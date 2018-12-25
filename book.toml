@@ -1,0 +1,5 @@
+[book]
+authors = ["burrrata"]
+multilingual = false
+src = "src"
+title = "cryptoeconomics.study follow along"
