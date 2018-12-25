@@ -6,21 +6,17 @@ What are they and how do they work? Let's roll our own to find out!
 # Lectures
 - https://cryptoeconomics.study/lectures/chapter-01-0.html
 
-[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://youtu.be/T-D1KVIuvjA)
-
-<br>
 [![chapter_1.0](https://img.youtube.com/vi/VaUTTE5xb54/hqdefault.jpg)](https://youtu.be/VaUTTE5xb54)
-<br>
+
 [![chapter_1.1](https://img.youtube.com/vi/FLIo_ZjV--U/hqdefault.jpg)](https://youtu.be/FLIo_ZjV--U)
-<br>
+
 [![chapter_1.2](https://img.youtube.com/vi/XIsn8-5Xekc/hqdefault.jpg)](https://youtu.be/XIsn8-5Xekc)
-<br>
+
 [![chapter_1.3](https://img.youtube.com/vi/j7Mbx8laZwY/hqdefault.jpg)](https://youtu.be/j7Mbx8laZwY)
-<br>
+
 [![chapter_1.4](https://img.youtube.com/vi/-xoCoZGJ9AQ/hqdefault.jpg)](https://youtu.be/-xoCoZGJ9AQ)
-<br>
+
 [![chapter_1.5](https://img.youtube.com/vi/ckzi8iqGilE/hqdefault.jpg)](https://youtu.be/ckzi8iqGilE)
-<br>
 
 # Words
 - https://github.com/cryptoeconomics-study/website/blob/master/overview.md
