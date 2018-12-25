@@ -1,6 +1,11 @@
 # Centralized Payment Processors
 What are they and how do they work? Let's roll our own to find out! 
 
+# Lectures
+- https://cryptoeconomics.study/lectures/chapter-01-0.html
+
+[![chapter_1.0](https://img.youtube.com/vi/VaUTTE5xb54/hqdefault.jpg)](https://www.youtube.com/watch?v=VaUTTE5xb54)
+
 # Words
 - https://github.com/cryptoeconomics-study/website/blob/master/overview.md
 
