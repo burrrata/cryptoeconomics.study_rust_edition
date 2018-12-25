@@ -3,7 +3,13 @@ What are they and how do they work? Let's roll our own to find out!
 
 <br>
 
-# Lectures
+# TODO
+- combine the words with the code
+- bonus points if it follows a storyline
+
+<br>
+
+## Lectures
 - https://cryptoeconomics.study/lectures/chapter-01-0.html
 
 [![chapter_1.0](https://img.youtube.com/vi/VaUTTE5xb54/hqdefault.jpg)](https://youtu.be/VaUTTE5xb54)
@@ -18,7 +24,7 @@ What are they and how do they work? Let's roll our own to find out!
 
 [![chapter_1.5](https://img.youtube.com/vi/ckzi8iqGilE/hqdefault.jpg)](https://youtu.be/ckzi8iqGilE)
 
-# Words
+## Words
 - https://github.com/cryptoeconomics-study/website/blob/master/overview.md
 
 * Overview of basic crypto concepts
@@ -67,7 +73,7 @@ What are they and how do they work? Let's roll our own to find out!
 
 <br>
 
-# Code
+## Code
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
 - https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 ```
