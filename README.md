@@ -3,11 +3,15 @@ a book that follows along with the lecture videos
 
 ## Current Sources of Truth
 
-https://github.com/cryptoeconomics-study/code
+Code
+- https://github.com/cryptoeconomics-study/code
 
-https://cryptoeconomics.study/overview.html
+Course Overview
+- https://cryptoeconomics.study/overview.html
+- https://github.com/cryptoeconomics-study/website/blob/master/overview.md
 
-https://cryptoeconomics.study/lectures/
+Lectures
+- https://cryptoeconomics.study/lectures/
 
 ## Problems in Search of Solutions
 
