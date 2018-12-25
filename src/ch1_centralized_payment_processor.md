@@ -2,6 +2,8 @@
 What are they and how do they work? Let's roll our own to find out! 
 
 # Words
+- https://github.com/cryptoeconomics-study/website/blob/master/overview.md
+
 * Overview of basic crypto concepts
    * Hashes -- not how they work but instead what they do (collision resistance, second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)], preimage resistance, random oracle)
    * Public / private keys -- Sign with private key, verify with public key
