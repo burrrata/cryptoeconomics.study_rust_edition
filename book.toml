@@ -3,3 +3,9 @@ authors = ["burrrata"]
 multilingual = false
 src = "src"
 title = "cryptoeconomics.study follow along"
+
+[output.html]
+mathjax-support = true
+
+[output.html.playpen]
+editable = true
