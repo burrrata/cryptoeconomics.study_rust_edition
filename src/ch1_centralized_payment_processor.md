@@ -13,8 +13,8 @@ What are they and how do they work? Let's roll our own to find out!
 ## Lectures
 - https://cryptoeconomics.study/lectures/chapter-01-0.html
 
-```How do I embed YouTube videos into mdBooks?```
-- shots fired: https://users.rust-lang.org/t/embedding-youtube-in-mdbook/23555/3
+QUESTION: how do I embed YouTube videos in mdBook so they play here rather than taking the user away from the page to YouTube?
+- https://users.rust-lang.org/t/embedding-youtube-in-mdbook/23555/3
 
 [![chapter_1.0](https://img.youtube.com/vi/VaUTTE5xb54/hqdefault.jpg)](https://youtu.be/VaUTTE5xb54)
 
