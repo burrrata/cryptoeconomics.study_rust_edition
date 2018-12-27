@@ -4,8 +4,9 @@ What are they and how do they work? Let's roll our own to find out!
 <br>
 
 # TODO
-- combine the words with the code
-- bonus points if it follows a storyline
+- remix the Javascript as editable, runnable, Rust code
+- move the english words into comments in the code
+- bonus points if you can craft a story to explain the code and concepts
 
 <br>
 
