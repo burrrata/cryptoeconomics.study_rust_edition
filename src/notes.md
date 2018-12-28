@@ -11,7 +11,8 @@ Uses mostly standard Rust without calling to external crypto libraries that mdBo
 
 The above example uses sha256, which is great, but also calls an external library 
 This is a function to replace ```pub fn hash``` with a standard Rust hasher
-```
+
+```rust
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
