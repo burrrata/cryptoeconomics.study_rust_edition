@@ -1,3 +1,4 @@
+```rust
 #![allow(warnings)]
 
 extern crate rand;
@@ -100,3 +101,4 @@ fn main() {
     println!("BANK DATA:\n{:#?}\n", Bank_Data);
 
 }
+```
