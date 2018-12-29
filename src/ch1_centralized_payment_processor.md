@@ -5,7 +5,7 @@ What are they and how do they work? Let's roll our own to find out!
 
 # GOALS
 - For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
-- Then show create a library and tutorial that is meant to be explored through the CLI that shows how to iteratively ugrade each component and function in the standard model to make it more secure
+- Then create a CLI tutorial that shows how to iteratively ugrade each component and function in the standard model to make it more secure
 - Stetch Goal: work towards recreating the Parity Ethereum Client, but that's probably not realistic lol
 
 # TODO
