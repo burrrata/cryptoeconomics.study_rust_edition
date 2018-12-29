@@ -156,6 +156,15 @@ impl Chain {
         println!("These tx failed: {:#?}", failed_tx);
         verified_tx
     }
+    
+    pub fn apply_tx(&mut self,
+                    verified_tx: Vec<Transaction>) {
+        
+        for i in verified_tx {
+            sender.balance -= i.amount;
+            receiver.balance += i.amount;
+        }
+    }
     */
 
     pub fn last_hash(&self) -> String {
