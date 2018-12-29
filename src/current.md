@@ -287,6 +287,7 @@ impl Chain {
 
 fn main() {
 
+
     // Create The "Blockchain" 
     // (really PP's private data system)
     let pp_pk = Chain::key_gen();
@@ -298,6 +299,7 @@ fn main() {
     };
     let mut chain = Chain::new_blockchain(PP.pub_key.clone(), 1);
     chain.accounts.push(PP);
+
 
     // Test Account Creation
     for i in 0..5 {
@@ -318,8 +320,6 @@ fn main() {
     for i in 0..3 {
         chain.new_block();
     }
-    //println!("chain: {}", )
-    
     
     
     // Test Hashing
