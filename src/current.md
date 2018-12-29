@@ -21,10 +21,16 @@ use std::hash::Hasher;
 // - Problem: SHA2 is not part of the standard library and does not work in the Rust Playground
 // - Solution: Swapped it out for the default hasher
 // 
-// TX PROBLEMS!
+// ~DONE BY DEFAULT: Centralized Operator = Genesis Address
+// - only account that can "mine" new blocks (aka approve tx)
+// - only account that can change params (block rewards, difficulty, etc)
+//
+// CURRENT
+// 
+// TX Problems!
 // - does not update receiver account balance 
 // - does not check sender signature 
-// TX SOLUTIONS?
+// TX Solutions?
 // - done: create a function that verifies tx before added to a new block
 // - todo: better Accounts data structure
 //   - HashMap?
@@ -34,7 +40,7 @@ use std::hash::Hasher;
 //      - MAYBE: where each Vec holds a pub_key and a struct for that account? 
 // - todo: function that updates account balances based on verified tx
 // 
-// CURRENT: Addresses
+// Addresses
 // - DONE: add struct for addresses (public_key, sign_key, balance)
 // - DONE: add function to create new addresses
 // - ONGOING: add vector to store all addresses
@@ -42,10 +48,6 @@ use std::hash::Hasher;
 // TX Updates
 // - prevent over spending by checking if balance is > tx
 // - check if tx is signed by sender
-// 
-// ~DONE BY DEFAULT: Centralized Operator = Genesis Address
-// - only account that can "mine" new blocks (aka approve tx)
-// - only account that can change params (block rewards, difficulty, etc)
 //
 // Stretch Goals
 // - parameters to change central operator's fees / rewards
