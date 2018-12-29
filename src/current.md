@@ -13,28 +13,38 @@ use std::fmt::Write;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+
+
+// TODOS
+//
+// DONE: Simple Hash Function 
+// - Problem: SHA2 is not part of the standard library and does not work in the Rust Playground
+// - Solution: Swapped it out for the default hasher
+// 
 // TX PROBLEMS!
 // - does not update receiver account balance 
 // - does not check sender signature 
-// TX SOLUTION?
+// TX SOLUTIONS?
 // - done: create a function that verifies tx before added to a new block
 // - todo: better Accounts data structure
-//   - HashMap::form(key: pub_key, value: Account struct) ?
-//   - or can I encode Structs with pub_key as the identifier instead of Account?
-
-// TODO
-//
-// Addresses
-// - add struct for addresses (public_key, sign_key, balance)
-// - add function to create new addresses
-// - add vector to store all addresses
+//   - HashMap?
+//      - NO: HashMap only works for types that implement the Eq and Hash traits. See link below for details.
+//      - https://doc.rust-lang.org/rust-by-example/std/hash/alt_key_types.html
+//   - Vec of Vecs?
+//      - MAYBE: where each Vec holds a pub_key and a struct for that account? 
+// - todo: function that updates account balances based on verified tx
+// 
+// CURRENT: Addresses
+// - DONE: add struct for addresses (public_key, sign_key, balance)
+// - DONE: add function to create new addresses
+// - ONGOING: add vector to store all addresses
 // 
 // TX Updates
+// - prevent over spending by checking if balance is > tx
 // - check if tx is signed by sender
-// - check if balance is > tx
 // 
-// Centralized Operator = Genesis Address
-// - must approve all tx
+// ~DONE BY DEFAULT: Centralized Operator = Genesis Address
+// - only account that can "mine" new blocks (aka approve tx)
 // - only account that can change params (block rewards, difficulty, etc)
 //
 // Stretch Goals
