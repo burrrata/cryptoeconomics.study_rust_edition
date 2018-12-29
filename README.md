@@ -1,5 +1,5 @@
 
-A Rust book that aims to follow along with the [Cryptoeconomics.Study](https://cryptoeconomics.study) lecture videos and code.
+A Rust book that aims to follow along with the [Cryptoeconomics.Study](https://cryptoeconomics.study) lecture videos and code. May or may not expand to a CLI tutorial rather than mdBook. Time will tell...
 
 # Cryptoeconomics.Study Stuff
 
