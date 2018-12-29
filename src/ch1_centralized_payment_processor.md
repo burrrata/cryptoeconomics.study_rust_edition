@@ -81,6 +81,4 @@ QUESTION: how do I embed YouTube videos in mdBook so they play here rather than 
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
 - https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
-```
-// TODO: recreate the JS code in Rust
-```
+See [current.md](for latest iteration of Rust code that runs on the Rust Playground)
