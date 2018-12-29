@@ -3,6 +3,11 @@ What are they and how do they work? Let's roll our own to find out!
 
 <br>
 
+# GOALS
+- For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
+- Then show create a library and tutorial that is meant to be explored through the CLI that shows how to iteratively ugrade each component and function in the standard model to make it more secure
+- Stetch Goal: work towards recreating the Parity Ethereum Client, but that's probably not realistic lol
+
 # TODO
 - remix the Javascript as editable, runnable, Rust code
 - move the english words into comments in the code
@@ -78,7 +83,15 @@ QUESTION: how do I embed YouTube videos in mdBook so they play here rather than 
 <br>
 
 ## Code
+
+MUST run in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code. THEN explain how the user can upgrade the toy functions in order to move towards something like [Parity's Ethereum Client](https://github.com/paritytech/parity-ethereum).
+
+Here's Karl's awesome code:
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
 - https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
-See [current.md](for latest iteration of Rust code that runs on the Rust Playground)
+Here's an awesome Rust blockchain tutorial:
+- https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
+- https://github.com/tensor-programming/Rust_block_chain
+
+This is GREAT, but there's no functionality for accounts or tx signatures. Augmenting the above Rust tutorial it to look more like the cryptoeconomics.study code in [current.md](current.md)
