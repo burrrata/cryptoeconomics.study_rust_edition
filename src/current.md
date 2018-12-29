@@ -13,6 +13,10 @@ use std::fmt::Write;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+// TX PROBLEMS!
+// - does not update receiver account balance 
+// - does not check sender signature 
+
 // TODO
 //
 // Addresses
@@ -36,6 +40,7 @@ use std::hash::Hasher;
 
 #[derive(Debug)]
 pub struct Account {
+    name: String,
     priv_key: String,
     pub_key: String,
     balance: f32,
@@ -64,6 +69,7 @@ pub struct Block {
     transactions: Vec<Transaction>
 }
 
+#[derive(Debug)]
 pub struct Chain {
     chain: Vec<Block>,
     accounts: Vec<Account>,
@@ -99,10 +105,12 @@ impl Chain {
         rn.to_string()
     }
     
-    pub fn new_account(&mut self) {
+    pub fn new_account(&mut self,
+                       name: String) {
         
         let pk = Chain::key_gen();
         let account = Account {
+            name: name,
             priv_key: pk.clone(),
             pub_key: Chain::hash(&pk),
             balance: 100.0,
@@ -111,7 +119,6 @@ impl Chain {
         self.accounts.push(account);
     }
     
-
     pub fn new_transaction(&mut self,
                            sender: String,
                            receiver: String,
@@ -234,23 +241,49 @@ impl Chain {
 
 fn main() {
 
-    // Blockchain Params
-    let mut miner_addr = String::from("123");
-    let mut dif = 1; // 0..3 are recommend for CLI, but only 1 works on Rust Playground
-    
-    // Create a "blockchain"
-    let mut chain = Chain::new_blockchain(miner_addr, dif);
-    
+    // Create The "Blockchain" 
+    // (really PP's private data system)
+    let pp_pk = Chain::key_gen();
+    let mut PP = Account {
+            name: String::from("PP"),
+            priv_key: pp_pk.clone(),
+            pub_key: Chain::hash(&pp_pk),
+            balance: 1000000.0,
+    };
+    let mut chain = Chain::new_blockchain(PP.pub_key.clone(), 1);
+    chain.accounts.push(PP);
+
     // Test Account Creation
     for i in 0..5 {
-        chain.new_account();
+        chain.new_account(String::from("unique_person"));
     }
+    chain.new_account(String::from("Jim"));
+    
     println!("\nAccounts:\n{:#?}\n", chain.accounts);
+    
+    
+    // Test Updating Block Reward
+    chain.update_reward(10000.0);
+    // PROBLEM!
+    // - the chain creates a "new block", but the reward
+    //   does not get added to PP's balance!
+    
+    // Test New Block Creation
+    for i in 0..3 {
+        chain.generate_new_block();
+    }
+    //println!("chain: {}", )
+    
+    
     
     // Test Hashing
     let hw = String::from("Hello World");
     let hash_test = Chain::hash(&hw);
     println!("hash test: {}", hash_test);
+    
+    
+    // Print Result of Chain
+    println!("\nCHAIN:\n{:#?}\n", chain);
     
 }
 ```
