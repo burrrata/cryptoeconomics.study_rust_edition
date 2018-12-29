@@ -1,15 +1,12 @@
-# Cryptoeconomics.Study Follow Along
-A Rust book that will (hopefully) follow along with these lecture videos and code.
+# Cryptoeconomics.Study Rust Edition
+A Rust book that aims to follow along with the [Cryptoeconomics.Study](https://cryptoeconomics.study) lecture videos and code.
 
-## Cryptoeconomics.Study Materials
-
-Code
-- https://github.com/cryptoeconomics-study/code
+Lectures
+- https://cryptoeconomics.study/lectures/
 
 Course Overview
 - https://cryptoeconomics.study/overview.html
 - https://github.com/cryptoeconomics-study/website/blob/master/overview.md
 
-Lectures
-- https://cryptoeconomics.study/lectures/
-
+Code
+- https://github.com/cryptoeconomics-study/code
