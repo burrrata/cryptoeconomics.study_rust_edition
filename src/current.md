@@ -109,8 +109,6 @@ impl Chain {
         };
         
         self.accounts.push(account);
-        
-        //account
     }
     
 
@@ -236,19 +234,20 @@ impl Chain {
 
 fn main() {
 
-    let mut miner_addr = String::new();
-    let mut difficulty = 2; // 0, 1, or 2 are recommended
+    // Blockchain Params
+    let mut miner_addr = String::from("123");
+    let mut dif = 1; // 0..3 are recommend for CLI, but only 1 works on Rust Playground
     
-    let mut chain = Chain::new_blockchain(String::from("123"), 1);
+    // Create a "blockchain"
+    let mut chain = Chain::new_blockchain(miner_addr, dif);
     
-    // account testing
+    // Test Account Creation
     for i in 0..5 {
         chain.new_account();
     }
     println!("\nAccounts:\n{:#?}\n", chain.accounts);
     
-
-    // hash testing
+    // Test Hashing
     let hw = String::from("Hello World");
     let hash_test = Chain::hash(&hw);
     println!("hash test: {}", hash_test);
