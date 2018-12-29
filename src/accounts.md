@@ -1,4 +1,3 @@
-```rust
 #![allow(warnings)]
 
 extern crate rand;
@@ -33,13 +32,16 @@ fn main() {
     }
         
     
-    // ACCOUNT DATABASE TESTING
+    //////////////////////////////
+    // ACCOUNT DATABASE TESTING //
+    //////////////////////////////
     
     #[derive(Debug)]
     pub struct Account {
         pub_key: String,
         balance: f32,
     }
+
 
     // P2P
     fn new_p2p_account() -> Account {
@@ -59,33 +61,42 @@ fn main() {
     for i in 0..3 {
         p2p_accounts.push(new_p2p_account());
     }
-    println!("accounts:\n{:#?}\n", accounts_vec);
     
-    // UNDER CONSTRUCTION
-    /*
-    // Centralized
-    fn new_centralized_account() -> Vec<> {
+    println!("P2P ACCOUNTS:\n{:#?}\n", p2p_accounts);
+    
+
+    // Centralized Bank Accounts
+    fn new_bank_account() -> (Account, String) {
         
-        let cav = Vec::new(); // centralized account vec
         let priv_key = key_gen();
         let pub_key = hash(& priv_key.clone());
         let account = Account {
             pub_key: pub_key,
-            balance: 100.0,
+            balance: 0.0,
         };
         
-        cav.push(account);
-        cav.push(priv_key);
-        
-        cav
+        (account, priv_key)
+    }
+
+    #[derive(Debug)]
+    struct Bank_Data {
+        Accounts: Vec<Account>,
+        Keys: Vec<String>,
     }
     
-    let mut bank_keys: Vec<Vec> = Vec::new();
+    let mut bank_accounts: Vec<Account> = Vec::new();
+    let mut bank_keys: Vec<String> = Vec::new();
+    let mut Bank_Data = Bank_Data {
+        Accounts: bank_accounts,
+        Keys: bank_keys,
+    };  
+    
     for i in 0..3 {
-        accounts_vec.push(new_centralized_account());
+        let (account, key) = new_bank_account();
+        Bank_Data.Accounts.push(account);
+        Bank_Data.Keys.push(key);
     }
-    println!("accounts:\n{:#?}\n", accounts_vec);
-    println!("bank keys:\n{:#?}\n", bank_keys);
-    */
+  
+    println!("BANK DATA:\n{:#?}\n", Bank_Data);
+
 }
-```
