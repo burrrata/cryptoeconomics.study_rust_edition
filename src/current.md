@@ -139,6 +139,7 @@ impl Chain {
     
     // UNDER CONSTRUCTION
     // sender.balance isn't a thing yet
+    // need a better Accounts data structure
     /*
     pub fn verify_tx(&mut self,
                      pending_tx: Vec<Transaction>) -> Vec<Transaction> {
