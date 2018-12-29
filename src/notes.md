@@ -43,18 +43,39 @@ fn main() {
 ```rust
 #![allow(warnings)]
 
+extern crate rand;
 extern crate time;
 extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
 
+use rand::prelude::*;
 use std::fmt::Write;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+// TODO
+//
+// Addresses
+// - add struct for addresses (public_key, sign_key, balance)
+// - add function to create new addresses
+// - add vector to store all addresses
+// 
+// TX Updates
+// - check if tx is signed by sender
+// - check if balance is > tx
+// 
+// Centralized Operator as genesis address
+// - must approve all tx
+// - only account that can change params (block rewards, difficulty, etc)
 
-fn main() {
+#[derive(Debug)]
+pub struct Account {
+    priv_key: String,
+    pub_key: String,
+    balance: f32,
+}
 
 #[derive(Debug, Clone, Serialize)]
 struct Transaction {
@@ -88,9 +109,11 @@ pub struct Chain {
 }
 
 
+
 impl Chain {
 
-    pub fn new(miner_addr: String, difficulty: u32) -> Chain {
+    pub fn new_blockchain(miner_addr: String, 
+                          difficulty: u32) -> Chain {
         let mut chain = Chain {
             chain: Vec::new(),
             curr_trans: Vec::new(),
@@ -103,8 +126,31 @@ impl Chain {
         chain
 
     }
+    
+    
+    pub fn key_gen() -> String {
+        let rn: i32 = thread_rng().gen();
+        rn.to_string()
+    }
+    
+    pub fn new_account() -> Account {
+        
+        let pk = Chain::key_gen();
+        let account = Account {
+            priv_key: pk.clone(),
+            pub_key: Chain::hash(&pk),
+            balance: 100.0,
+        };
+        
+        account
+    }
+    
 
-    pub fn new_transaction(&mut self, sender: String, receiver: String, amount: f32) -> bool {
+    pub fn new_transaction(&mut self,
+                           sender: String,
+                           receiver: String,
+                           amount: f32) -> bool {
+    
         self.curr_trans.push(Transaction{
             sender,
             receiver,
@@ -208,18 +254,6 @@ impl Chain {
         }
     }
 
-    /*
-    pub fn hash<T: serde::Serialize>(item: &T) -> String {
-        let input = serde_json::to_string(&item).unwrap();
-        let mut hasher = Sha256::default();
-        hasher.input(input.as_bytes());
-        let res = hasher.result();
-        let vec_res = res.to_vec();
-
-        Chain::hex_to_string(vec_res.as_slice())
-    }
-    */
-
     pub fn hash<T: serde::Serialize>(item: &T) -> String {
         let input = serde_json::to_string(&item).unwrap();
         let input_bytes = input.as_bytes();
@@ -231,20 +265,19 @@ impl Chain {
         
         hex_digest
     }
-
-    /*
-    pub fn hex_to_string(vec_res: &[u8]) -> String {
-        let mut s = String::new();
-        for b in vec_res {
-            write!(&mut s, "{:x}", b).expect("unable to write");
-        }
-        s
-    }
-    */
-
 }
 
+fn main() {
 
+    let mut miner_addr = String::new();
+    let mut difficulty = 2; // 0, 1, or 2 are recommended
+    
+    // account testing
+    let mut test_account = Chain::new_account();
+    println!("new account: {:#?}", test_account);
+    
+
+    // hash testing
     let hw = String::from("Hello World");
     let hash_test = Chain::hash(&hw);
     println!("hash test: {}", hash_test);
