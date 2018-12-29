@@ -138,6 +138,7 @@ impl Chain {
     }
     
     // UNDER CONSTRUCTION
+    // sender.balance isn't a thing yet
     /*
     pub fn verify_tx(&mut self,
                      pending_tx: Vec<Transaction>) -> Vec<Transaction> {
@@ -184,7 +185,7 @@ impl Chain {
             difficulty: self.difficulty
         };
 
-        let reward_trans = Transaction {
+        let block_reward_tx = Transaction {
             sender: String::from("Root"),
             receiver: self.miner_addr.clone(),
             amount: self.reward
@@ -196,14 +197,22 @@ impl Chain {
             transactions: vec![]
         };
         
-        // Insert Step to Verify Pending TX Here
+        // Verify Pending TX Here
+        let mut verified_tx = Vec::new(); // swap for line below asap
+        // let mut verified_tx = verify_tx(pending_tx);
+        verified_tx.push(block_reward_tx);
         
-        block.transactions.push(reward_trans);
-        block.transactions.append(&mut self.pending_tx); // change this to verified_tx
+        // Apply Verified TX To Update Account Balances Here
+        block.transactions.append(&mut self.pending_tx); // swap for line below asap
+        // apply_tx(verified_tx);
+        
+        // Add Stuff To The New Block
+        block.transactions.append(&mut verified_tx);
         block.count = block.transactions.len() as u32;
         block.header.merkle = Chain::get_merkle(block.transactions.clone());
         Chain::proof_of_work(&mut block.header);
 
+        // Add New Block To The Chain
         println!("{:#?}", &block);
         self.chain.push(block);
         true
