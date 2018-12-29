@@ -15,7 +15,12 @@ A Rust book that aims to follow along with the [Cryptoeconomics.Study](https://c
 
 # Cryptoeconomics.Study Rust Edition
 
-### Ch1
+### Ch1: Centralized Payment Processors
+
+Original
 - https://cryptoeconomics.study/lectures/chapter-01-0.html
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
-- Current Rust Draft: https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/current.md
+
+Current Rust Draft
+- https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1_centralized_payment_processor.md
+- https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/current.md
