@@ -16,6 +16,11 @@ use std::hash::Hasher;
 // TX PROBLEMS!
 // - does not update receiver account balance 
 // - does not check sender signature 
+// TX SOLUTION?
+// - done: create a function that verifies tx before added to a new block
+// - todo: better Accounts data structure
+//   - HashMap::form(key: pub_key, value: Account struct) ?
+//   - or can I encode Structs with pub_key as the identifier instead of Account?
 
 // TODO
 //
@@ -73,7 +78,7 @@ pub struct Block {
 pub struct Chain {
     chain: Vec<Block>,
     accounts: Vec<Account>,
-    curr_trans: Vec<Transaction>,
+    pending_tx: Vec<Transaction>,
     difficulty: u32,
     miner_addr: String, 
     reward: f32,
@@ -87,14 +92,14 @@ impl Chain {
                           difficulty: u32) -> Chain {
         let mut chain = Chain {
             chain: Vec::new(),
-            curr_trans: Vec::new(),
+            pending_tx: Vec::new(),
             accounts: Vec::new(),
             difficulty,
             miner_addr,
             reward: 0.0,
         };
 
-        chain.generate_new_block();
+        chain.new_block();
         chain
 
     }
@@ -119,18 +124,38 @@ impl Chain {
         self.accounts.push(account);
     }
     
-    pub fn new_transaction(&mut self,
-                           sender: String,
-                           receiver: String,
-                           amount: f32) -> bool {
+    pub fn new_tx(&mut self,
+                  sender: String,
+                  receiver: String,
+                  amount: f32) -> bool {
     
-        self.curr_trans
+        self.pending_tx
             .push(Transaction{sender,
                               receiver,
                               amount,});
 
         true
     }
+    
+    // UNDER CONSTRUCTION
+    /*
+    pub fn verify_tx(&mut self,
+                     pending_tx: Vec<Transaction>) -> Vec<Transaction> {
+        
+        let verified_tx = Vec::new();
+        let failed_tx = Vec::new();
+        
+        for i in pending_tx {
+            match {
+                sender.balance >= amount => verified_tx.push(i),
+                _ => failed_tx.push(i);
+            }
+        }
+        
+        println!("These tx failed: {:#?}", failed_tx);
+        verified_tx
+    }
+    */
 
     pub fn last_hash(&self) -> String {
         let block = match self.chain.last() {
@@ -150,7 +175,7 @@ impl Chain {
         true
     }
 
-    pub fn generate_new_block(&mut self) -> bool {
+    pub fn new_block(&mut self) -> bool {
         let header = Blockheader {
             timestamp: time::now().to_timespec().sec,
             nonce: 0,
@@ -170,9 +195,11 @@ impl Chain {
             count: 0,
             transactions: vec![]
         };
-
+        
+        // Insert Step to Verify Pending TX Here
+        
         block.transactions.push(reward_trans);
-        block.transactions.append(&mut self.curr_trans);
+        block.transactions.append(&mut self.pending_tx); // change this to verified_tx
         block.count = block.transactions.len() as u32;
         block.header.merkle = Chain::get_merkle(block.transactions.clone());
         Chain::proof_of_work(&mut block.header);
@@ -182,10 +209,10 @@ impl Chain {
         true
     }
 
-    fn get_merkle(curr_trans: Vec<Transaction>) -> String {
+    fn get_merkle(pending_tx: Vec<Transaction>) -> String {
         let mut merkle = Vec::new();
 
-        for t in &curr_trans {
+        for t in &pending_tx {
             let hash = Chain::hash(t);
             merkle.push(hash);
         }
@@ -270,7 +297,7 @@ fn main() {
     
     // Test New Block Creation
     for i in 0..3 {
-        chain.generate_new_block();
+        chain.new_block();
     }
     //println!("chain: {}", )
     
