@@ -84,7 +84,7 @@ QUESTION: how do I embed YouTube videos in mdBook so they play here rather than 
 
 ## Code
 
-MUST run in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code. THEN explain how the user can upgrade the toy functions in order to move towards something like [Parity's Ethereum Client](https://github.com/paritytech/parity-ethereum).
+MUST run in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code. THEN explain how the user can upgrade the toy functions in order to move towards something like [Parity's Ethereum Client](https://github.com/paritytech/parity-ethereum) or [Substrate](https://github.com/paritytech/substrate).
 
 Here's Karl's awesome code:
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
