@@ -94,6 +94,6 @@ Here's an awesome Rust blockchain tutorial:
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
 
-These are GREAT, but Cryptoeconomics.Study code is written in JS and references external Ethereum libraries, and there's no functionality for accounts or tx signatures in the Rust tutorial. 
+These are GREAT, but Cryptoeconomics.Study code is written in JS and references external Ethereum libraries, and there's no functionality for accounts, keys, or tx signatures in the Rust tutorial. 
 
 Attempting to get the best of both worlds here: [current.md](current.md)
