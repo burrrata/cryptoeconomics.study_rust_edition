@@ -32,8 +32,6 @@ use std::hash::Hasher;
 //   value as the data
 
 
-
-
 // Stucts
 
 #[derive(Debug)]
@@ -45,13 +43,14 @@ struct State {
     history: Vec<Vec<TX>>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct TX {
     sender: String,
     receiver: String,
     tx_amount: f32,
     nonce: i32,
 }
+
 
 // State
 impl State {
@@ -158,43 +157,34 @@ impl State {
                 break
             }
             
-            else {
-                println!("Valid TX.");
-                
-                // expected struct `TX`, found &TX
-                //self.verified_tx.push(i);
-                
-                // cannot move out of borrowed content
-                //self.verified_tx.push(*i);
-                
-                // ¯\_(ツ)_/¯ 
-            }
+            println!("Valid TX.");
+            self.verified_tx.push(i.clone());
         }
     }
     
-    
+    pub fn confirm_tx(&mut self) {
+        
+        println!("\n\nConfirming TX");
+        
+        let mut block = Vec::new();
+        
+        for i in & self.verified_tx {
+            
+            *self.balances.get_mut(&i.sender).unwrap() -= i.tx_amount;
+            *self.balances.get_mut(&i.receiver).unwrap() += i.tx_amount;
+            *self.nonces.get_mut(&i.sender).unwrap() += 1;
+            println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
+            
+            block.push(i.clone())
+        }
+        
+        self.history.push(block); 
+    }    
     
 }
 
 
-fn confirm_tx(mut balances: HashMap<String, f32>,
-              mut nonces: HashMap<String, i32>,
-              mut verified_tx: Vec<TX>,
-              mut history: Vec<TX>) -> (HashMap<String, f32>, 
-                                        HashMap<String, i32>,
-                                        Vec<TX>) {
-    
-    println!("\n\nConfirming TX");
-    for i in verified_tx {
-        *balances.get_mut(&i.sender).unwrap() -= i.tx_amount;
-        *balances.get_mut(&i.receiver).unwrap() += i.tx_amount;
-        *nonces.get_mut(&i.sender).unwrap() += 1;
-        println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
-        history.push(i);        
-    }
 
-    (balances, nonces, history)
-}
 
 
 // CENTRALIZED BANK "BLOCKCHAIN"
@@ -222,69 +212,22 @@ fn main() {
     
     // check results
     println!("\n\n/// Genesis State ///\n\n");
-    println!("Balances:\n{:#?}", &state.balances);
-    println!("Nonces:\n{:#?}", &state.nonces);
+    println!("Genesis State:\n{:#?}", state);
     
     
     
     // TX Testing 
     ///////////////////////////////////////////
-    println!("\n\n/// Testing Stuff ///\n\n");
+    println!("\n\n/// Testing TX Stuff ///\n\n");
     
+    // add tx to pending_tx pool
     state.new_tx(test0_priv.clone(), test1_pub.clone(), 500.0);
-    println!("\nPending TX:\n{:#?}", &state.pending_tx);
-
+    // verify valid tx
     state.verify_tx();
-    println!("\nPending TX:\n{:#?}", &state.pending_tx);
-    println!("\nVerified TX:\n{:#?}", &state.verified_tx);
-
-
-
-    /*
-    // vecs to store pending and processed tx
-    let mut pending_tx = Vec::new();
-    let mut history = Vec::new();
-
-    // valid tx
-    let tx0 = TX {
-        sender: String::from("0x000"),
-        receiver: String::from("0x001"),
-        tx_amount: 500.0,
-        nonce: *nonces.get("0x000").unwrap(),
-    };
-    pending_tx.push(tx0);
-    
-    // invalid tx
-    let tx1 = TX {
-        sender: String::from("0x000"),
-        receiver: String::from("0x001"),
-        tx_amount: -100.0,
-        nonce: *nonces.get("0x000").unwrap(),
-    };
-    pending_tx.push(tx1);
-
-    // verify tx
-    let (mut balances,
-         mut nonces,
-         mut verified_tx) = verify_tx(balances,
-                                      nonces,
-                                      pending_tx);
-
-    // apply valid tx
-    let (mut balances,
-         mut nonces,
-         mut history) = confirm_tx(balances,
-                                   nonces,
-                                   verified_tx,
-                                   history);
-
+    // cofirm tx and change state
+    state.confirm_tx();
     // check results
-    println!("\n\nEnd State");
-    println!("\nBalances:\n{:#?}", &balances);
-    println!("\nNonces:\n{:#?}", &nonces);
-    println!("\nKeys:\n{:#?}", &keys);
-    println!("\nHistory:\n{:#?}", &history);
-    */
+    println!("\n\nCurrent State:\n{:#?}", state);
 
 }
 ```
