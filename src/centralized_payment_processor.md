@@ -91,15 +91,17 @@ fn new_tx(sender: String,
 
 fn verify_tx(mut balances: HashMap<String, f32>,
              mut nonces: HashMap<String, i32>,
-             pending_tx: Vec<TX>,
-             mut history: Vec<TX>) -> (HashMap<String, 
-                                       f32>, 
-                                       HashMap<String, i32>,
-                                       Vec<TX>) {
-
+             pending_tx: Vec<TX>) -> (HashMap<String, f32>, 
+                                      HashMap<String, i32>,
+                                      Vec<TX>) {
+    
+    // Verify TX
+    let mut verified_tx = Vec::new();
+        
+    println!("\n\nVerifying TX:");
     for i in pending_tx {
     
-        println!("\nCurrent TX Being Verified:\n{:#?}", &i);
+        println!("\n{:#?}", &i);
         
         if !balances.contains_key(&i.sender) {
             println!("Invalid TX: sender not found.");
@@ -112,10 +114,16 @@ fn verify_tx(mut balances: HashMap<String, f32>,
         }
         
         if !(i.tx_amount > 0.0) {
-            println!("Invalid TX: insufficient balance.");
+            println!("Invalid TX: negative amount error.");
             println!("{} cannot send {} to {}", i.sender, i.tx_amount, i.receiver);
             break
         } 
+        
+        if !(balances.get(&i.sender).unwrap() > &i.tx_amount) {
+            println!("Invalid TX: insufficient funds.");
+            println!("{} cannot send {} to {}", i.sender, i.tx_amount, i.receiver);
+            break            
+        }
         
         if !(i.nonce == *nonces.get(&i.sender).unwrap()) {
             println!("Invalid TX: potential replay tx.");
@@ -124,17 +132,30 @@ fn verify_tx(mut balances: HashMap<String, f32>,
         }
         
         else {
-            if balances.get(&i.sender).unwrap() > &i.tx_amount {
-                *balances.get_mut(&i.sender).unwrap() -= i.tx_amount;
-                *balances.get_mut(&i.receiver).unwrap() += i.tx_amount;
-                *nonces.get_mut(&i.sender).unwrap() += 1;
-                println!("Valid TX.");
-                println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
-                history.push(i);
-            }
+            println!("Valid TX.");
+            verified_tx.push(i);
         }
     }
     
+    (balances, nonces, verified_tx)
+}
+
+fn confirm_tx(mut balances: HashMap<String, f32>,
+              mut nonces: HashMap<String, i32>,
+              mut verified_tx: Vec<TX>,
+              mut history: Vec<TX>) -> (HashMap<String, f32>, 
+                                        HashMap<String, i32>,
+                                        Vec<TX>) {
+    
+    println!("\n\nConfirming TX");
+    for i in verified_tx {
+        *balances.get_mut(&i.sender).unwrap() -= i.tx_amount;
+        *balances.get_mut(&i.receiver).unwrap() += i.tx_amount;
+        *nonces.get_mut(&i.sender).unwrap() += 1;
+        println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
+        history.push(i);        
+    }
+
     (balances, nonces, history)
 }
 
@@ -177,46 +198,59 @@ fn main() {
     }
     
     // check results
-    println!("\nBALANCES:\n{:#?}", &balances);
-    println!("\nNONCES:\n{:#?}", &nonces);
-    println!("\nKEYS:\n{:#?}\n", &keys);
+    println!("\n\nGenesis State");
+    println!("\nBalances:\n{:#?}", &balances);
+    println!("\nNonces:\n{:#?}", &nonces);
+    println!("\nKeys:\n{:#?}\n", &keys);
     
     
     // TX Testing 
     ///////////////////////////////////////////
     
-    // vec to store pending tx
+    // vecs to store pending and processed tx
     let mut pending_tx = Vec::new();
-    // vec to store history of valid tx
     let mut history = Vec::new();
 
     // valid tx
-    let tx1 = TX {
+    let tx0 = TX {
         sender: String::from("0x000"),
         receiver: String::from("0x001"),
         tx_amount: 500.0,
         nonce: *nonces.get("0x000").unwrap(),
     };
-    pending_tx.push(tx1);
+    pending_tx.push(tx0);
     
     // invalid tx
-    let tx2 = TX {
+    let tx1 = TX {
         sender: String::from("0x000"),
         receiver: String::from("0x001"),
         tx_amount: -100.0,
         nonce: *nonces.get("0x000").unwrap(),
     };
-    pending_tx.push(tx2);
-    
-    // check to see which pending tx are valid
-    // if tx is valid, process accordingly
-    let (balances, nonces, history) = verify_tx(balances, nonces, pending_tx, history);
+    pending_tx.push(tx1);
+
+
+    // verify tx
+    let (mut balances,
+         mut nonces,
+         mut verified_tx) = verify_tx(balances,
+                                      nonces,
+                                      pending_tx);
+
+    // apply valid tx
+    let (mut balances,
+         mut nonces,
+         mut history) = confirm_tx(balances,
+                                   nonces,
+                                   verified_tx,
+                                   history);
 
     // check results
-    println!("\nBALANCES:\n{:#?}", &balances);
-    println!("\nNONCES:\n{:#?}", &nonces);
-    println!("\nKEYS:\n{:#?}", &keys);
-    println!("\nHISTORY:\n{:#?}", &history);
+    println!("\n\nEnd State");
+    println!("\nBalances:\n{:#?}", &balances);
+    println!("\nNonces:\n{:#?}", &nonces);
+    println!("\nKeys:\n{:#?}", &keys);
+    println!("\nHistory:\n{:#?}", &history);
 
 }
 ```
