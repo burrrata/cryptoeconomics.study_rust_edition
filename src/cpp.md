@@ -68,7 +68,9 @@ impl State {
     
     // generate a new key
     pub fn key_gen() -> String {
+        
         let rn: i32 = thread_rng().gen_range(100000, 1000000);
+        
         rn.to_string()
     }
 
