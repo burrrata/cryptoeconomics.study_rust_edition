@@ -96,4 +96,4 @@ Here's an awesome Rust blockchain tutorial:
 
 These are GREAT, but Cryptoeconomics.Study code is written in JS and references external Ethereum libraries, and there's no functionality for accounts, keys, or tx signatures in the Rust tutorial. 
 
-Attempting to get the best of both worlds here: [current.md](current.md)
+Attempting to get the best of both worlds here: [current.md](current.md) and [centralized_payment_processor.md](centralized_payment_processor.md)
