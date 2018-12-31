@@ -190,9 +190,9 @@ impl State {
 // CENTRALIZED BANK "BLOCKCHAIN"
 fn main() {
 
+    // Init Blockchain
     // init blockchain state 
     let mut state = State::new_blockchain();
-    
     // create 3 random accounts
     for i in 0..3 {state.new_account()}
     // create deterministic test account
@@ -207,16 +207,12 @@ fn main() {
     let test1_bal = 10000.0;
     state.balances.insert(test1_pub.clone(), test1_bal.clone());
     state.nonces.insert(test1_pub.clone(), 0);
-    
     // check results
     println!("\n{:#?}", state);
     
     
-    
-    // TX Testing 
-    ///////////////////////////////////////////
+    // Test TX 
     println!("\n\n/// Testing TX Stuff ///\n\n");
-    
     // add tx to pending_tx pool
     state.new_tx(test0_priv.clone(), test1_pub.clone(), 500.0);
     // verify valid tx
