@@ -17,12 +17,17 @@ use std::hash::Hasher;
 //
 // TX Processing
 // the current architecture can only process 1 tx per 
-// account per block otherwise there's a nonce error
+// account per "block" (round of tx confirmation) 
+// otherwise there's a nonce error
 //
-// TX Signatures and Verification
-// What if the bank gave people their private keys to
+// TX Signatures
+// what if the bank gave people their private keys to
 // sign TX, but also kept a copy for themselves to
 // override or reverse any TX at any time?
+//
+// Accounts
+// would it make sense to make the accounts struts
+// that hold HashMaps?
 
 
 
@@ -166,7 +171,7 @@ fn main() {
     // Account Testing
     ///////////////////////////////////////////
     
-    // set up data stores for account balances and keys
+    // set up HashMaps for account balances, keys, and nonces
     let mut balances: HashMap<String, f32> = HashMap::new();
     let mut keys: HashMap<String, String> = HashMap::new();
     let mut nonces: HashMap<String, i32> = HashMap::new();
@@ -179,15 +184,12 @@ fn main() {
         nonces.insert(pub_key.clone(), nonce.clone());
     }
     
-    // create 2 accounts with fixed keys and balances
-    // because we can't test the tx function without 
-    // knowing the sender and reciever addresses, but
-    // everytime we run the program it creates new
-    // accounts with randomized keys
+    // create 2 accounts with fixed keys and balances for testing
+    // 0x000
     balances.insert(String::from("0x000"), 1000.0);
     keys.insert(String::from("0x000"), String::from("000"));
     nonces.insert(String::from("0x000"), 0);
-    
+    // 0x001
     balances.insert(String::from("0x001"), 1000.0);
     keys.insert(String::from("0x001"), String::from("001"));
     nonces.insert(String::from("0x001"), 0);
@@ -228,7 +230,6 @@ fn main() {
         nonce: *nonces.get("0x000").unwrap(),
     };
     pending_tx.push(tx1);
-
 
     // verify tx
     let (mut balances,
