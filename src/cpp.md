@@ -15,6 +15,8 @@ use std::hash::Hasher;
 
 // TODOS
 //
+// The new verify_tx() function doesn't work
+// 
 // TX Processing
 // the current architecture can only process 1 tx per 
 // account per "block" (round of tx confirmation) 
@@ -158,7 +160,14 @@ impl State {
             
             else {
                 println!("Valid TX.");
-                self.verified_tx.push(i);
+                
+                // expected struct `TX`, found &TX
+                //self.verified_tx.push(i);
+                
+                // cannot move out of borrowed content
+                //self.verified_tx.push(*i);
+                
+                // ¯\_(ツ)_/¯ 
             }
         }
     }
