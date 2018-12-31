@@ -27,7 +27,6 @@ use std::hash::Hasher;
 
 
 
-
 // USEFUL STUFF
 
 fn key_gen() -> String {
@@ -69,11 +68,13 @@ struct TX {
     nonce: i32,
 }
 
+// not very useful
 fn new_tx(sender: String,
           receiver: String,
           tx_amount: f32,
           mut nonces: HashMap<String, i32>,
-          mut pending_tx: Vec<TX>) -> (HashMap<String, i32>, Vec<TX>) {
+          mut pending_tx: Vec<TX>) -> (HashMap<String, i32>,
+                                       Vec<TX>) {
     
     let tx = TX {
         sender: sender.clone(),
@@ -91,7 +92,10 @@ fn new_tx(sender: String,
 fn verify_tx(mut balances: HashMap<String, f32>,
              mut nonces: HashMap<String, i32>,
              pending_tx: Vec<TX>,
-             mut history: Vec<TX>) -> (HashMap<String, f32>, HashMap<String, i32>, Vec<TX>) {
+             mut history: Vec<TX>) -> (HashMap<String, 
+                                       f32>, 
+                                       HashMap<String, i32>,
+                                       Vec<TX>) {
 
     for i in pending_tx {
     
@@ -138,9 +142,9 @@ fn verify_tx(mut balances: HashMap<String, f32>,
 // CENTRALIZED BANK MODEL
 fn main() {
 
-
     // Account Testing
     ///////////////////////////////////////////
+    
     // set up data stores for account balances and keys
     let mut balances: HashMap<String, f32> = HashMap::new();
     let mut keys: HashMap<String, String> = HashMap::new();
@@ -180,6 +184,7 @@ fn main() {
     
     // TX Testing 
     ///////////////////////////////////////////
+    
     // vec to store pending tx
     let mut pending_tx = Vec::new();
     // vec to store history of valid tx
@@ -207,8 +212,7 @@ fn main() {
     // if tx is valid, process accordingly
     let (balances, nonces, history) = verify_tx(balances, nonces, pending_tx, history);
 
-    
-    // print results
+    // check results
     println!("\nBALANCES:\n{:#?}", &balances);
     println!("\nNONCES:\n{:#?}", &nonces);
     println!("\nKEYS:\n{:#?}", &keys);
