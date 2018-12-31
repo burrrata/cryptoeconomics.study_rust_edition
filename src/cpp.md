@@ -13,21 +13,24 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
-// TODOS
+// INFO
 //
-// TX Processing
-// the current architecture can only process 1 tx per 
-// account per "block" (round of tx confirmation) 
-// otherwise there's a nonce error
-//
-// TX Signatures
-// - users write down and store their own keys to verify tx
-// - bank can change state arbitrarily using a master key
+// Private Keys
+// - users keep their keys to verify their tx
+// - "bank" (currently YOU in this tutorial) can change
+//   the state arbitrarily, just like with a real bank
+// 
+// TODO: TX Signatures
+// ! users hash their tx with their private key
+// ! verify_tx() checks that hash against the sender's pub_key
 //
 // Accounts
-// - there's got to be a better way to structure them than
+// - the "bank" creates accounts for users because
+//   the "bank" is the only one who manages the State, just
+//   like with a real bank
+// ? there's got to be a better way to structure them than
 //   disjointed HashMaps with the key as the pub_key and 
-//   value as the data
+//   value as the data?
 
 
 // Structs
@@ -212,11 +215,10 @@ fn main() {
     
     
     // Test TX 
-    println!("\n\n/// Testing TX Stuff ///\n\n");
     // add some tx to the pending_tx pool
     state.new_tx(&t0_priv, &t1_pub, 500.0);
     state.new_tx(&t1_priv, &t0_pub, 127.0);
-    state.new_tx(&t0_priv, &t1_pub.clone(), 100000.0);
+    state.new_tx(&t0_priv, &t1_pub.clone(), 1000.0);
     // verify valid tx
     state.verify_tx();
     // cofirm tx and change state
