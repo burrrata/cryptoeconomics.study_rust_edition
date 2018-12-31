@@ -15,6 +15,14 @@ use std::hash::Hasher;
 
 // INFO
 //
+// Accounts
+// - the "bank" creates accounts for users because
+//   the "bank" is the only one who manages the State, just
+//   like with a real bank
+// ? there's got to be a better way to structure them than
+//   disjointed HashMaps with the key as the pub_key and 
+//   value as the data?
+//
 // Private Keys
 // - users keep their keys to verify their tx
 // - "bank" (currently YOU in this tutorial) can change
@@ -23,14 +31,7 @@ use std::hash::Hasher;
 // TODO: TX Signatures
 // ! users hash their tx with their private key
 // ! verify_tx() checks that hash against the sender's pub_key
-//
-// Accounts
-// - the "bank" creates accounts for users because
-//   the "bank" is the only one who manages the State, just
-//   like with a real bank
-// ? there's got to be a better way to structure them than
-//   disjointed HashMaps with the key as the pub_key and 
-//   value as the data?
+
 
 
 // Structs
