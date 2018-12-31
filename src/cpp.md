@@ -15,8 +15,6 @@ use std::hash::Hasher;
 
 // TODOS
 //
-// The new verify_tx() function doesn't work
-// 
 // TX Processing
 // the current architecture can only process 1 tx per 
 // account per "block" (round of tx confirmation) 
@@ -32,7 +30,7 @@ use std::hash::Hasher;
 //   value as the data
 
 
-// Stucts
+// Structs
 
 #[derive(Debug)]
 struct State {
@@ -123,11 +121,11 @@ impl State {
     // verify the tx in the pending_tx pool
     pub fn verify_tx(&mut self) {
         
-        println!("\n\nVerifying TX:");
+        println!("\nVerifying TX:");
         
         for i in & self.pending_tx {
         
-            println!("\n{:#?}", &i);
+            println!("{:#?}", &i);
             
             if !self.balances.contains_key(&i.sender) {
                 println!("Invalid TX: sender not found.");
@@ -160,12 +158,13 @@ impl State {
             println!("Valid TX.");
             self.verified_tx.push(i.clone());
         }
+        
+        self.pending_tx = Vec::new();
     }
     
+    // apply and confirm valid_tx pool
     pub fn confirm_tx(&mut self) {
-        
-        println!("\n\nConfirming TX");
-        
+
         let mut block = Vec::new();
         
         for i in & self.verified_tx {
@@ -178,7 +177,8 @@ impl State {
             block.push(i.clone())
         }
         
-        self.history.push(block); 
+        self.history.push(block);
+        self.verified_tx = Vec::new();
     }    
     
 }
@@ -190,13 +190,11 @@ impl State {
 // CENTRALIZED BANK "BLOCKCHAIN"
 fn main() {
 
-    // init blockchain and keyring    
+    // init blockchain state 
     let mut state = State::new_blockchain();
     
     // create 3 random accounts
-    for i in 0..3 {
-        state.new_account();
-    }
+    for i in 0..3 {state.new_account()}
     // create deterministic test account
     let test0_priv = String::from("693677"); // 693677
     let test0_pub = State::hash(&test0_priv.clone()); // 0xC31B6988D3A6A62B
@@ -211,8 +209,7 @@ fn main() {
     state.nonces.insert(test1_pub.clone(), 0);
     
     // check results
-    println!("\n\n/// Genesis State ///\n\n");
-    println!("Genesis State:\n{:#?}", state);
+    println!("\n{:#?}", state);
     
     
     
