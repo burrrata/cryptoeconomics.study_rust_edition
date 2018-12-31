@@ -106,13 +106,13 @@ impl State {
     
     // create a tx and add it to the pending_tx pool
     pub fn new_tx(&mut self,
-                  priv_key: String,
-                  receiver: String,
+                  priv_key: &str,
+                  receiver: &str,
                   tx_amount: f32) {
         
         let tx = TX {
             sender: State::hash(&priv_key),
-            receiver: receiver,
+            receiver: receiver.to_string(),
             tx_amount: tx_amount,
             nonce: *self.nonces.get(&State::hash(&priv_key)).unwrap(),
         };
@@ -166,7 +166,9 @@ impl State {
     
     // apply and confirm valid_tx pool
     pub fn confirm_tx(&mut self) {
-
+        
+        println!("\nConfirming TX:");
+        
         let mut block = Vec::new();
         
         for i in & self.verified_tx {
@@ -181,12 +183,8 @@ impl State {
         
         self.history.push(block);
         self.verified_tx = Vec::new();
-    }    
-    
+    }
 }
-
-
-
 
 
 // CENTRALIZED BANK "BLOCKCHAIN"
@@ -198,31 +196,32 @@ fn main() {
     // create 3 random accounts
     for i in 0..3 {state.new_account()}
     // create deterministic test account
-    let test0_priv = String::from("693677"); // 693677
-    let test0_pub = State::hash(&test0_priv.clone()); // 0xC31B6988D3A6A62B
-    let test0_bal = 10000.0;
-    state.balances.insert(test0_pub.clone(), test0_bal.clone());
-    state.nonces.insert(test0_pub.clone(), 0);
+    let t0_priv = String::from("693677"); // 693677
+    let t0_pub = State::hash(&t0_priv); // 0xC31B6988D3A6A62B
+    let t0_bal = 10000.0;
+    state.balances.insert(t0_pub.clone(), t0_bal.clone());
+    state.nonces.insert(t0_pub.clone(), 0);
     // create deterministic test account
-    let test1_priv = String::from("172218"); // 172218
-    let test1_pub = State::hash(&test1_priv.clone()); // 0x81C52538C70E98B7
-    let test1_bal = 10000.0;
-    state.balances.insert(test1_pub.clone(), test1_bal.clone());
-    state.nonces.insert(test1_pub.clone(), 0);
+    let t1_priv = String::from("172218"); // 172218
+    let t1_pub = State::hash(&t1_priv); // 0x81C52538C70E98B7
+    let t1_bal = 10000.0;
+    state.balances.insert(t1_pub.clone(), t1_bal.clone());
+    state.nonces.insert(t1_pub.clone(), 0);
     // check results
     println!("\n{:#?}", state);
     
     
     // Test TX 
     println!("\n\n/// Testing TX Stuff ///\n\n");
-    // add tx to pending_tx pool
-    state.new_tx(test0_priv.clone(), test1_pub.clone(), 500.0);
+    // add some tx to the pending_tx pool
+    state.new_tx(&t0_priv, &t1_pub, 500.0);
+    state.new_tx(&t1_priv, &t0_pub, 127.0);
+    state.new_tx(&t0_priv, &t1_pub.clone(), 100000.0);
     // verify valid tx
     state.verify_tx();
     // cofirm tx and change state
     state.confirm_tx();
     // check results
     println!("\n\nCurrent State:\n{:#?}", state);
-
 }
 ```
