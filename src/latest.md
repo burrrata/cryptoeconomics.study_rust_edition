@@ -229,13 +229,13 @@ fn main() {
     let mut state = State::new_blockchain();
     // create 3 random accounts
     for i in 0..3 {state.new_account()}
-    // create deterministic test account
+    // manually create deterministic test account
     let t0_priv = String::from("693677"); // 693677
     let t0_pub = State::hash(&t0_priv); // 0xC31B6988D3A6A62B
     let t0_bal = 10000.0;
     state.balances.insert(t0_pub.clone(), t0_bal.clone());
     state.nonces.insert(t0_pub.clone(), 0);
-    // create deterministic test account
+    // manually create deterministic test account
     let t1_priv = String::from("172218"); // 172218
     let t1_pub = State::hash(&t1_priv); // 0x81C52538C70E98B7
     let t1_bal = 10000.0;
@@ -243,7 +243,6 @@ fn main() {
     state.nonces.insert(t1_pub.clone(), 0);
     // check results
     println!("\n{:#?}", state);
-    
     
     // Test TX 
     // add some tx to the pending_tx pool
