@@ -37,6 +37,9 @@ use std::hash::Hash;
 // https://doc.rust-lang.org/std/hash/trait.Hash.html
 // https://github.com/pubkey/eth-crypto/blob/master/src/sign-transaction.js
 // https://rust-lang-nursery.github.io/rust-cookbook/cryptography/hashing.html#sign-and-verify-a-message-with-hmac-digest
+//
+// Stretch Goals
+// - parameters to add fees/rewards and simulate ongoing tx to see how profitable central operators really are (network effects)
 
 
 // Structs
