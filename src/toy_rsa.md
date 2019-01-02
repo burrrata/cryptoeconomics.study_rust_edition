@@ -13,9 +13,6 @@ TODO
 
 fn main() {
     
-    // create a message
-    let message = "abcd".to_string();
-    
     // pick 2 primes
     let p: f32 = 3.0;
     let q: f32 = 11.0;
@@ -37,22 +34,34 @@ fn main() {
     // e × d mod φ(n) = 1:
     let priv_key: f32 = 3.0;
     
+    // Create a message as a String
+    let message = "abcd".to_string();
     
-    // TODO: Convert Message String to f32
-    // assuming we've already done that...
-    let mut b: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0];
+    // Convert message to Vec<f32> 
+    let mut b: Vec<f32> = message.as_bytes()
+                                 .iter()
+                                 .map(|x| *x as f32)
+                                 .collect();
+    println!("b: {:#?}", b);
     
     // Encrypt the messages using the public key: e
-    let mut encrypted: Vec<f32> = b.iter_mut()
-                                   .map(|i| i.powf(pub_key) % n)
+    let mut encrypted: Vec<f32> = b.iter()
+                                   .map(|x| x.powf(pub_key) % n)
                                    .collect();
     println!("encrypted message: {:?}", &encrypted);
     
     // Decrypt the messages using the private key: d
-    let mut decrypted: Vec<f32> = encrypted.iter_mut()
-                                           .map(|i| i.powf(priv_key) % n)
+    let mut decrypted: Vec<f32> = encrypted.iter()
+                                           .map(|x| x.powf(priv_key) % n)
                                            .collect();
     println!("decrypted message: {:?}", &decrypted);
+    
+    // Convert decrypted Vec<f32> back to a String
+    let m: Vec<u8> = decrypted.iter()
+                     .map(|x| *x as u8)
+                     //.map(|x| x as char)
+                     .collect();
+    println!("m: {:#?}", m);
     
 }
 ```
