@@ -1,6 +1,7 @@
 ```rust
 #![allow(warnings)]
 
+
 extern crate rand;
 extern crate serde;
 extern crate serde_json;
@@ -12,45 +13,19 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
-use std::hash::Hash;
-
-// INFO
-//
-// Accounts
-// - the "bank" creates accounts for users because
-//   the "bank" is the only one who manages the State, just
-//   like with a real bank
-// ? there's got to be a better way to structure them than
-//   disjointed HashMaps with the key as the pub_key and 
-//   value as the data?
-//
-// Private Keys
-// - users keep their keys to verify their tx
-// - "bank" (currently YOU in this tutorial) can change
-//   the state arbitrarily, just like with a real bank
-// 
-// TODO: TX Signatures
-// ! users hash their tx with their private key
-// ! verify_tx() checks that hash against the sender's pub_key
-// HOW does one roll a simple DIY TX signature scheme in Rust?
-// (without external libraries)
-// https://doc.rust-lang.org/std/hash/trait.Hash.html
-// https://github.com/pubkey/eth-crypto/blob/master/src/sign-transaction.js
-// https://rust-lang-nursery.github.io/rust-cookbook/cryptography/hashing.html#sign-and-verify-a-message-with-hmac-digest
-//
-// Stretch Goals
-// - parameters to add fees/rewards and simulate ongoing tx to see how profitable central operators really are (network effects)
-
-
-// Structs
 
 #[derive(Debug)]
 struct State {
-    balances: HashMap<String, f32>,
-    nonces: HashMap<String, i32>,
+    accounts: HashMap<String, Account>,
     pending_tx: Vec<TX>,
     verified_tx: Vec<TX>,
     history: Vec<Vec<TX>>,
+}
+
+#[derive(Debug)]
+struct Account {
+balance: f32,
+nonce: i32,
 }
 
 #[derive(Debug, Clone)]
@@ -68,14 +43,12 @@ struct Signed_TX {
 }
 
 
-// State
 impl State {
-    
+
     // initialize new blockchain
     pub fn new_blockchain() -> State {
         let mut state = State {
-            balances: HashMap::new(),
-            nonces: HashMap::new(),
+            accounts: HashMap::new(),
             pending_tx: Vec::new(),
             verified_tx: Vec::new(),
             history: Vec::new(),
@@ -91,7 +64,7 @@ impl State {
         
         rn.to_string()
     }
-
+    
     // hash stuff
     pub fn hash<T: serde::Serialize>(item: &T) -> String {
     
@@ -104,6 +77,39 @@ impl State {
         let hex_digest = format!("{:#X}", digest);
         
         hex_digest
+    }
+    
+    // create new account
+    pub fn new_account(&mut self) {
+        
+        let priv_key = State::key_gen();
+        let pub_key = State::hash(& priv_key.clone());
+        let new_account = Account {
+            balance: 100.0,
+            nonce: 0,
+        };
+        
+        self.accounts.insert(pub_key.clone(), new_account);
+        
+        println!("\nThis is your public key: {:#?}", pub_key);
+        println!("This is your private key: {:#?}", priv_key);
+        println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
+    }
+
+    // create a tx and add it to the pending_tx pool
+    pub fn new_tx(&mut self,
+                  priv_key: &str,
+                  receiver: &str,
+                  tx_amount: f32) {
+        
+        let tx = TX {
+            sender: State::hash(&priv_key),
+            receiver: receiver.to_string(),
+            tx_amount: tx_amount,
+            nonce: self.accounts.get(&State::hash(&priv_key)).unwrap().nonce,
+        };
+
+        self.pending_tx.push(tx);
     }
     
     // UNDER CONSTRUCTION
@@ -122,38 +128,6 @@ impl State {
     }
     */
     
-    // create a new account
-    pub fn new_account(&mut self) {
-    
-        let priv_key = State::key_gen();
-        let pub_key = State::hash(& priv_key.clone());
-        let balance = 100.0;
-        let nonce = 0;
-        
-        println!("\nThis is your public key: {:#?}", pub_key);
-        println!("This is your private key: {:#?}", priv_key);
-        println!("This is your balance: {:#?}", balance);
-        
-        self.balances.insert(pub_key.clone(), balance.clone());
-        self.nonces.insert(pub_key.clone(), nonce.clone());
-    }
-    
-    // create a tx and add it to the pending_tx pool
-    pub fn new_tx(&mut self,
-                  priv_key: &str,
-                  receiver: &str,
-                  tx_amount: f32) {
-        
-        let tx = TX {
-            sender: State::hash(&priv_key),
-            receiver: receiver.to_string(),
-            tx_amount: tx_amount,
-            nonce: *self.nonces.get(&State::hash(&priv_key)).unwrap(),
-        };
-
-        self.pending_tx.push(tx);
-    }
-    
     // verify the tx in the pending_tx pool
     pub fn verify_tx(&mut self) {
         
@@ -163,12 +137,12 @@ impl State {
         
             println!("{:#?}", &i);
             
-            if !self.balances.contains_key(&i.sender) {
+            if !self.accounts.contains_key(&i.sender) {
                 println!("Invalid TX: sender not found.");
                 break
             } 
             
-            if !self.balances.contains_key(&i.receiver) {
+            if !self.accounts.contains_key(&i.receiver) {
                 println!("Invalid TX: receiver not found.");
                 break
             }
@@ -179,15 +153,15 @@ impl State {
                 break
             } 
             
-            if !(self.balances.get(&i.sender).unwrap() > &i.tx_amount) {
+            if !(self.accounts.get(&i.sender).unwrap().balance > i.tx_amount) {
                 println!("Invalid TX: insufficient funds.");
                 println!("{} cannot send {} to {}", i.sender, i.tx_amount, i.receiver);
                 break            
             }
             
-            if !(i.nonce == *self.nonces.get(&i.sender).unwrap()) {
+            if !(i.nonce == self.accounts.get(&i.sender).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.sender, *self.nonces.get(&i.sender).unwrap(), i.nonce);
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.sender, self.accounts.get(&i.sender).unwrap().nonce, i.nonce);
                 break
             }
             
@@ -207,9 +181,9 @@ impl State {
         
         for i in & self.verified_tx {
             
-            *self.balances.get_mut(&i.sender).unwrap() -= i.tx_amount;
-            *self.balances.get_mut(&i.receiver).unwrap() += i.tx_amount;
-            *self.nonces.get_mut(&i.sender).unwrap() += 1;
+            self.accounts.get_mut(&i.sender).unwrap().balance -= i.tx_amount;
+            self.accounts.get_mut(&i.receiver).unwrap().balance += i.tx_amount;
+            self.accounts.get_mut(&i.sender).unwrap().nonce += 1;
             println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
             
             block.push(i.clone())
@@ -221,26 +195,33 @@ impl State {
 }
 
 
-// CENTRALIZED BANK "BLOCKCHAIN"
 fn main() {
 
     // Init Blockchain
     // init blockchain state 
     let mut state = State::new_blockchain();
+    
+    // Init Accounts
     // create 3 random accounts
-    for i in 0..3 {state.new_account()}
-    // manually create deterministic test account
+    for i in 0..3 {
+        state.new_account()
+    }
+    // manually create account for testing
     let t0_priv = String::from("693677"); // 693677
     let t0_pub = State::hash(&t0_priv); // 0xC31B6988D3A6A62B
-    let t0_bal = 10000.0;
-    state.balances.insert(t0_pub.clone(), t0_bal.clone());
-    state.nonces.insert(t0_pub.clone(), 0);
-    // manually create deterministic test account
+    let t0 = Account {
+        balance: 10000.0,
+        nonce: 0,
+    };
+    state.accounts.insert(t0_pub.clone(), t0);
+    // manually create account for testing
     let t1_priv = String::from("172218"); // 172218
     let t1_pub = State::hash(&t1_priv); // 0x81C52538C70E98B7
-    let t1_bal = 10000.0;
-    state.balances.insert(t1_pub.clone(), t1_bal.clone());
-    state.nonces.insert(t1_pub.clone(), 0);
+    let t1 = Account {
+        balance: 10000.0,
+        nonce: 0,        
+    };
+    state.accounts.insert(t1_pub.clone(), t1);
     // check results
     println!("\n{:#?}", state);
     
@@ -255,5 +236,6 @@ fn main() {
     state.confirm_tx();
     // check results
     println!("\n\nCurrent State:\n{:#?}", state);
+    
 }
 ```
