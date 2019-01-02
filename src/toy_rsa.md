@@ -8,6 +8,20 @@ TODO
 - figure out how to take in a message String and turn it into a Vec<f32>
 
 ```rust
+// because Rust isn't perfect and pow() or powf() don't
+// have options for integration of modulo operations
+fn exp_mod(b: i32,
+           p: i32,
+           m: i32) -> i32 {
+    
+    let mut out = (b * b) % m;
+    //println!("0: {}", out);
+    for i in 1..p-1 { //because the first iter of out took 2 off the base
+        out = (out * b) % m;
+        //println!("{}: {}", i, out);
+    }
+    out
+}
 
 fn main() {
     
@@ -19,7 +33,7 @@ fn main() {
     
     // product of primes (the part that's usually hard to reverse) 
     let m: i32 = 3233; //p * q;
-    println!("n: {}", m);
+    println!("m: {}", m);
     
     // LCM of p and q
     // Compute φ(n): the value of Euler's totient function of n
@@ -38,35 +52,7 @@ fn main() {
     let priv_key: i32 = 413;
     println!("private key: {}", priv_key);
 
-    // let p = 311, let q = 223
-    // let m = 310 * 222 = 68820
-    // let pub_key = 313
-    // x * 313 mod 68820 = 1
-    // x = 9831 
-    // remainder is 3
-    
-    // a modular multiplicative inverse of an integer a is
-    // an integer x such that the product ax is congruent
-    // (equal) to 1 with respect to the modulus m 
-    //let priv_key: i32 = "TBD" // 3.0;
-    //assert_eq!(priv_key, 3.0);
-    
-    
-    
-    // Does n (the modulus) have to be bigger than any of the numbers in the message? 
 
-    fn exp_mod(b: i32,
-               p: i32,
-               m: i32) -> i32 {
-        
-        let mut out = (b * b) % m;
-        //println!("0: {}", out);
-        for i in 1..p-1 { //because the first iter of out took 2 off the base
-            out = (out * b) % m;
-            //println!("{}: {}", i, out);
-        }
-        out
-    }
     
     
     println!("\n// TESTING FUNCTION //");
