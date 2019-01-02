@@ -34,34 +34,51 @@ fn main() {
     // e × d mod φ(n) = 1:
     let priv_key: f32 = 3.0;
     
+    
     // Create a message as a String
     let message = "abcd".to_string();
     
-    // Convert message to Vec<f32> 
-    let mut b: Vec<f32> = message.as_bytes()
+    
+    // Convert message to Vec<f32> because 
+    // pow() creates an overflow when applied to u8 or i32
+    let mut m: Vec<f32> = message.as_bytes()
                                  .iter()
                                  .map(|x| *x as f32)
                                  .collect();
-    println!("b: {:#?}", b);
+    println!("m: {:?}", m);
+    // [97.0, 98.0, 99.0, 100.0]
+    
+    
     
     // Encrypt the messages using the public key: e
-    let mut encrypted: Vec<f32> = b.iter()
-                                   .map(|x| x.powf(pub_key) % n)
-                                   .collect();
+    let mut encrypted: Vec<f32> = m.iter().map(|x| x.powf(pub_key) % n).collect();
     println!("encrypted message: {:?}", &encrypted);
+    // [17.0, 9.0, 12.0, 6.0]
     
     // Decrypt the messages using the private key: d
-    let mut decrypted: Vec<f32> = encrypted.iter()
-                                           .map(|x| x.powf(priv_key) % n)
-                                           .collect();
+    let mut decrypted: Vec<f32> = encrypted.iter().map(|x| x.powf(priv_key) % n).collect();
     println!("decrypted message: {:?}", &decrypted);
+    // [29.0, 3.0, 12.0, 18.0]
     
-    // Convert decrypted Vec<f32> back to a String
-    let m: Vec<u8> = decrypted.iter()
+    
+    
+    // Convert decrypted Vec<f32> back to a Vec<u8>
+    let m2: Vec<u8> = decrypted.iter()
                      .map(|x| *x as u8)
                      //.map(|x| x as char)
                      .collect();
-    println!("m: {:#?}", m);
+    println!("m2: {:?}", m2);
+    // [29, 3, 12, 18]
     
+    
+    // Covert u8 bytes back to original String
+    // testing on original message
+    let mut test: Vec<u8> = message.as_bytes().to_vec();
+    let s = String::from_utf8(test).unwrap();
+    println!("s: {}", s);
+    // testing on decrypted message
+    let mut s2 = String::from_utf8(m2).unwrap();
+    println!("s2: {}", s2);
 }
+
 ```
