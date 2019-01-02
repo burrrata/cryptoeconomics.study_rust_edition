@@ -59,28 +59,27 @@ fn main() {
     println!("\n// PARAMS //");
     
     // pick 2 primes
-    let p: i32 = 61;
-    let q: i32 = 53;
+    let p = 61;
+    let q = 53;
     println!("p: {}\nq: {}", p, q);
     
-    // product of primes
-    // (the part that's usually hard to reverse) 
-    let m: i32 = p * q; // 3233
+    // create the modulo group as a product of the primes
+    let m = p * q; // 3233
     println!("m: {}", m);
     
     // TODO: create function that computes LCM of p and q
-    let lcm: i32 = 780; // lcm((p - 1.0), (q - 1.0));
+    let lcm = 780; // lcm((p - 1.0), (q - 1.0));
     println!("lcm: {}", lcm);
     
     // TODO: explain why this works
-    let pub_key: i32 = 17;
+    let pub_key = 17;
     println!("public key: {}", pub_key);
     
     // TODO: explain why this works
-    let priv_key: i32 = 413;
+    let priv_key = 413;
     println!("private key: {}", priv_key);
-
-
+    
+    
     println!("\n// TESTING FUNCTION //");
     // Create a message String
     let message = "thepasswordispassword".to_string();
@@ -90,12 +89,12 @@ fn main() {
     let m1 = s2v(message);
     println!("message before encryption: {:?}", m1);
     
-    // Encrypt the messages using the public key: e
-    let e = toy_rsa(m1, pub_key, m);
-    println!("encrypted message: {:?}", &e);
+    // Encrypt the messages using the public key
+    let em = toy_rsa(m1, pub_key, m);
+    println!("encrypted message: {:?}", &em);
     
-    // Decrypt the messages using the private key: d
-    let m2 = toy_rsa(e, priv_key, m);
+    // Decrypt the messages using the private key
+    let m2 = toy_rsa(em, priv_key, m);
     println!("message after decryption: {:?}", &m2);
     
     // Convert decrypted Vec<i32> back to message String
