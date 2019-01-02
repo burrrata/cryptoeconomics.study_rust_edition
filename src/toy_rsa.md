@@ -1,22 +1,21 @@
 Following the wikipedia page:
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation
 
-TODO
-- figure out how to take in a message String and turn it into a Vec<f32>
-
 ```rust
-// because Rust isn't perfect and pow() or powf() don't
-// have options for integration of modulo operations
+// function that calculates pow() with a mod option like
+// python does (but Rust does not)
+// https://docs.python.org/3/library/functions.html#pow
+// https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
 fn exp_mod(input: i32,
            power: i32,
            modulo: i32) -> i32 {
     
     let mut out = (input * input) % modulo;
-    //println!("0: {}", out);
-    for i in 1..power-1 { //because the first iter of out took 2 off the base
+    // because the first iter of out took 2 off the base
+    for i in 0..power-2 {
         out = (out * input) % modulo;
-        //println!("{}: {}", i, out);
     }
+    
     out
 }
 
@@ -31,9 +30,33 @@ fn toy_rsa(input: Vec<i32>,
     output
 }
 
+// convert string to Vec<i32>
+fn s2v(input: String) -> Vec<i32> {
+    
+    let output: Vec<i32> = input.as_bytes()
+                                .iter()
+                                .map(|x| *x as i32)
+                                .collect();
+    
+    output
+}
+
+// convert Vec<i32> to string
+fn v2s(input: Vec<i32>) -> String {
+    
+    let output_u8: Vec<u8> = input.iter()
+                                  .map(|x| *x as u8)
+                                  .collect();
+    let output_string = String::from_utf8(output_u8).unwrap();
+    
+    output_string
+}
+
+
+// Let's roll it
 fn main() {
     
-    println!("// PARAMS //");
+    println!("\n// PARAMS //");
     
     // pick 2 primes
     let p: i32 = 61;
@@ -60,11 +83,11 @@ fn main() {
 
     println!("\n// TESTING FUNCTION //");
     // Create a message String
-    let message = "abcd".to_string();
+    let message = "thepasswordispassword".to_string();
     println!("message string: {}", message);
     
-    // Convert message to Vec<i32> because 
-    let m1: Vec<i32> = message.as_bytes().iter().map(|x| *x as i32).collect();
+    // Convert message to Vec<i32>
+    let m1 = s2v(message);
     println!("message before encryption: {:?}", m1);
     
     // Encrypt the messages using the public key: e
@@ -75,10 +98,8 @@ fn main() {
     let m2 = toy_rsa(e, priv_key, m);
     println!("message after decryption: {:?}", &m2);
     
-    // Convert decrypted Vec<i32> back to a Vec<u8>
-    let message2_bytes: Vec<u8> = m2.iter().map(|x| *x as u8).collect();
-    // Covert u8 bytes back to original String
-    let message2 = String::from_utf8(message2_bytes).unwrap();
+    // Convert decrypted Vec<i32> back to message String
+    let message2 = v2s(m2);
     println!("message string: {}", message2);
     
 }
