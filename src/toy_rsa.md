@@ -41,10 +41,10 @@ fn main() {
     
     // Convert message to Vec<f32> because 
     // pow() creates an overflow when applied to u8 or i32
-    let mut m: Vec<f32> = message.as_bytes()
-                                 .iter()
-                                 .map(|x| *x as f32)
-                                 .collect();
+    //let mut m: Vec<f32> = message.as_bytes().iter().map(|x| *x as f32).collect();
+    
+    // ! WHY does this only work for numbers < 10 ?
+    let m: Vec<f32> = vec![1.0, 2.0, 3.0, 9.0];
     println!("m: {:?}", m);
     // [97.0, 98.0, 99.0, 100.0]
     
@@ -63,13 +63,9 @@ fn main() {
     
     
     // Convert decrypted Vec<f32> back to a Vec<u8>
-    let m2: Vec<u8> = decrypted.iter()
-                     .map(|x| *x as u8)
-                     //.map(|x| x as char)
-                     .collect();
+    let m2: Vec<u8> = decrypted.iter().map(|x| *x as u8).collect();
     println!("m2: {:?}", m2);
     // [29, 3, 12, 18]
-    
     
     // Covert u8 bytes back to original String
     // testing on original message
@@ -80,5 +76,4 @@ fn main() {
     let mut s2 = String::from_utf8(m2).unwrap();
     println!("s2: {}", s2);
 }
-
 ```
