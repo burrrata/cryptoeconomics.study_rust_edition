@@ -4,8 +4,12 @@ Following these turorials/suggestions:
 - https://wpollock.com/AUnixSec/PublicKeyDemo.htm
 - https://www.reddit.com/r/codes/comments/abg9tj/diy_digital_signatures/
 
+TODO
+- figure out how to take in a message String and turn it into a Vec<f32>
+
 ```rust
 #![allow(warnings)]
+
 
 fn main() {
     
@@ -25,31 +29,30 @@ fn main() {
     // Pick any number less than and relatively prime to φ(n)
     // in this case any prime number except 2 or 5 will do.
     // This is one of your two keys: the public/encryption key e.
-    let e: f32 = 7.0;
+    let pub_key: f32 = 7.0;
     
     // Compute the matching private/decryption key d, 
     // as the inverse of e modulus φ(n).
     // In this case the inverse means a number such that 
     // e × d mod φ(n) = 1:
-    let d: f32 = 3.0;
+    let priv_key: f32 = 3.0;
     
-    // The two keys are: (7,33) and (3,33).
- 
- 
+    
+    // TODO: Convert Message String to f32
+    // assuming we've already done that...
+    let mut b: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0];
+    
     // Encrypt the messages using the public key: e
-    //let mut b = message.as_bytes();
-    let mut b = vec![1, 2, 3, 4]; // [a, b, c, d]
-    println!("b: {:?}", &b);
-    
-    let mut x = Vec::new();
-    for i in b {
-        x.push((i as f32).powf(e) % n);
-    }
-    println!("x: {:?}", &x);
+    let mut encrypted: Vec<f32> = b.iter_mut()
+                                   .map(|i| i.powf(pub_key) % n)
+                                   .collect();
+    println!("encrypted message: {:?}", &encrypted);
     
     // Decrypt the messages using the private key: d
-    let o: Vec<f32> = x.iter_mut().map(|i| i.powf(d) % n).collect();
-    println!("o: {:?}", &o);
+    let mut decrypted: Vec<f32> = encrypted.iter_mut()
+                                           .map(|i| i.powf(priv_key) % n)
+                                           .collect();
+    println!("decrypted message: {:?}", &decrypted);
     
 }
 ```
