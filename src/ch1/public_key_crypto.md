@@ -1,5 +1,5 @@
-# RSA and Public Key Crypto Systems
-More than just fancy numbers.
+# Public Key Crypto
+(mainly RSA)
 
 ```rust
 // function that calculates pow() with a mod option like
