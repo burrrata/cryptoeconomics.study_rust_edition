@@ -1,0 +1,9 @@
+[package]
+name = "TBD"
+version = "0.0.1"
+authors = ["Burrrata <burrrata@protonmail.com>"]
+license = "MIT/Apache-2.0"
+publish = false
+
+[dependencies]
+rand = "0.6.1"
