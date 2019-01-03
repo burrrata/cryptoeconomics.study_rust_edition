@@ -1,6 +1,7 @@
 # Summary
 
 - [Intro](./intro,md)
+- [Crypto Wars](./crypto_wars.md)
 - [Chapter 1: Centralized Payment Processor](./ch1/intro.md)
   - [State](./ch1/state.md): all the things
   - [Randomness](.ch1/randomness.md): and why it matters
