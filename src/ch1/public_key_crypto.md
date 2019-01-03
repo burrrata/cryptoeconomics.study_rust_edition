@@ -1,6 +1,5 @@
 # RSA and Public Key Crypto Systems
-- https://en.wikipedia.org/wiki/Public-key_cryptography
-- https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+More than just fancy numbers.
 
 ```rust
 // function that calculates pow() with a mod option like
@@ -107,3 +106,8 @@ fn main() {
     
 }
 ```
+
+# Resources
+- https://en.wikipedia.org/wiki/Public-key_cryptography
+- https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+- https://en.wikipedia.org/wiki/Least_common_multiple
