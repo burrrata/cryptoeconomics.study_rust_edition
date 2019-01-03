@@ -2,12 +2,12 @@
 They're not as boring when you roll your own! 
 - State: all the things
 - Randomness: and why it matters
-- Pub/Private Key Crypto: not just an account/password system
+- Public Key Crypto: not just an account/password system
 - Digital Signatures: the proof is in the pudding
 - Accounts: combining these things into something useful!
 - TX: using your account to do stuff!
 - Hashing and Merkle Trees/Tries: keeping track of what happened
-- Wrap Up: putting it all together into a working centralized payment processor
+- Centralize Payment Processor: putting it all together into a working example
 
 <br>
 
