@@ -1,6 +1,6 @@
 # Chapter 1: centralized payment processors
 They're not as boring when you roll your own! 
-- State: what is and is not
+- State: what is, and is not... it's all in the state
 - Randomness: and why it matters
 - Pub/Private Key Crypto: not just an account/password system
 - Digital Signatures: the proof is in the pudding
