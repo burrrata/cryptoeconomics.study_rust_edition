@@ -2,7 +2,7 @@
 (mostly RSA)
 
 ## Code Example
-This recreates the RSA style protocol explained in the wiki page, randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
+This recreates the RSA style protocol explained in the [RSA wiki page](https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation), randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
 
 ```rust
 extern crate rand;
@@ -180,7 +180,7 @@ fn main() {
     let priv_key = 413;
     */
 
-    // works on Rust Playground when p and q are < 500
+    // usually works on Rust Playground when p and q are < 500
     let p = prime_gen(5, 500);
     let q = prime_gen(5, 500);
     let m = p * q; 
@@ -202,6 +202,7 @@ fn main() {
     let ciphertext = toy_rsa(m2nums.clone(), pub_key, m);
     let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
     let message2 = v2s(decrypted.clone());
+    assert_eq!(message, message2);
     println!("\n// Testing //");
     println!("message: {:?}", &message);
     println!("message as nums: {:?}", &m2nums);
