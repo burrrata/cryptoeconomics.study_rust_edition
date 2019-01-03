@@ -7,5 +7,5 @@ They're not as boring when you roll your own!
   - [Accounts](.ch1/accounts.md): combining these things into something useful!
   - [TX](.ch1/tx.md): using your account to do stuff!
   - [Hashing](.ch1/hashing.md) (and Merkle Trees/Tries): keeping track of what happened
-  - [Centralize Payment Processor](.ch1/centralized_payment_processor): putting it all together into a working example
+  - [Centralize Payment Processor](.ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](.ch1/inspo.md): standing on the shoulders of giants
