@@ -1,3 +1,6 @@
+# Accounts
+- combining keys to make something useful
+
 ```rust
 use std::collections::HashMap;
 
