@@ -6,6 +6,7 @@ Following the wikipedia page:
 // python does (but Rust does not)
 // https://docs.python.org/3/library/functions.html#pow
 // https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
+// https://en.wikipedia.org/wiki/Modular_exponentiation
 fn exp_mod(input: i32,
            power: i32,
            modulo: i32) -> i32 {
@@ -58,12 +59,14 @@ fn main() {
     
     println!("\n// PARAMS //");
     
-    // pick 2 primes
+    // Pick 2 primes
     let p = 61;
     let q = 53;
     println!("p: {}\nq: {}", p, q);
     
-    // create the modulo group as a product of the primes
+    // Create the modulo group as a product of the primes
+    // note: this must be shared between parties otherwise
+    //       the protocol will not work
     let m = p * q; // 3233
     println!("m: {}", m);
     
