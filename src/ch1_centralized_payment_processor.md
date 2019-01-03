@@ -1,5 +1,13 @@
-# Centralized Payment Processors
+# Chapter 1: centralized payment processor
 What are they and how do they work? Let's roll our own to find out! 
+- State: what is and is not
+- Randomness: and why it matters
+- Pub/Private Key Crypto: not just an account/password system
+- Digital Signatures: the proof is in the pudding
+- Accounts: combining these things into something useful!
+- TX: using your account to do stuff!
+- Hashing and Merkle Trees/Tries: keeping track of what happened
+- Wrap Up: putting it all together into a working centralized payment processor
 
 <br>
 
@@ -8,10 +16,6 @@ What are they and how do they work? Let's roll our own to find out!
 - Then create a CLI tutorial that shows how to iteratively ugrade each component and function in the standard model to make it more secure
 - Stetch Goal: work towards recreating the Parity Ethereum Client and/or arbitrary blockchain architectures like Substrate, but that's probably not realistic lol
 
-# TODO
-- create a new page in an mdBook explaining each component of the centralized blockchain system
-- combine the components into a working prototype at the end
-
 Each chapter in the book can then evolve like this:
 - goal/thing to build a toy version of (w links examples of the thing IRL)
 - each page explains a part (w links to wikipedia article and production library version of the tutorial example)
@@ -19,6 +23,10 @@ Each chapter in the book can then evolve like this:
 
 Bonus points if there's a story to explain the code and concepts.
 
+
+
+<br>
+<hr>
 <br>
 
 ## Lectures
