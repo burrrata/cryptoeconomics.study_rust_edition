@@ -2,6 +2,37 @@
 (mainly RSA)
 
 ```rust
+// variable names based off Euclidean divison equation: a = b · q + r
+// https://crates.io/crates/gcd
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+fn gcd(a: i32,
+       b: i32) -> i32 {
+    
+    let (mut a, mut b) = if a > b {
+        (a, b)
+    } else {
+        (b, a)
+    };
+
+    while b != 0 {
+        let r = a % b;
+        a = b;
+        b = r;
+    }
+
+    a
+}
+
+// lowest common multiple
+// https://en.wikipedia.org/wiki/Least_common_multiple
+fn lcm(a: i32,
+       b: i32) -> i32 {
+    
+    let lcm = (a * b) / gcd(a, b);
+    
+    lcm
+}
+
 // function that calculates pow() with a mod option like
 // python does (but Rust does not)
 // https://docs.python.org/3/library/functions.html#pow
@@ -56,6 +87,15 @@ fn v2s(input: Vec<i32>) -> String {
 
 // Let's roll it
 fn main() {
+    
+    println!("\n// TESTING NEW STUFF //");
+    let a = 175687;
+    let b = 4678;
+    println!("a: {}", a);
+    println!("b: {}", b);
+    println!("gcd(a, b): {}", gcd(a, b));
+    println!("lcm(a, b): {}", lcm(a,b));
+    
     
     println!("\n// PARAMS //");
     
