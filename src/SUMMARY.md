@@ -1,6 +1,6 @@
 # Summary
 
-- [Chapter 1: Centralized Payment Processor](./ch1/intro.md))
+- [Chapter 1: Centralized Payment Processor](./ch1/intro.md)
   - [State](./ch1/state.md): all the things
   - [Randomness](.ch1/randomness.md): and why it matters
   - [Public Key Crypto](.ch1/public_key_crypto.md): not just an account/password system
