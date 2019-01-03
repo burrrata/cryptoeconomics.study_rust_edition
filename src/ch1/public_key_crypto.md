@@ -1,4 +1,4 @@
-# RSA and Public Private Key Crypto Systems
+# RSA and Public Key Crypto Systems
 - https://en.wikipedia.org/wiki/Public-key_cryptography
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 
