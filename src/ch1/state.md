@@ -2,16 +2,7 @@
 All the things
 
 ```rust
-extern crate rand;
-extern crate serde;
-extern crate serde_json;
-#[macro_use]
-extern crate serde_derive;
-
-use rand::prelude::*;
 use std::collections::HashMap;
-use std::collections::hash_map::DefaultHasher;
-use std::hash::Hasher;
 
 
 #[derive(Debug)]
@@ -37,7 +28,7 @@ struct TX {
 }
 
 #[derive(Debug, Clone)]
-struct Signed_TX {
+struct SignedTX {
     tx: TX,
     signature: String,
 }
