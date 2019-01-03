@@ -1,6 +1,21 @@
 # Inspo
 Great minds think alike
 
+
+
+# Cryptoeconomics.Study Stuff
+
+### Overview
+- https://cryptoeconomics.study/overview.html
+- https://github.com/cryptoeconomics-study/website/blob/master/overview.md
+
+### Lectures
+- https://cryptoeconomics.study/lectures/
+
+### Code
+- https://github.com/cryptoeconomics-study/code
+
+
 ## Cryptoeconomics.Study Lectures
 - https://cryptoeconomics.study/lectures/chapter-01-0.html
 
