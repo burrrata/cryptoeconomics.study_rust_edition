@@ -1,6 +1,9 @@
 # Public Key Crypto
 (mostly RSA)
 
+## Code Example
+This recreates the RSA style protocol explained in the wiki page, randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
+
 ```rust
 extern crate rand;
 use rand::prelude::*;
