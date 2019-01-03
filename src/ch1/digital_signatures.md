@@ -1,5 +1,7 @@
-# DSA
-- https://en.wikipedia.org/wiki/Digital_signature
+# Digital Signatures
+The proof is in the pudding.
+
+Talk about how when you sign/do stuff with a public key crypto system you prove that it came from your address.
 
 ```rust
 // Here's an example
@@ -29,3 +31,6 @@ struct Signed_TX {
 
 // ^^ see toy_rsa.md example for WIP solution
 ```
+
+# Resources
+- https://en.wikipedia.org/wiki/Digital_signature
