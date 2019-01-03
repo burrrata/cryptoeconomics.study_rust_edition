@@ -1,5 +1,6 @@
-Following the wikipedia page:
-- https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation
+# RSA and Public Private Key Crypto Systems
+- https://en.wikipedia.org/wiki/Public-key_cryptography
+- https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 
 ```rust
 // function that calculates pow() with a mod option like
