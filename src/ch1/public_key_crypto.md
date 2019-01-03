@@ -181,8 +181,8 @@ fn main() {
     */
 
     // usually works on Rust Playground when p and q are < 500
-    let p = prime_gen(5, 500);
-    let q = prime_gen(5, 500);
+    let p = prime_gen(5, 100);
+    let q = prime_gen(5, 100);
     let m = p * q; 
     let ctf_pq = ctf(p, q);
     let pub_key = pub_key_gen(1, ctf_pq);
