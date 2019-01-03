@@ -1,5 +1,5 @@
-# Chapter 1: centralized payment processor
-What are they and how do they work? Let's roll our own to find out! 
+# Chapter 1: centralized payment processors
+They're not as boring when you roll your own! 
 - State: what is and is not
 - Randomness: and why it matters
 - Pub/Private Key Crypto: not just an account/password system
