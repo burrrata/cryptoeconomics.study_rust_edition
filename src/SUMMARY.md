@@ -1,8 +1,8 @@
 # Summary
 
-[Intro](./intro.md)
+[Intro](intro.md)
 
-[Pregame w Crypto Wars](./crypto_wars.md)
+[Pregame w Crypto Wars](crypto_wars.md)
 
 [Centralized Payment Processor](/ch1/intro.md)
   - [State](/ch1/state.md): all the things
@@ -15,4 +15,4 @@
   - [Centralize Payment Processor](/ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](/ch1/inspo.md): standing on the shoulders of giants
 
-[Resources](./resources.md)
+[Resources](resources.md)
