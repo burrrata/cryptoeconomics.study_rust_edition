@@ -3,7 +3,7 @@ Great minds think alike
 
 
 
-# Cryptoeconomics.Study
+## Cryptoeconomics.Study
 
 ### Overview
 - https://cryptoeconomics.study/overview.html
@@ -16,11 +16,13 @@ Great minds think alike
 - https://github.com/cryptoeconomics-study/code
 - ch1: https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
-# Another Awesome Blockchain Tutorial
+
+## Another Awesome Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
 
-# So why this book?
+
+## So why this book?
 
 Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code.
 - Cryptoeconomics.Study code is written in JS and references external Ethereum libraries
