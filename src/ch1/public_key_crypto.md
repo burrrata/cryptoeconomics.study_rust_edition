@@ -41,6 +41,13 @@ fn ctf(a: i32,
     lcm((a - 1), (b - 1))
 }
 
+// find primes in a range!
+fn find_primes(low: i32,
+               high: i32) -> i32 {
+    0 // placeholder
+} 
+
+
 // function that calculates pow() with a mod option like
 // python does (but Rust does not)
 // https://docs.python.org/3/library/functions.html#pow
@@ -96,21 +103,15 @@ fn v2s(input: Vec<i32>) -> String {
 // Let's roll it
 fn main() {
     
-    println!("\n// TESTING NEW STUFF //");
-    let a = 175687;
-    let b = 4678;
-    println!("a: {}", a);
-    println!("b: {}", b);
-    println!("gcd(a, b): {}", gcd(a, b));
-    println!("lcm(a, b): {}", lcm(a,b));
-    
-    
     println!("\n// PARAMS //");
     
-    // Pick 2 primes
+    // Pick 2 primes > 0
     let p = 61;
     let q = 53;
-    println!("p: {}\nq: {}", p, q);
+    assert!(p > 0);
+    assert!(q > 0);
+    println!("p: {}", p);
+    println!("q: {}", q);
     
     // Create the modulo group as a product of the primes
     // note: this must be shared between parties otherwise
@@ -123,8 +124,11 @@ fn main() {
     assert_eq!(ctf_pq, 780);
     println!("ctf_pq: {}", ctf_pq);
     
-    // TODO: explain why this works
-    let pub_key = 17;
+    // Choose pub_key such that
+    // 1 < pub_key < ctf_pq (780) 
+    // that is coprime (not a divisor) to ctf_pq
+    let pub_key = 17; // prime_gen(1, ctf_pq);
+    assert!(ctf_pq / pub_key != 0);
     println!("public key: {}", pub_key);
     
     // TODO: explain why this works
