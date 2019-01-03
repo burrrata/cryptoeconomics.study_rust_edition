@@ -1,5 +1,5 @@
 # Public Key Crypto
-(mainly RSA)
+(mostly RSA)
 
 ```rust
 // variable names based off Euclidean divison equation: a = b · q + r
@@ -31,6 +31,14 @@ fn lcm(a: i32,
     let lcm = (a * b) / gcd(a, b);
     
     lcm
+}
+
+// Carmichael's totient function
+// https://en.wikipedia.org/wiki/Carmichael_function
+fn ctf(a: i32,
+       b: i32) -> i32 {
+    
+    lcm((a - 1), (b - 1))
 }
 
 // function that calculates pow() with a mod option like
@@ -110,9 +118,10 @@ fn main() {
     let m = p * q; // 3233
     println!("m: {}", m);
     
-    // TODO: create function that computes LCM of p and q
-    let lcm = 780; // lcm((p - 1.0), (q - 1.0));
-    println!("lcm: {}", lcm);
+    //  Carmichael's totient function
+    let ctf_pq = ctf(p, q); // 780;
+    assert_eq!(ctf_pq, 780);
+    println!("ctf_pq: {}", ctf_pq);
     
     // TODO: explain why this works
     let pub_key = 17;
