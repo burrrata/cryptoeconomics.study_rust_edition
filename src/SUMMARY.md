@@ -1,6 +1,6 @@
 # Summary
 
-- [Intro](./intro,md)
+- [Intro](./intro.md)
 - [Crypto Wars](./crypto_wars.md)
 - [Chapter 1: Centralized Payment Processor](./ch1/intro.md)
   - [State](./ch1/state.md): all the things
@@ -10,6 +10,6 @@
   - [Accounts](.ch1/accounts.md): combining these things into something useful!
   - [TX](.ch1/tx.md): using your account to do stuff!
   - [Hashing](.ch1/hashing.md) (and Merkle Trees/Tries): keeping track of what happened
-  - [Centralize Payment Processor](.ch1/centralized_payment_processor): putting it all together into a working example
+  - [Centralize Payment Processor](.ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](.ch1/inspo.md): standing on the shoulders of giants
 - [Resources](./resources.md)
