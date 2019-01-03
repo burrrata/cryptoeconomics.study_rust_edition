@@ -29,7 +29,8 @@ struct Signed_TX {
 // The signature can be insecure.
 // It just needs to use standard Rust code :)
 
-// ^^ see toy_rsa.md example for WIP solution
+// see public_key_crypto.md for WIP mechanism that can replace the current hash function
+// still have to figure out how to turn a struct into an array of bytes though
 ```
 
 # Resources
