@@ -7,7 +7,7 @@ extern crate rand;
 use rand::prelude::*;
 
 // generate a new key
-pub fn key_gen() -> String {
+fn key_gen() -> String {
     
     let rn: i32 = thread_rng().gen_range(100000, 1000000);
     
@@ -23,7 +23,7 @@ fn main() {
 ```
 
 ### Importance of strong random number generation
-A cryptographically strong random number generator, which has been properly seeded with adequate entropy, must be used to generate the primes p and q. An analysis comparing millions of public keys gathered from the Internet was carried out in early 2012 by Arjen K. Lenstra, James P. Hughes, Maxime Augier, Joppe W. Bos, Thorsten Kleinjung and Christophe Wachter. They were able to factor 0.2% of the keys using only Euclid's algorithm.[32][33]
+A cryptographically strong random number generator, which has been properly seeded with adequate entropy, must be used to generate the primes p and q. An analysis comparing millions of public keys gathered from the Internet was carried out in early 2012 by Arjen K. Lenstra, James P. Hughes, Maxime Augier, Joppe W. Bos, Thorsten Kleinjung and Christophe Wachter. They were able to factor 0.2% of the keys using only Euclid's algorithm.
 
 They exploited a weakness unique to cryptosystems based on integer factorization. If n = pq is one public key and n′ = p′q′ is another, then if by chance p = p′ (but q is not equal to q'), then a simple computation of gcd(n,n′) = p factors both n and n′, totally compromising both keys. Lenstra et al. note that this problem can be minimized by using a strong random seed of bit-length twice the intended security level, or by employing a deterministic function to choose q given p, instead of choosing p and q independently.
 
