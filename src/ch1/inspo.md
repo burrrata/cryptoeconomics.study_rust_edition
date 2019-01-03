@@ -16,22 +16,8 @@ Great minds think alike
 - https://github.com/cryptoeconomics-study/code
 
 
-## Cryptoeconomics.Study Lectures
-- https://cryptoeconomics.study/lectures/chapter-01-0.html
 
-[![chapter_1.0](https://img.youtube.com/vi/VaUTTE5xb54/hqdefault.jpg)](https://youtu.be/VaUTTE5xb54)
-
-[![chapter_1.1](https://img.youtube.com/vi/FLIo_ZjV--U/hqdefault.jpg)](https://youtu.be/FLIo_ZjV--U)
-
-[![chapter_1.2](https://img.youtube.com/vi/XIsn8-5Xekc/hqdefault.jpg)](https://youtu.be/XIsn8-5Xekc)
-
-[![chapter_1.3](https://img.youtube.com/vi/j7Mbx8laZwY/hqdefault.jpg)](https://youtu.be/j7Mbx8laZwY)
-
-[![chapter_1.4](https://img.youtube.com/vi/-xoCoZGJ9AQ/hqdefault.jpg)](https://youtu.be/-xoCoZGJ9AQ)
-
-[![chapter_1.5](https://img.youtube.com/vi/ckzi8iqGilE/hqdefault.jpg)](https://youtu.be/ckzi8iqGilE)
-
-## Cryptoeconomics.Study Words
+## Cryptoeconomics.Study Ch1 Words
 - https://github.com/cryptoeconomics-study/website/blob/master/overview.md
 
 * Overview of basic crypto concepts
@@ -80,7 +66,7 @@ Great minds think alike
 
 <br>
 
-## Cryptoeconomics.Study Code
+## Cryptoeconomics.Study Ch1 Code
 
 
 Here's Karl's awesome code:
