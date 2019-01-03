@@ -72,12 +72,14 @@ Here's Karl's awesome code:
 - https://github.com/cryptoeconomics-study/code/blob/master/c1_CentralPaymentOperator/paypalWithSigs.js
 - https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
-## Awesome Rust blockchain tutorial:
+## Another Awesome Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
 
 ## So why this book?
 
-Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code. THEN explain how the user can upgrade the toy functions in order to move towards something like [Parity's Ethereum Client](https://github.com/paritytech/parity-ethereum) or [Substrate](https://github.com/paritytech/substrate).
+Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code.
 - Cryptoeconomics.Study code is written in JS and references external Ethereum libraries
 - there's no functionality for accounts, keys, or tx signatures in the Rust tutorial
+
+So here we are!
