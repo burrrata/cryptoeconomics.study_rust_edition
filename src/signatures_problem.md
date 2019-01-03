@@ -1,3 +1,6 @@
+# DSA
+- https://en.wikipedia.org/wiki/Digital_signature
+
 ```rust
 // Here's an example
 
@@ -23,4 +26,6 @@ struct Signed_TX {
 // The keys can be very very small.
 // The signature can be insecure.
 // It just needs to use standard Rust code :)
+
+// ^^ see toy_rsa.md example for WIP solution
 ```
