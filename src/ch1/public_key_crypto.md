@@ -111,3 +111,4 @@ fn main() {
 - https://en.wikipedia.org/wiki/Public-key_cryptography
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 - https://en.wikipedia.org/wiki/Least_common_multiple
+- https://en.wikipedia.org/wiki/Modular_exponentiation
