@@ -11,7 +11,8 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
-// USEFUL FUNCTIONS
+// USEFUL RSA FUNCTIONS
+
 // variable names based off Euclidean divison equation: a = b · q + r
 // https://crates.io/crates/gcd
 // https://en.wikipedia.org/wiki/Greatest_common_divisor
@@ -193,7 +194,7 @@ struct TX {
 }
 
 #[derive(Debug, Clone)]
-struct Signed_TX {
+struct SignedTX {
     tx: TX,
     signature: String,
 }
@@ -274,12 +275,15 @@ impl State {
     pub fn sign_tx(priv_key: String,
                    tx: TX) -> String {
         
-        let x = Vec::new();
-        let mut hasher = DefaultHasher::new();
-        let hashed_tx = Hash::hash_tx(tx, hasher);
-        x.push(hashed_tx);
-        x.push(priv_key);
-        let signed_tx_hash = x.join("");
+        // is there a standard weak RSA modulo group?
+        // 65537
+        let modulo = 65537;
+        
+        // the trait `serde::Serialize` is not implemented for `TX`
+        let hashed_tx = State::hash(&tx);
+        
+        // priv_key needs to be an i32, not a String
+        let signed_tx_hash = toy_rsa(s2v(hashed_tx), priv_key, modulo);
         
         signed_tx_hash
     }
@@ -434,5 +438,6 @@ fn main() {
     state.confirm_tx();
     // check results
     println!("\n\nCurrent State:\n{:#?}", state);
+    
 }
 ```
