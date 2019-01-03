@@ -34,3 +34,4 @@ struct Signed_TX {
 
 # Resources
 - https://en.wikipedia.org/wiki/Digital_signature
+- https://en.wikipedia.org/wiki/Digital_Signature_Algorithm
