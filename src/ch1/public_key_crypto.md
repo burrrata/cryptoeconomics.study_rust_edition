@@ -2,6 +2,9 @@
 (mostly RSA)
 
 ```rust
+extern crate rand;
+use rand::prelude::*;
+
 // variable names based off Euclidean divison equation: a = b · q + r
 // https://crates.io/crates/gcd
 // https://en.wikipedia.org/wiki/Greatest_common_divisor
@@ -41,15 +44,74 @@ fn ctf(a: i32,
     lcm((a - 1), (b - 1))
 }
 
-// find primes in a range!
-fn find_primes(low: i32,
-               high: i32) -> i32 {
-    0 // placeholder
-} 
+// slowly check if a number is prime
+fn slow_prime_check(num: i32) -> bool {
+    
+    if num < 0 {
+        println!("number must be greater than 0");
+    }
+    
+    if num > 1000000 {
+        println!("number cannot be greater than 1000000");
+    }
+    
+    for i in 2..num{
+        if num % i == 0 {
+            return false
+        }
+    }
+    true
+}
 
+// slowly yet randomly generate a prime number within a range
+fn prime_gen(low: i32,
+             high: i32) -> i32 {
+    
+    for i in 0..1000000 {
+        let p = thread_rng().gen_range(low, high);
+        if slow_prime_check(p) {
+            return p
+        }
+    }
+    0
+}
 
-// function that calculates pow() with a mod option like
-// python does (but Rust does not)
+// generate a public key within a range
+fn pub_key_gen(min: i32,
+               max: i32) -> i32 {
+    
+    let pub_key = prime_gen(min, max);
+    assert!(max % pub_key != 0);
+    
+    pub_key
+}
+
+// slowly find the modular multiplicative inverse of a prime 
+fn slow_mmi(ctf_pq: i32,
+            pub_key: i32,
+            max: i32)-> i32 {
+    
+    for i in 2..max {
+        if (i * pub_key) % ctf_pq == 1 {
+            return i
+        }
+    }
+    println!("Try larger search?");
+    0
+}
+
+// create a private key from a public key and other data
+fn priv_key_gen(ctf_pq: i32,
+                pub_key: i32) -> i32 {
+    
+    let priv_key = slow_mmi(ctf_pq, pub_key, 100000);
+    
+    priv_key
+}
+
+// Because... Rust.
+// exp_mod() is like pow() with a mod option
+// (like python does natively, but not Rust)
 // https://docs.python.org/3/library/functions.html#pow
 // https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
 // https://en.wikipedia.org/wiki/Modular_exponentiation
@@ -100,63 +162,52 @@ fn v2s(input: Vec<i32>) -> String {
 }
 
 
-// Let's roll it
+
+// Rollin, rollin, rollin... !
 fn main() {
-    
-    println!("\n// PARAMS //");
-    
-    // Pick 2 primes > 0
+
+    /*
+    // the numbers from wiki work
+    // https://en.wikipedia.org/wiki/RSA_(cryptosystem)
     let p = 61;
     let q = 53;
+    let m = 3233;
+    let ctf_pq = 780;
+    let pub_key = 17;
+    let priv_key = 413;
+    */
+
+    // works on Rust Playground when p and q are < 500
+    let p = prime_gen(5, 500);
+    let q = prime_gen(5, 500);
+    let m = p * q; 
+    let ctf_pq = ctf(p, q);
+    let pub_key = pub_key_gen(1, ctf_pq);
+    let priv_key = priv_key_gen(ctf_pq, pub_key);
+    println!("\n// Params //");
     assert!(p > 0);
     assert!(q > 0);
-    println!("p: {}", p);
-    println!("q: {}", q);
+    println!("p: {}", &p);
+    println!("q: {}", &q);
+    println!("m: {}", &m);
+    println!("ctf_pq: {}", &ctf_pq);
+    println!("pub_key: {}", &pub_key);
+    println!("priv_key: {}", &priv_key);
     
-    // Create the modulo group as a product of the primes
-    // note: this must be shared between parties otherwise
-    //       the protocol will not work
-    let m = p * q; // 3233
-    println!("m: {}", m);
-    
-    //  Carmichael's totient function
-    let ctf_pq = ctf(p, q); // 780;
-    assert_eq!(ctf_pq, 780);
-    println!("ctf_pq: {}", ctf_pq);
-    
-    // Choose pub_key such that
-    // 1 < pub_key < ctf_pq (780) 
-    // that is coprime (not a divisor) to ctf_pq
-    let pub_key = 17; // prime_gen(1, ctf_pq);
-    assert!(ctf_pq / pub_key != 0);
-    println!("public key: {}", pub_key);
-    
-    // TODO: explain why this works
-    let priv_key = 413;
-    println!("private key: {}", priv_key);
-    
-    
-    println!("\n// TESTING FUNCTION //");
-    // Create a message String
     let message = "thepasswordispassword".to_string();
-    println!("message string: {}", message);
+    let m2nums = s2v(message.clone());
+    let ciphertext = toy_rsa(m2nums.clone(), pub_key, m);
+    let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
+    let message2 = v2s(decrypted.clone());
+    println!("\n// Testing //");
+    println!("message: {:?}", &message);
+    println!("message as nums: {:?}", &m2nums);
+    println!("ciphertext: {:?}", &ciphertext);
+    println!("decrypted nums: {:?}", &decrypted);
+    println!("decrypted message: {}", &message2);
     
-    // Convert message to Vec<i32>
-    let m1 = s2v(message);
-    println!("message before encryption: {:?}", m1);
-    
-    // Encrypt the messages using the public key
-    let em = toy_rsa(m1, pub_key, m);
-    println!("encrypted message: {:?}", &em);
-    
-    // Decrypt the messages using the private key
-    let m2 = toy_rsa(em, priv_key, m);
-    println!("message after decryption: {:?}", &m2);
-    
-    // Convert decrypted Vec<i32> back to message String
-    let message2 = v2s(m2);
-    println!("message string: {}", message2);
-    
+    println!("DONE!");
+
 }
 ```
 
