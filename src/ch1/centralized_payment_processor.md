@@ -357,10 +357,11 @@ fn main() {
 
     // TODO
     // - merge RSA functions into impl State
-    // - generate keys from toy_rsa not the default hasher
-    // - find a way to encrypt struct TX with toy_rsa()
-    // - incorporate signatures into TX
-    // - check TX to verify sender matches signature
+    // - generate accounts from toy_rsa not default hasher
+    // - encrypt hash of TX with toy_rsa()
+    //   - see the "Signing Messages" section of the wiki
+    //   - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+    // - function to verify TX sender matches signature
 
     // Testing RSA Stuff
     // usually works on Rust Playground when p and q are < 500
@@ -433,6 +434,5 @@ fn main() {
     state.confirm_tx();
     // check results
     println!("\n\nCurrent State:\n{:#?}", state);
-    
 }
 ```
