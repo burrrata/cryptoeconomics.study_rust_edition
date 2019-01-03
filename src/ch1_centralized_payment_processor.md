@@ -9,9 +9,15 @@ What are they and how do they work? Let's roll our own to find out!
 - Stetch Goal: work towards recreating the Parity Ethereum Client, but that's probably not realistic lol
 
 # TODO
-- remix the Javascript as editable, runnable, Rust code
-- move the english words into comments in the code
-- bonus points if you can craft a story to explain the code and concepts
+- create a new page in an mdBook explaining each component of the centralized blockchain system
+- combine the components into a working prototype at the end
+
+Each chapter in the book can then evolve like this:
+- goal/thing to build
+- each page explains a part
+- summary putting it all together
+
+Bonus points if there's a story to explain the code and concepts.
 
 <br>
 
