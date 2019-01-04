@@ -401,7 +401,7 @@ fn main() {
     let mut state = State::new_blockchain();
     
     
-    // Init RSA Params and Create Account Keys
+    // Init "RSA" Params and Create Account Keys
     // with fixed p and q to generate deterministic accounts
     let p = 61; // State::prime_gen(5, 100);
     let q = 53; // State::prime_gen(5, 100);
@@ -440,16 +440,15 @@ fn main() {
     println!("pub_key: {}", &pub_key);
     println!("priv_key: {}", &priv_key);
     */
-    // Create 3 more random accounts
+    // Create 3 random accounts
     for i in 0..3 {
         state.new_account(ctf_pq)
     }
     // check results
     println!("\nInitial {:#?}", state);
 
-
     
-    // Test TX
+    // Create TX
     state.new_signed_tx(acc_0_pub_key,
                         acc_0_priv_key,
                         acc_1_pub_key,
