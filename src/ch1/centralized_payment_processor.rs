@@ -1,6 +1,13 @@
-// TODO
-// How do we not use rand as an external crate?
-// Or at least figure out how to import it into mdBook?
+// TODOS
+// - How do we not use rand as an external crate
+//   or at least figure out how to import it into mdBook?
+// - Make check_signed_tx_signature() NOT crash the entire
+//   program if the tx signature does not match the sender.
+// - Would it make more sense to have the RSA stuff in 
+//   it's own impl ?
+// - Maybe use 65537 as the modulo rather than following
+//   the toy setup in the wikipedia article? 
+
 extern crate rand;
 use rand::prelude::*;
 
@@ -8,18 +15,6 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
-
-// Old State Struct
-/*
-#[derive(Debug)]
-struct State {
-    modulo: i32,
-    accounts: HashMap<i32, Account>,
-    pending_tx: Vec<SignedTX>,
-    verified_tx: Vec<SignedTX>,
-    history: Vec<Vec<SignedTX>>,
-}
-*/
 
 #[derive(Debug)]
 struct State {
@@ -67,8 +62,6 @@ pub struct Block {
 impl State {
 
     /// "RSA" KEY GENERATION STUFF ///
-    // Would it make more sense to have the RSA stuff in 
-    // it's own impl ?
     
     // variable names based off Euclidean divison equation: a = b · q + r
     // https://crates.io/crates/gcd
@@ -233,9 +226,9 @@ impl State {
         }
         self.accounts.insert(pub_key.clone(), new_account);
         
-        println!("\nThis is your public key (address): {:#?}", &pub_key);
-        println!("This is your private key (signing key): {:#?}", &priv_key);
-        println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
+        //println!("\nThis is your public key (address): {:#?}", &pub_key);
+        //println!("This is your private key (signing key): {:#?}", &priv_key);
+        //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
     
     // Turn Arbitrary Stuff Into &[u8] Slice
@@ -340,13 +333,13 @@ impl State {
             State::any_as_u8_slice(&signed_tx.tx)
         };
         let tx_hash = State::hash_u8(tx_as_bytes);
-        println!("tx hash: {}", tx_hash);
+        //println!("tx hash: {}", tx_hash);
         
         let decrypted_tx_hash_sig = State::toy_rsa(signed_tx.signature,
                                             signed_tx.tx.sender,
                                             modulo);
         let decrypted_tx_hash = State::v2s(decrypted_tx_hash_sig);
-        println!("decrypted tx hash: {}", decrypted_tx_hash);
+        //println!("decrypted tx hash: {}", decrypted_tx_hash);
         
         match tx_hash == decrypted_tx_hash {
             true => true,
@@ -401,7 +394,7 @@ impl State {
                 break
             }
             
-            println!("Valid TX.");
+            //println!("Valid TX.");
             verified_tx.push(i.clone());
         }
         
@@ -409,7 +402,6 @@ impl State {
         verified_tx
     }
     
-    // NOT public
     // Create A Merkle Tree Of All TX In A Vec
     pub fn merklize(transactions: Vec<SignedTX>) -> String {
         
@@ -487,17 +479,22 @@ fn main() {
     
     
     // Init "RSA" Params and Create Account Keys
-    // with fixed p and q to generate deterministic accounts
-    let p = 61; // State::prime_gen(5, 100);
-    let q = 53; // State::prime_gen(5, 100);
+    
+    // Randomized initialization
+    // State::prime_gen(5, 100);
+    // State::prime_gen(5, 100);
+    
+    // Fixed p and q initialization to generate 
+    // deterministic accounts for testing
+    let p = 61; 
+    let q = 53; 
     assert!(p > 0);
     assert!(q > 0);
-    // m (3233) is now a constant we can use for all keys that share the same p and q setup
-    // Could we also use 65537 ?
+    // m (3233) is now a constant we can use for all keys
+    // that share the same fixed p and q setup
     let m = p * q;
     state.modulo = m;
-    let ctf_pq = State::ctf(p, q);
-    // manually create testing account from previous keys
+    // Manually create testing account 0
     let acc_0_pub_key = 773;
     let acc_0_priv_key = 557;
     let acc_0 = Account {
@@ -505,7 +502,7 @@ fn main() {
         nonce: 0,
     };
     state.accounts.insert(acc_0_pub_key.clone(), acc_0);
-    // Manually create testing account from previous keys
+    // Manually create testing account 1
     let acc_1_pub_key = 179;
     let acc_1_priv_key = 719;
     let acc_1 = Account {
@@ -513,11 +510,14 @@ fn main() {
         nonce: 0,        
     };
     state.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    // Carmichael's totient function of p and q
+    let ctf_pq = State::ctf(p, q);
     // Create 3 random accounts
     for _i in 0..3 {
         state.new_account(ctf_pq)
     }
-    // Uncomment if you want to generate more keys and see their params
+    // Uncomment if you want to generate more keys
+    // and see their params
     /*
     let pub_key = State::pub_key_gen(1, ctf_pq);
     let priv_key = State::priv_key_gen(ctf_pq, pub_key);
@@ -532,7 +532,7 @@ fn main() {
     println!("\nInitial {:#?}", state);
 
     
-    // Create TX
+    // Create Test TX
     state.new_signed_tx(acc_0_pub_key,
                         acc_0_priv_key,
                         acc_1_pub_key,
@@ -543,7 +543,7 @@ fn main() {
     // Create New Block
     let pending_block = state.new_block();
     
-    // Push New Block To "Blockchain"
+    // Push New Block To The "Blockchain"
     state.push_block(pending_block);
     println!("\nState With New Block\n{:#?}", state);
 }
