@@ -1,15 +1,16 @@
 ```rust
-extern crate serde;
-extern crate serde_json;
-#[macro_use]
-extern crate serde_derive;
-
 extern crate rand;
 use rand::prelude::*;
 
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
+
+
+// TODO
+// How do we not use rand as an external crate?
+// Or at least figure out how to import it into mdBook?
+
 
 
 // USEFUL RSA FUNCTIONS
@@ -280,30 +281,6 @@ impl State {
     
         state
     }    
-    
-    /*
-    // generate a new key
-    pub fn key_gen() -> String {
-        
-        let rn: i32 = thread_rng().gen_range(100000, 1000000);
-        
-        rn.to_string()
-    }
-    */
-    
-    // hash stuff
-    pub fn hash<T: serde::Serialize>(item: &T) -> String {
-    
-        let input = serde_json::to_string(&item).unwrap();
-        let input_bytes = input.as_bytes();
-        
-        let mut hasher = DefaultHasher::new();
-        hasher.write(input_bytes);
-        let digest = hasher.finish();
-        let hex_digest = format!("{:#X}", digest);
-        
-        hex_digest
-    }
     
     // create new account
     pub fn new_account(&mut self, ctf_pq: i32) {
