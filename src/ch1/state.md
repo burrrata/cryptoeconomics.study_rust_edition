@@ -2,7 +2,7 @@
 All the things
 
 ## TODO
-Explain how a State object is simply a mapping of data in the chain, mainly addresses -> balances
+Explain how a State object is simply the agreed upon state of a set of information. In this case we keep track of information that we need to make the "blockchain" function. 
 
 ## Code
 
