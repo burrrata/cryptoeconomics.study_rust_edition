@@ -177,21 +177,9 @@ unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     )
 }
 
-// hash &[u8] slices into hex Strings
-fn hash_u8(stuff: &[u8]) -> String {
-    
-    let mut hasher = DefaultHasher::new();
-    hasher.write(stuff);
-    let digest = hasher.finish();
-    let hex_digest = format!("{:#X}", digest);
-        
-    hex_digest
-}
 
 
 
-
-// STRUCTS
 #[derive(Debug)]
 struct State {
     modulo: i32,
@@ -206,22 +194,6 @@ struct Account {
 balance: f32,
 nonce: i32,
 }
-
-/*
-#[derive(Debug, Clone)]
-struct TX {
-    sender: String,
-    receiver: String,
-    tx_amount: f32,
-    nonce: i32,
-}
-
-#[derive(Debug, Clone)]
-struct SignedTX {
-    tx: TX,
-    signature: String,
-}
-*/
 
 #[derive(Debug, Clone)]
 struct TX {
@@ -294,7 +266,7 @@ impl State {
         let tx_bytes: &[u8] = unsafe {
             any_as_u8_slice(&tx)
         };
-        let tx_hash = hash_u8(tx_bytes);
+        let tx_hash = State::hash_u8(tx_bytes);
         let signature = toy_rsa(s2v(tx_hash), sender_priv_key, m);
         
         // Create Signed TX
@@ -306,6 +278,17 @@ impl State {
         // Add SignedTX to pending TX pool
         self.pending_tx.push(signed_tx);
     }
+    
+    // Hash &[u8] Into Hex String
+    pub fn hash_u8(stuff: &[u8]) -> String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!("{:#X}", digest);
+            
+        hex_digest
+    }    
     
     // Check The Signature Of A SignedTX Matches The Sender
     // NOTE: 
@@ -321,7 +304,7 @@ impl State {
         let tx_as_bytes = unsafe {
             any_as_u8_slice(&signed_tx.tx)
         };
-        let tx_hash = hash_u8(tx_as_bytes);
+        let tx_hash = State::hash_u8(tx_as_bytes);
         println!("tx hash: {}", tx_hash);
         
         let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
