@@ -1,6 +1,10 @@
 # Public Key Crypto
 (mostly RSA)
 
+## TODO
+- mainly explain how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around
+- then exmplain how you can sign stuff with your private key, and others can verify that signature with your public key
+
 ## Code Example
 This recreates the RSA style protocol explained in the [RSA wiki page](https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation), randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
 
