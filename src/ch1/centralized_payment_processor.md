@@ -568,11 +568,7 @@ fn main() {
                         m);
     println!("\nAdded Pending TX\n{:#?}", state);
     
-    // Verify TX
-    //state.verify_tx();
-    //println!("\nVerified TX\n{:#?}", state);
-    
-    // Confirm Verified TX
+    // Create New Block
     state.new_block();
     println!("\nState With New Block\n{:#?}", state);
 }
