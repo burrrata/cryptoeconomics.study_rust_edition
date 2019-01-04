@@ -1,4 +1,3 @@
-```rust
 // TODO
 // How do we not use rand as an external crate?
 // Or at least figure out how to import it into mdBook?
@@ -572,4 +571,3 @@ fn main() {
     state.new_block();
     println!("\nState With New Block\n{:#?}", state);
 }
-```
