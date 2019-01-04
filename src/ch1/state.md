@@ -1,6 +1,11 @@
 # State
 All the things
 
+## TODO
+Explain how a State object is simply a mapping of data in the chain, mainly addresses -> balances
+
+## Code
+
 ```rust
 use std::collections::HashMap;
 
