@@ -3,17 +3,12 @@ They're not as boring when you roll your own!
 
 ### TODO
 
-hashing.md
-- create a function to hash the history into "blocks"
-- create a merkle tree of block hashes to make it actually like a "block" "chain"
-- add rand to mdBook or find a way to create it using vanilla Rust so that mdBook builds, then update SUMMARY.md and this page with table of contents
-
 UX
-- build out individual sections leading up to the full demo
+- build out individual sections as a tutorial leading up to the full demo
 - add relevant resources to each section
-- improve comments to explain what's going on
+- improve comments in the centralize_payment_processor finale to better explain what's going on for those who jump ahead
 
 Feedback
 - update Cryptoeconomics.Study post
+- hit up the Tensor Programming guy who rolled the template Rust blockchain tutorial
 - share to /r/ethereum
-- where else?
