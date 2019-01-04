@@ -10,176 +10,6 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
-
-// USEFUL RSA FUNCTIONS
-
-// variable names based off Euclidean divison equation: a = b · q + r
-// https://crates.io/crates/gcd
-// https://en.wikipedia.org/wiki/Greatest_common_divisor
-fn gcd(a: i32,
-       b: i32) -> i32 {
-    
-    let (mut a, mut b) = if a > b {
-        (a, b)
-    } else {
-        (b, a)
-    };
-
-    while b != 0 {
-        let r = a % b;
-        a = b;
-        b = r;
-    }
-
-    a
-}
-
-// lowest common multiple
-// https://en.wikipedia.org/wiki/Least_common_multiple
-fn lcm(a: i32,
-       b: i32) -> i32 {
-    
-    let lcm = (a * b) / gcd(a, b);
-    
-    lcm
-}
-
-// Carmichael's totient function
-// https://en.wikipedia.org/wiki/Carmichael_function
-fn ctf(a: i32,
-       b: i32) -> i32 {
-    
-    lcm((a - 1), (b - 1))
-}
-
-// slowly check if a number is prime
-fn slow_prime_check(num: i32) -> bool {
-    
-    if num < 0 {
-        println!("number must be greater than 0");
-    }
-    
-    if num > 1000000 {
-        println!("number cannot be greater than 1000000");
-    }
-    
-    for i in 2..num{
-        if num % i == 0 {
-            return false
-        }
-    }
-    true
-}
-
-// slowly yet randomly generate a prime number within a range
-fn prime_gen(low: i32,
-             high: i32) -> i32 {
-    
-    for i in 0..1000000 {
-        let p = thread_rng().gen_range(low, high);
-        if slow_prime_check(p) {
-            return p
-        }
-    }
-    0
-}
-
-// slowly find the modular multiplicative inverse of a prime 
-fn slow_mmi(ctf_pq: i32,
-            pub_key: i32,
-            max: i32)-> i32 {
-    
-    for i in 2..max {
-        if (i * pub_key) % ctf_pq == 1 {
-            return i
-        }
-    }
-    println!("Try larger search?");
-    0
-}
-
-// generate a public key within a range
-fn pub_key_gen(min: i32,
-               max: i32) -> i32 {
-    
-    let pub_key = prime_gen(min, max);
-    assert!(max % pub_key != 0);
-    
-    pub_key
-}
-
-// create a private key from a public key and other data
-fn priv_key_gen(ctf_pq: i32,
-                pub_key: i32) -> i32 {
-    
-    let priv_key = slow_mmi(ctf_pq, pub_key, 100000);
-    
-    priv_key
-}
-
-// Because... Rust.
-// exp_mod() is like pow() with a mod option
-// (like python does natively, but not Rust)
-// https://docs.python.org/3/library/functions.html#pow
-// https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
-// https://en.wikipedia.org/wiki/Modular_exponentiation
-fn exp_mod(input: i32,
-           power: i32,
-           modulo: i32) -> i32 {
-    
-    let mut out = (input * input) % modulo;
-    // because the first iter of out took 2 off the base
-    for i in 0..power-2 {
-        out = (out * input) % modulo;
-    }
-    
-    out
-}
-
-// toy RSA function
-fn toy_rsa(input: Vec<i32>,
-           key: i32,
-           modulo: i32) -> Vec<i32> {
-    
-    let output = input.iter()
-                      .map(|x| exp_mod(*x, key, modulo))
-                      .collect();
-    output
-}
-
-// convert string to Vec<i32>
-fn s2v(input: String) -> Vec<i32> {
-    
-    let output: Vec<i32> = input.as_bytes()
-                                .iter()
-                                .map(|x| *x as i32)
-                                .collect();
-    
-    output
-}
-
-// convert Vec<i32> to string
-fn v2s(input: Vec<i32>) -> String {
-    
-    let output_u8: Vec<u8> = input.iter()
-                                  .map(|x| *x as u8)
-                                  .collect();
-    let output_string = String::from_utf8(output_u8).unwrap();
-    
-    output_string
-}
-
-// turn stuff into a &[u8] slice
-unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
-    ::std::slice::from_raw_parts(
-        (p as *const T) as *const u8,
-        ::std::mem::size_of::<T>(),
-    )
-}
-
-
-
-
 #[derive(Debug)]
 struct State {
     modulo: i32,
@@ -191,8 +21,8 @@ struct State {
 
 #[derive(Debug)]
 struct Account {
-balance: f32,
-nonce: i32,
+    balance: f32,
+    nonce: i32,
 }
 
 #[derive(Debug, Clone)]
@@ -210,10 +40,149 @@ struct SignedTX {
 }
 
 
-// Rollin, rollin, rollin...
 impl State {
 
-    // Initialize The "Blockchain"
+    /// "RSA" KEY GENERATION STUFF ///
+    // Would it make more sense to have the RSA stuff in 
+    // it's own impl ?
+    
+    // variable names based off Euclidean divison equation: a = b · q + r
+    // https://crates.io/crates/gcd
+    // https://en.wikipedia.org/wiki/Greatest_common_divisor
+    pub fn gcd(a: i32,
+           b: i32) -> i32 {
+        
+        let (mut a, mut b) = if a > b {
+            (a, b)
+        } else {
+            (b, a)
+        };
+    
+        while b != 0 {
+            let r = a % b;
+            a = b;
+            b = r;
+        }
+    
+        a
+    }
+    
+    // lowest common multiple
+    // https://en.wikipedia.org/wiki/Least_common_multiple
+    pub fn lcm(a: i32,
+           b: i32) -> i32 {
+        
+        let lcm = (a * b) / State::gcd(a, b);
+        
+        lcm
+    }
+    
+    // Carmichael's totient function
+    // https://en.wikipedia.org/wiki/Carmichael_function
+    pub fn ctf(a: i32,
+           b: i32) -> i32 {
+        
+        State::lcm((a - 1), (b - 1))
+    }
+    
+    // slowly check if a number is prime
+    pub fn slow_prime_check(num: i32) -> bool {
+        
+        if num < 0 {
+            println!("number must be greater than 0");
+        }
+        
+        if num > 1000000 {
+            println!("number cannot be greater than 1000000");
+        }
+        
+        for i in 2..num{
+            if num % i == 0 {
+                return false
+            }
+        }
+        true
+    }
+    
+    // slowly yet randomly generate a prime number within a range
+    pub fn prime_gen(low: i32,
+                 high: i32) -> i32 {
+        
+        for i in 0..1000000 {
+            let p = thread_rng().gen_range(low, high);
+            if State::slow_prime_check(p) {
+                return p
+            }
+        }
+        0
+    }
+    
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(ctf_pq: i32,
+                pub_key: i32,
+                max: i32)-> i32 {
+        
+        for i in 2..max {
+            if (i * pub_key) % ctf_pq == 1 {
+                return i
+            }
+        }
+        println!("Try larger search?");
+        0
+    }
+    
+    // generate a public key within a range
+    pub fn pub_key_gen(min: i32,
+                   max: i32) -> i32 {
+        
+        let pub_key = State::prime_gen(min, max);
+        assert!(max % pub_key != 0);
+        
+        pub_key
+    }
+    
+    // create a private key from a public key and other data
+    pub fn priv_key_gen(ctf_pq: i32,
+                    pub_key: i32) -> i32 {
+        
+        let priv_key = State::slow_mmi(ctf_pq, pub_key, 100000);
+        
+        priv_key
+    }
+    
+    // Because... Rust.
+    // exp_mod() is like pow() with a mod option
+    // (like python does natively, but not Rust)
+    // https://docs.python.org/3/library/functions.html#pow
+    // https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
+    // https://en.wikipedia.org/wiki/Modular_exponentiation
+    pub fn exp_mod(input: i32,
+               power: i32,
+               modulo: i32) -> i32 {
+        
+        let mut out = (input * input) % modulo;
+        // because the first iter of out took 2 off the base
+        for i in 0..power-2 {
+            out = (out * input) % modulo;
+        }
+        
+        out
+    }
+    
+    // toy RSA function
+    pub fn toy_rsa(input: Vec<i32>,
+               key: i32,
+               modulo: i32) -> Vec<i32> {
+        
+        let output = input.iter()
+                          .map(|x| State::exp_mod(*x, key, modulo))
+                          .collect();
+        output
+    }
+
+    /// "BLOCKCHAIN" STUFF ///
+    
+    // Initialize A "Blockchain"
     pub fn new_blockchain() -> State {
         let mut state = State {
             modulo: 0,
@@ -229,8 +198,8 @@ impl State {
     // Create New Account
     pub fn new_account(&mut self, ctf_pq: i32) {
         
-        let pub_key = pub_key_gen(1, ctf_pq);
-        let priv_key = priv_key_gen(ctf_pq, pub_key);
+        let pub_key = State::pub_key_gen(1, ctf_pq);
+        let priv_key = State::priv_key_gen(ctf_pq, pub_key);
         let new_account = Account {
             balance: 100.0,
             nonce: 0,
@@ -245,7 +214,26 @@ impl State {
         println!("This is your private key (signing key): {:#?}", &priv_key);
         println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
+    
+    // Turn Arbitrary Stuff Into &[u8] Slice
+    pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::<T>(),
+        )
+    }
 
+    // convert string to Vec<i32>
+    pub fn s2v(input: String) -> Vec<i32> {
+        
+        let output: Vec<i32> = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+    
     // Create A TX And Add It To The pending_tx Pool
     pub fn new_signed_tx(&mut self,
                   sender_pub_key: i32,
@@ -264,10 +252,10 @@ impl State {
         
         // Create Signature
         let tx_bytes: &[u8] = unsafe {
-            any_as_u8_slice(&tx)
+            State::any_as_u8_slice(&tx)
         };
         let tx_hash = State::hash_u8(tx_bytes);
-        let signature = toy_rsa(s2v(tx_hash), sender_priv_key, m);
+        let signature = State::toy_rsa(State::s2v(tx_hash), sender_priv_key, m);
         
         // Create Signed TX
         let signed_tx = SignedTX {
@@ -290,6 +278,17 @@ impl State {
         hex_digest
     }    
     
+    // convert Vec<i32> to string
+    pub fn v2s(input: Vec<i32>) -> String {
+        
+        let output_u8: Vec<u8> = input.iter()
+                                      .map(|x| *x as u8)
+                                      .collect();
+        let output_string = String::from_utf8(output_u8).unwrap();
+        
+        output_string
+    }    
+    
     // Check The Signature Of A SignedTX Matches The Sender
     // NOTE: 
     //   if the TX uses an invalid signature
@@ -302,15 +301,15 @@ impl State {
                            modulo: i32) -> bool {
     
         let tx_as_bytes = unsafe {
-            any_as_u8_slice(&signed_tx.tx)
+            State::any_as_u8_slice(&signed_tx.tx)
         };
         let tx_hash = State::hash_u8(tx_as_bytes);
         println!("tx hash: {}", tx_hash);
         
-        let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
+        let decrypted_tx_hash_sig = State::toy_rsa(signed_tx.signature,
                                             signed_tx.tx.sender,
                                             modulo);
-        let decrypted_tx_hash = v2s(decrypted_tx_hash_sig);
+        let decrypted_tx_hash = State::v2s(decrypted_tx_hash_sig);
         println!("decrypted tx hash: {}", decrypted_tx_hash);
         
         match tx_hash == decrypted_tx_hash {
@@ -404,15 +403,15 @@ fn main() {
     
     // Init RSA Params and Create Account Keys
     // with fixed p and q to generate deterministic accounts
-    let p = 61; //prime_gen(5, 100);
-    let q = 53; //prime_gen(5, 100);
+    let p = 61; // State::prime_gen(5, 100);
+    let q = 53; // State::prime_gen(5, 100);
     assert!(p > 0);
     assert!(q > 0);
     // m (3233) is now a constant we can use for all keys that share the same p and q setup
     // Could we also use 65537 ?
     let m = p * q;
     state.modulo = m;
-    let ctf_pq = ctf(p, q);
+    let ctf_pq = State::ctf(p, q);
     // manually create testing account from previous keys
     let acc_0_pub_key = 773;
     let acc_0_priv_key = 557;
@@ -432,8 +431,8 @@ fn main() {
     // Uncomment if you want to generate more keys
     // and see their params
     /*
-    let pub_key = pub_key_gen(1, ctf_pq);
-    let priv_key = priv_key_gen(ctf_pq, pub_key);
+    let pub_key = State::pub_key_gen(1, ctf_pq);
+    let priv_key = State::priv_key_gen(ctf_pq, pub_key);
     println!("p: {}", &p);
     println!("q: {}", &q);
     println!("m: {}", &m);
