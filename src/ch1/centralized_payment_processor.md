@@ -221,6 +221,7 @@ fn check_signed_tx(signed_tx: SignedTX,
 // STRUCTS
 #[derive(Debug)]
 struct State {
+    modulo: i32,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<SignedTX>,
     verified_tx: Vec<SignedTX>,
@@ -270,6 +271,7 @@ impl State {
     // initialize new blockchain
     pub fn new_blockchain() -> State {
         let mut state = State {
+            modulo: 0,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             verified_tx: Vec::new(),
@@ -356,33 +358,14 @@ impl State {
         self.pending_tx.push(signed_tx);
     }
     
-    // UNDER CONSTRUCTION
-    /*
-    pub fn sign_tx(priv_key: String,
-                   tx: TX) -> String {
-        
-        // is there a standard weak RSA modulo group?
-        // 65537
-        let modulo = 65537;
-        
-        // the trait `serde::Serialize` is not implemented for `TX`
-        let hashed_tx = State::hash(&tx);
-        
-        // priv_key needs to be an i32, not a String
-        let signed_tx_hash = toy_rsa(s2v(hashed_tx), priv_key, modulo);
-        
-        signed_tx_hash
-    }
-    */
-    
     // verify the tx in the pending_tx pool
     pub fn verify_tx(&mut self) {
         
-        println!("\nVerifying TX:");
+        //println!("\nVerifying TX:");
         
         for i in & self.pending_tx {
         
-            println!("{:#?}", &i);
+            //println!("{:#?}", &i);
             
             if !self.accounts.contains_key(&i.tx.sender) {
                 println!("Invalid TX: sender not found.");
@@ -413,7 +396,10 @@ impl State {
             }
             
             // TODO!
-            // if fn check_signed_tx(i: SignedTX, modulo: i32) {println!("TX No Good!");}
+            if !(check_signed_tx(i.clone(), self.modulo)) {
+                println!("TX No Good!");
+                break
+            }
             
             println!("Valid TX.");
             self.verified_tx.push(i.clone());
@@ -460,7 +446,9 @@ fn main() {
     assert!(p > 0);
     assert!(q > 0);
     // m (3233) is now a constant we can use for all keys that share the same p and q setup
+    // Could we also use 65537 ?
     let m = p * q;
+    state.modulo = m;
     let ctf_pq = ctf(p, q);
     // manually create testing account from previous keys
     let acc_0_pub_key = 773;
@@ -494,9 +482,8 @@ fn main() {
     for i in 0..3 {
         state.new_account(ctf_pq)
     }
-    
     // check results
-    println!("\n{:#?}", state);
+    println!("\nInitial {:#?}", state);
 
 
     
