@@ -26,7 +26,7 @@ struct State {
     modulo: i32,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<SignedTX>,
-    chain: Vec<block>,
+    chain: Vec<Block>,
 }
 
 #[derive(Debug, Clone)]
@@ -60,7 +60,7 @@ pub struct Blockheader {
 #[derive(Debug, Clone)]
 pub struct Block {
     header: Blockheader,
-    transactions: Vec<TX>
+    transactions: Vec<SignedTX>
 }
 
 
@@ -212,8 +212,7 @@ impl State {
             modulo: 0,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
-            verified_tx: Vec::new(),
-            history: Vec::new(),
+            chain: Vec::new(),
         };
     
         state
@@ -264,9 +263,9 @@ impl State {
     pub fn hash_any<T>(stuff: &T) -> String {
         
         let u8_stuff = unsafe {
-            any_as_u8_slice(stuff)
+            State::any_as_u8_slice(stuff)
         };
-        let hash_of_stuff = hash_u8(u8_stuff);
+        let hash_of_stuff = State::hash_u8(u8_stuff);
         
         hash_of_stuff
     }
@@ -359,10 +358,11 @@ impl State {
     }
     
     // Verify TX In The pending_tx Pool
-    pub fn verify_tx(&mut self,
-                     block: Block) -> Block {
+    pub fn verify_tx(&mut self) -> Vec<SignedTX> {
         
         //println!("\nVerifying TX:");
+        
+        let mut verified_tx = Vec::new();
         
         for i in & self.pending_tx {
         
@@ -402,67 +402,74 @@ impl State {
             }
             
             println!("Valid TX.");
-            block.push(i.clone());
+            verified_tx.push(i.clone());
         }
         
         self.pending_tx = Vec::new();
-        valid_block
+        verified_tx
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
-    pub fn confirm_tx(&mut self) {
+    pub fn confirm_tx(&mut self,
+                      block: Block) {
         
         println!("\nConfirming TX:");
+        println!("Block: {:#?}", &block);
         
-        let mut block = Vec::new();
-        
-        for i in & self.verified_tx {
+        for i in & block.transactions {
             
             self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
             self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
             self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
             println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
             
-            block.push(i.clone())
         }
         
-        self.history.push(block);
-        self.verified_tx = Vec::new();
+        self.chain.push(block);
+        println!("Block pushed to Chain");
     }
     
+    // DO WE NEED THIS?
     // Hash Previous Block
+    /*
     pub fn last_hash(&self) -> String {
         let block = match self.chain.last() {
             Some(block) => block,
             None => return vec![48; 64].unwrap()
         };
-        hash_u8(&block.header)
+        hash_any(&block.header)
     }
+    */
     
     // This should do a few things:
     // - verify tx
     // - add verified tx to a block
     // - confirm and process the block
-    pub fn generate_new_block(&mut self) -> bool {
+    pub fn new_block(&mut self) -> bool {
     
         let header = Blockheader {
             timestamp: time::now().to_timespec().sec,
             nonce: 0,
-            pre_hash: hash_any(self.chain.last()),
-            merkle: String::from("tbd"),
+            pre_hash: String::from("TBD"),
+            merkle: String::from("TBD"),
         };
+        let transactions = State::verify_tx(self);
 
-        let mut block = Block {
+        let block = Block {
             header: header,
-            transactions: vec![]
+            transactions: transactions,
         };
-
-        // Confirm TX
-        //block.transactions.append(&mut self.verified_tx;
-        //block.header.merkle = State::get_merkle(block.transactions.clone());
-        //println!("{:#?}", &block);
         
-        //self.chain.push(block);
+        // If authority to publish block is granted via...
+        // - centralized database processor
+        // - PoW
+        // - PoS
+        // - etc...
+        State::confirm_tx(self, block);
+        
+        // TODO:
+        // - merkle tree stuff
+        
         true
     }
 
@@ -558,13 +565,13 @@ fn main() {
                         acc_1_pub_key,
                         50.0,
                         m);
-    println!("\n{:#?}", state);
+    println!("\nAdded Pending TX\n{:#?}", state);
     
     // Verify TX
-    state.verify_tx();
-    println!("\n{:#?}", state);
+    //state.verify_tx();
+    //println!("\nVerified TX\n{:#?}", state);
     
     // Confirm Verified TX
-    state.confirm_tx();
-    println!("\n{:#?}", state);
+    state.new_block();
+    println!("\nState With New Block\n{:#?}", state);
 }
