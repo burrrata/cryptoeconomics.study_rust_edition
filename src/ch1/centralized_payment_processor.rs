@@ -53,7 +53,7 @@ struct SignedTX {
 pub struct Blockheader {
     timestamp: i64,
     nonce: i32, 
-    pre_hash: String,  
+    previous_block_hash: String,  
     merkle: String,  
 }
 
@@ -333,7 +333,7 @@ impl State {
     //   when v2s() tries to turn the Vec<i32> into a String
     // TODO:
     //   make the TX just fail rather than crashing the entire program  
-    pub fn check_signed_tx(signed_tx: SignedTX,
+    pub fn check_signed_tx_signature(signed_tx: SignedTX,
                            modulo: i32) -> bool {
     
         let tx_as_bytes = unsafe {
@@ -396,7 +396,7 @@ impl State {
                 break
             }
             
-            if !(State::check_signed_tx(i.clone(), self.modulo)) {
+            if !(State::check_signed_tx_signature(i.clone(), self.modulo)) {
                 println!("TX No Good!");
                 break
             }
@@ -407,6 +407,52 @@ impl State {
         
         self.pending_tx = Vec::new();
         verified_tx
+    }
+    
+    // NOT public
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn merklize(transactions: Vec<SignedTX>) -> String {
+        
+        let mut merkle = Vec::new();
+
+        for i in &transactions {
+            let hashed_tx = State::hash_any(&i);
+            merkle.push(hashed_tx);
+        }
+
+        if merkle.len() % 2 == 1 {
+            let last = merkle.last().cloned().unwrap();
+            merkle.push(last);
+        }
+
+        while merkle.len() > 1 {
+            let mut h1 = merkle.remove(0);
+            let mut h2 = merkle.remove(0);
+            h1.push_str(&mut h2);
+            let nh = State::hash_any(&h1);
+            merkle.push(nh);
+        }
+        
+        merkle.pop().unwrap()
+    }
+    
+    // Create A New Block With Valid Transactions
+    pub fn new_block(&mut self) -> Block {
+    
+        let transactions = State::verify_tx(self);
+        let header = Blockheader {
+            timestamp: time::now().to_timespec().sec,
+            nonce: 0,
+            previous_block_hash: State::hash_any(& self.chain.last()),
+            merkle: State::merklize(transactions.clone()),
+        };
+
+        let block = Block {
+            header: header,
+            transactions: transactions,
+        };
+        
+        block
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
@@ -427,64 +473,6 @@ impl State {
         self.chain.push(block);
         println!("Block pushed to Chain");
     }
-    
-    // DO WE NEED THIS?
-    // Hash Previous Block
-    /*
-    pub fn last_hash(&self) -> String {
-        let block = match self.chain.last() {
-            Some(block) => block,
-            None => return vec![48; 64].unwrap()
-        };
-        hash_any(&block.header)
-    }
-    */
-    
-    // Create A New Block With Valid Transactions
-    pub fn new_block(&mut self) -> Block {
-    
-        let header = Blockheader {
-            timestamp: time::now().to_timespec().sec,
-            nonce: 0,
-            pre_hash: String::from("TBD"),
-            merkle: String::from("TBD"),
-        };
-        let transactions = State::verify_tx(self);
-
-        let block = Block {
-            header: header,
-            transactions: transactions,
-        };
-        
-        block
-    }
-
-    // NOT public
-    /*
-    fn get_merkle(curr_trans: Vec<Transaction>) -> String {
-        let mut merkle = Vec::new();
-
-        for t in &curr_trans {
-            let hash = Chain::hash(t);
-            merkle.push(hash);
-        }
-
-        if merkle.len() % 2 == 1 {
-            let last = merkle.last().cloned().unwrap();
-            merkle.push(last);
-        }
-
-        while merkle.len() > 1 {
-            let mut h1 = merkle.remove(0);
-            let mut h2 = merkle.remove(0);
-            h1.push_str(&mut h2);
-            let nh = Chain::hash(&h1);
-            merkle.push(nh);
-        }
-        merkle.pop().unwrap()
-    }
-    */
-    
 }
 
 
