@@ -10,6 +10,8 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
+// Old State Struct
+/*
 #[derive(Debug)]
 struct State {
     modulo: i32,
@@ -18,8 +20,17 @@ struct State {
     verified_tx: Vec<SignedTX>,
     history: Vec<Vec<SignedTX>>,
 }
+*/
 
 #[derive(Debug)]
+struct State {
+    modulo: i32,
+    accounts: HashMap<i32, Account>,
+    pending_tx: Vec<SignedTX>,
+    chain: Vec<Block>,
+}
+
+#[derive(Debug, Clone)]
 struct Account {
     balance: f32,
     nonce: i32,
@@ -37,6 +48,20 @@ struct TX {
 struct SignedTX {
     tx: TX,
     signature: Vec<i32>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Blockheader {
+    timestamp: i64,
+    nonce: i32, 
+    pre_hash: String,  
+    merkle: String,  
+}
+
+#[derive(Debug, Clone)]
+pub struct Block {
+    header: Blockheader,
+    transactions: Vec<SignedTX>
 }
 
 
@@ -188,8 +213,7 @@ impl State {
             modulo: 0,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
-            verified_tx: Vec::new(),
-            history: Vec::new(),
+            chain: Vec::new(),
         };
     
         state
@@ -223,6 +247,30 @@ impl State {
         )
     }
 
+    // Hash &[u8] Into Hex String
+    pub fn hash_u8(stuff: &[u8]) -> String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!("{:#X}", digest);
+            
+        hex_digest
+    }    
+    
+    // Takes in stuff
+    // Turns it to a u8 slice
+    // Hashes that slice into a hex string
+    pub fn hash_any<T>(stuff: &T) -> String {
+        
+        let u8_stuff = unsafe {
+            State::any_as_u8_slice(stuff)
+        };
+        let hash_of_stuff = State::hash_u8(u8_stuff);
+        
+        hash_of_stuff
+    }
+    
     // convert string to Vec<i32>
     pub fn s2v(input: String) -> Vec<i32> {
         
@@ -233,6 +281,17 @@ impl State {
         
         output
     }
+    
+    // convert Vec<i32> to string
+    pub fn v2s(input: Vec<i32>) -> String {
+        
+        let output_u8: Vec<u8> = input.iter()
+                                      .map(|x| *x as u8)
+                                      .collect();
+        let output_string = String::from_utf8(output_u8).unwrap();
+        
+        output_string
+    }    
     
     // Create A TX And Add It To The pending_tx Pool
     pub fn new_signed_tx(&mut self,
@@ -267,28 +326,6 @@ impl State {
         self.pending_tx.push(signed_tx);
     }
     
-    // Hash &[u8] Into Hex String
-    pub fn hash_u8(stuff: &[u8]) -> String {
-        
-        let mut hasher = DefaultHasher::new();
-        hasher.write(stuff);
-        let digest = hasher.finish();
-        let hex_digest = format!("{:#X}", digest);
-            
-        hex_digest
-    }    
-    
-    // convert Vec<i32> to string
-    pub fn v2s(input: Vec<i32>) -> String {
-        
-        let output_u8: Vec<u8> = input.iter()
-                                      .map(|x| *x as u8)
-                                      .collect();
-        let output_string = String::from_utf8(output_u8).unwrap();
-        
-        output_string
-    }    
-    
     // Check The Signature Of A SignedTX Matches The Sender
     // NOTE: 
     //   if the TX uses an invalid signature
@@ -322,9 +359,11 @@ impl State {
     }
     
     // Verify TX In The pending_tx Pool
-    pub fn verify_tx(&mut self) {
+    pub fn verify_tx(&mut self) -> Vec<SignedTX> {
         
         //println!("\nVerifying TX:");
+        
+        let mut verified_tx = Vec::new();
         
         for i in & self.pending_tx {
         
@@ -364,33 +403,106 @@ impl State {
             }
             
             println!("Valid TX.");
-            self.verified_tx.push(i.clone());
+            verified_tx.push(i.clone());
         }
         
         self.pending_tx = Vec::new();
+        verified_tx
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
-    pub fn confirm_tx(&mut self) {
+    pub fn confirm_tx(&mut self,
+                      block: Block) {
         
         println!("\nConfirming TX:");
+        println!("Block: {:#?}", &block);
         
-        let mut block = Vec::new();
-        
-        for i in & self.verified_tx {
+        for i in & block.transactions {
             
             self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
             self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
             self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
             println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
             
-            block.push(i.clone())
         }
         
-        self.history.push(block);
-        self.verified_tx = Vec::new();
+        self.chain.push(block);
+        println!("Block pushed to Chain");
     }
+    
+    // DO WE NEED THIS?
+    // Hash Previous Block
+    /*
+    pub fn last_hash(&self) -> String {
+        let block = match self.chain.last() {
+            Some(block) => block,
+            None => return vec![48; 64].unwrap()
+        };
+        hash_any(&block.header)
+    }
+    */
+    
+    // This should do a few things:
+    // - verify tx
+    // - add verified tx to a block
+    // - confirm and process the block
+    pub fn new_block(&mut self) -> bool {
+    
+        let header = Blockheader {
+            timestamp: time::now().to_timespec().sec,
+            nonce: 0,
+            pre_hash: String::from("TBD"),
+            merkle: String::from("TBD"),
+        };
+        let transactions = State::verify_tx(self);
+
+        let block = Block {
+            header: header,
+            transactions: transactions,
+        };
+        
+        // If authority to publish block is granted via...
+        // - centralized database processor
+        // - PoW
+        // - PoS
+        // - etc...
+        State::confirm_tx(self, block);
+        
+        // TODO:
+        // - merkle tree stuff
+        
+        true
+    }
+
+    // NOT public
+    /*
+    fn get_merkle(curr_trans: Vec<Transaction>) -> String {
+        let mut merkle = Vec::new();
+
+        for t in &curr_trans {
+            let hash = Chain::hash(t);
+            merkle.push(hash);
+        }
+
+        if merkle.len() % 2 == 1 {
+            let last = merkle.last().cloned().unwrap();
+            merkle.push(last);
+        }
+
+        while merkle.len() > 1 {
+            let mut h1 = merkle.remove(0);
+            let mut h2 = merkle.remove(0);
+            h1.push_str(&mut h2);
+            let nh = Chain::hash(&h1);
+            merkle.push(nh);
+        }
+        merkle.pop().unwrap()
+    }
+    */
+    
 }
+
+
 
 
 // Rollin, rollin, rollin...
@@ -454,14 +566,14 @@ fn main() {
                         acc_1_pub_key,
                         50.0,
                         m);
-    println!("\n{:#?}", state);
+    println!("\nAdded Pending TX\n{:#?}", state);
     
     // Verify TX
-    state.verify_tx();
-    println!("\n{:#?}", state);
+    //state.verify_tx();
+    //println!("\nVerified TX\n{:#?}", state);
     
     // Confirm Verified TX
-    state.confirm_tx();
-    println!("\n{:#?}", state);
+    state.new_block();
+    println!("\nState With New Block\n{:#?}", state);
 }
 ```
