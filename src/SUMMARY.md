@@ -8,4 +8,4 @@
 
 [Resources](./resources.md)
 
-[Randomness](/randomness.md)
+[Randomness Test](/randomness.md)
