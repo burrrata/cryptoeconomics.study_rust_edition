@@ -15,6 +15,8 @@ mdBook says nothing about adding depdancies to external crates
 - https://rust-lang-nursery.github.io/mdBook/index.html
 - https://github.com/rust-lang-nursery/mdBook
 
+Tried adding a Cargo.toml and running `cargo build --release` and pushing that to the repo, but Travis still failed. Not sure what else to try at this point...
+
 # Summary
 
 [Intro](./intro.md)
