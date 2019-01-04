@@ -410,11 +410,10 @@ impl State {
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
-    pub fn confirm_tx(&mut self,
-                      block: Block) {
+    pub fn confirm_block(&mut self,
+                         block: Block) {
         
-        println!("\nConfirming TX:");
-        println!("Block: {:#?}", &block);
+        println!("\nConfirming Block:\n{:#?}", &block);
         
         for i in & block.transactions {
             
@@ -441,11 +440,8 @@ impl State {
     }
     */
     
-    // This should do a few things:
-    // - verify tx
-    // - add verified tx to a block
-    // - confirm and process the block
-    pub fn new_block(&mut self) -> bool {
+    // Create A New Block With Valid Transactions
+    pub fn new_block(&mut self) -> Block {
     
         let header = Blockheader {
             timestamp: time::now().to_timespec().sec,
@@ -460,17 +456,7 @@ impl State {
             transactions: transactions,
         };
         
-        // If authority to publish block is granted via...
-        // - centralized database processor
-        // - PoW
-        // - PoS
-        // - etc...
-        State::confirm_tx(self, block);
-        
-        // TODO:
-        // - merkle tree stuff
-        
-        true
+        block
     }
 
     // NOT public
@@ -539,8 +525,11 @@ fn main() {
         nonce: 0,        
     };
     state.accounts.insert(acc_1_pub_key.clone(), acc_1);
-    // Uncomment if you want to generate more keys
-    // and see their params
+    // Create 3 random accounts
+    for _i in 0..3 {
+        state.new_account(ctf_pq)
+    }
+    // Uncomment if you want to generate more keys and see their params
     /*
     let pub_key = State::pub_key_gen(1, ctf_pq);
     let priv_key = State::priv_key_gen(ctf_pq, pub_key);
@@ -551,10 +540,6 @@ fn main() {
     println!("pub_key: {}", &pub_key);
     println!("priv_key: {}", &priv_key);
     */
-    // Create 3 random accounts
-    for _i in 0..3 {
-        state.new_account(ctf_pq)
-    }
     // check results
     println!("\nInitial {:#?}", state);
 
@@ -568,6 +553,9 @@ fn main() {
     println!("\nAdded Pending TX\n{:#?}", state);
     
     // Create New Block
-    state.new_block();
+    let pending_block = state.new_block();
+    
+    // Push New Block To "Blockchain"
+    state.confirm_block(pending_block);
     println!("\nState With New Block\n{:#?}", state);
 }
