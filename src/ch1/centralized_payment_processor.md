@@ -1,11 +1,12 @@
 ```rust
-extern crate rand;
 extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
 
+extern crate rand;
 use rand::prelude::*;
+
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
@@ -169,14 +170,61 @@ fn v2s(input: Vec<i32>) -> String {
     output_string
 }
 
+// turn stuff into a &[u8] slice
+unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::<T>(),
+    )
+}
+
+// hash &[u8] slices into hex Strings
+fn hash_u8(stuff: &[u8]) -> String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!("{:#X}", digest);
+        
+    hex_digest
+}
+
+// NOTE: if the tx uses an invalid signature
+// there is a high likelihood that it will produce
+// invalid utf8, and thus this function will crash
+// when v2s() tries to turn the Vec<i32> into a String
+fn check_signed_tx(signed_tx: SignedTX,
+                   modulo: i32) -> bool {
+    
+    let tx_as_bytes = unsafe {
+        any_as_u8_slice(&signed_tx.tx)
+    };
+    let tx_hash = hash_u8(tx_as_bytes);
+    println!("tx hash: {}", tx_hash);
+    
+    let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
+                                        signed_tx.tx.sender,
+                                        modulo);
+    let decrypted_tx_hash = v2s(decrypted_tx_hash_sig);
+    println!("decrypted tx hash: {}", decrypted_tx_hash);
+    
+    match tx_hash == decrypted_tx_hash {
+        true => true,
+        false => {
+            println!("not valid tx");
+            return false
+        },
+    }
+}
+
 
 // STRUCTS
 #[derive(Debug)]
 struct State {
-    accounts: HashMap<String, Account>,
-    pending_tx: Vec<TX>,
-    verified_tx: Vec<TX>,
-    history: Vec<Vec<TX>>,
+    accounts: HashMap<i32, Account>,
+    pending_tx: Vec<SignedTX>,
+    verified_tx: Vec<SignedTX>,
+    history: Vec<Vec<SignedTX>>,
 }
 
 #[derive(Debug)]
@@ -185,6 +233,7 @@ balance: f32,
 nonce: i32,
 }
 
+/*
 #[derive(Debug, Clone)]
 struct TX {
     sender: String,
@@ -198,9 +247,24 @@ struct SignedTX {
     tx: TX,
     signature: String,
 }
+*/
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: i32,
+    receiver: i32,
+    amount: f32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone)]
+struct SignedTX {
+    tx: TX,
+    signature: Vec<i32>,
+}
 
 
-// STATE
+// Rollin, rollin, rollin...
 impl State {
 
     // initialize new blockchain
@@ -215,6 +279,7 @@ impl State {
         state
     }    
     
+    /*
     // generate a new key
     pub fn key_gen() -> String {
         
@@ -222,6 +287,7 @@ impl State {
         
         rn.to_string()
     }
+    */
     
     // hash stuff
     pub fn hash<T: serde::Serialize>(item: &T) -> String {
@@ -238,36 +304,56 @@ impl State {
     }
     
     // create new account
-    pub fn new_account(&mut self) {
+    pub fn new_account(&mut self, ctf_pq: i32) {
         
-        let priv_key = State::key_gen();
-        let pub_key = State::hash(& priv_key.clone());
+        let pub_key = pub_key_gen(1, ctf_pq);
+        let priv_key = priv_key_gen(ctf_pq, pub_key);
         let new_account = Account {
             balance: 100.0,
             nonce: 0,
         };
         
+        if self.accounts.contains_key(&pub_key) {
+            println!("Bummer... account collision.");
+        }
         self.accounts.insert(pub_key.clone(), new_account);
         
-        println!("\nThis is your public key: {:#?}", pub_key);
-        println!("This is your private key: {:#?}", priv_key);
+        println!("\nThis is your public key (address): {:#?}", &pub_key);
+        println!("This is your private key (signing key): {:#?}", &priv_key);
         println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
 
     // create a tx and add it to the pending_tx pool
     pub fn new_tx(&mut self,
-                  priv_key: &str,
-                  receiver: &str,
-                  tx_amount: f32) {
+                  sender_pub_key: i32,
+                  sender_priv_key: i32,
+                  receiver: i32,
+                  amount: f32,
+                  m: i32) {
         
+        // Create TX
         let tx = TX {
-            sender: State::hash(&priv_key),
-            receiver: receiver.to_string(),
-            tx_amount: tx_amount,
-            nonce: self.accounts.get(&State::hash(&priv_key)).unwrap().nonce,
+            sender: sender_pub_key,
+            receiver: receiver,
+            amount: amount,
+            nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
         };
-
-        self.pending_tx.push(tx);
+        
+        // Create Signature
+        let tx_bytes: &[u8] = unsafe {
+            any_as_u8_slice(&tx)
+        };
+        let tx_hash = hash_u8(tx_bytes);
+        let signature = toy_rsa(s2v(tx_hash), sender_priv_key, m);
+        
+        // Create Signed TX
+        let signed_tx = SignedTX {
+            tx: tx,
+            signature: signature,
+        };
+        
+        // Add SignedTX to pending TX pool
+        self.pending_tx.push(signed_tx);
     }
     
     // UNDER CONSTRUCTION
@@ -298,33 +384,36 @@ impl State {
         
             println!("{:#?}", &i);
             
-            if !self.accounts.contains_key(&i.sender) {
+            if !self.accounts.contains_key(&i.tx.sender) {
                 println!("Invalid TX: sender not found.");
                 break
             } 
             
-            if !self.accounts.contains_key(&i.receiver) {
+            if !self.accounts.contains_key(&i.tx.receiver) {
                 println!("Invalid TX: receiver not found.");
                 break
             }
             
-            if !(i.tx_amount > 0.0) {
+            if !(i.tx.amount > 0.0) {
                 println!("Invalid TX: negative amount error.");
-                println!("{} cannot send {} to {}", i.sender, i.tx_amount, i.receiver);
+                println!("{} cannot send {} to {}", i.tx.sender, i.tx.amount, i.tx.receiver);
                 break
             } 
             
-            if !(self.accounts.get(&i.sender).unwrap().balance > i.tx_amount) {
+            if !(self.accounts.get(&i.tx.sender).unwrap().balance > i.tx.amount) {
                 println!("Invalid TX: insufficient funds.");
-                println!("{} cannot send {} to {}", i.sender, i.tx_amount, i.receiver);
+                println!("{} cannot send {} to {}", i.tx.sender, i.tx.amount, i.tx.receiver);
                 break            
             }
             
-            if !(i.nonce == self.accounts.get(&i.sender).unwrap().nonce) {
+            if !(i.tx.nonce == self.accounts.get(&i.tx.sender).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.sender, self.accounts.get(&i.sender).unwrap().nonce, i.nonce);
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.tx.sender, self.accounts.get(&i.tx.sender).unwrap().nonce, i.tx.nonce);
                 break
             }
+            
+            // TODO!
+            // if fn check_signed_tx(i: SignedTX, modulo: i32) {println!("TX No Good!");}
             
             println!("Valid TX.");
             self.verified_tx.push(i.clone());
@@ -342,10 +431,10 @@ impl State {
         
         for i in & self.verified_tx {
             
-            self.accounts.get_mut(&i.sender).unwrap().balance -= i.tx_amount;
-            self.accounts.get_mut(&i.receiver).unwrap().balance += i.tx_amount;
-            self.accounts.get_mut(&i.sender).unwrap().nonce += 1;
-            println!("{} sent {} to {}", &i.sender, &i.tx_amount, &i.receiver);
+            self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
+            self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
+            self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
+            println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
             
             block.push(i.clone())
         }
@@ -356,88 +445,75 @@ impl State {
 }
 
 
-// Rollin, rollin, rollin... Rolling our own blockchain! :)
+// Rollin, rollin, rollin...
 fn main() {
 
-    // TODO
-    // - merge RSA functions into impl State
-    // - generate accounts from toy_rsa not default hasher
-    // - encrypt hash of TX with toy_rsa()
-    //   - see the "Signing Messages" section of the wiki
-    //   - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
-    // - function to verify TX sender matches signature
 
-    // Testing RSA Stuff
-    // usually works on Rust Playground when p and q are < 500
-    let p = prime_gen(5, 100);
-    let q = prime_gen(5, 100);
-    let m = p * q; 
-    let ctf_pq = ctf(p, q);
-    let pub_key = pub_key_gen(1, ctf_pq);
-    let priv_key = priv_key_gen(ctf_pq, pub_key);
-    println!("\n// Params //");
+    // Init Blockchain State
+    let mut state = State::new_blockchain();
+    
+    
+    // Init RSA Params and Create Account Keys
+    // with fixed p and q to generate deterministic accounts
+    let p = 61; //prime_gen(5, 100);
+    let q = 53; //prime_gen(5, 100);
     assert!(p > 0);
     assert!(q > 0);
+    // m (3233) is now a constant we can use for all keys that share the same p and q setup
+    let m = p * q;
+    let ctf_pq = ctf(p, q);
+    // manually create testing account from previous keys
+    let acc_0_pub_key = 773;
+    let acc_0_priv_key = 557;
+    let acc_0 = Account {
+        balance: 10000.0,
+        nonce: 0,
+    };
+    state.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    // Manually create testing account from previous keys
+    let acc_1_pub_key = 179;
+    let acc_1_priv_key = 719;
+    let acc_1 = Account {
+        balance: 10000.0,
+        nonce: 0,        
+    };
+    state.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    // Uncomment if you want to generate more keys
+    // and see their params
+    /*
+    let pub_key = pub_key_gen(1, ctf_pq);
+    let priv_key = priv_key_gen(ctf_pq, pub_key);
     println!("p: {}", &p);
     println!("q: {}", &q);
     println!("m: {}", &m);
     println!("ctf_pq: {}", &ctf_pq);
     println!("pub_key: {}", &pub_key);
     println!("priv_key: {}", &priv_key);
-    let message = String::from("thepasswordispassword");
-    let m2nums = s2v(message.clone());
-    let ciphertext = toy_rsa(m2nums.clone(), pub_key, m);
-    let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
-    let message2 = v2s(decrypted.clone());
-    assert_eq!(message, message2);
-    println!("\n// Testing //");
-    println!("message: {:?}", &message);
-    println!("message as nums: {:?}", &m2nums);
-    println!("ciphertext: {:?}", &ciphertext);
-    println!("decrypted nums: {:?}", &decrypted);
-    println!("decrypted message: {}", &message2);
-    println!("DONE!");
-
-
-    // Init Blockchain
-    // init blockchain state 
-    let mut state = State::new_blockchain();
-    
-    // Init Accounts
-    // create 3 random accounts
+    */
+    // Create 3 more random accounts
     for i in 0..3 {
-        state.new_account()
+        state.new_account(ctf_pq)
     }
-    // manually create account for testing
-    let t0_priv = String::from("693677"); // 693677
-    let t0_pub = State::hash(&t0_priv); // 0xC31B6988D3A6A62B
-    let t0 = Account {
-        balance: 10000.0,
-        nonce: 0,
-    };
-    state.accounts.insert(t0_pub.clone(), t0);
-    // manually create account for testing
-    let t1_priv = String::from("172218"); // 172218
-    let t1_pub = State::hash(&t1_priv); // 0x81C52538C70E98B7
-    let t1 = Account {
-        balance: 10000.0,
-        nonce: 0,        
-    };
-    state.accounts.insert(t1_pub.clone(), t1);
+    
     // check results
     println!("\n{:#?}", state);
+
+
     
-    // Test TX 
-    // add some tx to the pending_tx pool
-    state.new_tx(&t0_priv, &t1_pub, 500.0);
-    state.new_tx(&t1_priv, &t0_pub, 127.0);
-    state.new_tx(&t0_priv, &t1_pub.clone(), 1000.0);
-    // verify valid tx
+    // Test TX
+    state.new_tx(acc_0_pub_key,
+                 acc_0_priv_key,
+                 acc_1_pub_key,
+                 50.0,
+                 m);
+    println!("\n{:#?}", state);
+    
+    // Verify TX
     state.verify_tx();
-    // cofirm tx and change state
-    state.confirm_tx();
-    // check results
-    println!("\n\nCurrent State:\n{:#?}", state);
+    println!("\n{:#?}", state);
     
+    // Confirm Verified TX
+    state.confirm_tx();
+    println!("\n{:#?}", state);
 }
 ```
