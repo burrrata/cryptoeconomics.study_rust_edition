@@ -4,7 +4,16 @@ Because if you include any files that call external crates in the SUMMARY.md the
 
 Soution TBD  ¯\_(ツ)_/¯ 
 
+### How did The Rust Cookbook do it?
+- https://github.com/rust-lang-nursery/rust-cookbook
+- they have a Cargo.toml with dependancies: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/Cargo.toml
+  - is that enough?
+- their book.toml is standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/book.toml
+- their travis.yml is also standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/.travis.yml
 
+mdBook says nothing about adding depdancies to external crates
+- https://rust-lang-nursery.github.io/mdBook/index.html
+- https://github.com/rust-lang-nursery/mdBook
 
 # Summary
 
