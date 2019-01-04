@@ -107,7 +107,7 @@ impl State {
     pub fn ctf(a: i32,
            b: i32) -> i32 {
         
-        State::lcm((a - 1), (b - 1))
+        State::lcm(a - 1, b - 1)
     }
     
     // slowly check if a number is prime
@@ -133,7 +133,7 @@ impl State {
     pub fn prime_gen(low: i32,
                  high: i32) -> i32 {
         
-        for i in 0..1000000 {
+        for _i in 0..1000000 {
             let p = thread_rng().gen_range(low, high);
             if State::slow_prime_check(p) {
                 return p
@@ -187,7 +187,7 @@ impl State {
         
         let mut out = (input * input) % modulo;
         // because the first iter of out took 2 off the base
-        for i in 0..power-2 {
+        for _i in 0..power-2 {
             out = (out * input) % modulo;
         }
         
@@ -383,7 +383,7 @@ impl State {
                 println!("Invalid TX: negative amount error.");
                 println!("{} cannot send {} to {}", i.tx.sender, i.tx.amount, i.tx.receiver);
                 break
-            } 
+            }
             
             if !(self.accounts.get(&i.tx.sender).unwrap().balance > i.tx.amount) {
                 println!("Invalid TX: insufficient funds.");
@@ -553,7 +553,7 @@ fn main() {
     println!("priv_key: {}", &priv_key);
     */
     // Create 3 random accounts
-    for i in 0..3 {
+    for _i in 0..3 {
         state.new_account(ctf_pq)
     }
     // check results
