@@ -241,7 +241,7 @@ struct SignedTX {
 // Rollin, rollin, rollin...
 impl State {
 
-    // initialize new blockchain
+    // Initialize The "Blockchain"
     pub fn new_blockchain() -> State {
         let mut state = State {
             modulo: 0,
@@ -254,7 +254,7 @@ impl State {
         state
     }    
     
-    // create new account
+    // Create New Account
     pub fn new_account(&mut self, ctf_pq: i32) {
         
         let pub_key = pub_key_gen(1, ctf_pq);
@@ -274,7 +274,7 @@ impl State {
         println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
 
-    // create a tx and add it to the pending_tx pool
+    // Create A TX And Add It To The pending_tx Pool
     pub fn new_signed_tx(&mut self,
                   sender_pub_key: i32,
                   sender_priv_key: i32,
@@ -307,11 +307,14 @@ impl State {
         self.pending_tx.push(signed_tx);
     }
     
-    // Check the signature of a SignedTX matches the sender
-    // NOTE: if the tx uses an invalid signature
-    // there is a high likelihood that it will produce
-    // invalid utf8, and thus this function will crash
-    // when v2s() tries to turn the Vec<i32> into a String
+    // Check The Signature Of A SignedTX Matches The Sender
+    // NOTE: 
+    //   if the TX uses an invalid signature
+    //   there is a high likelihood that it will produce
+    //   invalid utf8, and thus this function will crash
+    //   when v2s() tries to turn the Vec<i32> into a String
+    // TODO:
+    //   make the TX just fail rather than crashing the entire program  
     pub fn check_signed_tx(signed_tx: SignedTX,
                            modulo: i32) -> bool {
     
@@ -336,7 +339,7 @@ impl State {
         }
     }
     
-    // verify the tx in the pending_tx pool
+    // Verify TX In The pending_tx Pool
     pub fn verify_tx(&mut self) {
         
         //println!("\nVerifying TX:");
@@ -385,7 +388,7 @@ impl State {
         self.pending_tx = Vec::new();
     }
     
-    // apply and confirm valid_tx pool
+    // Confirm TX in valid_tx Pool And Add Them To The History
     pub fn confirm_tx(&mut self) {
         
         println!("\nConfirming TX:");
