@@ -1,13 +1,50 @@
-// TODOS
-// - How do we not use rand as an external crate
-//   or at least figure out how to import it into mdBook?
-// - Make check_signed_tx_signature() NOT crash the entire
-//   program if the tx signature does not match the sender.
-// - Would it make more sense to have the RSA stuff in 
-//   it's own impl ?
-// - Maybe use 65537 as the modulo rather than following
-//   the toy setup in the wikipedia article? 
+# Centralized Payment Processor
 
+
+
+
+
+## Properties of centralized systems
+- yawn...
+
+Benefits:
+- Easy to build and reason about.
+- Simple to scale.
+- Privacy preserving. (if you trust the operator)
+
+Downsides:
+- Single point of failure if the operator quits, gets hacked, or is legally forced to shut down (eg. servers burn down, servers seized by authorities), the entire system breaks.
+- Censorship
+- The operator can censor users and change their balances, and it is very difficult for users to prove malfeasance because there is no client-side validation
+- Straight up fraud. The operator has complete control, so they can steal money directly from users or print money ("credit") out of thin air (and banks do this all the time, it's called fractional reserve banking :).
+
+The only safeguard against misbehavior of centralized operators is the legal system & social reputation.
+
+Legal and social incentives don't protect against hacking though --see Bitconnect, Mt. Gox, and many other exchanges which have been hacked.
+
+Also, theft is often unprovable
+
+## Properties of decentralized systems
+- yay!
+
+They're new, fun, and exciting and open up a field of P2P possibilities :)
+
+Also resistant to hacking IF built correctly (they're often not as best practices are an evolving moving target)
+
+<br>
+
+## TODOS CODE
+- How do we not use rand as an external crate
+   or at least figure out how to import it into mdBook?
+ - Make check_signed_tx_signature() NOT crash the entire
+   program if the tx signature does not match the sender.
+ - Would it make more sense to have the RSA stuff in 
+   it's own impl ?
+ - Maybe use 65537 as the modulo rather than following
+   the toy setup in the wikipedia article? 
+
+## Code
+```rust
 extern crate rand;
 use rand::prelude::*;
 
@@ -547,3 +584,4 @@ fn main() {
     state.push_block(pending_block);
     println!("\nState With New Block\n{:#?}", state);
 }
+```
