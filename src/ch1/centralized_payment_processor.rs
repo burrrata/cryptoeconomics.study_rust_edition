@@ -410,10 +410,10 @@ impl State {
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
-    pub fn confirm_block(&mut self,
-                         block: Block) {
+    pub fn push_block(&mut self,
+                      block: Block) {
         
-        println!("\nConfirming Block:\n{:#?}", &block);
+        println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         
         for i in & block.transactions {
             
@@ -556,6 +556,6 @@ fn main() {
     let pending_block = state.new_block();
     
     // Push New Block To "Blockchain"
-    state.confirm_block(pending_block);
+    state.push_block(pending_block);
     println!("\nState With New Block\n{:#?}", state);
 }
