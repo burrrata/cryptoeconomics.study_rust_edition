@@ -1,15 +1,13 @@
 ```rust
+// TODO
+// How do we not use rand as an external crate?
+// Or at least figure out how to import it into mdBook?
 extern crate rand;
 use rand::prelude::*;
 
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
-
-
-// TODO
-// How do we not use rand as an external crate?
-// Or at least figure out how to import it into mdBook?
 
 
 
@@ -86,16 +84,6 @@ fn prime_gen(low: i32,
     0
 }
 
-// generate a public key within a range
-fn pub_key_gen(min: i32,
-               max: i32) -> i32 {
-    
-    let pub_key = prime_gen(min, max);
-    assert!(max % pub_key != 0);
-    
-    pub_key
-}
-
 // slowly find the modular multiplicative inverse of a prime 
 fn slow_mmi(ctf_pq: i32,
             pub_key: i32,
@@ -108,6 +96,16 @@ fn slow_mmi(ctf_pq: i32,
     }
     println!("Try larger search?");
     0
+}
+
+// generate a public key within a range
+fn pub_key_gen(min: i32,
+               max: i32) -> i32 {
+    
+    let pub_key = prime_gen(min, max);
+    assert!(max % pub_key != 0);
+    
+    pub_key
 }
 
 // create a private key from a public key and other data
@@ -190,33 +188,7 @@ fn hash_u8(stuff: &[u8]) -> String {
     hex_digest
 }
 
-// NOTE: if the tx uses an invalid signature
-// there is a high likelihood that it will produce
-// invalid utf8, and thus this function will crash
-// when v2s() tries to turn the Vec<i32> into a String
-fn check_signed_tx(signed_tx: SignedTX,
-                   modulo: i32) -> bool {
-    
-    let tx_as_bytes = unsafe {
-        any_as_u8_slice(&signed_tx.tx)
-    };
-    let tx_hash = hash_u8(tx_as_bytes);
-    println!("tx hash: {}", tx_hash);
-    
-    let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
-                                        signed_tx.tx.sender,
-                                        modulo);
-    let decrypted_tx_hash = v2s(decrypted_tx_hash_sig);
-    println!("decrypted tx hash: {}", decrypted_tx_hash);
-    
-    match tx_hash == decrypted_tx_hash {
-        true => true,
-        false => {
-            println!("not valid tx");
-            return false
-        },
-    }
-}
+
 
 
 // STRUCTS
@@ -303,7 +275,7 @@ impl State {
     }
 
     // create a tx and add it to the pending_tx pool
-    pub fn new_tx(&mut self,
+    pub fn new_signed_tx(&mut self,
                   sender_pub_key: i32,
                   sender_priv_key: i32,
                   receiver: i32,
@@ -333,6 +305,35 @@ impl State {
         
         // Add SignedTX to pending TX pool
         self.pending_tx.push(signed_tx);
+    }
+    
+    // Check the signature of a SignedTX matches the sender
+    // NOTE: if the tx uses an invalid signature
+    // there is a high likelihood that it will produce
+    // invalid utf8, and thus this function will crash
+    // when v2s() tries to turn the Vec<i32> into a String
+    pub fn check_signed_tx(signed_tx: SignedTX,
+                           modulo: i32) -> bool {
+    
+        let tx_as_bytes = unsafe {
+            any_as_u8_slice(&signed_tx.tx)
+        };
+        let tx_hash = hash_u8(tx_as_bytes);
+        println!("tx hash: {}", tx_hash);
+        
+        let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
+                                            signed_tx.tx.sender,
+                                            modulo);
+        let decrypted_tx_hash = v2s(decrypted_tx_hash_sig);
+        println!("decrypted tx hash: {}", decrypted_tx_hash);
+        
+        match tx_hash == decrypted_tx_hash {
+            true => true,
+            false => {
+                println!("not valid tx");
+                return false
+            },
+        }
     }
     
     // verify the tx in the pending_tx pool
@@ -372,8 +373,7 @@ impl State {
                 break
             }
             
-            // TODO!
-            if !(check_signed_tx(i.clone(), self.modulo)) {
+            if !(State::check_signed_tx(i.clone(), self.modulo)) {
                 println!("TX No Good!");
                 break
             }
@@ -465,11 +465,11 @@ fn main() {
 
     
     // Test TX
-    state.new_tx(acc_0_pub_key,
-                 acc_0_priv_key,
-                 acc_1_pub_key,
-                 50.0,
-                 m);
+    state.new_signed_tx(acc_0_pub_key,
+                        acc_0_priv_key,
+                        acc_1_pub_key,
+                        50.0,
+                        m);
     println!("\n{:#?}", state);
     
     // Verify TX
