@@ -6,7 +6,7 @@ They're not as boring when you roll your own!
 hashing.md
 - create a function to hash the history into "blocks"
 - create a merkle tree of block hashes to make it actually like a "block" "chain"
-- add rand to mdBook or find a way to create it using vanilla Rust so that mdBook builds
+- add rand to mdBook or find a way to create it using vanilla Rust so that mdBook builds, then update SUMMARY.md and this page with table of contents
 
 UX
 - build out individual sections leading up to the full demo
