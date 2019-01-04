@@ -8,6 +8,7 @@ All about those trees
 # Resources
 - https://en.wikipedia.org/wiki/Merkle_tree
 - https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
+- https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
 
 
 # WIP STUFF
