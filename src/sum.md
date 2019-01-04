@@ -1,6 +1,6 @@
 # A Placeholder for SUMMARY.md
 
-Because if you include any files that call external crates in the SUMMARY.md the mdBook build fails.
+Because if you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
 Soution TBD  ¯\_(ツ)_/¯ 
 
@@ -30,7 +30,8 @@ Tried adding a Cargo.toml and running `cargo build --release` and pushing that t
   - [Digital Signatures](./ch1/digital_signatures.md): the proof is in the pudding
   - [Accounts](./ch1/accounts.md): combining these things into something useful!
   - [TX](./ch1/tx.md): using your account to do stuff!
-  - [Hashing](./ch1/hashing.md) (and Merkle Trees/Tries): keeping track of what happened
+  - [Hashing](./ch1/hashing.md): deterministically making data compact
+  - [Blocks](./ch1/blocks.md): how you know what happened
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
 
