@@ -1,9 +1,17 @@
 # Hashing
 All about those trees
 
-``
-// TBD
-``
+### TODO: 
+
+Explain how they work:
+- Rust default hasher
+- SHA256 that's used in Ethereum
+
+Explain what they do:
+- collision resistance
+- second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)]
+- preimage resistance
+- random oracle
 
 # Resources
 - https://en.wikipedia.org/wiki/Merkle_tree
