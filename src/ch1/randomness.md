@@ -1,6 +1,10 @@
 # Randomness
 and why it matters
 
+## Words
+If you want to see how important just skip ahead to the [centralized payment processor demo](https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md). Everything commented out relies on randomness. It's nealry impossible to create new accounts and generate public or private keys without a reliable and secure form of randomness. 
+
+## Code
 ```rust
 extern crate rand;
 
