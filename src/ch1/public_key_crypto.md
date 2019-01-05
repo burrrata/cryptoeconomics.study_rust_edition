@@ -2,6 +2,7 @@
 (mostly RSA)
 
 ## Words
+- QUESTION: is a full (toy) RSA setup overkill for a centralized banking demo? Would it be better to introduce that when we "decentralize" the "blockchain" in ch2 as to not introduce too many concepts all at once?
 - mainly explain how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around
 - then exmplain how you can sign stuff with your private key, and others can verify that signature with your public key
 
