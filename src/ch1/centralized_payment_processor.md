@@ -591,7 +591,7 @@ Code
 - ch1: https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
 
-### Another Awesome Blockchain Tutorial
+### Rust Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
 
