@@ -115,3 +115,9 @@ fn main() {
 
 }
 ```
+
+## Resources
+
+Todo
+- resources on the history of state machines
+- articles exploring Ethereum's state machine architecture in more depth
