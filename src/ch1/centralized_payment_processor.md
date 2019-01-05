@@ -565,6 +565,8 @@ fn main() {
 ## Notes
 - source: https://cryptoeconomics.study/overview.html
 
+### Centralized Databases
+
 Benefits:
 - Easy to build and reason about.
 - Simple to scale.
@@ -582,9 +584,8 @@ Legal and social incentives don't protect against hacking though --see Bitconnec
 
 Also, theft is often unprovable
 
-## Properties of decentralized systems
-- yay!
+### Decentralized Databases
 
-They're new, fun, and exciting and open up a field of P2P possibilities :)
+They're new, fun, and exciting and open up a field of possibilities that would otherwise be impossible at scale without cryptoeconomic mechanisms :)
 
-Also resistant to hacking IF built correctly (they're often not as best practices are an evolving moving target)
+Also resistant to hacking IF built correctly (but they're often not because best practices are a constantly evolving moving target)
