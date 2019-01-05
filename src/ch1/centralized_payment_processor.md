@@ -1,16 +1,15 @@
 # Centralized Payment Processor
-
-
-
-
+Bringing it all together...
 
 ## Words
 
 So if we bring that all together we have a "working" centralized payments processor demo! I say "working" because we've demonstrated many of the core components in a payment processing engine and it (mostly) doesn't crash, but in practice you'd need many security/ux improvements. We'll explore those in future chapters, but for now let's explore this model to get familiar with how everything works :)
 
+## Code
+```rust
 
-
-## TODOS CODE
+// TODO
+/*
 - How do we not use rand as an external crate
    or at least figure out how to import it into mdBook?
  - Make check_signed_tx_signature() NOT crash the entire
@@ -19,9 +18,8 @@ So if we bring that all together we have a "working" centralized payments proces
    it's own impl ?
  - Maybe use 65537 as the modulo rather than following
    the toy setup in the wikipedia article? 
+*/
 
-## Code
-```rust
 extern crate rand;
 use rand::prelude::*;
 
