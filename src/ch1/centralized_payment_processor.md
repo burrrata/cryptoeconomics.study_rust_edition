@@ -576,33 +576,26 @@ fn main() {
 
 
 ## Resources
-- todo: add links to Cryptoeconomics.Study code and that Rust blockchain tutorial
+
+### Cryptoeconomics.Study
+
+Overview
+- https://cryptoeconomics.study/overview.html
+- https://github.com/cryptoeconomics-study/website/blob/master/overview.md
+
+Lectures
+- https://cryptoeconomics.study/lectures/
+
+Code
+- https://github.com/cryptoeconomics-study/code
+- ch1: https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
 
 
-Notes from Cryptoeconomics.Study
-- source: https://cryptoeconomics.study/overview.html
+### Another Awesome Blockchain Tutorial
+- https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
+- https://github.com/tensor-programming/Rust_block_chain
 
-#### Centralized Databases
-
-Benefits:
-- Easy to build and reason about.
-- Simple to scale.
-- Privacy preserving. (if you trust the operator)
-
-Downsides:
-- Single point of failure if the operator quits, gets hacked, or is legally forced to shut down (eg. servers burn down, servers seized by authorities), the entire system breaks.
-- Censorship
-- The operator can censor users and change their balances, and it is very difficult for users to prove malfeasance because there is no client-side validation
-- Straight up fraud. The operator has complete control, so they can steal money directly from users or print money ("credit") out of thin air (and banks do this all the time, it's called fractional reserve banking :).
-
-The only safeguard against misbehavior of centralized operators is the legal system & social reputation.
-
-Legal and social incentives don't protect against hacking though --see Bitconnect, Mt. Gox, and many other exchanges which have been hacked.
-
-Also, theft is often unprovable
-
-#### Decentralized Databases
-
-They're new, fun, and exciting and open up a field of possibilities that would otherwise be impossible at scale without cryptoeconomic mechanisms :)
-
-Also resistant to hacking IF built correctly (but they're often not because best practices are a constantly evolving moving target)
+### Ethereum Stuff
+- https://ethereum.org/
+- https://github.com/ethereum/wiki/wiki/White-Paper
+- https://ethresear.ch
