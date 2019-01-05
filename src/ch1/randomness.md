@@ -1,7 +1,9 @@
 # Randomness
 and why it matters
 
+
 ## Words
+
 If you want to see how important randomness is, just skip ahead to the [centralized payment processor demo](https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md). Everything commented out relies on randomness. It's nealry impossible to create new accounts and generate public or private keys without a reliable and secure form of randomness. 
 
 We'll explore this more in the public key crypto tutorial, but the [Rust Rand Book](https://rust-random.github.io/book/intro.html) is also a great resource. Not only do they explain how the library works, but they provide a foundation of knowledge for why their library works the way it does. It's honestly better than anything I could write, so I'll let you explore that for yourself.
@@ -28,9 +30,9 @@ If you want to explore this code, copy the commented part into the Rust Playgrou
 
 /*
 
-extern crate rand;
+//extern crate rand;
 
-use rand::prelude::*;
+//use rand::prelude::*;
 
 // generate a new key
 fn key_gen() -> String {
