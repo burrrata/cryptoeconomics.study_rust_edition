@@ -11,7 +11,9 @@ So as we mentioned, a blockchain is a glorified database. As such, at it's heart
 use std::collections::HashMap;
 
 // First we're going to create a struct that will hold the important state data we want to keep our database functioning:
-// - 
+// - accounts: this is where people's money and addresses live
+// - pending_tx: a pool of pending tx that have not yet been verified as legit or not
+// - verified_tx
 
 #[derive(Debug)]
 struct State {
