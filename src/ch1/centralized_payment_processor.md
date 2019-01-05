@@ -4,34 +4,11 @@
 
 
 
-## Properties of centralized systems
-- yawn...
+## Words
 
-Benefits:
-- Easy to build and reason about.
-- Simple to scale.
-- Privacy preserving. (if you trust the operator)
+So if we bring that all together we have a "working" centralized payments processor demo! I say "working" because we've demonstrated many of the core components in a payment processing engine and it (mostly) doesn't crash, but in practice you'd need many security/ux improvements. We'll explore those in future chapters, but for now let's explore this model to get familiar with how everything works :)
 
-Downsides:
-- Single point of failure if the operator quits, gets hacked, or is legally forced to shut down (eg. servers burn down, servers seized by authorities), the entire system breaks.
-- Censorship
-- The operator can censor users and change their balances, and it is very difficult for users to prove malfeasance because there is no client-side validation
-- Straight up fraud. The operator has complete control, so they can steal money directly from users or print money ("credit") out of thin air (and banks do this all the time, it's called fractional reserve banking :).
 
-The only safeguard against misbehavior of centralized operators is the legal system & social reputation.
-
-Legal and social incentives don't protect against hacking though --see Bitconnect, Mt. Gox, and many other exchanges which have been hacked.
-
-Also, theft is often unprovable
-
-## Properties of decentralized systems
-- yay!
-
-They're new, fun, and exciting and open up a field of P2P possibilities :)
-
-Also resistant to hacking IF built correctly (they're often not as best practices are an evolving moving target)
-
-<br>
 
 ## TODOS CODE
 - How do we not use rand as an external crate
@@ -585,3 +562,31 @@ fn main() {
     println!("\nState With New Block\n{:#?}", state);
 }
 ```
+
+
+## Notes
+- source: https://cryptoeconomics.study/overview.html
+
+Benefits:
+- Easy to build and reason about.
+- Simple to scale.
+- Privacy preserving. (if you trust the operator)
+
+Downsides:
+- Single point of failure if the operator quits, gets hacked, or is legally forced to shut down (eg. servers burn down, servers seized by authorities), the entire system breaks.
+- Censorship
+- The operator can censor users and change their balances, and it is very difficult for users to prove malfeasance because there is no client-side validation
+- Straight up fraud. The operator has complete control, so they can steal money directly from users or print money ("credit") out of thin air (and banks do this all the time, it's called fractional reserve banking :).
+
+The only safeguard against misbehavior of centralized operators is the legal system & social reputation.
+
+Legal and social incentives don't protect against hacking though --see Bitconnect, Mt. Gox, and many other exchanges which have been hacked.
+
+Also, theft is often unprovable
+
+## Properties of decentralized systems
+- yay!
+
+They're new, fun, and exciting and open up a field of P2P possibilities :)
+
+Also resistant to hacking IF built correctly (they're often not as best practices are an evolving moving target)
