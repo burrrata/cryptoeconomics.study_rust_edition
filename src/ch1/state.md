@@ -118,6 +118,9 @@ fn main() {
 
 ## Resources
 
-Todo
-- resources on the history of state machines
-- articles exploring Ethereum's state machine architecture in more depth
+The history of state machines
+- https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22
+- https://en.wikipedia.org/wiki/Analytical_Engine
+
+Ethereum's state machine architecture
+- https://github.com/ethereum/wiki/wiki/White-Paper#ethereum-state-transition-function
