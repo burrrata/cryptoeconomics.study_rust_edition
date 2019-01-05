@@ -1,5 +1,5 @@
 # Centralized Payment Processor
-Bringing it all together...
+Bringing it all together.
 
 ## Words
 
