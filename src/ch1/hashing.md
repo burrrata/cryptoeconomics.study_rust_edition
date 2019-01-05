@@ -1,7 +1,7 @@
 # Hashing
-All about those trees
+All about those trees.
 
-### TODO: 
+### Words
 
 Explain how they work:
 - Rust default hasher
@@ -13,15 +13,12 @@ Explain what they do:
 - preimage resistance
 - random oracle
 
-# Resources
-- https://en.wikipedia.org/wiki/Merkle_tree
-- https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
-- https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
+It would be great to mention how Ethereum uses patricia tries and then show how to upgrade to this mechanism in ch2 or later
+- https://github.com/ethereum/wiki/wiki/Patricia-Tree
 
 
-# WIP STUFF
+# Code
 - uses unsafe code, but no external libraries 
-
 
 ```rust
 use std::collections::HashMap;
@@ -100,8 +97,9 @@ fn main() {
     let tx_hash = hash(tx_bytes);
     println!("tx hash: {:#?}", tx_hash);
 }
-
-
-
-
 ```
+
+# Resources
+- https://en.wikipedia.org/wiki/Merkle_tree
+- https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
+- https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
