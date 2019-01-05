@@ -1,9 +1,9 @@
 # Resources
 
 ### The Ethereum Papers
-- https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
-- https://ethereum.github.io/yellowpaper/paper.pdf
-- https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
+- white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
+- beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
+- yellow: https://ethereum.github.io/yellowpaper/paper.pdf
 
 ### Ethereum Research
 - https://ethresear.ch
