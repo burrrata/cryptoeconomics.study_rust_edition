@@ -1,5 +1,5 @@
 # State
-All the things...
+All the things.
 
 ## Words
 
@@ -13,17 +13,16 @@ use std::collections::HashMap;
 // First we're going to create a struct that will hold the important state data we want to keep our database functioning:
 // - accounts: this is where people's money and addresses live
 // - pending_tx: a pool of pending tx that have not yet been verified as legit or not
-// - verified_tx
+// - chain: this is where TX that have been verified and processed are stored. Think of it as the history, but rather than a bank telling you what your balance is, you can check the history to make sure everything is legit. 
 
 #[derive(Debug)]
 struct State {
-    accounts: HashMap<String, Account>,
-    pending_tx: Vec<TX>,
-    verified_tx: Vec<TX>,
-    history: Vec<Vec<TX>>,
+    modulo: i32,
+    accounts: HashMap<i32, Account>,
+    pending_tx: Vec<SignedTX>,
+    chain: Vec<Block>,
 }
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Account {
     balance: f32,
     nonce: i32,
@@ -31,32 +30,46 @@ struct Account {
 
 #[derive(Debug, Clone)]
 struct TX {
-    sender: String,
-    receiver: String,
-    tx_amount: f32,
+    sender: i32,
+    receiver: i32,
+    amount: f32,
     nonce: i32,
 }
 
 #[derive(Debug, Clone)]
 struct SignedTX {
     tx: TX,
-    signature: String,
+    signature: Vec<i32>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Blockheader {
+    timestamp: i64,
+    nonce: i32, 
+    previous_block_hash: String,  
+    merkle: String,  
+}
+
+#[derive(Debug, Clone)]
+pub struct Block {
+    header: Blockheader,
+    transactions: Vec<SignedTX>
 }
 
 
 impl State {
 
-    // initialize new blockchain
+    // Initialize A "Blockchain"
     pub fn new_blockchain() -> State {
         let mut state = State {
+            modulo: 0,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
-            verified_tx: Vec::new(),
-            history: Vec::new(),
+            chain: Vec::new(),
         };
     
         state
-    }
+    }  
 }
 
 
