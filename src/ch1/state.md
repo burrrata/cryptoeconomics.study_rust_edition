@@ -22,12 +22,21 @@ struct State {
     pending_tx: Vec<SignedTX>,
     chain: Vec<Block>,
 }
+
+// As promised, accounts have a balance.
+// They also have a nonce which is used to add a unique 
+// serial number to every tx and prevent duplicates from
+// being processed. 
 #[derive(Debug, Clone)]
 struct Account {
     balance: f32,
     nonce: i32,
 }
 
+// TX stands for transaction.
+// Sender, receiver, and amount are what they say they are.
+// Like we said, the nonce is a unique value added to every
+// TX to prevent duplicates from being processed.
 #[derive(Debug, Clone)]
 struct TX {
     sender: i32,
@@ -36,12 +45,23 @@ struct TX {
     nonce: i32,
 }
 
+// The sender of every TX signs it to verify that it came
+// from them and not someone else. This is done via hashing
+// and public key crypto, which we'll explore soon. 
 #[derive(Debug, Clone)]
 struct SignedTX {
     tx: TX,
     signature: Vec<i32>,
 }
 
+// The blockheader is attached to every block to provide
+// information such as when the block was produced (timestamp),
+// a unique identifier (nonce), the hash of the previous block
+// to verify the correct ordering of blocks, and a merkle 
+// hash that acts as a signature of this block that the next
+// block can reference. Hashing and linking these blocks 
+// together like this is what leads to the term "blockchain".
+// (because it's a chain of blocks)
 #[derive(Debug, Clone)]
 pub struct Blockheader {
     timestamp: i64,
@@ -50,13 +70,26 @@ pub struct Blockheader {
     merkle: String,  
 }
 
+// Each block holds the information in the block header
+// as well as all the TX that were processed in that block.
+// Because of this anyone can verify the authenticity of the
+// history, and you can't rewrite the history without 
+// rewriting every block that comes after it. When there's
+// a cost for creating blocks this is very difficult, and
+// this is what leads people to trust that blockchains are
+// secure. With a centralized operator though, this does not
+// apply. For this reason, in this chapter we'll refer to the
+// database as a "blockchain" because it's architecture is
+// inspired by blockchains, but has none of the security
+// guarantees of decntralized P2P blockchains.
 #[derive(Debug, Clone)]
 pub struct Block {
     header: Blockheader,
     transactions: Vec<SignedTX>
 }
 
-
+// This function initializes a new "blockchain" inspired
+// data structure.
 impl State {
 
     // Initialize A "Blockchain"
@@ -72,11 +105,13 @@ impl State {
     }  
 }
 
-
+// Let's try it out. If you push play you'll see that the
+// program creates a new state. It's empty, but soon we'll
+// start filling it with data.
 fn main() {
 
   let state = State::new_blockchain();
-  println!("state: {:#?}", state);
+  println!("{:#?}", state);
 
 }
 ```
