@@ -60,6 +60,7 @@ fn main() {
 - https://en.wikipedia.org/wiki/Entropy_(information_theory)
 - https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator
 - https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
 
 ### Ethereum Specific Randomness
 - https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
