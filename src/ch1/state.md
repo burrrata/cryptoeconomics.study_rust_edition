@@ -122,5 +122,6 @@ The history of state machines
 - https://en.wikipedia.org/wiki/Analytical_Engine
 - https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22
 
-Ethereum's state machine architecture
+The Ethereum Whitepaper: state machine sections
+- https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system
 - https://github.com/ethereum/wiki/wiki/White-Paper#ethereum-state-transition-function
