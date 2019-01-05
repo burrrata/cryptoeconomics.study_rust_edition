@@ -1,14 +1,19 @@
 # Public Key Crypto
 (mostly RSA)
 
-## TODO
+## Words
 - mainly explain how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around
 - then exmplain how you can sign stuff with your private key, and others can verify that signature with your public key
 
-## Code Example
+## Code
 This recreates the RSA style protocol explained in the [RSA wiki page](https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation), randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
 
+Haven't figured out how to import external crates to mdBook yet, so just copypasta the commented code into the Rust Playground if you want to experiment with it.
+
 ```rust
+
+/*
+
 extern crate rand;
 use rand::prelude::*;
 
@@ -217,9 +222,11 @@ fn main() {
     println!("DONE!");
 
 }
+
+*/
 ```
 
-# Resources
+## Resources
 - https://en.wikipedia.org/wiki/Public-key_cryptography
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 - https://en.wikipedia.org/wiki/Least_common_multiple
