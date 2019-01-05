@@ -7,11 +7,8 @@ So if we bring that all together we have a "working" centralized payments proces
 
 ## Code
 ```rust
-
 // TODO
 /*
-- How do we not use rand as an external crate
-   or at least figure out how to import it into mdBook?
  - Make check_signed_tx_signature() NOT crash the entire
    program if the tx signature does not match the sender.
  - Would it make more sense to have the RSA stuff in 
@@ -20,8 +17,12 @@ So if we bring that all together we have a "working" centralized payments proces
    the toy setup in the wikipedia article? 
 */
 
-extern crate rand;
-use rand::prelude::*;
+// rand!
+// Uncomment if you want to create new randomized accounts
+// or want to experiment with randomzied RSA params
+// search "rand!" to find functions that use this crate
+//extern crate rand;
+//use rand::prelude::*;
 
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
@@ -133,6 +134,8 @@ impl State {
         true
     }
     
+    // rand!
+    /*
     // slowly yet randomly generate a prime number within a range
     pub fn prime_gen(low: i32,
                  high: i32) -> i32 {
@@ -145,6 +148,7 @@ impl State {
         }
         0
     }
+    */
     
     // slowly find the modular multiplicative inverse of a prime 
     pub fn slow_mmi(ctf_pq: i32,
@@ -160,6 +164,8 @@ impl State {
         0
     }
     
+    // rand!
+    /*
     // generate a public key within a range
     pub fn pub_key_gen(min: i32,
                    max: i32) -> i32 {
@@ -169,6 +175,7 @@ impl State {
         
         pub_key
     }
+    */
     
     // create a private key from a public key and other data
     pub fn priv_key_gen(ctf_pq: i32,
@@ -223,6 +230,8 @@ impl State {
         state
     }    
     
+    // rand!
+    /*
     // Create New Account
     pub fn new_account(&mut self, ctf_pq: i32) {
         
@@ -242,6 +251,7 @@ impl State {
         //println!("This is your private key (signing key): {:#?}", &priv_key);
         //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
+    */
     
     // Turn Arbitrary Stuff Into &[u8] Slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -492,6 +502,7 @@ fn main() {
     
     // Init "RSA" Params and Create Account Keys
     
+    // rand!
     // Randomized initialization
     // State::prime_gen(5, 100);
     // State::prime_gen(5, 100);
@@ -524,13 +535,15 @@ fn main() {
     state.accounts.insert(acc_1_pub_key.clone(), acc_1);
     // Carmichael's totient function of p and q
     let ctf_pq = State::ctf(p, q);
+   
+    // rand!
+    /*
     // Create 3 random accounts
     for _i in 0..3 {
         state.new_account(ctf_pq)
     }
     // Uncomment if you want to generate more keys
     // and see their params
-    /*
     let pub_key = State::pub_key_gen(1, ctf_pq);
     let priv_key = State::priv_key_gen(ctf_pq, pub_key);
     println!("p: {}", &p);
