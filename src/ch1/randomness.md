@@ -6,6 +6,12 @@ If you want to see how important just skip ahead to the [centralized payment pro
 
 ## Code
 ```rust
+
+// If you want to explore this code, copy the commented part into the Rust Playground:
+// - https://play.rust-lang.org
+
+/*
+
 extern crate rand;
 
 use rand::prelude::*;
@@ -24,6 +30,8 @@ fn main() {
     println!("key: {}", key);
     
 }
+
+*/
 ```
 
 ### Importance of strong random number generation
