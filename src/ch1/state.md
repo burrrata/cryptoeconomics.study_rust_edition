@@ -122,9 +122,8 @@ The Ethereum Whitepaper: state machine sections
 - https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system
 - https://github.com/ethereum/wiki/wiki/White-Paper#ethereum-state-transition-function
 
-The Ethereum Yellowpaper:
-- https://ethereum.github.io/yellowpaper/paper.pdf
-- Section 2: "Ethereum, taken as a whole, can be viewed as a
+The Ethereum Yellowpaper: 2. The Blockchain Paradigm
+- "Ethereum, taken as a whole, can be viewed as a
 transaction-based state machine: we begin with a genesis
 state and incrementally execute transactions to morph
 it into some final state. It is this final state which we
@@ -138,6 +137,7 @@ states; the ‘valid’ part is important—there exist far more
 invalid state changes than valid state changes. Invalid state
 changes might, e.g., be things such as reducing an account
 balance without an equal and opposite increase elsewhere."
+- https://ethereum.github.io/yellowpaper/paper.pdf
 
 The history of state machines
 - https://en.wikipedia.org/wiki/Analytical_Engine
