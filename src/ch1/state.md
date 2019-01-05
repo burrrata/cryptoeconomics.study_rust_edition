@@ -1,14 +1,17 @@
 # State
-All the things
+All the things...
 
-## TODO
-Explain how a State object is simply the agreed upon state of a set of information. In this case we keep track of information that we need to make the "blockchain" function. 
+## Words
+
+So as we mentioned, a blockchain is a glorified database. As such, at it's heart is some data. Like any database that changes, the current state of things is literally called the "state". With a centralized database it's often just a handful of admins who use their meatsticks to push buttons on a keyboard that tell a program what to do when. Being how this is the simplest example we'll start here, but in future chapters we'll see how just a few changes can transfer control from the admins to the users. This will result in a  decentralized blockchain where the state is agreed upon by a distributed group of verifiers based on some consensus rules. Working towards that, let's start with the simplest example possible to explore the basic concepts. 
 
 ## Code
 
 ```rust
 use std::collections::HashMap;
 
+// First we're going to create a struct that will hold the important state data we want to keep our database functioning:
+// - 
 
 #[derive(Debug)]
 struct State {
