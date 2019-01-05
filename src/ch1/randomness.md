@@ -55,14 +55,14 @@ fn main() {
 ### Rust Rand Book
 - https://rust-random.github.io/book/intro.html
 
+### Ethereum Specific Randomness
+- https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
+- https://vitalik.ca/files/randomness.html
+- https://ethresear.ch/t/posw-random-beacon/1814
+
 ### Other
 - https://blog.cloudflare.com/why-randomness-matters/
 - https://en.wikipedia.org/wiki/Entropy_(information_theory)
 - https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator
 - https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
 - https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
-
-### Ethereum Specific Randomness
-- https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
-- https://vitalik.ca/files/randomness.html
-- https://ethresear.ch/t/posw-random-beacon/1814
