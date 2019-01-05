@@ -228,7 +228,13 @@ fn main() {
 ```
 
 ## Resources
+
+RSA Pub Key Stuff
 - https://en.wikipedia.org/wiki/Public-key_cryptography
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 - https://en.wikipedia.org/wiki/Least_common_multiple
 - https://en.wikipedia.org/wiki/Modular_exponentiation
+
+Ethereum Key Stuff
+- Appendix F of the Yellow Paper: https://ethereum.github.io/yellowpaper/paper.pdf
+- Parity Ethereum Client (Rust): ethkey library: https://github.com/paritytech/parity-ethereum/tree/master/accounts/ethkey
