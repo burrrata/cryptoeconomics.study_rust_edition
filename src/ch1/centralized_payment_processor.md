@@ -575,10 +575,14 @@ fn main() {
 ```
 
 
-## Notes
+## Resources
+- todo: add links to Cryptoeconomics.Study code and that Rust blockchain tutorial
+
+
+Notes from Cryptoeconomics.Study
 - source: https://cryptoeconomics.study/overview.html
 
-### Centralized Databases
+#### Centralized Databases
 
 Benefits:
 - Easy to build and reason about.
@@ -597,7 +601,7 @@ Legal and social incentives don't protect against hacking though --see Bitconnec
 
 Also, theft is often unprovable
 
-### Decentralized Databases
+#### Decentralized Databases
 
 They're new, fun, and exciting and open up a field of possibilities that would otherwise be impossible at scale without cryptoeconomic mechanisms :)
 
