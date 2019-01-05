@@ -21,3 +21,6 @@ Chapter Framework:
 - summary putting it all together (editable code you can run and play with)
 
 Bonus points if there's a story to explain the code and concepts.
+
+## Table Of Contents
+- TBD: I'll add it once the mdBook/rand problem is solved
