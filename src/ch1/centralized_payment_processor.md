@@ -15,6 +15,10 @@ So if we bring that all together we have a "working" centralized payments proces
    it's own impl ?
  - Maybe use 65537 as the modulo rather than following
    the toy setup in the wikipedia article? 
+ - How much faster would the program be if we used &[u8]
+   for all values rather than i32 and f32? Or would the ux
+   be too much of a pain in ass and is i32 easier because
+   the user just types a number like python and it works?
 */
 
 // rand!
