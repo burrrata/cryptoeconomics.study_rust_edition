@@ -4,6 +4,8 @@ The proof is in the pudding.
 Talk about how when you sign/do stuff with a public key crypto system you prove that it came from your address.
 
 ```rust
+/*
+
 extern crate rand;
 use rand::prelude::*;
 
@@ -319,6 +321,8 @@ fn main() {
     println!("is the signature authentic?\n{}", check_tx);
 
 }
+
+*/
 ```
 
 # Resources
