@@ -16,30 +16,30 @@ https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/c
 - history => blocks and merkle tries  
 - bank money => PoW
 
-Better P2P Network
+### Better P2P Network
 - signed "RSA" tx => ECDSA
 - generic merkle trie => patricia tries
 - generic String/u8 conversion => RSL data encoding
 - PoW => PoS
 
-L2: state channels
+### L2: state channels
 
-L2: plasma
+### L2: plasma
 
-Cryptoeconomic Applications
+### Cryptoeconomic Applications
 - So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot...
 - Would it make more sense to dive into solidity at this point?
 
 <br>
 
-# TODO
+# General TODOs
 
-UX: make it useable so people can actually learn stuff or provide feedback
-- build out individual sections as a tutorial leading up to the full demo
-- add relevant resources to each section
-- improve comments in the centralize_payment_processor finale to better explain what's going on for those who jump ahead
+Chapter Architecture:
+- each chapter creates a thing
+- sections in the chapter create the components needed for that thing
+- each section has an explanation in words, code, and resources to get other perspectives
 
-Feedback: making it actually usable
+Get feedback to make it actually usable by people
 - update Cryptoeconomics.Study post
 - hit up the Tensor Programming guy who rolled the template Rust blockchain tutorial
 - share to /r/ethereum
