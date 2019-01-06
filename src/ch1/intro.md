@@ -3,6 +3,10 @@ They're not as boring when you roll your own!
 
 ### TODO
 
+General:
+- would it make sense to have a separate module for data serialization (turning stuff into &[u8] bytes so that RSA and the hash function can operate on them?)
+- then you could have an upgrade path to Ethereum's RLP: https://github.com/ethereum/wiki/wiki/RLP
+
 UX: make it useable so people can actually learn stuff or provide feedback
 - build out individual sections as a tutorial leading up to the full demo
 - add relevant resources to each section
