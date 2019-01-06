@@ -6,20 +6,22 @@
 
 Main
 - [Centralized Payment Processor](./ch1/intro.md)
-  - [State](./ch1/state.md): all the things
-  - [Randomness](./ch1/randomness.md): and why it matters
-  - [Public Key Crypto](./ch1/public_key_crypto.md): not just an account/password system
-  - [Digital Signatures](./ch1/digital_signatures.md): the proof is in the pudding
-  - [Accounts](./ch1/accounts.md): combining these things into something useful!
-  - [TX](./ch1/tx.md): using your account to do stuff!
-  - [Hashing](./ch1/hashing.md): deterministically making data compact
-  - [Blocks](./ch1/blocks.md): how you know what happened
-  - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
-  - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
+  - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
 - [P2P Blockchain Network](.ch2/intro.md)
+  - [State](./ch2/state.md)
+  - [Randomness](./ch2/randomness.md)
+  - [Public Key Crypto](./ch2/public_key_crypto.md)
+  - [Digital Signatures](./ch2/digital_signatures.md)
+  - [Accounts](./ch2/accounts.md)
+  - [TX](./ch2/tx.md)
+  - [Hashing](./ch2/hashing.md)
+  - [Blocks](./ch2/blocks.md)
+- [Better P2P Blockchain](./ch3/intro.md)
+  - [RLP](.ch3/rlp.md)
+  - [Patricia Tries](.ch3/patricia_tries.md)
 - [Moar Resources](./resources/intro.md)
-  - [Learning](./resources/learning.md): things to read
-  - [Building](./resources/building.md): things to do
-  - [Engaging](./resources/engaging.md): people to talk to
+  - [Learning](./resources/learning.md)
+  - [Building](./resources/building.md)
+  - [Engaging](./resources/engaging.md)
 
 [Donations](./donations.md)
