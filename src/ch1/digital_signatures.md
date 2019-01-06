@@ -10,7 +10,7 @@ Talk about how when you sign/do stuff with a public key crypto system you prove 
 
 
 # Code
-```rust
+```rust, ignore
 /*
 
 extern crate rand;
