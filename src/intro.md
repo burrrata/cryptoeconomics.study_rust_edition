@@ -9,6 +9,7 @@ These stakeholders are incentivized to contribute to the health and growth netwo
 
 This tutorial will explore the basic components that go into building cryptoeconomic systems. This will start with the traditional centralize payment processors we know and hate, and will progressively move towards more and more decentralized systems secured and maintained through cryptoeconomics rather than corporate interests. Let the games begin! 
 
+<br>
 
 ## Goals
 - For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
@@ -22,7 +23,9 @@ Chapter Framework:
 
 Bonus points if there's a story to explain the code and concepts.
 
-## Table Of Contents
+<br>
+
+## How The Cookie Crumbles
 [Intro](./intro.md)
 
 [Pregame w Crypto Wars](./crypto_wars.md)
