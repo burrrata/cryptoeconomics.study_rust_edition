@@ -16,10 +16,9 @@
   - [Blocks](./ch1/blocks.md): how you know what happened
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
-- [Placeholder for ch2 and stuff](.ch2/intro.md)
+- [P2P Network](.ch2/intro.md)
 - [Resources](./resources/intro.md)
-  - [Learning](./resources/learning.md)
-  - [Building](./resources/building.md)
-  - [Engaging](./resources/engaging.md)
-
+  - [Learning](./resources/learning.md): things to read
+  - [Building](./resources/building.md): things to do
+  - [Engaging](./resources/engaging.md): people to talk to
 [Donations](./donations.md)
