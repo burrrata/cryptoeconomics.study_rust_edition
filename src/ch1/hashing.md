@@ -3,18 +3,19 @@ All about those trees.
 
 ### Words
 
-Explain how they work:
+Explain how hashing works:
 - Rust default hasher
 - SHA256 that's used in Ethereum
 
-Explain what they do:
+Explain what it's useful for:
 - collision resistance
 - second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)]
 - preimage resistance
 - random oracle
 
-It would be great to mention how Ethereum uses patricia tries and then show how to upgrade to this mechanism in ch2 or later
-- https://github.com/ethereum/wiki/wiki/Patricia-Tree
+Explore merkle trees
+- effecient data verification
+- touch on patricia trees, but explain/build them in ch2: https://github.com/ethereum/wiki/wiki/Patricia-Tree
 
 
 # Code
