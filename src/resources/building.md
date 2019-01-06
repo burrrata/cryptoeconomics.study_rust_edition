@@ -9,6 +9,7 @@
 
 ### Smart Contract Dev
 - security like manticore and stuff
+- https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch
 
 ### L2 Dev
 - plasma
