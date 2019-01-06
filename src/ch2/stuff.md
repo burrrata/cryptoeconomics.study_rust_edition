@@ -1,8 +1,10 @@
-# Resources for >= Ch2 
+# Resources For The Future
 For things that might help with extending the original demo.
 
-PoS
-- Alpha Casper FFG Testnet Instructions: https://hackmd.io/s/Hk6UiFU7z
+Casper FFG Testnet (PoS): https://hackmd.io/s/Hk6UiFU7z
+
+Sharding
+- https://github.com/ethereum/wiki/wiki/Sharding-roadmap
 
 Pyethereum Serenity Draft
 - https://github.com/ethereum/pyethereum/tree/serenity/
