@@ -1,12 +1,12 @@
 # Flow
 
 ### CPP State
-- see: https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md
 - trust bank has correct state
 - bank controls accounts
 - bank controls tx
 - bank controls history
 - bank creates new money
+https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md
 
 ### P2P State
 - trust => agreed upon pub key crypto accounts and network params 
