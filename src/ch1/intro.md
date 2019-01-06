@@ -1,11 +1,6 @@
 # Ch1: Centralized Payment Processors
 They're not as boring when you roll your own! 
-  - [State](./ch1/state.md): all the things
-  - [Randomness](./ch1/randomness.md): and why it matters
-  - [Public Key Crypto](./ch1/public_key_crypto.md): not just an account/password system
-  - [Digital Signatures](./ch1/digital_signatures.md): the proof is in the pudding
-  - [Accounts](./ch1/accounts.md): combining these things into something useful!
-  - [TX](./ch1/tx.md): using your account to do stuff!
-  - [Hashing](./ch1/hashing.md): deterministically making data compact
-  - [Blocks](./ch1/blocks.md): how you know what happened
-  - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
+
+This chapter will explore data as we know it: in the form of a centralized payment processor like PayPal or your bank. The purpose is to highlight the important working parts of the system: state, accounts, transactions, and most of all... trust. In future chapters we'll show how we can get those same properties, but in a way where everyone can verify the authenticity of the state rather than trusting the word of a for profit business. After that we'll explore the new and exciting possibilities enabled by this divergent architecture :)
+
+Let's get started...
