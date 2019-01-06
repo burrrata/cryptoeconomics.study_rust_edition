@@ -11,7 +11,7 @@ This recreates the RSA style protocol explained in the [RSA wiki page](https://e
 
 Haven't figured out how to import external crates to mdBook yet, so just copypasta the commented code into the Rust Playground if you want to experiment with it.
 
-```rust
+```rust, ignore
 
 /*
 
