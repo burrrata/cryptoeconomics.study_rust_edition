@@ -1,35 +1,25 @@
 # Flow
 
 ### CPP State
-
-Accounts
-- id: hash of randomized numbers 
-- password: another set of randomized numbers
-- balance: u8
-- nonce: u8
-
-tx
-- check that account exists
-- check account is not frozen
-- check account balance is > tx amount
-- check tx nonce = account nonce to prevent double spend glitches/hacks
-
-history
-- hashmap of processed tx
-- function to search hashmap for an account (key) and return associated tx (value)
+- see: https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md
+- trust bank has correct state
+- bank controls accounts
+- bank controls tx
+- bank controls history
+- bank creates new money
 
 ### P2P State
-- agreed upon pub key crypto params
-- accounts
-- tx & signatures
-- blocks and merkle tries 
-- PoW
+- trust => agreed upon pub key crypto accounts and network params 
+- accounts => accounts created via "secure" random key generation
+- tx => signed tx
+- history => blocks and merkle tries  
+- bank money => PoW
 
 Better P2P Network
-- ECDSA
-- patricia tries
-- RSL data encoding
-- PoS
+- signed "RSA" tx => ECDSA
+- generic merkle trie => patricia tries
+- generic String/u8 conversion => RSL data encoding
+- PoW => PoS
 
 L2: state channels
 
