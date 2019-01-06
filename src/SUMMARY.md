@@ -2,7 +2,7 @@
 
 [Intro](./intro.md)
 
-[Pregame w Crypto Wars](./crypto_wars.md)
+[Pregame](./crypto_wars.md)
 
 Main
 - [Centralized Payment Processor](./ch1/intro.md)
@@ -17,7 +17,7 @@ Main
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
 - [P2P Blockchain Network](.ch2/intro.md)
-- [Resources](./resources/intro.md)
+- [Moar Resources](./resources/intro.md)
   - [Learning](./resources/learning.md): things to read
   - [Building](./resources/building.md): things to do
   - [Engaging](./resources/engaging.md): people to talk to
