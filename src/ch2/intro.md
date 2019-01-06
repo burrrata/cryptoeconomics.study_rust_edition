@@ -27,7 +27,7 @@ Pyethereum Serenity Draft
   - https://pdaian.com/blog/vote-buying-on-chain-governance-and-quadratic-plutocracy
 - Small vs Large Games
   - https://unenumerated.blogspot.com/2015/05/small-game-fallacies.html
-- Dystopia (things we want to avoid/fix)
+- Dystopia (things we want to avoid that blockchains could easily amplify)
   - https://en.wikipedia.org/wiki/Social_Credit_System
   - https://www.reuters.com/investigates/special-report/venezuela-zte/
   - https://www.npr.org/sections/thesalt/2018/09/29/643386327/no-cash-needed-at-this-cafe-students-pay-the-tab-with-their-personal-data
