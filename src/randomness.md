@@ -7,7 +7,7 @@ The Rust Cookbook did it, but I don't know how
 - https://github.com/rust-lang-nursery/rust-cookbook
 
 
-```rust
+```rust, ignore
 extern crate rand;
 
 use rand::Rng;
