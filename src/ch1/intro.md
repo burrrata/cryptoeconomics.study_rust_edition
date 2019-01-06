@@ -1,4 +1,4 @@
-# Chapter 1: centralized payment processors
+# Ch1: Centralized Payment Processors
 They're not as boring when you roll your own! 
   - [State](./ch1/state.md): all the things
   - [Randomness](./ch1/randomness.md): and why it matters
