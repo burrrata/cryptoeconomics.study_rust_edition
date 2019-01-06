@@ -1,3 +1,8 @@
+# Flow
+
+Does it make more sense to make ch1 a straight up centralized payment processor without blocks or pub key crypto?
+- and THEN add those upgrades in ch2 as we iteratively decentralize it?
+
 # mdBook and External Libraries
 - If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
