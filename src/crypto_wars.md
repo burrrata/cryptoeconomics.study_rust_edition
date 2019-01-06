@@ -2,5 +2,5 @@
   <img src="crypto_wars.png">
 </p>
 
-A fun and highlevel intro to the concepts in this book, applied to a ripoff of the Star Wars story arch.
+A whimsical (WIP) intro to the concepts in this book.
 - https://burrrata.github.io/crypto_wars/
