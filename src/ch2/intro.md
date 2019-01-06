@@ -1,4 +1,5 @@
-# Resources For The Future
+# Ch2: Content TBD
+For now just a placeholder collecting resources that might be helpful for future chapters.
 
 Casper FFG Testnet (PoS)
 - https://hackmd.io/s/Hk6UiFU7z
