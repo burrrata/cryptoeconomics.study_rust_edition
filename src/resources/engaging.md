@@ -1,5 +1,5 @@
 # Engaging: people to talk to
-Because sharing is caring.
+because sharing is caring
 
 ### Ethereum Research Forum
 - https://ethresear.ch
