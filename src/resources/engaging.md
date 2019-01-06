@@ -1,11 +1,13 @@
 # Engaging
 Sharing is caring.
 
-Ethereum Research Forum
+### Ethereum Research Forum
 - https://ethresear.ch
 
-Cryptoeconomics.Study Forum
+### Cryptoeconomics.Study Forum
 - http://forum.cryptoeconomics.study
 
-Reddit Ethereum Community
+### Reddit Communities
 - https://www.reddit.com/r/ethereum/
+- https://www.reddit.com/r/cryptoeconomics/
+- https://www.reddit.com/r/crypto
