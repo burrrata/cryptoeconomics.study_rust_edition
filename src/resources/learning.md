@@ -1,4 +1,4 @@
-# Resources
+# Learning: things to read
 
 ### The Ethereum Papers
 - white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
