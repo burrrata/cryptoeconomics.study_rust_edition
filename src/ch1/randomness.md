@@ -28,7 +28,7 @@ Strong random number generation is important throughout every phase of public ke
 If you want to explore this code, copy the commented part into the Rust Playground:
 - https://play.rust-lang.org
 
-```rust
+```rust, ignore
 
 /*
 
