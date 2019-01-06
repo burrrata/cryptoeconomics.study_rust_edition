@@ -16,7 +16,7 @@
   - [Blocks](./ch1/blocks.md): how you know what happened
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
-- [P2P Network](.ch2/intro.md)
+- [P2P Blockchain Network](.ch2/intro.md)
 - [Resources](./resources/intro.md)
   - [Learning](./resources/learning.md): things to read
   - [Building](./resources/building.md): things to do
