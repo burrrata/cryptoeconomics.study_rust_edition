@@ -16,6 +16,8 @@
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
   - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
 
+[Placeholder for ch2 and stuff](.ch2/intro.md)
+
 [Resources](./resources.md)
 
 [TEST](./test.md)
