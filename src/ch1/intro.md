@@ -9,7 +9,7 @@ They're not as boring when you roll your own!
   - [Hashing](./ch1/hashing.md): deterministically making data compact
   - [Blocks](./ch1/blocks.md): how you know what happened
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md): putting it all together into a working example
-  - [Inspo](./ch1/inspo.md): standing on the shoulders of giants
+  - [Inspo](./ch1/inspo.md): standing on shoulders
 
 
 ### TODO
