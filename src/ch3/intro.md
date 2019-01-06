@@ -1,4 +1,4 @@
-# Ch2: Content TBD
+# Ch3: Content TBD
 For now just a placeholder collecting resources that might be helpful for future chapters.
 
 Casper FFG Testnet (PoS)
