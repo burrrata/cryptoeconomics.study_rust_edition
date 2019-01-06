@@ -1,14 +1,24 @@
 # Flow
 
-Does it make more sense to make ch1 a straight up centralized payment processor without blocks or pub key crypto?
-- and THEN add those upgrades in ch2 as we iteratively decentralize it?
+### CPP State
 
-CPP State
-- accounts (just large randomized values that the user has and the operator checks against a centralized HashMap)
-- tx (minimal)
-- history (just a hashmap that stores processed tx)
+Accounts
+- id: hash of randomized numbers 
+- password: another set of randomized numbers
+- balance: u8
+- nonce: u8
 
-P2P State
+tx
+- check that account exists
+- check account is not frozen
+- check account balance is > tx amount
+- check tx nonce = account nonce to prevent double spend glitches/hacks
+
+history
+- hashmap of processed tx
+- function to search hashmap for an account (key) and return associated tx (value)
+
+### P2P State
 - agreed upon pub key crypto params
 - accounts
 - tx & signatures
