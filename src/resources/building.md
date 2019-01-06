@@ -6,6 +6,7 @@
 
 ### Core Blockchain Dev
 - are there resources for this stuff?
+- maybe resources that talk about cryptoeconomic security for L1 and L2 systems?
 
 ### Smart Contract Dev
 - security like manticore and stuff
