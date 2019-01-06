@@ -9,11 +9,9 @@
 ## Code
 This recreates the RSA style protocol explained in the [RSA wiki page](https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation), randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
 
-Haven't figured out how to import external crates to mdBook yet, so just copypasta the commented code into the Rust Playground if you want to experiment with it.
+Haven't figured out how to buidl mdBook with the rand crate yet, so just copypasta the code into the Rust Playground if you want to experiment with it.
 
 ```rust, ignore
-
-/*
 
 extern crate rand;
 use rand::prelude::*;
@@ -223,8 +221,6 @@ fn main() {
     println!("DONE!");
 
 }
-
-*/
 ```
 
 ## Resources
