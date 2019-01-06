@@ -15,7 +15,10 @@ Pyethereum Serenity Draft
 ### Cryptoeconomics
 - Token Engineering
   - http://tokenengineering.net/building-blocks
+- Applications
+  - https://colony.io/
 - Voting Systems
+  - https://medium.com/@Vlad_Zamfir
   - https://www.coindesk.com/the-dark-dao-threat-vote-vulnerability-could-undermine-crypto-elections
   - http://hackingdistributed.com/2018/07/02/on-chain-vote-buying
   - https://pdaian.com/blog/vote-buying-on-chain-governance-and-quadratic-plutocracy
