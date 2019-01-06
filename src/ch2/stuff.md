@@ -8,3 +8,6 @@ Sharding
 
 Pyethereum Serenity Draft
 - https://github.com/ethereum/pyethereum/tree/serenity/
+
+Token Engineering
+- http://tokenengineering.net/building-blocks
