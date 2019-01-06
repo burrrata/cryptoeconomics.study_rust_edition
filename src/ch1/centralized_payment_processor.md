@@ -43,13 +43,6 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
-/*
-Structs
-- State {accounts, frozen_accounts, pending_tx, history}
-- Account {balance, password, nonce}
-- TX {sender, password, nonce, receiver}
-*/
-
 #[derive(Debug)]
 struct State {
     accounts: HashMap<String, Account>,
@@ -73,20 +66,6 @@ struct TX {
     receiver: String,
 }
 
-
-/*
-Functions
-- hash
-- create password
-- create new account
-- freeze account (move from reg accounts HashMap to frozen HashMap)
-- add moneys to account (like if the user paid the central operator from another bank account)
-- check account exists
-- check account password = tx_password
-- check account nonce = tx_nonce
-- check account balance > tx amount
-- check history of account
-*/
 
 // Central Payment Processor
 impl State {
@@ -163,6 +142,39 @@ impl State {
     
         self.frozen_accounts.insert(account.0, account.1);
     }
+    
+    // Add funds to an account
+    pub fn add_funds(&mut self,
+                     account_id: String,
+                     amount: i32) {
+        
+        if let Some(x) = self.accounts.get_mut(&account_id) {
+            x.balance += amount;
+        }
+        /*
+        let mut account = self.accounts.get_mut(&account_id).unwrap();
+        account.1.balance += amount;
+        self.accounts.insert(account.0, account.1);
+        */
+    }
+    
+    // Check that an account exists
+    pub fn does_account_exist(&mut self,
+                              account_id: String) -> bool {
+        
+        if let Some(x) = self.accounts.get(&account_id) {
+            return true
+        }
+        return false
+    }
+    
+/*
+Functions
+- check account password = tx_password
+- check account nonce = tx_nonce
+- check account balance > tx amount
+- check history of account
+*/   
 }
 
 
