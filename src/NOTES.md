@@ -29,3 +29,11 @@ mdBook says nothing about adding depdancies to external crates
 - summary putting it all together (editable code you can run and play with)
 
 Bonus points if there's a story to explain the code and concepts.
+
+### Why this book?
+
+Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code.
+- Cryptoeconomics.Study code is written in JS and references external Ethereum libraries
+- there's no functionality for accounts, keys, or tx signatures in the Rust tutorial
+
+So here we are!
