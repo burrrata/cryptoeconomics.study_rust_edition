@@ -4,7 +4,7 @@
 
 [Pregame w Crypto Wars](./crypto_wars.md)
 
-[Main]
+Main
 - [Centralized Payment Processor](./ch1/intro.md)
   - [State](./ch1/state.md): all the things
   - [Randomness](./ch1/randomness.md): and why it matters
