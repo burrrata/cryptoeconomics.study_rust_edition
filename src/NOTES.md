@@ -3,6 +3,34 @@
 Does it make more sense to make ch1 a straight up centralized payment processor without blocks or pub key crypto?
 - and THEN add those upgrades in ch2 as we iteratively decentralize it?
 
+CPP State
+- accounts
+- tx
+- history
+
+P2P State
+- agreed upon pub key crypto params
+- accounts
+- tx & signatures
+- blocks and merkle tries 
+- PoW
+
+Better P2P Network
+- ECDSA
+- patricia tries
+- RSL data encoding
+- PoS
+
+L2: state channels
+
+L2: plasma
+
+Cryptoeconomic Applications
+- So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot...
+- Would it make more sense to dive into solidity at this point?
+
+<br>
+
 # mdBook and External Libraries
 - If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
@@ -22,6 +50,8 @@ How did The Rust Cookbook do it?
 mdBook says nothing about adding depdancies to external crates
 - https://rust-lang-nursery.github.io/mdBook/index.html
 - https://github.com/rust-lang-nursery/mdBook
+
+<br>
 
 # Goals
 - For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
