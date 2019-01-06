@@ -18,4 +18,7 @@
 
 [Placeholder for ch2 and stuff](.ch2/intro.md)
 
-[Resources](./resources.md)
+[Resources](./resources/intro.md)
+  - [Learning](./resources/learning.md)
+  - [Building](./resources/building.md)
+  - [Engaging](./resources/engaging.md)
