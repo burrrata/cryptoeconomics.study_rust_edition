@@ -4,9 +4,9 @@ Does it make more sense to make ch1 a straight up centralized payment processor 
 - and THEN add those upgrades in ch2 as we iteratively decentralize it?
 
 CPP State
-- accounts
-- tx
-- history
+- accounts (just large randomized values that the user has and the operator checks against a centralized HashMap)
+- tx (minimal)
+- history (just a hashmap that stores processed tx)
 
 P2P State
 - agreed upon pub key crypto params
