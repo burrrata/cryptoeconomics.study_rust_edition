@@ -1,3 +1,7 @@
+## Bringing it all together
+
+## Words
+
 Structs
 - State {accounts, frozen_accounts, pending_tx, history}
 - Account {balance, password, nonce}
@@ -27,6 +31,9 @@ MAIN
 - simulate TX
 - show the bank's view vs the user's view
 
+
+## Code
+
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
@@ -46,7 +53,7 @@ Structs
 #[derive(Debug)]
 struct State {
     accounts: HashMap<String, Account>,
-    frozen_account: HashMap<String, Account>,
+    frozen_accounts: HashMap<String, Account>,
     pending_tx: HashMap<i32, TX>,
     history: HashMap<i32, TX>,
 }
@@ -97,7 +104,7 @@ impl State {
         
         let new = State {
             accounts: HashMap::new(),
-            frozen_account: HashMap::new(),
+            frozen_accounts: HashMap::new(),
             pending_tx: HashMap::new(),
             history: HashMap::new(),
         };
@@ -146,6 +153,15 @@ impl State {
         };
         
         self.accounts.insert(account_id, account_data);
+    }
+    
+    // "Freeze" an account
+    pub fn freeze_account(&mut self,
+                          account_id: String) {
+        
+        let account = self.accounts.remove_entry(&account_id).unwrap();
+    
+        self.frozen_accounts.insert(account.0, account.1);
     }
 }
 
