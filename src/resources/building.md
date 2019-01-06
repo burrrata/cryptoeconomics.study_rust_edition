@@ -1,4 +1,4 @@
-# Building
+# Building: things to do.
 
 ### General Ethereum Dev
 - https://github.com/ConsenSys/ethereum-developer-tools-list
