@@ -19,5 +19,3 @@
 [Placeholder for ch2 and stuff](.ch2/intro.md)
 
 [Resources](./resources.md)
-
-[TEST](./test.md)
