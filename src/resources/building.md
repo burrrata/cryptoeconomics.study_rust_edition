@@ -1,1 +1,16 @@
 # Building
+
+### General Ethereum Dev
+- https://github.com/ConsenSys/ethereum-developer-tools-list
+- https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
+
+### Core Blockchain Dev
+- are there resources for this stuff?
+
+### Smart Contract Dev
+- security like manticore and stuff
+
+### L2 Dev
+- plasma
+- state channels
+- other?
