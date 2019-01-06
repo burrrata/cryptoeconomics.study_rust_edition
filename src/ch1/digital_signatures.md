@@ -1,8 +1,15 @@
 # Digital Signatures
 The proof is in the pudding.
 
+
+# Words
+
+Would it be better to merge this with the public key crypto section since they're so similar and use mostly the same code?
+
 Talk about how when you sign/do stuff with a public key crypto system you prove that it came from your address.
 
+
+# Code
 ```rust
 /*
 
