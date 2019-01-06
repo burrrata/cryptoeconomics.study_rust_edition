@@ -1,5 +1,3 @@
-# Notes
-
 # mdBook and External Libraries
 - If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
