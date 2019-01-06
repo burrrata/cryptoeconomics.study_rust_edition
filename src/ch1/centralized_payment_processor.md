@@ -6,7 +6,7 @@ Bringing it all together.
 So if we bring that all together we have a "working" centralized payments processor demo! I say "working" because we've demonstrated many of the core components in a payment processing engine and it (mostly) doesn't crash, but in practice you'd need many security/ux improvements. We'll explore those in future chapters, but for now let's explore this model to get familiar with how everything works :)
 
 ## Code
-```rust
+```rust, ignore
 // TODO
 /*
  - Make check_signed_tx_signature() NOT crash the entire
