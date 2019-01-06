@@ -31,6 +31,21 @@ Cryptoeconomic Applications
 
 <br>
 
+# TODO
+
+UX: make it useable so people can actually learn stuff or provide feedback
+- build out individual sections as a tutorial leading up to the full demo
+- add relevant resources to each section
+- improve comments in the centralize_payment_processor finale to better explain what's going on for those who jump ahead
+
+Feedback: making it actually usable
+- update Cryptoeconomics.Study post
+- hit up the Tensor Programming guy who rolled the template Rust blockchain tutorial
+- share to /r/ethereum
+
+
+<br>
+
 # mdBook and External Libraries
 - If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
