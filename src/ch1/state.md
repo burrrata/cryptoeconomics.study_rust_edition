@@ -1,18 +1,36 @@
 # State
 All the things...
 
-## Video
-
 ## Words
 
+In this chapter we'll explore the concept of "state" and why it's crucial to the functioning of any system.
+
+Concepts to cover at a high level:
+- data is power
+- "money", pictures, everything digital is just data stored in a state
+- computation occurs in a state
+
+## Video
+
+Link to Cryptoeconomics.Study's most relevant video on the topic. 
+
 ## Code
-```rust, ignore
+```rust, editable
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 
-// This structure keeps track of all the data we need
+// In Rust, structs are a way to organize data. You can 
+// learn more about them here:
+// https://doc.rust-lang.org/book/ch05-00-structs.html
+
+// This structure keeps track of all the bank's data.
+// The state is simply a record of what's what, and when
+// things change, like users doing stuff or the bank doing
+// stuff, the state will (hopefully )change to reflect that.
+// Theoretically it's in everyone's best interest to make
+// sure that the state accurate.
 #[derive(Debug)]
 struct State {
 
@@ -75,25 +93,39 @@ struct Account {
     balance: i32,
 }
 
-
+// This structure keeps track of all the TX information
+// the bank cares about from users.
 #[derive(Debug, Clone)]
 struct TX {
+    // Account to take money from.
     sender: String,
+    // Add a password so we know the account to take money
+    // from is the one that submitted the TX.
     sender_password: i32,
+    // Check to make sure we're not processing duplicate TX.
     sender_nonce: i32,
+    // Account to add money to.
     receiver: String,
+    // Amount of moneys to "move around". Actually, the money
+    // doesn't exist because the bank makes it up when they
+    // "loan" money. It's just a number in a database. The only
+    // thing verifying it's existance is the banks internal 
+    // ledger, and maybe the ledgers of other banks. Good 
+    // thing those banks are all secure, honest, and don't
+    // collude 👍
     amount: i32,
 }
 
 
+// An implimentation is a structure that links functions
+// together. You can learn more about them here:
+// https://doc.rust-lang.org/book/ch05-03-method-syntax.html
 impl State {
     
-    // Create a new state
+    // This function create a new state for the bank.
     pub fn new_state() -> State {
     
         // Ah... a blank canvas. So clean. So pure. So beautiful.
-        // Let the games begin.
-    
         let mut new = State {
             accounts: HashMap::new(),
             frozen_accounts: HashMap::new(),
@@ -106,5 +138,19 @@ impl State {
         
         new
     }
+}
+
+// In Rust the main() function is where the program runs.
+// You can store functions and stuff anywhere, but main()
+// is the function has it's own state that keeps track of
+// variables and computation. You can learn more about it
+// here: https://doc.rust-lang.org/book/
+fn main() {
+    
+    // Let's roll our own "bank"!
+    let mut bank = State::new_state();
+    println!("{:#?}", bank);
+    
+    // Let the games begin...
 }
 ```
