@@ -12,7 +12,7 @@ In this example we'll explore some of the common data structures that banks keep
     <a href="https://www.youtube.com/embed/ckzi8iqGilE">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
 </p>
 
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ckzi8iqGilE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Code
 ```rust, editable
