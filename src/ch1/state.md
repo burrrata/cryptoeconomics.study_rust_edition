@@ -11,7 +11,7 @@ In this example we'll explore some of the common data structures that banks keep
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/ckzi8iqGilE/0.jpg)](https://www.youtube.com/watch?v=ckzi8iqGilE)
 
 <p>
-    <a href="https://www.youtube.com/embed/ckzi8iqGilE">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-5.html">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
 </p>
 
 ## Code
