@@ -116,12 +116,12 @@ impl State {
         }
     }
     
-    // Print Account Stats
-    pub fn print_account(&mut self,
+    // Print Account Info
+    pub fn print_account_info(&mut self,
                          account_id: String) {
         
         if let Some(x) = self.accounts.get(&account_id) {
-            println!("Your Account:\n{:#?}", self.accounts.get(&account_id));
+            println!("Your Account:\n{:#?}", self.accounts.get(&account_id).unwrap());
         }
         println!("Account not found");
     }
@@ -266,9 +266,9 @@ impl State {
                 account_history.push(i.clone());
             }
         }
-        
-        println!("\nAccount {} ", account_id);
-        println!("{:#?}", self.accounts.get(&account_id));
+        println!("\n/// Getting Account History ///");
+        println!("Account {} ", account_id);
+        println!("{:#?}", self.accounts.get(&account_id).unwrap());
         println!("History:\n{:#?}", account_history);
     }
 }
@@ -331,7 +331,7 @@ fn main() {
     
     // Try checking the balance of a frozen account
     println!("\n/// Checking Frozen Account ///");
-    bank.print_account(test_account0.clone().to_string());
+    bank.print_account_info(test_account0.clone().to_string());
     
     // Try sending from a frozen account to a regular account
     /*
