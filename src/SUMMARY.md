@@ -5,6 +5,7 @@
 [Pregame](./crypto_wars.md)
 
 - [Centralized Payment Processor](./ch1/intro.md)
+  - [State](./ch1/state.md)
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
   
 - [P2P Blockchain Network](.ch2/intro.md)
