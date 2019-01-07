@@ -29,7 +29,7 @@ MAIN
 - create new state
 - create new accounts
 - simulate TX
-- show the bank's view vs the user's view
+- show the bank's view vs the user's view as well as the functions the bank can perform vs what the user can perform
 
 
 ## Code
