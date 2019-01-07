@@ -24,13 +24,17 @@ https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/c
 - generic String/u8 conversion => RSL data encoding
 - PoW => PoS
 
+<hr>
+
+So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot... Would it make more sense to dive into solidity at this point, or is it possible to replicate aspects of the Parity Ethereum client if I can roll external libraries in mdBook or build it out as a CLI tutorial?
+
+<hr>
+
 ### L2: state channels
 
 ### L2: plasma
 
 ### Cryptoeconomic Applications
-- So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot...
-- Would it make more sense to dive into solidity at this point?
 
 <br>
 
