@@ -8,7 +8,7 @@ In this example we'll explore some of the common data structures that banks keep
 
 ## Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ckzi8iqGilE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<video src="https://www.youtube.com/embed/ckzi8iqGilE">
 
 ## Code
 ```rust, editable
