@@ -34,6 +34,10 @@ https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/c
 
 # General TODOs
 
+Rust Code
+- It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
+- It would also be nice to have better errors so that when functions fail we (or the users) know why.
+
 Chapter Architecture:
 - each chapter creates a thing
 - sections in the chapter create the components needed for that thing
