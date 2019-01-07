@@ -22,11 +22,13 @@ use std::hash::Hasher;
 
 #[derive(Debug)]
 struct State {
-    account_ids: Vec<String>,
     accounts: HashMap<String, Account>,
     frozen_accounts: HashMap<String, Account>,
+    account_ids: Vec<String>,
     pending_tx: Vec<TX>,
     history: Vec<TX>,
+    debt_history: Vec<TX>,
+    debt_pool: i32,
 }
 
 #[derive(Debug, Clone)]
@@ -49,19 +51,7 @@ struct TX {
 // Central Payment Processor
 impl State {
     
-    // Create a new state
-    pub fn new_state() -> State {
-    
-        let mut new = State {
-            account_ids: Vec::new(),
-            accounts: HashMap::new(),
-            frozen_accounts: HashMap::new(),
-            pending_tx: Vec::new(),
-            history: Vec::new(),
-        };
-        
-        new
-    }
+    // USEFUL FUNCTIONS
     
     // Turn stuff into &[u8] slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -93,8 +83,42 @@ impl State {
         hash_of_stuff
     }
     
+    
+    // INIT STATE
+    
+    // Create a new state
+    pub fn new_state() -> State {
+    
+        // Ah... a blank canvas. So clean. So pure. So beautiful.
+        // Let the games begin.
+    
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new
+    }
+    
+    // ACCOUNT STUFF
+    
     // Create a new account
     pub fn new_account(&mut self) {
+        
+        // Notice how the only thing tying the account_id to the password
+        // is that the bank stores them in the same database. If the bank
+        // were to change this by accident, or a hacker were to get access to
+        // that data via hacking the bank directly or a relevant 3rd party...
+        // well... life would get very interesting very fast. Mostly for you 
+        // though because the banks are insured so for them it's a write-off
+        // that affects them minimally. 
+        // https://en.wikipedia.org/wiki/Write-off
+        // https://en.wikipedia.org/wiki/Equifax
         
         let account_id = State::hash(&thread_rng().gen_range(0, 1000000));
         let account_data = Account {
@@ -111,14 +135,26 @@ impl State {
     pub fn new_accounts(&mut self,
                         num_accounts: i32) {
         
+        // Sock puppets ahoy!
+        // Good thing banks are honest and would never create accounts to
+        // simulate activity when there was none. Even better that crypto
+        // exchanges are even more honest because, well... crypto! It's 
+        // different this time right?
+        // https://en.wikipedia.org/wiki/Sockpuppet_(Internet)
+        // https://en.wikipedia.org/wiki/Wash_trade
+        // https://medium.com/@bitfinexed/wash-trading-bitcoin-how-bitfinex-benefits-from-fraudulent-trading-8bd66be73215
+        // https://medium.com/@bitfinexed/the-tether-truth-machine-the-wheels-of-justice-turn-slowly-but-grind-exceedingly-finely-8e3bd72ad011
+        
         for i in 0..num_accounts {
             self.new_account()
         }
     }
     
-    // Print Account Info
+    // Print account info
     pub fn print_account_info(&mut self,
                          account_id: String) {
+        
+        // If it's written down it must be true.
         
         if let Some(x) = self.accounts.get(&account_id) {
             println!("Your Account:\n{:#?}", self.accounts.get(&account_id).unwrap());
@@ -126,32 +162,111 @@ impl State {
         println!("Account not found");
     }
     
+    // Print account history
+    pub fn print_account_history(&mut self,
+                                 account_id: String,) {
+        
+        // Assuming the bank's records are accurate and up to date, which
+        // we assume they are, probably, but we don't know ¯\_(ツ)_/¯ 
+        // https://www.bbc.com/news/business-43985233
+        // https://www.cnet.com/news/commonwealth-bank-of-australia-financial-data-breach-20-million-accounts/
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        println!("\n/// Getting Account History ///");
+        println!("Account {} ", account_id);
+        println!("{:#?}", self.accounts.get(&account_id).unwrap());
+        println!("History:\n{:#?}", account_history);
+    }
+    
     // "Freeze" an account
     pub fn freeze_account(&mut self,
                           account_id: String) {
+        
+        // The end of your life savings are just a click away...
         
         let account = self.accounts.remove_entry(&account_id).unwrap();
     
         self.frozen_accounts.insert(account.0, account.1);
     }
     
+    // TX STUFF
+    
     // Add funds to an account
     pub fn add_funds(&mut self,
                      account_id: String,
                      amount: i32) {
+        
+        // A very important function for any private and seldom audited
+        // for-profit enterprise. What could go wrong?
+        // https://en.wikipedia.org/wiki/Enron_scandal
         
         if let Some(x) = self.accounts.get_mut(&account_id) {
             x.balance += amount;
         }
     }
     
+    // Create a new bank TX
+    pub fn new_bank_tx(&mut self,
+                       receiver: String,
+                       amount: i32) {
+        
+        // When banks give people loans or credit it's actually processed
+        // as debt which banks can then trade amongst each other at a market
+        // rate based on how likely the debtor is likely to pay back in full
+        // Yes you heard this right, they print money and profit from doing so.
+        // Carpenters make cabinets, comedians make jokes, banks make money,
+        // literaly...
+        // Fun Fact: debt on a banks balance sheet is an ASSET to the bank and
+        // not a liability. It's a liability to users, but banks can buy, sell, 
+        // and trade this debt as a financial product. One of a banks primary 
+        // products is loans, but as a user of a bank you're actually the product 
+        // they're selling to other banks and investment funds. Kind of like how 
+        // with social media platforms access to the users attention is the 
+        // product that they sell to 3rd party advertisers.
+        // https://en.wikipedia.org/wiki/Fractional-reserve_banking
+        let tx = TX {
+            sender: self.accounts.get(&bank_debt).unwrap(),
+            receiver: receiver,
+            amount: amount,
+        };
+
+        // Tx is legit by default because it's from the bank so let's process it.
+        // decrease the balance from sender's account
+        self.accounts
+            .get_mut(&tx.sender)
+            .unwrap()
+            .balance -= tx.amount;
+        // increase sender's nonce to prevent replay glitches
+        self.accounts
+            .get_mut(&tx.sender)
+            .unwrap()
+            .nonce += 1;
+        // increase the balance of the reciever's account
+        self.accounts
+            .get_mut(&tx.receiver)
+            .unwrap()
+            .balance += tx.amount;
+            
+        // add processed TX to history
+        self.history.push(tx.clone());        
+    }
+    
     // Create a new TX
-    pub fn new_tx(&mut self,
-                  sender: String,
-                  sender_password: i32,
-                  sender_nonce: i32,
-                  receiver: String,
-                  amount: i32) {
+    pub fn new_user_tx(&mut self,
+                       sender: String,
+                       sender_password: i32,
+                       sender_nonce: i32,
+                       receiver: String,
+                       amount: i32) {
         
         let tx = TX {
             sender: sender,
@@ -164,7 +279,8 @@ impl State {
         self.pending_tx.push(tx);
     }
 
-    // Verify pending TX
+    // Verify pending user TX
+    // Notice how the bank (or any hacker) gets to bypass this check
     pub fn process_pending_tx(&mut self) {
         
         // check pending tx
@@ -233,50 +349,12 @@ impl State {
         // clear pending tx
         self.pending_tx = Vec::new();
     }
-
-    // Find the history for an account
-    pub fn get_account_history(&mut self,
-                               account_id: String,) -> Vec<TX> {
-        
-        let mut account_history = Vec::new();
-        let list = self.history.clone();
-        for i in list {
-            if i.sender == account_id {
-                account_history.push(i.clone());
-            }
-            if i.receiver == account_id {
-                account_history.push(i.clone());
-            }
-        }
-        
-        account_history
-    }
-    
-    // Print the history for an account
-    pub fn print_account_history(&mut self,
-                                 account_id: String,) {
-        
-        let mut account_history = Vec::new();
-        let list = self.history.clone();
-        for i in list {
-            if i.sender == account_id {
-                account_history.push(i.clone());
-            }
-            if i.receiver == account_id {
-                account_history.push(i.clone());
-            }
-        }
-        println!("\n/// Getting Account History ///");
-        println!("Account {} ", account_id);
-        println!("{:#?}", self.accounts.get(&account_id).unwrap());
-        println!("History:\n{:#?}", account_history);
-    }
 }
 
 
 fn main() {
     
-    // Roll your own bank!
+    // Init bank state
     let mut bank = State::new_state();
     println!("\n/// Initialized Bank State ///");
     println!("{:#?}", &bank);
@@ -285,7 +363,12 @@ fn main() {
     bank.new_accounts(10);
     println!("\n/// Created Some Accounts ///");
     println!("{:#?}", bank);
-    
+
+    // Init some variables for testing accounts
+    let test_account0 = bank.account_ids[0].clone();
+    let test_account1 = bank.account_ids[1].clone();
+    let test_account2 = bank.account_ids[2].clone();
+
     // Add some funds to those accounts
     for i in bank.accounts.values_mut() {
         i.balance += 10000;
@@ -301,7 +384,7 @@ fn main() {
         
         if sender != receiver {
         
-            bank.new_tx(sender.to_string(),
+            bank.new_bank_tx(sender.to_string(),
                         bank.accounts.get(sender).unwrap().password,
                         bank.accounts.get(sender).unwrap().nonce,
                         receiver.to_string(),
@@ -316,16 +399,11 @@ fn main() {
     println!("\n/// Processed Pending TX ///");
     println!("{:#?}", bank);
     
-    // Init some variables for testing
-    let test_account0 = bank.account_ids[0].clone();
-    let test_account1 = bank.account_ids[1].clone();
-    let test_account2 = bank.account_ids[2].clone();
-    
     // Get the history for an account
     bank.print_account_history(test_account0.clone());
     
     // Freeze an account
-    bank.freeze_account(test_account0.clone().to_string());
+    bank.freeze_account(test_account0.clone());
     println!("\n/// Froze Account {} ///", &test_account0);
     println!("{:#?}", bank);
     
@@ -333,35 +411,28 @@ fn main() {
     println!("\n/// Checking Frozen Account ///");
     bank.print_account_info(test_account0.clone().to_string());
     
-    // Try sending from a frozen account to a regular account
-    /*
-    // CURRENT WIP
-    // These fail, and rightfully so, but they need to
-    // fail gracefully and return helpful errors rather 
-    // than just halting the program.
-    println!("/// Frozen Account TX Test ///");
-    bank.new_tx(test_account0.to_string(),
-                bank.accounts.get(&test_account0).unwrap().password,
-                bank.accounts.get(&test_account0).unwrap().nonce,
-                test_account1,
-                100);
-    bank.new_tx(test_account1.to_string(),
-                bank.accounts.get(&test_account1).unwrap().password,
-                bank.accounts.get(&test_account1).unwrap().nonce,
-                test_account0.clone(),
-                100);
-    // Try sending to a frozen account from a regular account
-    bank.new_tx(test_account2.to_string(),
-                bank.accounts.get(&test_account2).unwrap().password,
-                bank.accounts.get(&test_account2).unwrap().nonce,
-                test_account0,
-                100);
-    */
-    println!("//////////////////////////////");
+    // So to recap...
+    // The bank gets to print money out of thin air, controls the access to 
+    // the movement and informatino of that money, and has minimal downside
+    // when things go wrong due to bailouts and insurance.
+    // The users trust the bank, are only allows as much money as they can 
+    // figure out how to convince the bank or anyone else to give them, and
+    // are the ones who are really screwed if things go wrong.
+    // Seems a little odd that such an essential piece of modern living is so
+    // opaque and fragile 🤔
+    // Can we do better? Maybe! Some people have some ideas on how to at least
+    // make this process a little more secure. In the next chapter we'll explore
+    // how we can change the architecture of the system to make it better for
+    // users. This includes:
+    // - giving everyone on the network the option to verify TX to make sure no
+    //   one is cheating
+    // - creating account IDs and passwords via cryptography so that they are
+    //   more useful and not all located in a centralized database
+    // - because accounts are not in a centralized database the user controls
+    //   the account, and as long as the network is operational, the user's
+    //   account is too. Just like if your bank went under
+    //   (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be
+    //   gone, if the P2P network you're on goes under same deal. 
+    // Let's see how that works!
 }
-
-/*
-MAIN
-- show the bank's view vs the user's view
-*/
 ```
