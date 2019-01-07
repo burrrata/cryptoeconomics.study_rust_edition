@@ -1,5 +1,4 @@
-# State
-All the things...
+# State: all the things...
 
 ## Words
 
@@ -9,7 +8,7 @@ In this example we'll explore some of the common data structures that banks keep
 
 ## Video
 
-Link to Cryptoeconomics.Study's most relevant video on the topic. 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ckzi8iqGilE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Code
 ```rust, editable
