@@ -45,6 +45,7 @@ use std::hash::Hasher;
 
 #[derive(Debug)]
 struct State {
+    account_ids: Vec<String>,
     accounts: HashMap<String, Account>,
     frozen_accounts: HashMap<String, Account>,
     pending_tx: Vec<TX>,
@@ -75,6 +76,7 @@ impl State {
     pub fn new_state() -> State {
     
         let mut new = State {
+            account_ids: Vec::new(),
             accounts: HashMap::new(),
             frozen_accounts: HashMap::new(),
             pending_tx: Vec::new(),
@@ -119,11 +121,12 @@ impl State {
         
         let account_id = State::hash(&thread_rng().gen_range(0, 1000000));
         let account_data = Account {
-            password: thread_rng().gen(),
+            password: thread_rng().gen_range(0, 1000000),
             nonce: 0,
             balance: 0,
         };
         
+        self.account_ids.push(account_id.clone());
         self.accounts.insert(account_id, account_data);
     }
     
@@ -134,6 +137,16 @@ impl State {
         for i in 0..num_accounts {
             self.new_account()
         }
+    }
+    
+    // Print Account Stats
+    pub fn print_account(&mut self,
+                         account_id: String) {
+        
+        if let Some(x) = self.accounts.get(&account_id) {
+            println!("Your Account:\n{:#?}", self.accounts.get(&account_id));
+        }
+        println!("Account not found");
     }
     
     // "Freeze" an account
@@ -177,16 +190,19 @@ impl State {
     // Verify pending TX
     pub fn process_pending_tx(&mut self) {
         
+        // check pending tx
         for i in & self.pending_tx {
-
+            
             // check that sender is legit
             if !(self.accounts.contains_key(&i.sender)) {
-                break
+                println!("TX ERROR: sender not found.");
+                continue;
             }
  
             // check that receiver is legit
             if !(self.accounts.contains_key(&i.receiver)) {
-                break
+                println!("TX ERROR: receiver not found.");
+                continue;
             }           
             
             // check that tx is signed by sender password
@@ -194,7 +210,8 @@ impl State {
                                      .get(&i.sender)
                                      .unwrap()
                                      .password) {
-                break
+                println!("TX ERROR: tx and sender passwords do not match.");
+                continue;
             }
             
             // check that the TX nonce matches the sender nonce
@@ -202,17 +219,20 @@ impl State {
                                   .get(&i.sender)
                                   .unwrap()
                                   .nonce) {
-                break
+                println!("TX ERROR: tx and sender nonces do not match.");
+                continue;
             }
 
             // check that the TX amount is >= the sender's balance 
-            if !(i.amount >= self.accounts
+            if !(i.amount <= self.accounts
                                     .get(&i.sender)
                                     .unwrap()
                                     .balance) {
-                    break
-                } 
-
+                println!("TX ERROR: sender has insufficient balance");
+                continue;
+            } 
+            
+            // Tx is legit so let's process it
             // decrease the balance from sender's account
             self.accounts
                 .get_mut(&i.sender)
@@ -228,7 +248,13 @@ impl State {
                 .get_mut(&i.receiver)
                 .unwrap()
                 .balance += i.amount;
+                
+            // add processed TX to history
+            self.history.push(i.clone());
         }
+        
+        // clear pending tx
+        self.pending_tx = Vec::new();
     }
 
     // Find the history for an account
@@ -241,36 +267,124 @@ impl State {
             if i.sender == account_id {
                 account_history.push(i.clone());
             }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
         }
         
         account_history
     }
+    
+    // Print the history for an account
+    pub fn print_account_history(&mut self,
+                                 account_id: String,) {
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        
+        println!("\nAccount {} ", account_id);
+        println!("{:#?}", self.accounts.get(&account_id));
+        println!("History:\n{:#?}", account_history);
+    }
 }
 
-
-/*
-MAIN: todo
-- simulate TX
-- show the bank's view vs the user's view
-*/
 
 fn main() {
     
     // Roll your own bank!
     let mut bank = State::new_state();
-    println!("bank: {:#?}", &bank);
+    println!("\n/// Initialized Bank State ///");
+    println!("{:#?}", &bank);
     
     // Create some new accounts
     bank.new_accounts(10);
-    println!("bank: {:#?}", bank);
+    println!("\n/// Created Some Accounts ///");
+    println!("{:#?}", bank);
     
-    /*
     // Add some funds to those accounts
-    for mut i in bank.accounts {
-        i.1.balance += 5;
-        //i.1.balance += thread_rng().gen_range(0, 1000);
+    for i in bank.accounts.values_mut() {
+        i.balance += 10000;
     }
-    println!("bank: {:#?}", &bank);
+    println!("\n/// Added Funds To Accounts ///");
+    println!("{:#?}", bank);
+
+    // Simulate some TX
+    for i in 0..10 {
+        
+        let sender = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+        
+            bank.new_tx(sender.to_string(),
+                        bank.accounts.get(sender).unwrap().password,
+                        bank.accounts.get(sender).unwrap().nonce,
+                        receiver.to_string(),
+                        thread_rng().gen_range(100, 1000))
+        }
+    }
+    println!("\n/// Simulated Some TX ///");
+    println!("{:#?}", bank);
+    
+    // Process pending TX
+    bank.process_pending_tx();
+    println!("\n/// Processed Pending TX ///");
+    println!("{:#?}", bank);
+    
+    // Init some variables for testing
+    let test_account0 = bank.account_ids[0].clone();
+    let test_account1 = bank.account_ids[1].clone();
+    let test_account2 = bank.account_ids[2].clone();
+    
+    // Get the history for an account
+    bank.print_account_history(test_account0.clone());
+    
+    // Freeze an account
+    bank.freeze_account(test_account0.clone().to_string());
+    println!("\n/// Froze Account {} ///", &test_account0);
+    println!("{:#?}", bank);
+    
+    // Try checking the balance of a frozen account
+    println!("\n/// Checking Frozen Account ///");
+    bank.print_account(test_account0.clone().to_string());
+    
+    // Try sending from a frozen account to a regular account
+    /*
+    // CURRENT WIP
+    // These fail, and rightfully so, but they need to
+    // fail gracefully and return helpful errors rather 
+    // than just halting the program.
+    println!("/// Frozen Account TX Test ///");
+    bank.new_tx(test_account0.to_string(),
+                bank.accounts.get(&test_account0).unwrap().password,
+                bank.accounts.get(&test_account0).unwrap().nonce,
+                test_account1,
+                100);
+    bank.new_tx(test_account1.to_string(),
+                bank.accounts.get(&test_account1).unwrap().password,
+                bank.accounts.get(&test_account1).unwrap().nonce,
+                test_account0.clone(),
+                100);
+    // Try sending to a frozen account from a regular account
+    bank.new_tx(test_account2.to_string(),
+                bank.accounts.get(&test_account2).unwrap().password,
+                bank.accounts.get(&test_account2).unwrap().nonce,
+                test_account0,
+                100);
     */
+    println!("//////////////////////////////");
 }
+
+/*
+MAIN
+- show the bank's view vs the user's view
+*/
 ```
