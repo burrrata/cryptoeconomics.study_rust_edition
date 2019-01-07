@@ -47,8 +47,8 @@ use std::hash::Hasher;
 struct State {
     accounts: HashMap<String, Account>,
     frozen_accounts: HashMap<String, Account>,
-    pending_tx: HashMap<i32, TX>,
-    history: HashMap<i32, TX>,
+    pending_tx: Vec<TX>,
+    history: Vec<TX>,
 }
 
 #[derive(Debug, Clone)]
@@ -61,9 +61,10 @@ struct Account {
 #[derive(Debug, Clone)]
 struct TX {
     sender: String,
-    sender_password: String,
+    sender_password: i32,
     sender_nonce: i32,
     receiver: String,
+    amount: i32,
 }
 
 
@@ -73,19 +74,11 @@ impl State {
     // Create a new state
     pub fn new_state() -> State {
     
-        /*
-        HashMaps
-        - accounts: (key: id, value: struct Account)
-        - frozen_accounts: (key: id, value: struct Account )
-        - pending_tx: (key: tx#, value: struct TX)
-        - history: (key: tx#, value: struct TX)
-        */
-        
-        let new = State {
+        let mut new = State {
             accounts: HashMap::new(),
             frozen_accounts: HashMap::new(),
-            pending_tx: HashMap::new(),
-            history: HashMap::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
         };
         
         new
@@ -134,6 +127,15 @@ impl State {
         self.accounts.insert(account_id, account_data);
     }
     
+    // Create multiple new accounts
+    pub fn new_accounts(&mut self,
+                        num_accounts: i32) {
+        
+        for i in 0..num_accounts {
+            self.new_account()
+        }
+    }
+    
     // "Freeze" an account
     pub fn freeze_account(&mut self,
                           account_id: String) {
@@ -151,40 +153,124 @@ impl State {
         if let Some(x) = self.accounts.get_mut(&account_id) {
             x.balance += amount;
         }
-        /*
-        let mut account = self.accounts.get_mut(&account_id).unwrap();
-        account.1.balance += amount;
-        self.accounts.insert(account.0, account.1);
-        */
     }
     
-    // Check that an account exists
-    pub fn does_account_exist(&mut self,
-                              account_id: String) -> bool {
+    // Create a new TX
+    pub fn new_tx(&mut self,
+                  sender: String,
+                  sender_password: i32,
+                  sender_nonce: i32,
+                  receiver: String,
+                  amount: i32) {
         
-        if let Some(x) = self.accounts.get(&account_id) {
-            return true
-        }
-        return false
+        let tx = TX {
+            sender: sender,
+            sender_password: sender_password,
+            sender_nonce: sender_nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
     }
-    
-/*
-Functions
-- check account password = tx_password
-- check account nonce = tx_nonce
-- check account balance > tx amount
-- check history of account
-*/   
+
+    // Verify pending TX
+    pub fn process_pending_tx(&mut self) {
+        
+        for i in & self.pending_tx {
+
+            // check that sender is legit
+            if !(self.accounts.contains_key(&i.sender)) {
+                break
+            }
+ 
+            // check that receiver is legit
+            if !(self.accounts.contains_key(&i.receiver)) {
+                break
+            }           
+            
+            // check that tx is signed by sender password
+            if !(i.sender_password == self.accounts
+                                     .get(&i.sender)
+                                     .unwrap()
+                                     .password) {
+                break
+            }
+            
+            // check that the TX nonce matches the sender nonce
+            if !(i.sender_nonce == self.accounts
+                                  .get(&i.sender)
+                                  .unwrap()
+                                  .nonce) {
+                break
+            }
+
+            // check that the TX amount is >= the sender's balance 
+            if !(i.amount >= self.accounts
+                                    .get(&i.sender)
+                                    .unwrap()
+                                    .balance) {
+                    break
+                } 
+
+            // decrease the balance from sender's account
+            self.accounts
+                .get_mut(&i.sender)
+                .unwrap()
+                .balance -= i.amount;
+            // increase sender's nonce to prevent replay glitches
+            self.accounts
+                .get_mut(&i.sender)
+                .unwrap()
+                .nonce += 1;
+            // increase the balance of the reciever's account
+            self.accounts
+                .get_mut(&i.receiver)
+                .unwrap()
+                .balance += i.amount;
+        }
+    }
+
+    // Find the history for an account
+    pub fn get_account_history(&mut self,
+                               account_id: String,) -> Vec<TX> {
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        
+        account_history
+    }
 }
 
 
-
-
 /*
-MAIN
-- create new state
-- create new accounts
+MAIN: todo
 - simulate TX
 - show the bank's view vs the user's view
 */
+
+fn main() {
+    
+    // Roll your own bank!
+    let mut bank = State::new_state();
+    println!("bank: {:#?}", &bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!("bank: {:#?}", bank);
+    
+    /*
+    // Add some funds to those accounts
+    for mut i in bank.accounts {
+        i.1.balance += 5;
+        //i.1.balance += thread_rng().gen_range(0, 1000);
+    }
+    println!("bank: {:#?}", &bank);
+    */
+}
 ```
