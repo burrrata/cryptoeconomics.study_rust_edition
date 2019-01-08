@@ -1,4 +1,4 @@
-<h1 align="center" size="24">
+<h1 align="center">
     Welcome!
 </h1>
 
