@@ -1,3 +1,9 @@
+<h1 align="center">
+    NOTES
+</h1>
+
+<br>
+
 # Flow
 
 It would also be great to mention that while banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
@@ -40,19 +46,34 @@ So... if we want to do interesting things with cryptoecnomics... we need a scrip
 
 # General TODOs
 
-Rust Code
+### Ch1
+- better resources
+- clean up sassy comments so that they're not repeated every section
+
+<br>
+
+### Ch2
+- clean up organization
+- add PoW
+
+<br>
+
+### Ch3
+- literally everything
+
+<br>
+
+# Better Rust Code
 - It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
 - It would also be nice to have better errors so that when functions fail we (or the users) know why.
 
-Chapter Architecture:
-- each chapter creates a thing
-- sections in the chapter create the components needed for that thing
-- each section has an explanation in words, code, and resources to get other perspectives
+<br>
 
-Get feedback to make it actually usable by people
-- update Cryptoeconomics.Study post
-- hit up the Tensor Programming guy who rolled the template Rust blockchain tutorial
-- share to /r/ethereum
+# Feedback
+- Tensor Programming (they rolled the Rust blockchain tutorial this is based on)
+- Cryptoeconomics.Study forum (so far 0 engagement)
+- r/ethereum
+- r/cryptoeconomics
 
 
 <br>
@@ -83,15 +104,11 @@ mdBook says nothing about adding depdancies to external crates
 - For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
 - Maybe create a CLI tutorial that shows how to iteratively ugrade each component and function in the standard model to make it more secure
 - Stetch Goal: work towards recreating the Parity Ethereum Client and/or arbitrary blockchain architectures like Substrate, but that's probably not realistic lol
+- Add storylines to explain the code and concepts.
 
-### Chapter Framework:
-- goal/thing to build a toy version of (w links examples of the thing IRL)
-- each page explains a part (w links to wikipedia article and production library version of the tutorial example)
-- summary putting it all together (editable code you can run and play with)
+<br>
 
-Bonus points if there's a story to explain the code and concepts.
-
-### Why this book?
+# Why this book?
 
 Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code.
 - Cryptoeconomics.Study code is written in JS and references external Ethereum libraries
