@@ -5,14 +5,14 @@
 - beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
 - yellow: https://ethereum.github.io/yellowpaper/paper.pdf
 
-### Ethereum Research
-- https://ethresear.ch
-
 ### Cryptoeconomics.Study
 - Overview: https://cryptoeconomics.study/overview.html
 - Lectures: https://cryptoeconomics.study/lectures/
 - Code: https://github.com/cryptoeconomics-study/code
 - Forum: http://forum.cryptoeconomics.study
+
+### Ethereum Research
+- https://ethresear.ch
 
 ### Rust Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
