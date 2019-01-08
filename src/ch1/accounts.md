@@ -23,7 +23,7 @@ Some people like centralized databases and services because they're fast and the
 <br>
 
 ## Code
-```rust, editable
+```rust, ignore
 // This is Rust code.
 // I haven't figured out how to get rand to play
 // nicely with mdBook, so you'll have to copypasta
