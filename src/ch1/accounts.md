@@ -17,6 +17,12 @@ Some people like centralized databases and services because they're fast and the
 
 ## Code
 ```rust, ignore
+// This is Rust code.
+// I haven't figured out how to get rand to play
+// nicely with mdBook, so you'll have to copypasta
+// this into the Rust Playground. Have fun!
+// https://play.rust-lang.org
+
 extern crate rand;
 use rand::prelude::*;
 
