@@ -200,4 +200,17 @@ impl State {
         self.frozen_accounts.insert(account.0, account.1);
     }
 }
+
+fn main() {
+
+    // Init bank state
+    let mut bank = State::new_state();
+    println!("\n/// Initialized Bank State ///");
+    println!("{:#?}", &bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!("\n/// Created Some Accounts ///");
+    println!("{:#?}", bank);
+}
 ```
