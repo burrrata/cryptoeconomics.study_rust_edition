@@ -1,4 +1,8 @@
-# Welcome!
+<h1 align="center" size="24">
+    Welcome!
+</h1>
+
+<br>
 
 A blockchain is, at it's heart, just a glorified database. It keeps track of stuff. In this book we'll explore how that works and why anyone should care.
 
