@@ -1,4 +1,8 @@
-# Accounts
+<h1 align="center" size="24">
+    Accounts: the stuff you care about.
+</h1>
+
+<br>
 
 ## Words
 
@@ -6,6 +10,7 @@ An account is just a way to store data to make it more useful. As we said before
 
 Some people like centralized databases and services because they're fast and there's someone to blame if/when things go wrong. This makes users feel safe because it's familiar, they don't have to think too much, and someone seems responsible. Time has told us however that this is merely a mirage to make us feel good and in reality centralized operators have most of the upside but limited downside, while for users it's reversed. Sound fun? Great! Let's go...
 
+<br>
 
 ## Video
 
@@ -14,6 +19,8 @@ Some people like centralized databases and services because they're fast and the
 <p>
     <a href="https://cryptoeconomics.study/lectures/chapter-01-0.html">Cryptoeconomics - 1.0 - Chapter 1 Overview</a>.
 </p>
+
+<br>
 
 ## Code
 ```rust, ignore
@@ -223,3 +230,8 @@ fn main() {
     println!("{:#?}", bank);
 }
 ```
+
+<br>
+
+## Resources
+TBD
