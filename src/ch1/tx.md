@@ -32,7 +32,7 @@ Core Concepts
 <br>
 
 ## Code
-```rust
+```rust, ignore
 extern crate rand;
 use rand::prelude::*;
 
