@@ -9,9 +9,26 @@
 Core Concepts:
 - randomness and why it's essential in key generation
 - strong crypto and why it's essential as a foundation of trust (and security)
-- would this be a good place to talk about hash functions and why they're usefu? (rather than dumping it all in the PoW section)
+- hash functions and why they're usefu? (rather than dumping it all in the PoW section)
 
-Randomness is important, but it's really used for the key generation... Maybe merge with the public key crypto section? 
+### Hashing
+
+Explain how hashing works:
+- Rust default hasher
+- SHA256 that's used in Ethereum
+
+Explain what it's useful for:
+- collision resistance
+- second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)]
+- preimage resistance
+- random oracle
+
+Explore merkle trees
+- effecient data verification
+- touch on patricia trees, but explain/build them in ch2: https://github.com/ethereum/wiki/wiki/Patricia-Tree
+
+
+### Randomness 
 
 If you want to see how important randomness is, just skip ahead to the [centralized payment processor demo](https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md). Everything commented out relies on randomness. It's nealry impossible to create new accounts and generate public or private keys without a reliable and secure form of randomness. 
 
