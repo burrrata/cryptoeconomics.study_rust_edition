@@ -1,13 +1,19 @@
-## Bringing it all together
+<h1 align="center" size="24">
+    Centralized Payment Processor: bringing it all together.
+</h1>
+
+<br>
 
 ## Words
 
-When you use a centralized operator like a bank:
+TL;DR: when you use a centralized operator like a bank:
 - trust bank has correct state
 - bank controls accounts
 - bank controls tx
 - bank controls history
 - bank creates new money
+
+<br>
 
 ## Video
 
@@ -16,6 +22,8 @@ When you use a centralized operator like a bank:
 <p>
     <a href="https://cryptoeconomics.study/lectures/chapter-01-5.html">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
 </p>
+
+<br>
 
 ## Code
 
@@ -444,3 +452,8 @@ fn main() {
     // Let's see how that works!
 }
 ```
+
+<br>
+
+## Resources
+TBD
