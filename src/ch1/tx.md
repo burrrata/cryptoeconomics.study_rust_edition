@@ -6,8 +6,7 @@
 
 ## Words
 
-Core Concepts
-- tx is a way to request a state change
+Core Concept: tx is a way to request a state change, but...
 - the state transition function is how we make that state change
 - the central operator controls the state and thus all state changes including freezing accounts or printing money
 
@@ -207,6 +206,25 @@ impl State {
             x.balance += amount;
         }
     }
+
+    // Create a new TX
+    pub fn new_user_tx(&mut self,
+                       sender: String,
+                       sender_password: i32,
+                       sender_nonce: i32,
+                       receiver: String,
+                       amount: i32) {
+        
+        let tx = TX {
+            sender: sender,
+            sender_password: sender_password,
+            sender_nonce: sender_nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
+    }
     
     // Create a new bank TX
     pub fn new_bank_tx(&mut self,
@@ -246,25 +264,6 @@ impl State {
             
         // add processed TX to history
         self.history.push(tx.clone());        
-    }
-    
-    // Create a new TX
-    pub fn new_user_tx(&mut self,
-                       sender: String,
-                       sender_password: i32,
-                       sender_nonce: i32,
-                       receiver: String,
-                       amount: i32) {
-        
-        let tx = TX {
-            sender: sender,
-            sender_password: sender_password,
-            sender_nonce: sender_nonce,
-            receiver: receiver,
-            amount: amount,
-        };
-        
-        self.pending_tx.push(tx);
     }
 
     // Verify pending user TX
