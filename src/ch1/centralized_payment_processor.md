@@ -28,6 +28,9 @@ Core Concepts:
 
 ## Code
 
+### !
+This is now out of date and needs to be updated to reflect the debt_pool introduced in the tx and state transition sections.
+
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
