@@ -9,7 +9,7 @@
   - [Accounts](./ch1/accounts.md)
   - [TX](./ch1/tx.md)
   - [State Transition Function](./ch1/state_transition_function.md)
-  - [Manage Your Own Centralized Database](./ch1/centralized_database_manager.md)
+  - [Roll Your Own Centralized Database](./ch1/centralized_database_manager.md)
   
 - [PoW "Blockchain"](./ch2/intro.md)
   - [State](./ch2/state.md)
