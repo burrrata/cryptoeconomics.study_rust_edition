@@ -21,7 +21,8 @@ Pyethereum Serenity Draft
 
 <br>
 
-## Cryptoeconomics Stuff
+## Cryptoeconomics
+- The revolution will be incentivized.
 
 Ye Olde Cryptoeconomics
   - https://en.wikipedia.org/wiki/Common-pool_resource
