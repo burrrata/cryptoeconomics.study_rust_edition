@@ -6,10 +6,12 @@
     Ch1: Centralized Payment Processors
 </h1>
 
-They're not as boring when you roll your own! 
+They're not as boring when you roll your own! Have you ever rolled your own centralized payment processor? Didn't think so... How do you know if they're cool? How do you know if they're lame? ¯\\_(ツ)_/¯
+
+There's only one way to find out...
 
 This chapter will explore data as we know it: in the form of a centralized payment processor like PayPal or your bank. The purpose is to highlight the important working parts of the system: state, accounts, transactions, and most of all... trust. In future chapters we'll show how we can get those same properties, but in a way where everyone can verify the authenticity of the state rather than trusting the word of a for profit business. After that we'll explore the new and exciting possibilities enabled by this divergent architecture :)
 
-Let's get started...
+Let's get started :)
 
 <br>
