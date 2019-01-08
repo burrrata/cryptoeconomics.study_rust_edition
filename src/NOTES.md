@@ -1,7 +1,16 @@
 <h1 align="center">
     NOTES
 </h1>
+<br>
+<hr>
+<br>
 
+# IMMEDIATE TODO
+- ch1/tx needs to be cleaned up
+- the structure of ch1/tx changed, so subsequent sections need to be updated accordingly
+
+<br>
+<hr>
 <br>
 
 # Flow
