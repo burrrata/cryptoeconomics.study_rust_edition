@@ -6,44 +6,35 @@
 
 ## Words
 
-This is where we'll talk about upgrading our state transition function from a consensus model of "because the central operator says so" to "because someone did the work and proved that they earned the right to make these changes for the community".
-
-?
-- do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
+Goal
+- Upgrade our state transition function from a consensus model of "because the central operator says so" to "because someone did the work and proved that they earned the right to make these changes for the community".
 
 Core Concepts:
 - pending_tx pool => blocks
 - ledger history => hashed merkle tries
+- anti-spam protection with proof of work on each block
 
 Resources:
 - https://github.com/cryptoeconomics-study/code/blob/master/c3_ProofOfWork/proofOfWork.js
 - https://github.com/tensor-programming/Rust_block_chain/blob/master/src/blockchain.rs
 
+<br>
 
+Open Question
+- do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
 
+<br>
 
+Blocks, block headers, and a merkle tree of the history.
 
-### Blocks, block headers, and a merkle tree of the history.
-
-Yo what's up with those nonces?
+Block nonces vs TX nonces
 - are they to keep track of block numbers?
 - or are they for something else?
-
-The Ethereum Whitepaper has a lot of dope knowledge on how blocks are processed and the state transition function rolls the chain. Would be nice to include that.
-- https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
-
-Note: there will be no block rewards in this demo because a centralized payment processor only needs blocks
-to keep track of history, but does not need to incentivize miners to expend resources to secure the network.
-It's a "blockchain" style database not a decentralize P2P blockchain, but that's for ch2!
-
-
 
 
 <br>
 
 ## Videos
-
-
 
 [![Cryptoeconomics - 1.1 - Hashes and Signatures](https://img.youtube.com/vi/FLIo_ZjV--U/0.jpg)](https://www.youtube.com/watch?v=FLIo_ZjV--U)
 
@@ -170,6 +161,6 @@ Hashing and Merkle Trees
 - https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
 
 PoW
-- TBD
+- https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
 
 <br>
