@@ -21,6 +21,12 @@ In this example we'll explore some of the common data structures that banks keep
 
 ## Code
 ```rust, editable
+// This is live editable Rust code. That means 
+// that you can push the play button (little white triangle)
+// in the top right of this box to see run it, or 
+// you can edit whatever you like to see how that
+// changes things. Explore!
+
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
