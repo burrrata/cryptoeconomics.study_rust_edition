@@ -6,6 +6,7 @@
 # IMMEDIATE TODO
 - Rusty Cryptoeconomics or Cryptoeconomics.Study Rust Edition
 - double check that ch1 central payment processor is up to date from changes to tx and state transition function 
+- clean up ch1 template so it looks less like a rough draft and more like something you want to explore
 
 <br>
 <hr>
@@ -85,10 +86,16 @@ So... if we want to do interesting things with cryptoecnomics... we need a scrip
 <br>
 
 # Feedback
+- There needs to be a clear and easy way for people to provide feedback.
+    - email: rustycryptoeconomics@protonmail.com
+    - forum? 
+    - reddit?
 - Tensor Programming (they rolled the Rust blockchain tutorial this is based on)
 - Cryptoeconomics.Study forum (so far 0 engagement)
 - r/ethereum
 - r/cryptoeconomics
+- TWIE newsletter
+- other crypto newsletters
 
 
 <br>
