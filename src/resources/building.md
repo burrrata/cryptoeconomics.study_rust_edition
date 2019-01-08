@@ -1,4 +1,6 @@
-# Building: things to do.
+<h1 align="center">
+    Make things better by making better things.
+</h1>
 
 ### Rust Dev
 - all the Rust docs and books! https://doc.rust-lang.org/
