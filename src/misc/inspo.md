@@ -57,6 +57,38 @@ goals
 
 <br>
 
+## Crypto Stuff
+
+Bulletproofs
+- https://eprint.iacr.org/2017/1066.pdf
+- https://www.grin-forum.org/t/confidential-assets/1217
+- https://medium.com/interstellar/programmable-constraint-systems-for-bulletproofs-365b9feb92f7
+- https://crypto.stanford.edu/bulletproofs/
+- https://doc.dalek.rs/bulletproofs/index.html
+- https://github.com/dalek-cryptography/bulletproofs
+- https://doc-internal.dalek.rs/bulletproofs/notes/index.html
+
+Confidential Assets
+- https://www.grin-forum.org/t/confidential-assets/1217 https://blog.chain.com/hidden-in-plain-sight-transacting-privately-on-a-blockchain-835ab75c01cb https://blockstream.com/bitcoin17-final41.pdf
+
+Dandelion
+- https://github.com/mimblewimble/grin/blob/master/doc/dandelion/dandelion.md https://github.com/gfanti/bips/blob/master/bip-dandelion.mediawiki
+
+One Way Aggregate Signatures
+- https://download.wpsoftware.net/bitcoin/wizardry/horasyuanmouton-owas.pdf
+
+Scriptless Scripts
+- https://www.grin-forum.org/t/scriptless-scripts-research-material/610 
+- https://github.com/mimblewimble/grin/blob/master/doc/contracts.md
+- https://diyhpl.us/wiki/transcripts/mit-bitcoin-expo-2017/mimblewimble-and-scriptless-scripts/ 
+- https://lists.launchpad.net/mimblewimble/msg00029.html 
+- https://lists.launchpad.net/mimblewimble/msg00036.html "I think it's possible to extend to pretty much any script functionality (though I don't want to)"
+- https://lists.launchpad.net/mimblewimble/msg00029.html
+- https://bitcoinmagazine.com/articles/bitcoin-privacycoin-tech-making-bitcoin-more-private/ 
+- https://bitcoinmagazine.com/articles/scriptless-scripts-how-bitcoin-can-support-smart-contracts-without-smart-contracts/ 
+- https://joinmarket.me/blog/blog/flipping-the-scriptless-script-on-schnorr/
+
+
 ## Random Thoughts
 
 <br>
