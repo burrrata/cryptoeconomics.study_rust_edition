@@ -4,8 +4,7 @@
 <br>
 
 # IMMEDIATE TODO
-- ch1/tx needs to be cleaned up
-- the structure of ch1/tx changed, so subsequent sections need to be updated accordingly
+- double check that ch1 central payment processor is up to date from changes to tx and state transition function 
 
 <br>
 <hr>
