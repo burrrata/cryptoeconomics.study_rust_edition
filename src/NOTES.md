@@ -2,6 +2,8 @@
     NOTES
 </h1>
 <br>
+<br>
+<br>
 
 # IMMEDIATE TODO
 - Rusty Cryptoeconomics or Cryptoeconomics.Study Rust Edition
@@ -9,7 +11,7 @@
 - clean up ch1 template so it looks less like a rough draft and more like something you want to explore
 
 <br>
-<hr>
+<br>
 <br>
 
 # Flow
