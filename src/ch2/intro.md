@@ -1,7 +1,7 @@
 <div align="center">
-    <p align="center">
+    <div align="center">
         <img src="neurons.jpg" alt="neurons">  
-    </p>
+    </div>
     <h1 align="center">
         PoW "Blockchain"
     </h1>
