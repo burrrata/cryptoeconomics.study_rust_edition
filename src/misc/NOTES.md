@@ -90,6 +90,9 @@ C.S Feature Ideas:
 
 So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot... Would it make more sense to dive into solidity at this point, or is it possible to replicate aspects of the Parity Ethereum client if I can roll external libraries in mdBook or build it out as a CLI tutorial?
 
+Would it be possible to reimpliment the py-evm in Rust?
+- https://github.com/ethereum/py-evm
+
 <hr>
 
 ### L2: state channels
