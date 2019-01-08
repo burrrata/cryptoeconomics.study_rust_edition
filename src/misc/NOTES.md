@@ -6,9 +6,14 @@
 <br>
 
 # IMMEDIATE TODO
-- Rusty Cryptoeconomics or Cryptoeconomics.Study Rust Edition
-- double check that ch1 central payment processor is up to date from changes to tx and state transition function 
+- double check that ch1 central database is up to date from changes to tx and state transition function 
+- add timestamps to the central database model to order tx 
 - clean up ch1 template so it looks less like a rough draft and more like something you want to explore
+
+# Interactive Art
+- how can I simulate multiple users in an environment so that everything doesn't just run in the main() thread?
+- can fearless concurrency be simulated in mdBook or the Rust Playground?
+- https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
 <br>
 <br>
@@ -57,12 +62,13 @@ So... if we want to do interesting things with cryptoecnomics... we need a scrip
 # General TODOs
 
 ### Book
-- external crates
-    - https://users.rust-lang.org/t/diy-digital-signatures/23739/5
-- fun > docs
-    - pictures for each chapter intro
-    - ayu as default theme
-    - encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
+External crates
+- https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+
+Fun > docs/tutorials
+- pictures for each chapter intro
+- ayu as default theme
+- encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
 
 ### Ch1
 - better resources
