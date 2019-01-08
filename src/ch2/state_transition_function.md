@@ -1,5 +1,5 @@
 <h1 align="center">
-    PoW: the proof is in the pudding.
+    State Transitions: the proof is in the pudding.
 </h1>
 
 <br>
@@ -10,6 +10,44 @@ This is where we'll talk about upgrading our state transition function from a co
 
 ?
 - do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
+
+### Core Concepts:
+- pending_tx pool => blocks
+- ledger history => hashed merkle tries
+
+
+### Hashing 
+
+Explain how hashing works:
+- Rust default hasher
+- SHA256 that's used in Ethereum
+
+Explain what it's useful for:
+- collision resistance
+- second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)]
+- preimage resistance
+- random oracle
+
+Explore merkle trees
+- effecient data verification
+- touch on patricia trees, but explain/build them in ch2: https://github.com/ethereum/wiki/wiki/Patricia-Tree
+
+
+### Blocks, block headers, and a merkle tree of the history.
+
+Yo what's up with those nonces?
+- are they to keep track of block numbers?
+- or are they for something else?
+
+The Ethereum Whitepaper has a lot of dope knowledge on how blocks are processed and the state transition function rolls the chain. Would be nice to include that.
+- https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
+
+Note: there will be no block rewards in this demo because a centralized payment processor only needs blocks
+to keep track of history, but does not need to incentivize miners to expend resources to secure the network.
+It's a "blockchain" style database not a decentralize P2P blockchain, but that's for ch2!
+
+
+
 
 <br>
 
@@ -45,10 +83,92 @@ impl Chain {
         }
     }
 }
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+struct MyStruct {
+    id: u8,
+    data: String,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    receiver: String,
+    tx_amount: f32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, Hash)]
+struct AltTX {
+    sender: String,
+    receiver: String,
+    tx_amount: i32,
+    nonce: i32,
+}
+
+
+unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::<T>(),
+    )
+}
+
+fn hash(stuff: &[u8]) -> String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!("{:#X}", digest);
+        
+    hex_digest
+}
+
+
+fn main() {
+
+    // Using Example Struct
+    let my_struct = MyStruct {
+        id: 98,
+        data: "Hello World".to_string(),
+    };
+    
+    let bytes: &[u8] = unsafe { 
+        any_as_u8_slice(&my_struct)
+    };
+
+    println!("{:?}", &bytes);
+    
+    
+    // Using TX Struct
+    let tx = TX {
+        sender: "Your Mom".to_string(),
+        receiver: "Yours truly".to_string(),
+        tx_amount: 1000.0,
+        nonce: 345,
+    };
+    
+    let tx_bytes: &[u8] = unsafe {
+        any_as_u8_slice(&tx)
+    };
+    println!("tx: {:?}", &tx_bytes);
+    
+    let tx_hash = hash(tx_bytes);
+    println!("tx hash: {:#?}", tx_hash);
+}
 ```
 
 <br>
 
 ## Resources
+
+Hashing and Merkle Trees
+- https://en.wikipedia.org/wiki/Merkle_tree
+- https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
+- https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
 
 <br>
