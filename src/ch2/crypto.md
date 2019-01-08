@@ -1,8 +1,15 @@
-# Randomness
-and why it matters
+<h1 align="center">
+    Crypto & Trust: why they matter.
+</h1>
 
+<br>
 
 ## Words
+
+Core Concepts:
+- randomness and why it's essential in key generation
+- strong crypto and why it's essential as a foundation of trust (and security)
+- 
 
 Randomness is important, but it's really used for the key generation... Maybe merge with the public key crypto section? 
 
@@ -23,6 +30,7 @@ Heninger says in her blog that the bad keys occurred almost entirely in embedded
 
 Strong random number generation is important throughout every phase of public key cryptography. For instance, if a weak generator is used for the symmetric keys that are being distributed by RSA, then an eavesdropper could bypass RSA and guess the symmetric keys directly.
 
+<br>
 
 ## Code
 If you want to explore this code, copy the commented part into the Rust Playground:
@@ -54,6 +62,8 @@ fn main() {
 */
 ```
 
+<br>
+
 # Resources
 
 ### Rust Rand Book
@@ -70,3 +80,5 @@ fn main() {
 - https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator
 - https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
 - https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
+
+<br>
