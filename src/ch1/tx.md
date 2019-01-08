@@ -23,6 +23,14 @@ Core Concepts
 
 <br>
 
+[![Cryptoeconomics - 1.3 - Replay Protection](https://img.youtube.com/vi/j7Mbx8laZwY/0.jpg)](https://www.youtube.com/watch?v=j7Mbx8laZwY)
+
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-3.html">Cryptoeconomics - 1.3 - Replay Protection</a>.
+</p>
+
+<br>
+
 ## Code
 ```rust
 extern crate rand;
