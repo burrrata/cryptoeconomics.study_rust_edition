@@ -11,7 +11,7 @@
   - [History](./ch1/history.md)
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
   
-- [P2P Blockchain Network](.ch2/intro.md)
+- [P2P Blockchain Network](./ch2/intro.md)
   - [State](./ch2/state.md)
   - [Randomness](./ch2/randomness.md)
   - [Public Key Crypto](./ch2/public_key_crypto.md)
