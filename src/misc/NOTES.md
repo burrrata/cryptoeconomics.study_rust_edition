@@ -26,6 +26,7 @@ While banks or central operators can change the data in our bank accounts, they 
 
 
 # Ideas From C.S
+- https://github.com/K-Ho/code/tree/networkVisualization
 - https://docs.google.com/document/d/1R85zczC1-nklLXEFx-dZfQdlZexRAk8S9G9Hc3Zjkx4/edit
 
 
