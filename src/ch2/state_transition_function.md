@@ -11,26 +11,16 @@ This is where we'll talk about upgrading our state transition function from a co
 ?
 - do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
 
-### Core Concepts:
+Core Concepts:
 - pending_tx pool => blocks
 - ledger history => hashed merkle tries
 
+Resources:
+- https://github.com/cryptoeconomics-study/code/blob/master/c3_ProofOfWork/proofOfWork.js
+- https://github.com/tensor-programming/Rust_block_chain/blob/master/src/blockchain.rs
 
-### Hashing 
 
-Explain how hashing works:
-- Rust default hasher
-- SHA256 that's used in Ethereum
 
-Explain what it's useful for:
-- collision resistance
-- second preimage resistance [given x and H(x), cannot find y such that H(y) = H(x)]
-- preimage resistance
-- random oracle
-
-Explore merkle trees
-- effecient data verification
-- touch on patricia trees, but explain/build them in ch2: https://github.com/ethereum/wiki/wiki/Patricia-Tree
 
 
 ### Blocks, block headers, and a merkle tree of the history.
