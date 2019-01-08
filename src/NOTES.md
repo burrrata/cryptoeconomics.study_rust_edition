@@ -50,6 +50,7 @@ So... if we want to do interesting things with cryptoecnomics... we need a scrip
 - make ayu the default theme
 - figure out how to build and use external crates
 - create a compelling home/welcome page so it feel more like a platform and less like docs
+    - pictures
 
 ### Ch1
 - better resources
