@@ -4,12 +4,12 @@
 
 [Pregame](./crypto_wars.md)
 
-- [Centralized Payment Processor](./ch1/intro.md)
+- [Centralized Database Managers](./ch1/intro.md)
   - [State](./ch1/state.md)
   - [Accounts](./ch1/accounts.md)
   - [TX](./ch1/tx.md)
   - [State Transition Function](./ch1/state_transition_function.md)
-  - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
+  - [Manage Your Own Centralized Database](./ch1/centralized_payment_processor.md)
   
 - [PoW "Blockchain"](./ch2/intro.md)
   - [State](./ch2/state.md)
@@ -17,14 +17,14 @@
   - [Accounts](./ch2/accounts.md)
   - [TX](./ch2/tx.md)
   - [State Transition Function](./ch2/state_transition_function.md)
-  - [P2P PoW "Blockchain"](./ch2/p2p_pow_blockchain.md)
+  - [Roll Your Own PoW "Blockchain"](./ch2/p2p_pow_blockchain.md)
   
 - [PoS "Blockchain"](./ch3/intro.md)
   - [ECDSA](.ch3/ecdsa.md)
   - [RLP](.ch3/rlp.md)
   - [Patricia Tries](.ch3/patricia_tries.md)
   - [State Transition Function](.ch3/pos.md)
-  - [PoS "Blockchain"](./ch3/p2p_pos_blockchain.md)
+  - [Roll Your Own PoS "Blockchain"](./ch3/p2p_pos_blockchain.md)
   
 - [Resources](./resources/intro.md)
   - [Learning](./resources/learning.md)
