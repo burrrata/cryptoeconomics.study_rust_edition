@@ -16,6 +16,12 @@ Let's try it out and become kings of our own little hills!
 
 ## Videos
 
+[![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
+
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
+</p>
+
 <br>
 
 ## Code
