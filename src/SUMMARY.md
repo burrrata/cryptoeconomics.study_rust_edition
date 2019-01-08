@@ -20,6 +20,7 @@
   - [TX](./ch2/tx.md)
   - [Hashing](./ch2/hashing.md)
   - [Blocks](./ch2/blocks.md)
+  - [P2P "Blockchain"](./ch2/p2p_"blockchain".md)
   
 - [Better P2P Blockchain](./ch3/intro.md)
   - [ECDSA](.ch3/ecdsa.md)
