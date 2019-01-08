@@ -24,7 +24,7 @@
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
 
-### Projects Building Cryptoeconomic Stuff / Blockchain Related Stuff Using Rust
+### Projects Building Cryptoeconomic / Blockchain Related Stuff Using Rust
 - Grin: https://github.com/mimblewimble/grin
 - Polkadot: https://github.com/paritytech/polkadot
 - Substrate: https://www.parity.io/substrate/
