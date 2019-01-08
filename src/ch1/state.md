@@ -2,6 +2,8 @@
     State: all the things...
 </h1>
 
+<br>
+
 ## Words
 
 Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both have one thing in common: they allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
@@ -13,6 +15,8 @@ This data is mostly stored in centralized databases. The "state" of these databa
 
 In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data. 
 
+<br>
+
 ## Video
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
@@ -20,6 +24,8 @@ In this example we'll explore some of the common data structures that banks keep
 <p>
     <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
 </p>
+
+<br>
 
 ## Code
 ```rust, editable
@@ -167,3 +173,9 @@ fn main() {
     // Let the games begin...
 }
 ```
+
+<br>
+
+## Resources
+
+TBD
