@@ -32,6 +32,7 @@ Token Engineering
 
 Applications
   - https://colony.io/
+  - https://ethresear.ch/c/applications
 
 Voting Systems
   - https://medium.com/@Vlad_Zamfir
