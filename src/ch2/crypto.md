@@ -1,7 +1,9 @@
 <h1 align="center">
-    Crypto & Trust: why they matter.
+    Crypto & Trust
 </h1>
-
+<p align="center">
+    Why they matter.
+</p>
 <br>
 
 ## Words
