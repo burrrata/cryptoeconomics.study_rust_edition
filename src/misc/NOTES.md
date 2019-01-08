@@ -10,6 +10,8 @@
 - add timestamps to the central database model to order tx 
 - clean up ch1 template so it looks less like a rough draft and more like something you want to explore
 
+<br>
+
 # Interactive Art
 - how can I simulate multiple users in an environment so that everything doesn't just run in the main() thread?
 - can fearless concurrency be simulated in mdBook or the Rust Playground?
