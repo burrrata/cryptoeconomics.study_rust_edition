@@ -60,7 +60,15 @@ goals
 
 <br>
 
-### An evolution of human cooperation
+### An evolution of human cooperation part 1
+
+From what I can tell, it seems that cooperation is the fundamental thing that has allowed humans to overcome major difficulties and become the dominant species on the planet. For a while this worked really well in tribes where people knew each other and established reputation, and ten in top down command and control systems where one gov/religion would coordinate all it’s members to get stuff done (build churches/pyramids, invade less coordinated small tribes, etc…).
+
+Today though, we live in a global 24/7 interconnected world where these institutions are ill-equipped to take on our current challenges such as environmental challenges (tragedy of the commons), border-less culture/businesses/information (permission-less innovation), and a general inability for people to secure or verify information and value (and thus make informed decisions). We cannot solve these problems with the same level of thinking that created them, but we can evolve our coordination mechanisms to meet these demands.
+
+This is where cryptoeconomics comes in: it’s an evolution of human cooperation. History has shown that cooperation is possible, and the species, cultures, and societies that understood this are the ones that survived and thrived. We need mechanisms that enable this at scale. This means trustless 24/7 always on, always secure, selfishly incentivized positive sum global systems. This means blockchains and cryptoeconomics.
+
+### An evolution of human cooperation part 2
 
 Monarchies: I have a big stick and god gave it to me, and god has a big stick too, so do as I say otherwise we’ll hit you with a big metal/moral stick.
 
@@ -81,3 +89,5 @@ Think about the internet: all of the protocols themselves are relatively ok, and
 <br>
 
 
+
+<br>
