@@ -19,7 +19,7 @@ Let's try it out and become kings of our own little hills!
 <br>
 
 ## Code
-```rust
+```rust, ignore
 
 extern crate rand;
 use rand::prelude::*;
