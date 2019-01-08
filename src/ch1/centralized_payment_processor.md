@@ -9,6 +9,14 @@ When you use a centralized operator like a bank:
 - bank controls history
 - bank creates new money
 
+## Video
+
+[![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/ckzi8iqGilE/0.jpg)](https://www.youtube.com/watch?v=ckzi8iqGilE)
+
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-5.html">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
+</p>
+
 ## Code
 
 ```rust, ignore
