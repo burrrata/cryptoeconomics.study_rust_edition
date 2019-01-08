@@ -9,8 +9,11 @@ Some people like centralized databases and services because they're fast and the
 
 ## Video
 
-This seems like the most relevant match:
-- https://cryptoeconomics.study/lectures/chapter-01-0.html
+[![Cryptoeconomics - 1.0 - Chapter 1 Overview](https://img.youtube.com/vi/VaUTTE5xb54/0.jpg)](https://www.youtube.com/watch?v=VaUTTE5xb54)
+
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-0.html">Cryptoeconomics - 1.0 - Chapter 1 Overview</a>.
+</p>
 
 ## Code
 ```rust, ignore
