@@ -1,4 +1,4 @@
-<h1 align="center" size="24">
+<h1 align="center">
     Ch1: Centralized Payment Processors
 </h1>
 
