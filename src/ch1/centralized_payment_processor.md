@@ -7,12 +7,12 @@
 ## Words
 
 Core Concepts: 
-- when you use a centralized operator like a bank:
-- trust bank has correct state
-- bank controls accounts
-- bank controls tx
-- bank controls history
-- bank creates new money
+- When you use a centralized database you trust that they have the correct state.
+- The central operator controls:
+    - accounts / identity
+    - tx / operations
+    - history / data
+    - creation of new data
 
 <br>
 
