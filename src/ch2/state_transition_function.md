@@ -14,23 +14,13 @@ Core Concepts:
 - ledger history => hashed merkle tries
 - anti-spam protection with proof of work on each block
 
+Open Questions
+- do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
+- How do block nonces differ from TX nonces?
+
 Resources:
 - https://github.com/cryptoeconomics-study/code/blob/master/c3_ProofOfWork/proofOfWork.js
 - https://github.com/tensor-programming/Rust_block_chain/blob/master/src/blockchain.rs
-
-<br>
-
-Open Question
-- do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
-
-<br>
-
-Blocks, block headers, and a merkle tree of the history.
-
-Block nonces vs TX nonces
-- are they to keep track of block numbers?
-- or are they for something else?
-
 
 <br>
 
