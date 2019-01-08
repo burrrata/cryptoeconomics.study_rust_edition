@@ -1,7 +1,7 @@
 <div align="center">
-    <p align="center">
+    <div align="center">
         <img src="fun.png" alt="fun">  
-    </p>
+    </div>
     <h1 align="center">
         Ch1: Centralized Database Managers
     </h1>
