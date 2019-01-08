@@ -20,3 +20,6 @@
 - plasma
 - state channels
 - other?
+
+### Need some inspiration on what to build?
+- https://ethresear.ch/c/applications
