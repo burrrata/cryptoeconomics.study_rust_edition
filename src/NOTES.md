@@ -11,20 +11,20 @@ I would be great to focus LESS on payments, and MORE on data and access to compu
 It would also be great to mention that while banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
 
 ### CPP State
-- trust bank has correct state
-- bank controls accounts
-- bank controls tx
-- bank controls history
-- bank creates new money
+- users trust bank state
+- bank creates and controls accounts
+- users request tx to be approved by bank
+- bank controls any state transitions including freezing accounts or new money creation
 
 https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md
 
 ### P2P State
-- trust => agreed upon pub key crypto accounts and network params 
-- accounts => accounts created via "secure" random key generation
-- tx => signed tx
-- history => blocks and merkle tries  
-- bank money => PoW
+- centralized state database => new p2p database structure
+- trust => agreed upon pub key crypto accounts and network params (randomness + crypto basics)
+- accounts => accounts created via "secure" random key generation (accounts + pub key crypto)
+- tx => signed tx (tx + digital signatures)
+- history => blocks and merkle tries (blocks + hashing)
+- bank approved state transition => PoW state transition 
 
 ### Better P2P Network
 - signed "RSA" tx => ECDSA
