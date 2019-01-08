@@ -26,7 +26,7 @@
   - [State Transition Function](.ch3/pos.md)
   - [PoS "Blockchain"](./ch3/p2p_pos_blockchain.md)
   
-- [Moar Resources](./resources/intro.md)
+- [Resources](./resources/intro.md)
   - [Learning](./resources/learning.md)
   - [Building](./resources/building.md)
   - [Engaging](./resources/engaging.md)
