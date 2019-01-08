@@ -13,6 +13,7 @@
 
 ### Ethereum Research
 - https://ethresear.ch
+- https://ethereum-magicians.org/
 
 ### Rust Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
