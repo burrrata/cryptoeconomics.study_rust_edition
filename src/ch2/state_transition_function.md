@@ -53,6 +53,12 @@ It's a "blockchain" style database not a decentralize P2P blockchain, but that's
 
 ## Videos
 
+[![Cryptoeconomics - 1.1 - Hashes and Signatures](https://img.youtube.com/vi/FLIo_ZjV--U/0.jpg)](https://www.youtube.com/watch?v=FLIo_ZjV--U)
+
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-1.html">Cryptoeconomics - 1.1 - Hashes and Signatures</a>.
+</p>
+
 <br>
 
 ## Code
