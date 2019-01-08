@@ -9,7 +9,7 @@
 Core Concepts:
 - randomness and why it's essential in key generation
 - strong crypto and why it's essential as a foundation of trust (and security)
-- 
+- would this be a good place to talk about hash functions and why they're usefu? (rather than dumping it all in the PoW section)
 
 Randomness is important, but it's really used for the key generation... Maybe merge with the public key crypto section? 
 
