@@ -14,7 +14,7 @@ Core Concepts
 
 ## Videos
 
-¯\_(ツ)_/¯
+¯\\_(ツ)_/¯
 
 <br>
 
