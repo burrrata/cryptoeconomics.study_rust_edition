@@ -16,3 +16,6 @@
 - plasma
 - state channels
 - other?
+
+### Rust Book Dev
+- this book is built with [mdBook!](https://rust-lang-nursery.github.io/mdBook/index.html)
