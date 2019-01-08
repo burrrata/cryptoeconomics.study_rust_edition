@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="rusty_ethereum.png" alt="Rusty Ethereum">  
+</p>
 <h1 align="center">
     Welcome!
 </h1>
