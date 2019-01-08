@@ -6,7 +6,8 @@
 
 ## Words
 
-TL;DR: when you use a centralized operator like a bank:
+Core Concepts: 
+- when you use a centralized operator like a bank:
 - trust bank has correct state
 - bank controls accounts
 - bank controls tx
