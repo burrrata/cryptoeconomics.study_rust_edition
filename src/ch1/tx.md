@@ -110,9 +110,6 @@ impl State {
     // Create a new state
     pub fn new_state() -> State {
     
-        // Ah... a blank canvas. So clean. So pure. So beautiful.
-        // Let the games begin.
-    
         let mut new = State {
             accounts: HashMap::new(),
             frozen_accounts: HashMap::new(),
@@ -131,16 +128,6 @@ impl State {
     // Create a new account
     pub fn new_account(&mut self) {
         
-        // Notice how the only thing tying the account_id to the password
-        // is that the bank stores them in the same database. If the bank
-        // were to change this by accident, or a hacker were to get access to
-        // that data via hacking the bank directly or a relevant 3rd party...
-        // well... life would get very interesting very fast. Mostly for you 
-        // though because the banks are insured so for them it's a write-off
-        // that affects them minimally. 
-        // https://en.wikipedia.org/wiki/Write-off
-        // https://en.wikipedia.org/wiki/Equifax
-        
         let account_id = State::hash(&thread_rng().gen_range(0, 1000000));
         let account_data = Account {
             password: thread_rng().gen_range(0, 1000000),
@@ -155,17 +142,7 @@ impl State {
     // Create multiple new accounts
     pub fn new_accounts(&mut self,
                         num_accounts: i32) {
-        
-        // Sock puppets ahoy!
-        // Good thing banks are honest and would never create accounts to
-        // simulate activity when there was none. Even better that crypto
-        // exchanges are even more honest because, well... crypto! It's 
-        // different this time right?
-        // https://en.wikipedia.org/wiki/Sockpuppet_(Internet)
-        // https://en.wikipedia.org/wiki/Wash_trade
-        // https://medium.com/@bitfinexed/wash-trading-bitcoin-how-bitfinex-benefits-from-fraudulent-trading-8bd66be73215
-        // https://medium.com/@bitfinexed/the-tether-truth-machine-the-wheels-of-justice-turn-slowly-but-grind-exceedingly-finely-8e3bd72ad011
-        
+
         for i in 0..num_accounts {
             self.new_account()
         }
@@ -174,8 +151,6 @@ impl State {
     // Print account info
     pub fn print_account_info(&mut self,
                          account_id: String) {
-        
-        // If it's written down it must be true.
         
         if let Some(x) = self.accounts.get(&account_id) {
             println!("Your Account:\n{:#?}", self.accounts.get(&account_id).unwrap());
@@ -186,11 +161,6 @@ impl State {
     // Print account history
     pub fn print_account_history(&mut self,
                                  account_id: String,) {
-        
-        // Assuming the bank's records are accurate and up to date, which
-        // we assume they are, probably, but we don't know ¯\_(ツ)_/¯ 
-        // https://www.bbc.com/news/business-43985233
-        // https://www.cnet.com/news/commonwealth-bank-of-australia-financial-data-breach-20-million-accounts/
         
         let mut account_history = Vec::new();
         let list = self.history.clone();
