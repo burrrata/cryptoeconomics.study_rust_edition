@@ -6,6 +6,8 @@
 
 # Flow
 
+I would be great to focus LESS on payments, and MORE on data and access to computation, information, identity, social networks, and services.
+
 It would also be great to mention that while banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
 
 ### CPP State
