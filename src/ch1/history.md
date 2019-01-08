@@ -10,6 +10,8 @@ Core Concepts
 - knowing where you came from let's you know where you are
 - yet again... he who contols the data has the power - if the history of your account isn't accurate how do you prove it?
 
+This really only matters as a placeholder because in ch2 we'll upgrade the history function to a merklized blockchain. There really aren't any new concepts being introduced here though... 
+
 <br>
 
 ## Videos
