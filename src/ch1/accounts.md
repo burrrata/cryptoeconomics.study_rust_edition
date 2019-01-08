@@ -1,4 +1,4 @@
-<h1 align="center" size="24">
+<h1 align="center">
     Accounts: the stuff you care about.
 </h1>
 
