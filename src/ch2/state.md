@@ -142,3 +142,6 @@ balance without an equal and opposite increase elsewhere."
 The history of state machines
 - https://en.wikipedia.org/wiki/Analytical_Engine
 - https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22
+
+Blockchain
+- https://en.wikipedia.org/wiki/Blockchain
