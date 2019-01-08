@@ -11,5 +11,4 @@ Welcome! This was merged with the central payment operator chapter, but now it's
 - trust => agreed upon pub key crypto accounts and network params (randomness + crypto basics)
 - accounts => accounts created via "secure" random key generation (accounts + pub key crypto)
 - tx => signed tx (tx + digital signatures)
-- history => blocks and merkle tries (blocks + hashing)
-- bank approved state transition => PoW state transition 
+- bank approved state transition and data storage => PoW state transition and blocks / merkle tries data storage
