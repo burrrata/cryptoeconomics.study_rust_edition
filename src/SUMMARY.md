@@ -13,7 +13,7 @@
   
 - [P2P Blockchain Network](./ch2/intro.md)
   - [State](./ch2/state.md)
-  - [Randomness](./ch2/randomness.md)
+  - [Crypto](./ch2/crypto.md)
   - [Accounts](./ch2/accounts.md)
   - [TX](./ch2/tx.md)
   - [State Transition Function](./ch2/state_transition_function.md)
