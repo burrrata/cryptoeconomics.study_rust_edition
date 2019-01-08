@@ -3,8 +3,11 @@
 </p>
 
 <h1 align="center">
-    Harder Better Faster Stronger: moving towards a production ready blockchain.
+    Harder Better Faster Stronger
 </h1>
+<p align="center">
+    Moving towards a production ready blockchain.
+</p>
 
 <br>
 
