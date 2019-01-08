@@ -54,6 +54,9 @@ So how does this work? The foundation of public private key crypto is a set of a
 <br>
 
 ## Code
+
+### Toy prime creation and factorization examples:
+- I think this is actually incorrect and only works some of the time... but there's an updated version in the ch2/accounts.md section.
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
