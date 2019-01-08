@@ -177,6 +177,7 @@ fn main() {
 <br>
 
 ## Resources
+- https://en.wikipedia.org/wiki/Database
 - https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database
 
 <br>
