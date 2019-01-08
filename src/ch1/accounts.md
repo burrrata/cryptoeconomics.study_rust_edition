@@ -2,7 +2,7 @@
 
 ## Words
 
-An account is just a way to store data in one place to make it more useful. Let's put all our eggs in one basket and see how a centralized database might do that.
+An account is just a way to store data to make it more useful. Let's put all our eggs in one basket via a centralized database. Some people like these because they're fast and there's someone to blame if/when things go wrong. This makes users feel safe because it's familiar, they don't have to think too much, and someone seems responsible. Time has told us however that this is merely a mirage to make us feel good and in reality centralized operators have most of the upside but limited downside, while for users on the otherhad it's reversed. Sound fun? Great! Let's go...
 
 
 ## Video
