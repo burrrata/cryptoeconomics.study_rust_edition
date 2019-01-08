@@ -345,6 +345,16 @@ impl State {
 
 fn main() {
     
+    // Note that every function that starts with
+    // bank.function() is a function that only the
+    // centralized operator can perform. Users can
+    // submit TX for review, but ultimately they 
+    // have no control. Same for viewing their 
+    // account history or controlling if/when
+    // their funds are accessible. Users can
+    // make requests, but the central operator
+    // makes the rules.
+    
     // Init bank state
     let mut bank = State::new_state();
     println!("\n/// Initialized Bank State ///");
@@ -389,6 +399,9 @@ fn main() {
     bank.process_pending_tx();
     println!("\n/// Processed Pending TX ///");
     println!("{:#?}", bank);
+    
+    // Get the history for an account
+    bank.print_account_history(test_account0.clone());
 }
 ```
 
