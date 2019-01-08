@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="TBD" alt="TBD">  
+    <img src="inspo.jpg" alt="inspo">  
 </p>
 
 <h1 align="center">
@@ -54,7 +54,11 @@ goals
   - https://ethresear.ch/t/question-for-game-theory-experts-coalitions-with-and-without-a-concentrated-beneficiary/3859
   - http://www.paulgraham.com/good.html
 
+<br>
+
 ## Random Thoughts
+
+<br>
 
 ### An evolution of human cooperation
 
@@ -65,6 +69,8 @@ Capitalism: I have lots of money to buy lawyers and equities and our gov enforce
 Cryptoeconomics: there’s things to be done and if you want to do them you’ll be rewarded with X, but there’s also other things you could try to do and if you do you’ll be punished with Y, so do whatever you want :v:️
 
 Cryptoceonomics, if implemented correctly, might help to replace/minimize many institutions and practices we use today to reach consensus or enforce behaviors. That being said, there’s still a place for legal processes and voting, but they are often overused and inefficient for many usecases. Cryptoeconomics can help us optimize incentive verification and enforcement just like software and computers helped us optimize database entry and management :slight_smile:
+
+<br>
 
 ### Privacy as a foundation of "censorship resistance"
 
