@@ -20,6 +20,7 @@ Let's try it out and become kings of our own little hills!
 
 ## Code
 ```rust
+
 extern crate rand;
 use rand::prelude::*;
 
@@ -355,6 +356,21 @@ fn main() {
     }
     println!("\n/// Added Funds To Accounts ///");
     println!("{:#?}", bank);
+
+    // Let's make some TX requests
+    for i in 0..10 {
+        
+        let sender = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+            bank.new_user_tx(sender.to_string(),
+                        bank.accounts.get(sender).unwrap().password,
+                        bank.accounts.get(sender).unwrap().nonce,
+                        receiver.to_string(),
+                        thread_rng().gen_range(100, 1000))
+        }
+    } 
 
     // Let's print some moneys!
     for i in 0..10 {
