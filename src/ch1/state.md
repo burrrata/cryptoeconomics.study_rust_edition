@@ -67,7 +67,7 @@ struct State {
     // This is useful to look up account data in the 
     // accounts HashMap.
     account_ids: Vec<String>,
-    // This is churning pool of TX that have been submitted
+    // This is a churning pool of TX that have been submitted
     // by users, but not verified and processed by the bank. 
     pending_tx: Vec<TX>,
     // This is a history of all TX the bank has processed
