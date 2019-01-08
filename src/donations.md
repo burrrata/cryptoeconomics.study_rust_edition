@@ -1,7 +1,15 @@
-# Donations
-The best things in life are free, but for everthing else...
+<p align="center">
+    <img src="gratitude.png" alt="Thank You">  
+</p>
+<p align="center">
+  The best things in life are free, but for everthing else...
+</p>
 
-I hope you liked this book/tutorial and got some value out of it! I'll keep building learning tools and resources as long as I can, but it takes a lot of work and I'm doing it for free. If you feel so inspired please consider donating to support the ongoing maintenance and development of this and future books :)
+<br>
+
+<p>
+  I hope you liked this book/tutorial and got some value out of it! I'll keep building learning tools and resources as long as I can, but it takes a lot of work and I'm doing it for free. If you feel so inspired please consider donating to support the ongoing maintenance and development of this and future books :)
+</p>
 
 Ethereum:
 - 0xAB30757feDDc162C788d748f6F89AbeC4bB78cAD
