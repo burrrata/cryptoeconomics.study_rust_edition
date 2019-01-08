@@ -6,6 +6,9 @@
 
 - [Centralized Payment Processor](./ch1/intro.md)
   - [State](./ch1/state.md)
+  - [Accounts](./ch1/accounts.md)
+  - [TX](./ch1/tx.md)
+  - [History](./ch1/history.md)
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
   
 - [P2P Blockchain Network](.ch2/intro.md)
@@ -19,8 +22,10 @@
   - [Blocks](./ch2/blocks.md)
   
 - [Better P2P Blockchain](./ch3/intro.md)
+  - [ECDSA](.ch3/ecdsa.md)
   - [RLP](.ch3/rlp.md)
   - [Patricia Tries](.ch3/patricia_tries.md)
+  - [PoS](.ch3/pos.md)
   
 - [Moar Resources](./resources/intro.md)
   - [Learning](./resources/learning.md)
