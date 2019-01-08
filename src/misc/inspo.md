@@ -88,6 +88,15 @@ Scriptless Scripts
 - https://bitcoinmagazine.com/articles/scriptless-scripts-how-bitcoin-can-support-smart-contracts-without-smart-contracts/ 
 - https://joinmarket.me/blog/blog/flipping-the-scriptless-script-on-schnorr/
 
+Schorr Signatures
+- https://en.wikipedia.org/wiki/Schnorr_signature
+- https://en.wikipedia.org/wiki/Schnorr_group
+- https://www.grin-forum.org/t/schnorr-signatures-in-grin-information/730
+- https://github.com/mimblewimble/grin/blob/master/doc/contracts.md
+- https://diyhpl.us/wiki/transcripts/scalingbitcoin/milan/schnorr-signatures/
+- https://diyhpl.us/wiki/transcripts/blockchain-protocol-analysis-security-engineering/2018/schnorr-signatures-for-bitcoin-challenges-opportunities/
+
+<br>
 
 ## Random Thoughts
 
