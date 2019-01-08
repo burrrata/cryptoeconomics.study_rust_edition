@@ -47,10 +47,12 @@ So... if we want to do interesting things with cryptoecnomics... we need a scrip
 # General TODOs
 
 ### Book
-- make ayu the default theme
-- figure out how to build and use external crates
-- create a compelling home/welcome page so it feel more like a platform and less like docs
-    - pictures
+- external crates
+    - https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+- fun > docs
+    - pictures for each chapter intro
+    - ayu as default theme
+    - encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
 
 ### Ch1
 - better resources
