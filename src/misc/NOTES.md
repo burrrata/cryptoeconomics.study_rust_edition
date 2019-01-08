@@ -44,6 +44,8 @@ While banks or central operators can change the data in our bank accounts, they 
 - history => blocks and merkle tries (blocks + hashing)
 - bank approved state transition => PoW state transition 
 
+It's really important here that we can simulate multiple miners creating blocks to showcase how we deal with forks and decide which chain is the main chain.
+
 Ideas from C.S:
 - Implement a new Client node class.
 - Implement a new Miner node class. 
