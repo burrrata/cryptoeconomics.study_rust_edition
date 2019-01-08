@@ -7,9 +7,9 @@
 ## Words
 
 Core Concepts
-- tx as things that request a change state
-- state transition funciton as a way to confirm that state change
-- fun facts that come with having a centralized operator do this for you
+- tx is a way to request a state change
+- the state transition function is how we make that state change
+- the central operator controls the state and thus all state changes including freezing accounts or printing money
 
 <br>
 
@@ -395,12 +395,12 @@ fn main() {
     println!("\n/// Simulated Some TX ///");
     println!("{:#?}", bank);
     
-    // Process pending TX
+    // Process and approve or decline pending TX
     bank.process_pending_tx();
     println!("\n/// Processed Pending TX ///");
     println!("{:#?}", bank);
     
-    // Get the history for an account
+    // Get the TX history for an account
     bank.print_account_history(test_account0.clone());
 }
 ```
