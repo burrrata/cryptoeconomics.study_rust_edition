@@ -16,8 +16,6 @@ It would also be great to mention that while banks or central operators can chan
 - users request tx to be approved by bank
 - bank controls any state transitions including freezing accounts or new money creation
 
-https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/src/ch1/centralized_payment_processor.md
-
 ### P2P State
 - centralized state database => new p2p database structure
 - trust => agreed upon pub key crypto accounts and network params (randomness + crypto basics)
