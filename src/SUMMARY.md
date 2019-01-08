@@ -8,7 +8,6 @@
   - [State](./ch1/state.md)
   - [Accounts](./ch1/accounts.md)
   - [TX](./ch1/tx.md)
-  - [History](./ch1/history.md)
   - [Centralize Payment Processor](./ch1/centralized_payment_processor.md)
   
 - [P2P Blockchain Network](./ch2/intro.md)
