@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="fun.png" alt="fun">  
+</p>
+
 <h1 align="center">
     Ch1: Centralized Payment Processors
 </h1>
