@@ -4,6 +4,7 @@
 <br>
 
 # IMMEDIATE TODO
+- Rusty Cryptoeconomics or Cryptoeconomics.Study Rust Edition
 - double check that ch1 central payment processor is up to date from changes to tx and state transition function 
 
 <br>
