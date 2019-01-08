@@ -23,3 +23,11 @@
 
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
+
+### Projects Building Cryptoeconomic Stuff / Blockchain Related Stuff Using Rust
+- Grin: https://github.com/mimblewimble/grin
+- Polkadot: https://github.com/paritytech/polkadot
+- Substrate: https://www.parity.io/substrate/
+- Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum
+- Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
+- and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
