@@ -2,7 +2,7 @@
 authors = ["burrrata"]
 multilingual = false
 src = "src"
-title = "Cryptoeconomics.Study Rust Edition"
+title = "Rusty Cryptoeconomics"
 
 [output.html]
 mathjax-support = true
