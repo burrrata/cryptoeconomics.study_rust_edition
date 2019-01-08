@@ -1,10 +1,11 @@
-<p align="center">
-    <img src="rusty_ethereum.png" alt="Rusty Ethereum">  
-</p>
-<h1 align="center">
-    Welcome!
-</h1>
-
+<div align="center">
+    <p align="center">
+        <img src="rusty_ethereum.png" alt="Rusty Ethereum">  
+    </p>
+    <h1 align="center">
+        Welcome!
+    </h1>
+</div>
 <br>
 
 A blockchain is, at it's heart, just a glorified database. It keeps track of stuff. In this book we'll explore how that works and why anyone should care.
