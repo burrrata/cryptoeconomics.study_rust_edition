@@ -2,8 +2,6 @@
     NOTES
 </h1>
 <br>
-<hr>
-<br>
 
 # IMMEDIATE TODO
 - ch1/tx needs to be cleaned up
