@@ -18,22 +18,25 @@
 - https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
 <br>
-<br>
-<br>
 
-# Flow
+# Generalizable Data Structures
+- focus LESS on payments, and MORE on data and access to computation, information, identity, social networks, and services.
 
-I would be great to focus LESS on payments, and MORE on data and access to computation, information, identity, social networks, and services.
+While banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
 
-It would also be great to mention that while banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
 
-### CPP State
+# Ideas From C.S
+- https://docs.google.com/document/d/1R85zczC1-nklLXEFx-dZfQdlZexRAk8S9G9Hc3Zjkx4/edit
+
+
+# Centralized Database
 - users trust bank state
 - bank creates and controls accounts
 - users request tx to be approved by bank
 - bank controls any state transitions including freezing accounts or new money creation
 
-### P2P State
+
+# PoW "Blockchain"
 - centralized state database => new p2p database structure
 - trust => agreed upon pub key crypto accounts and network params (randomness + crypto basics)
 - accounts => accounts created via "secure" random key generation (accounts + pub key crypto)
@@ -41,11 +44,44 @@ It would also be great to mention that while banks or central operators can chan
 - history => blocks and merkle tries (blocks + hashing)
 - bank approved state transition => PoW state transition 
 
-### Better P2P Network
+Ideas from C.S:
+- Implement a new Client node class.
+- Implement a new Miner node class. 
+- Run their protocol in the sandbox and understand how Nakamoto consensus functions under different assumptions.
+- Develop a new doubleSpend.js script to spend coins, revert history and mine a longer chain.
+- Give one miner 51% of the hash power and execute the doubleSpend.js script in the sandbox.
+- Implement a new Selfish Miner node class with logic to execute a selfish mining attack.
+- Give one miner 25% of the hash power and execute a selfish mining attack in the sandbox.
+
+UX Feature Ideas from C.S:
+- Option to toggle nodes into miners and back again
+- Clearly display the longest chain and which nodes agree on this chain.
+- Easily expand a block and explore its contents in a separate view.
+- Visually see miners iterating through nonces and checking hashes
+- Controls to adjust amount of mining power each miner has
+- User can click a button to attempt a double spend attack
+- Users can also toggle a miner into a selfish miner.
+- Simulation of cost of mining to demonstrate when miners are profitable (and show that they lose money under the attack of selfish mining)
+
+# PoS "Blockchain"
 - signed "RSA" tx => ECDSA
 - generic merkle trie => patricia tries
 - generic String/u8 conversion => RSL data encoding
 - PoW => PoS
+
+C.S Casper Beacon Chain Ideas:
+- Add validator class
+- Add deposit transaction which locks coins
+- Add withdraw transaction which unlocks coins (after some delay)
+- Add vote() which votes on the current epoch - if more than ⅔ vote then the block is finalized
+- Update the fork choice rule to not revert finalized blocks, and accept a ‘starting block’ blockhash.
+C.S Feature Ideas:
+- Visualize when finality is reached
+- Implement and attempt nothing at stake attacks (get slashed)
+- Users can alter the # of honest nodes
+- Implement and attempt long range revision attacks
+- Controls to adjust the stake of each node
+
 
 <hr>
 
