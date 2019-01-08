@@ -1,4 +1,6 @@
-# State: all the things...
+<h1 align="center" size="24">
+    State: all the things...
+</h1>
 
 ## Words
 
