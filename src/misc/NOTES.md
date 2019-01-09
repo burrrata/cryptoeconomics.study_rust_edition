@@ -5,15 +5,36 @@
 <br>
 <br>
 
-# IMMEDIATE TODO
-- add relevant white/yellow paper sections to chapters 2 and 3
-- double check that ch1 central database is up to date from changes to tx and state transition function 
-- clean up ch1 template so it looks less like a rough draft and more like something you want to explore
-- Easy Feedback Channel.
-    - email: rustycryptoeconomics@protonmail.com / rrrustycrrryptoeconomics@protonmail.com
-    - forum? (rolling a forum for a tutorial that no one knows about feels a little extra atm)
-    - reddit? (maybe just post to r/ethereum and r/cryptoeconomics and see if anyone cares)
+# TODO
 
+### Immediate
+- read white/beige/yellow papers to sketch out the framework for chapters 1, 2, and 3 BEFORE writing code.
+- external crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+
+### Ch 1
+- moar resources
+- clean up comments
+- create a function to simulate multiple threads as if multiple users were using the service
+
+### Ch 2
+- add relevant white/yellow paper sections
+- get the end chapter demo working
+- decompose the demo into sections
+
+### Ch 3
+- add relevant white/yellow paper sections
+- add relevant production libraries for each upgrade
+- get the end chapter demo working
+- decompose the demo into sections
+
+### UX / UI
+- pictures for each chapter intro
+- ayu as default theme
+- better feedback flow
+- encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
+
+<br>
+<br>
 <br>
 
 # Interactive Art
@@ -104,34 +125,6 @@ Would it be possible to reimpliment the py-evm in Rust?
 
 ### Cryptoeconomic Applications
 
-<br>
-
-# General TODOs
-
-### Book
-External crates
-- https://users.rust-lang.org/t/diy-digital-signatures/23739/5
-
-Fun > docs/tutorials
-- pictures for each chapter intro
-- ayu as default theme
-- encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
-
-### Ch1
-- better resources
-
-<br>
-
-### Ch2
-- literally everything
-
-<br>
-
-### Ch3
-- literally everything
-
-<br>
-<br>
 <br>
 
 # Better Rust Code
