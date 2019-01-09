@@ -11,6 +11,18 @@ Core Concepts:
 - how you can sign stuff with your private key, and others can verify that signature with your public key
 - this is grounded in the hardness of cryptography, not the choice of a central operator
 
+### Computational infeasibility: 
+A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.
+
+### Encryption:
+Encryption is a process by which a document (plaintext) is combined with a shorter string of data, called a key (eg. c85ef7d79691fe79573b1a7064c19c1a9819ebdbd1faaab1a8ec92344438aaf4), to produce an output (ciphertext) which can be "decrypted" back into the original plaintext by someone else who has the key, but which is incomprehensible and computationally infeasible to decrypt for anyone who does not have the key.
+
+### Public key encryption:
+A special kind of encryption where there is a process for generating two keys at the same time (typically called a private key and a public key), such that documents encrypted using one key can be decrypted with the other. Generally, as suggested by the name, individuals publish their public keys and keep their private keys to themselves.
+
+### Digital signature:
+A digital signing algorithm is a process by which a user can produce a short string of data called a "signature" of a document using a private key such that anyone with the corresponding public key, the signature and the document can verify that (1) the document was "signed" by the owner of that particular private key, and (2) the document was not changed after it was signed. Note that this differs from traditional signatures where you can scribble extra text onto a document after you sign it and there's no way to tell the difference; in a digital signature any change to the document will render the signature invalid.
+
 <br>
 
 ## Code
@@ -232,6 +244,9 @@ fn main() {
 <br>
 
 ## Resources
+
+Ethereum Wiki Glossary
+- https://github.com/ethereum/wiki/wiki/Glossary
 
 RSA Pub Key Stuff
 - https://en.wikipedia.org/wiki/Public-key_cryptography
