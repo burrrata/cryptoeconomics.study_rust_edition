@@ -9,11 +9,10 @@
 - double check that ch1 central database is up to date from changes to tx and state transition function 
 - add timestamps to the central database model to order tx 
 - clean up ch1 template so it looks less like a rough draft and more like something you want to explore
-- a clear, simple, and easy way for people to provide feedback
-    - There needs to be a clear and easy way for people to provide feedback.
-    - email: rustycryptoeconomics@protonmail.com or rrrustycrrryptoeconomics@protonmail.com
-    - forum? 
-    - reddit?
+- there needs to be a clear and easy way for people to provide feedback.
+    - email: rustycryptoeconomics@protonmail.com / rrrustycrrryptoeconomics@protonmail.com
+    - forum? (rolling a forum for a tutorial that no one knows about feels a little extra atm)
+    - reddit? (maybe just post to r/ethereum and r/cryptoeconomics and see if anyone cares)
 
 <br>
 
