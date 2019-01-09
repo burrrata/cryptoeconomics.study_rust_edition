@@ -9,6 +9,11 @@
 - double check that ch1 central database is up to date from changes to tx and state transition function 
 - add timestamps to the central database model to order tx 
 - clean up ch1 template so it looks less like a rough draft and more like something you want to explore
+- a clear, simple, and easy way for people to provide feedback
+    - There needs to be a clear and easy way for people to provide feedback.
+    - email: rustycryptoeconomics@protonmail.com or rrrustycrrryptoeconomics@protonmail.com
+    - forum? 
+    - reddit?
 
 <br>
 
@@ -85,15 +90,14 @@ C.S Feature Ideas:
 - Implement and attempt long range revision attacks
 - Controls to adjust the stake of each node
 
+<br>
 
-<hr>
+# Programming On Blockchains
 
 So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot... Would it make more sense to dive into solidity at this point, or is it possible to replicate aspects of the Parity Ethereum client if I can roll external libraries in mdBook or build it out as a CLI tutorial?
 
 Would it be possible to reimpliment the py-evm in Rust?
 - https://github.com/ethereum/py-evm
-
-<hr>
 
 ### L2: state channels
 
@@ -116,13 +120,11 @@ Fun > docs/tutorials
 
 ### Ch1
 - better resources
-- clean up sassy comments so that they're not repeated every section
 
 <br>
 
 ### Ch2
-- clean up organization
-- add PoW
+- literally everything
 
 <br>
 
@@ -134,6 +136,7 @@ Fun > docs/tutorials
 # Better Rust Code
 - It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
 - It would also be nice to have better errors so that when functions fail we (or the users) know why.
+- enums and how they interact with structs and implementations
 
 <br>
 
