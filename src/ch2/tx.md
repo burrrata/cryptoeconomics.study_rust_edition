@@ -344,6 +344,6 @@ fn main() {
 ## Resources
 - https://en.wikipedia.org/wiki/Digital_signature
 - https://en.wikipedia.org/wiki/Digital_Signature_Algorithm
-
+- https://github.com/ethereum/wiki/wiki/Glossary
 
 <br>
