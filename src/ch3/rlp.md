@@ -1,9 +1,9 @@
 <div align="center">
     <h1 align="center">
-        RLP
+        State
     </h1>
     <p align="center">
-        Turning stuff into easier to manage stuff.
+        Using RLP to turn data into easier to manage data.
     </p>
 </div>
 <br>
