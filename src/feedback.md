@@ -3,7 +3,7 @@
         <img src="feedback.png" alt="The Knowledge Loop">
     </p>
     <h1 align="center">
-        Sharing is caring.
+        Sharing is caring :)
     </h1>
 </div>
 <br>
