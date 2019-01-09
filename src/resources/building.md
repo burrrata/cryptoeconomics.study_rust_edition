@@ -1,5 +1,5 @@
 <h1 align="center">
-    Make things better by making better things.
+    Let's make things better by making better things.
 </h1>
 
 ### Rust Dev
