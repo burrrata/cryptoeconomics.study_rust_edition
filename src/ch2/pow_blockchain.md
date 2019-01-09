@@ -2,30 +2,25 @@
 
 ## Words
 
-So if we bring that all together we have a "working" centralized payments processor demo! I say "working" because we've demonstrated many of the core components in a payment processing engine and it (mostly) doesn't crash, but in practice you'd need many security/ux improvements. We'll explore those in future chapters, but for now let's explore this model to get familiar with how everything works :)
+Woke commentary tbd.
 
 ## Code
 ```rust, ignore
 // TODO
 /*
+ - Add PoW
  - Make check_signed_tx_signature() NOT crash the entire
    program if the tx signature does not match the sender.
- - Would it make more sense to have the RSA stuff in 
-   it's own impl ?
  - Maybe use 65537 as the modulo rather than following
    the toy setup in the wikipedia article? 
- - How much faster would the program be if we used &[u8]
+ - RLP Stepping Stone: How much faster would the program be if we used &[u8]
    for all values rather than i32 and f32? Or would the ux
    be too much of a pain in ass and is i32 easier because
    the user just types a number like python and it works?
 */
 
-// rand!
-// Uncomment if you want to create new randomized accounts
-// or want to experiment with randomzied RSA params
-// search "rand!" to find functions that use this crate
-//extern crate rand;
-//use rand::prelude::*;
+extern crate rand;
+use rand::prelude::*;
 
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
@@ -136,9 +131,7 @@ impl State {
         }
         true
     }
-    
-    // rand!
-    /*
+
     // slowly yet randomly generate a prime number within a range
     pub fn prime_gen(low: i32,
                  high: i32) -> i32 {
@@ -151,7 +144,6 @@ impl State {
         }
         0
     }
-    */
     
     // slowly find the modular multiplicative inverse of a prime 
     pub fn slow_mmi(ctf_pq: i32,
@@ -167,8 +159,6 @@ impl State {
         0
     }
     
-    // rand!
-    /*
     // generate a public key within a range
     pub fn pub_key_gen(min: i32,
                    max: i32) -> i32 {
@@ -178,7 +168,6 @@ impl State {
         
         pub_key
     }
-    */
     
     // create a private key from a public key and other data
     pub fn priv_key_gen(ctf_pq: i32,
@@ -233,8 +222,6 @@ impl State {
         state
     }    
     
-    // rand!
-    /*
     // Create New Account
     pub fn new_account(&mut self, ctf_pq: i32) {
         
@@ -254,7 +241,6 @@ impl State {
         //println!("This is your private key (signing key): {:#?}", &priv_key);
         //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
-    */
     
     // Turn Arbitrary Stuff Into &[u8] Slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -505,7 +491,6 @@ fn main() {
     
     // Init "RSA" Params and Create Account Keys
     
-    // rand!
     // Randomized initialization
     // State::prime_gen(5, 100);
     // State::prime_gen(5, 100);
@@ -540,7 +525,6 @@ fn main() {
     let ctf_pq = State::ctf(p, q);
    
     // rand!
-    /*
     // Create 3 random accounts
     for _i in 0..3 {
         state.new_account(ctf_pq)
@@ -555,7 +539,6 @@ fn main() {
     println!("ctf_pq: {}", &ctf_pq);
     println!("pub_key: {}", &pub_key);
     println!("priv_key: {}", &priv_key);
-    */
     // check results
     println!("\nInitial {:#?}", state);
 
