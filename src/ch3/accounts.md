@@ -1,6 +1,9 @@
 <h1 align="center">
-    ECDSA: math is beautiful.
+    Accounts
 </h1>
+<p align="center">
+    upgrading to ECDSA
+</p>
 
 <br>
 
