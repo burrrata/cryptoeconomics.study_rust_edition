@@ -1,7 +1,9 @@
 <h1 align="center">
-    State Transitions: the proof is in the pudding.
+    State Transitions
 </h1>
-
+<p align="center">
+    The proof (of work) is in the pudding.
+</p>
 <br>
 
 ## Words
@@ -18,8 +20,23 @@ Open Questions
 - do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
 - How do block nonces differ from TX nonces?
 
-## Block:
+### Block:
 A block is a package of data that contains zero or more transactions, the hash of the previous block ("parent"), and optionally other data. Because each block (except for the initial "genesis block") points to the previous block, the data structure that they form is called a "blockchain".
+
+### Proof of work:
+One important property of a block in Bitcoin, Ethereum and many other crypto-ledgers is that the hash of the block must be smaller than some target value. The reason this is necessary is that in a decentralized system anyone can produce blocks, so in order to prevent the network from being flooded with blocks, and to provide a way of measuring how much consensus there is behind a particular version of the blockchain, it must in some way be hard to produce a block. Because hashes are pseudorandom, finding a block whose hash is less than 0000000100000000000000000000000000000000000000000000000000000000 takes an average of 4.3 billion attempts. In all such systems, the target value self-adjusts so that on average one node in the network finds a block every N minutes (eg. N = 10 for Bitcoin and 1 for Ethereum).
+
+### Proof of work nonce:
+A meaningless value in a block which can be adjusted in order to try to satisfy the proof of work condition
+
+### Mining:
+Mining is the process of repeatedly aggregating transactions, constructing a block and trying different nonces until a nonce is found that satisfies the proof of work condition. If a miner gets lucky and produces a valid block, they are granted a certain number of coins as a reward as well as all of the transaction fees in the block, and all miners start trying to create a new block containing the hash of the newly generated block as their parent.
+
+### Stale:
+A stale is a block that is created when there is already another block with the same parent out there; stales typically get discarded and are wasted effort.
+
+### Fork:
+A situation where two blocks are generated pointing to the same block as their parent, and some portion of miners see one block first and some see the other. This may lead to two blockchains growing at the same time. Generally, it is mathematically near-certain that a fork will resolve itself within four blocks as miners on one chain will eventually get lucky and that chain will grow longer and all miners switch to it; however, forks may last longer if miners disagree on whether or not a particular block is valid.
 
 <br>
 
@@ -155,5 +172,8 @@ Hashing and Merkle Trees
 
 PoW
 - https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
+
+Terms
+- https://github.com/ethereum/wiki/wiki/Glossary
 
 <br>
