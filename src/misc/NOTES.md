@@ -139,6 +139,7 @@ Fun > docs/tutorials
 - It would also be nice to have better errors so that when functions fail we (or the users) know why.
 - enums and how they interact with structs and implementations
 - pub vs priv functions
+- also I suck at traits
 
 <br>
 <br>
