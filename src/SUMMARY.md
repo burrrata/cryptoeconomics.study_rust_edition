@@ -31,4 +31,6 @@
   - [Building](./resources/building.md)
   - [Engaging](./resources/engaging.md)
 
+[Feedback](./feedback.md)
+
 [Donations Welcome!](./donations.md)
