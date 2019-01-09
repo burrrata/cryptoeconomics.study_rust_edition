@@ -581,24 +581,10 @@ fn main() {
 ## Resources
 
 ### Cryptoeconomics.Study
-
-Overview
 - https://cryptoeconomics.study/overview.html
-- https://github.com/cryptoeconomics-study/website/blob/master/overview.md
-
-Lectures
 - https://cryptoeconomics.study/lectures/
-
-Code
-- https://github.com/cryptoeconomics-study/code
-- ch1: https://codepen.io/karlfloersch/pen/YaEoYy?editors=0012
-
+- https://github.com/cryptoeconomics-study/code/tree/master/c3_ProofOfWork
 
 ### Rust Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
-
-### Ethereum Stuff
-- https://ethereum.org/
-- https://github.com/ethereum/wiki/wiki/White-Paper
-- https://ethresear.ch
