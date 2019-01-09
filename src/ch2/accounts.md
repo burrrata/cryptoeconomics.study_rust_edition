@@ -11,6 +11,12 @@ Core Concepts:
 - how you can sign stuff with your private key, and others can verify that signature with your public key
 - this is grounded in the hardness of cryptography, not the choice of a central operator
 
+TODO
+- add info about the data structure of accounts (nonces, balances, keys, etc)
+
+### Account nonce:
+A transaction counter in each account. This prevents replay attacks where a transaction sending eg. 20 coins from A to B can be replayed by B over and over to continually drain A's balance.
+
 ### Computational infeasibility: 
 A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.
 
