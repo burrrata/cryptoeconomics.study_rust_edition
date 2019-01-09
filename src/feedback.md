@@ -3,10 +3,10 @@
         <img src="feedback.png" alt="The Knowledge Loop">
     </p>
     <h1 align="center">
-        Feedback
+        
     </h1>
     <p align="center">
-        Sharing is caring.
+        Because sharing is caring.
     </p>
 </div>
 <br>
