@@ -2,7 +2,7 @@
 authors = ["burrrata"]
 multilingual = false
 src = "src"
-title = "Rusty Cryptoeconomics"
+title = "Rrrrusty Crrryptoeconomics"
 
 [output.html]
 mathjax-support = true
