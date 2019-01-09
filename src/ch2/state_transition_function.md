@@ -169,6 +169,7 @@ Hashing and Merkle Trees
 - https://en.wikipedia.org/wiki/Merkle_tree
 - https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
 - https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
+- Merklize this! Merkle Trees & Patricia Tries: https://www.zeroknowledge.fm/57
 
 PoW
 - https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
