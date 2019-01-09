@@ -131,12 +131,17 @@ Fun > docs/tutorials
 - literally everything
 
 <br>
+<br>
+<br>
 
 # Better Rust Code
 - It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
 - It would also be nice to have better errors so that when functions fail we (or the users) know why.
 - enums and how they interact with structs and implementations
+- pub vs priv functions
 
+<br>
+<br>
 <br>
 
 # Feedback
