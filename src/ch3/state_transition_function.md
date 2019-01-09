@@ -40,4 +40,6 @@ Uncle inclusion mechanism: Ethereum has a mechanism where a block may include it
 
 ## Resources
 
+https://github.com/ethereum/wiki/wiki/Glossary#casper-and-scaling-research
+
 <br>
