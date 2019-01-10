@@ -1,7 +1,9 @@
 <h1 align="center">
-    TX: doing stuff.
+    TX
 </h1>
-
+<p align="center">
+    doing stuff
+</p>
 <br>
 
 ## Words
