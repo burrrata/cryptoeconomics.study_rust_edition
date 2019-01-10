@@ -9,7 +9,9 @@
 
 <br>
 
-### Question: does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS and save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? 
+### Questions
+- does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS and save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? 
+- how important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
 
 <br>
 
