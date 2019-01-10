@@ -15,7 +15,7 @@
 
 Core Concepts
 - PoW => PoS
-- adding in support for uncles and ommers
+- adding in support for uncles, ommers, and mixhash in addition to nonces (https://ethereum.stackexchange.com/questions/5833/why-do-we-need-both-nonce-and-mixhash-values-in-a-block) 
 
 Uncle: See Ommer, the gender-neutral alternative to aunt/uncle.
 
