@@ -1,5 +1,5 @@
 <h1 align="center">
-    State Transition Function: getting from A to B.
+    State Transitions: getting from A to B.
 </h1>
 
 <br>
