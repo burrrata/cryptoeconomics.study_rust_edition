@@ -39,6 +39,7 @@
 - decompose the demo into sections
 
 ### UX / UI
+- rename all pictures to be the same name as the section they're featured in
 - pictures for each chapter intro
 - ayu as default theme
 - better feedback flow
