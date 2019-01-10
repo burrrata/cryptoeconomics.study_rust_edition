@@ -28,14 +28,14 @@
 - create a function to simulate multiple threads as if multiple users were using the service
 
 ### Ch 2
-- add relevant white/yellow paper sections
-- get the end chapter demo working
+- add words and links to relevant white/yellow paper sections
+- add PoW and Block numbers to the final demo
 - decompose the demo into sections
 
 ### Ch 3
 - add relevant white/yellow paper sections
 - add relevant production libraries for each upgrade
-- get the end chapter demo working
+- end chapter demo
 - decompose the demo into sections
 
 ### UX / UI
