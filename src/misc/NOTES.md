@@ -14,6 +14,7 @@ How important is it to build in concurrent threads to simulate network activity 
 - it would be so lit to replicate something like Polkadot within a fun tutorial!
 - https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
 - 2.2. Previous work: https://polkadot.network/PolkaDotPaper.pdf
+- https://github.com/paritytech/polkadot
 
 <br>
 
