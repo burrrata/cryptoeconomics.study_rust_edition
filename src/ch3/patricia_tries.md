@@ -31,7 +31,7 @@ in Ethereum must be filtered through this stringently
 correct database, accuracy of information is guaranteed.
 
 <p align="center">
-  <img src="patricia_tries" alt="merkle patricia trie">
+  <img src="patricia_tries.png" alt="merkle patricia trie">
 </p>
 
 - https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
