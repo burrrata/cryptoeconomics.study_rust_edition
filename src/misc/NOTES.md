@@ -12,6 +12,8 @@
 - read white/beige/yellow papers to sketch out the framework for chapters 1, 2, and 3 BEFORE writing code
 - external crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
+Question: does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS and save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? 
+
 ### Ch 1
 - moar resources
 - clean up comments
