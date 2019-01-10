@@ -3,7 +3,15 @@ All the things.
 
 ## Words
 
-So as we mentioned, a blockchain is a glorified database. As such, at it's heart is some data. Like any database that changes, the current state of things is literally called the "state". With a centralized database it's often just a handful of admins who use their meatsticks to push buttons on a keyboard that tell a program what to do when. Being how this is the simplest example we'll start here, but in future chapters we'll see how just a few changes can transfer control from the admins to the users. This will result in a  decentralized blockchain where the state is agreed upon by a distributed group of verifiers based on some consensus rules. Working towards that, let's start with the simplest example possible to explore the basic concepts. 
+So as we mentioned, a blockchain is a glorified database. As such, at it's heart is some data. Like any database that changes, the current state of things is literally called the "state". As we saw with a centralized database the owners of that database can change the state however and whenever they want. In a decentralized system where there is no centralized database manager, the state is agreed upon by a distributed group of verifiers based on some consensus rules that they all agree to.
+
+In a Proof of Work blockchain the state is divided by blocks; each new block representing a new world state. Users submit requests to change the state in the form of transactions (tx) and verifiers check those transactions and aggregate them into blocks. In order to publish a block that is accepted as the next state, the verifier has to perform computation to solve a puzzle. This is where the term "proof of work" comes in, because you can only solve the puzzle if you did the work. Whoever solves the puzzle gets to publish the next block, and there is a reward for doing so called the "block reward". This does a few things:
+- it creates new tokens to incentivize people to spend resources to check and secure blocks
+- it prevents anyone from just publishing spam blocks arbitrarily
+- because there is a reward for publishing valid blocks and every block can be checked by the entire network, anyone who publishes a fake block will be ignored, thus preventing fraud on the network
+
+All in all this accomplishes something that was not possible before: a shared state that people can trust to be a legitimate source of information. Before you had to trust a centralized operator because it was to complicated for a large network to process and manage a complex state asynchronously. With blockchain technology however, this is possible. In this chapter we'll explore the simplest version of this: a financial transaction network that uses proof of work to solve a simple puzzle. 
+
 
 ## Code
 
@@ -139,9 +147,8 @@ changes might, e.g., be things such as reducing an account
 balance without an equal and opposite increase elsewhere."
 - https://ethereum.github.io/yellowpaper/paper.pdf
 
-The history of state machines
+A history of state machines
 - https://en.wikipedia.org/wiki/Analytical_Engine
 - https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22
-
-Blockchain
+- https://en.wikipedia.org/wiki/Transition_system
 - https://en.wikipedia.org/wiki/Blockchain
