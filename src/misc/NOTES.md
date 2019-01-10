@@ -2,8 +2,6 @@
     NOTES
 </h1>
 <br>
-<br>
-<br>
 
 ## Questions
 
@@ -20,8 +18,6 @@ How important is it to build in concurrent threads to simulate network activity 
 <br>
 
 ## TODO
-
-<br>
 
 ### Immediate
 - reorganize chapters so that code commentary is in the sections, but not in the final demo. (to hopefully make it easier to use, explore, and reason about the code)
