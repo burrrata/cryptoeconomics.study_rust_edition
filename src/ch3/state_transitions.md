@@ -3,7 +3,7 @@
         <img src="TBD" alt="TBD">  
     </p>
     <h1 align="center">
-        State Transition Function
+        State Transitions
     </h1>
     <p align="center">
         PoS
