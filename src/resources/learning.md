@@ -38,3 +38,6 @@
 
 ### a16z Crypto Canon
 - https://a16z.com/2018/02/10/crypto-readings-resources/
+
+### Bitcoin Stuff
+- http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
