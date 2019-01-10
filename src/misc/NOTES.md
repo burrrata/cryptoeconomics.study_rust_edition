@@ -8,7 +8,8 @@
 # TODO
 
 ### Immediate
-- read white/beige/yellow papers to sketch out the framework for chapters 1, 2, and 3 BEFORE writing code.
+- reorganize chapters so that code commentary is in the sections, but not in the final demo. (to hopefully make it easier to use, explore, and reason about the code)
+- read white/beige/yellow papers to sketch out the framework for chapters 1, 2, and 3 BEFORE writing code
 - external crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
 ### Ch 1
