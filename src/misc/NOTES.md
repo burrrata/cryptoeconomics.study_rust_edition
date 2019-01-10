@@ -11,8 +11,10 @@
 
 ### Questions
 - Does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS and save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? Maybe have chapters 1-3 be minimal viable blockchain demos, and then do separate books for Ethereum, Substrate, or other systems/networks? So... is that basically building Substrate then instead of Ethereum?
-    - https://github.com/paritytech/substrate
+    - https://www.parity.io/substrate/
     - https://substrate.readme.io/docs
+    - https://github.com/paritytech/substrate
+
 - How important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
 
 <br>
