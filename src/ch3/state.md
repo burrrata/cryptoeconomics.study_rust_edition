@@ -27,3 +27,4 @@ TBD
 - https://github.com/ethereum/wiki/wiki/RLP
 - https://github.com/jnnk/pyrlp/blob/master/docs/tutorial.rst
 - https://github.com/paritytech/parity-common/tree/master/rlp
+- 2.2.1 RLP: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
