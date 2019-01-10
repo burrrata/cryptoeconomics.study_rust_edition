@@ -12,7 +12,7 @@ Goal
 - Upgrade our state transition function from a consensus model of "because the central operator says so" to "because someone did the work and proved that they earned the right to make these changes for the community".
 
 Core Concepts:
-- pending_tx pool => blocks
+- pending_tx pool => blocks (nonces, block headers, etc...)
 - ledger history => hashed merkle tries
 - anti-spam protection with proof of work on each block
 
@@ -171,8 +171,9 @@ Hashing and Merkle Trees
 - https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
 - Merklize this! Merkle Trees & Patricia Tries: https://www.zeroknowledge.fm/57
 
-PoW
+PoW & Blocks
 - https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining
+- https://ethereum.stackexchange.com/questions/5833/why-do-we-need-both-nonce-and-mixhash-values-in-a-block
 
 Terms
 - https://github.com/ethereum/wiki/wiki/Glossary
