@@ -1,6 +1,6 @@
 <div align="center">
     <p align="center">
-        <img src="TBD" alt="TBD">  
+        <img src="TBD" alt="TBD">
     </p>
     <h1 align="center">
         Title
