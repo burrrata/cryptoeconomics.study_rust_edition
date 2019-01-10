@@ -13,6 +13,21 @@ Core Concepts:
 ### Transaction (TX):
 A transaction is a digitally signed message authorizing some particular action associated with the blockchain. In a currency, the dominant transaction type is sending currency units or tokens to someone else; in a database actions like registering domain names, sending messages, or posting to a social feed would also be valid transaction types. Essentially, a state is an ordering of data, a transaction is a request to change the state of that data, and the state transition funciton determines how that happens.
 
+### 3.1. The Transaction
+The basic method for Ethereum accounts to interact
+with each other. The transaction is a single cryptographically signed instruction sent to the Ethereum network.
+There are two types of transactions: message calls
+and contract creations. Transactions lie at the
+heart of Ethereum, and are entirely responsible for the
+dynamism and flexibility of the platform. Transactions
+are the bread and butter of state transitions, that is of
+block additions, which contain all of the computation
+performed in one block. Each transaction applies the
+execution changes to the machine state, a temporary
+state which consists of all the required changes in computation that must be made before a block is finalized
+and added to the world state.
+- https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
+
 ### TX Fees
 Every transaction is required to include a tx fee. Miners have the choice of including the transaction and collecting the fee or not. This is to prevent someone from spamming the network or creating a DoS attack. 
 
