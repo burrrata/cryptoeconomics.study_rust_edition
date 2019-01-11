@@ -14,10 +14,11 @@
 - Parity WASM: https://github.com/paritytech/parity-wasm
 - POA's Honey Badger Byzantine Fault Tolerant (BFT) consensus algorithm: https://github.com/poanetwork/hbbft
 - POA's Threshold Crypto: https://github.com/poanetwork/threshold_crypto
-- Dalek Crypto: https://dalek.rs
 - Grin: https://github.com/mimblewimble/grin
 - Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
 - Bellman zk-SNARKS in Rust: https://z.cash/blog/bellman-zksnarks-in-rust/
+- Zero-knowledge Cryptography in Rust: https://github.com/zkcrypto
+- Dalek Crypto: https://dalek.rs
 - (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
 - and these: 
     - https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
