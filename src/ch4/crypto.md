@@ -3,7 +3,7 @@
         <img src="TBD" alt="TBD">
     </p>
     <h1 align="center">
-        Crypto Upgrades
+        Crypto
     </h1>
     <p align="center">
         Ideas and stuff to maybe play with.
@@ -21,3 +21,6 @@ STARKS
 - 0 setup
 - minimal crypto
 - cool af
+
+Some of the stuff covered by the ZeroKnowledge podcast or learning group
+- https://www.zeroknowledge.fm/59
