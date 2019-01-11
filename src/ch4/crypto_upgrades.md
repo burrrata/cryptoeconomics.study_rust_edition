@@ -17,3 +17,7 @@ Anything here
 Keys and signatures
 - https://github.com/poanetwork/threshold_crypto
 
+STARKS
+- 0 setup
+- minimal crypto
+- cool af
