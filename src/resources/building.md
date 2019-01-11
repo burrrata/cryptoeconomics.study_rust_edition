@@ -15,6 +15,7 @@
 - Dalek Crypto: https://dalek.rs
 - Grin: https://github.com/mimblewimble/grin
 - Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
+- (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
 - and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
 
 
