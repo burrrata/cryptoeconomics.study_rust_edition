@@ -6,6 +6,7 @@
     - do we want to just add a field in every block that has
       the proof of work? And then blocks can be checked that
       their PoW matched the header of the last block?
+ - funciton to check PoW
  
  Nice to have
  - Make check_signed_tx_signature() NOT crash the entire
@@ -445,7 +446,7 @@ impl State {
         let transactions = State::verify_tx(self);
         let header = Blockheader {
             timestamp: time::now().to_timespec().sec,
-            nonce: 0,
+            nonce: 0, // difficulty
             previous_block_hash: State::hash_any(& self.chain.last()),
             merkle: State::merklize_block(transactions.clone()),
         };
@@ -458,13 +459,38 @@ impl State {
         
         block
     }
-    
+
+    // Create a proof of work computed to earn the right
+    // to submit a valid block
+    pub fn proof_of_work(header: &mut Blockheader) {
+        loop {
+            let hash = State::hash_any(header);
+            let slice = &hash[..header.nonce as usize];
+            match slice.parse::<u32>() {
+                Ok(val) => {
+                    if val != 0 {
+                        header.nonce += 1;
+                    } else {
+                        println!("Block hash: {}", hash);
+                        break;
+                    }
+                },
+                Err(_) => {
+                    header.nonce += 1;
+                    continue;
+                }
+            };
+        }
+    }
+
     // Confirm TX in valid_tx Pool And Add Them To The History
     pub fn push_block(&mut self,
                       block: Block) {
         
         // THIS IS WHERE WE WANT TO ADD THE PROOF (of work)
         // required BEFORE pushing a block
+        let mut header = block.header.clone();
+        State::proof_of_work(&mut header);
         
         println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         
