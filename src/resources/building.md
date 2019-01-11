@@ -6,6 +6,18 @@
 - all the Rust docs and books! https://doc.rust-lang.org/
 - this book is built with [mdBook!](https://rust-lang-nursery.github.io/mdBook/index.html)
 
+### Rust Crypto / Blockchain Stuff
+- Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum
+- Parity Substrate: https://www.parity.io/substrate/
+- Parity Polkadot: https://github.com/paritytech/polkadot
+- POA's Honey Badger Byzantine Fault Tolerant (BFT) consensus algorithm: https://github.com/poanetwork/hbbft
+- POA's Threshold Crypto: https://github.com/poanetwork/threshold_crypto
+- Dalek Crypto: https://dalek.rs
+- Grin: https://github.com/mimblewimble/grin
+- Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
+- and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
+
+
 ### Core Blockchain Dev
 - are there resources for this stuff?
 - maybe resources that talk about cryptoeconomic security for L1 and L2 systems?
@@ -26,10 +38,3 @@
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
 
-### Cryptoeconomic / Blockchain / Crypto Stuff In Rust
-- Grin: https://github.com/mimblewimble/grin
-- Polkadot: https://github.com/paritytech/polkadot
-- Substrate: https://www.parity.io/substrate/
-- Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum
-- Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
-- and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
