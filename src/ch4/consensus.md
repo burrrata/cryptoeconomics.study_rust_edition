@@ -8,3 +8,8 @@ The latest Polkadot consensus mechanism
 - https://github.com/paritytech/polkadot
 
 The latest Serenity consensus mechanism
+
+Chain Fivers Redux
+- https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
+
+Other cool but abandoned Ethereum consensus/scaling mechanisms
