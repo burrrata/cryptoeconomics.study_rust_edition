@@ -44,6 +44,7 @@ How important is it to build in concurrent threads to simulate network activity 
 - decompose the demo into sections
 
 ### UX / UI
+- reformat the Resources sections to look like Awesome Lists, and then add relevant stuff to the relevant lists
 - rename all pictures to be the same name as the section they're featured in
 - pictures for each chapter intro
 - ayu as default theme
