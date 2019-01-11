@@ -4,7 +4,8 @@
 
 ### Rust Dev
 - all the Rust docs and books! https://doc.rust-lang.org/
-- this book is built with [mdBook!](https://rust-lang-nursery.github.io/mdBook/index.html)
+- all the Rust Crates! https://crates.io/
+- this book is built with [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html)
 
 ### Rust Crypto / Blockchain Stuff
 - Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum
