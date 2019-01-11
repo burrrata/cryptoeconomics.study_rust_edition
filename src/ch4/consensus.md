@@ -4,7 +4,11 @@
 HB BFTL
 - https://medium.com/poa-network/tagged/hbbft
 
-The latest Polkadot consensus mechanism
+AfG Consensus
+- https://github.com/paritytech/substrate
+
+Is the Polkadot consensus mechanism from the paper the same as in the current repo?
+- https://polkadot.network/PolkaDotPaper.pdf
 - https://github.com/paritytech/polkadot
 
 The latest Serenity consensus mechanism
