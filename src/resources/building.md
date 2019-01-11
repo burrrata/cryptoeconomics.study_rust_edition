@@ -19,6 +19,10 @@
 - (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
 - and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
 
+### Cryptoeconomic Security / Game Theory Stuff
+- https://ethresear.ch/c/economics
+- http://tokenengineering.net/building-blocks
+
 ### Ethereum Core Dev
 - TBD
 
@@ -27,18 +31,16 @@
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
 
 ### Ethereum Contract Dev
-- security like manticore and stuff
-- https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch
+- testing via manticore
+- formal verification
+- this stuff: https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch
 
 ### Ethereum L2 Dev
 - plasma
 - state channels
 - other?
 
-### Cryptoeconomic Security / Game Theory Stuff
-- https://ethresear.ch/c/economics
-- http://tokenengineering.net/building-blocks
+<br>
 
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
-
