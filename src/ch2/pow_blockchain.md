@@ -8,7 +8,14 @@ Woke commentary tbd.
 ```rust, ignore
 // TODO
 /*
+
+ Neccessary ASAP
  - Add PoW
+    - do we want to just add a field in every block that has
+      the proof of work? And then blocks can be checked that
+      their PoW matched the header of the last block?
+ 
+ Nice to have
  - Make check_signed_tx_signature() NOT crash the entire
    program if the tx signature does not match the sender.
  - Maybe use 65537 as the modulo rather than following
@@ -414,7 +421,7 @@ impl State {
     }
     
     // Create A Merkle Tree Of All TX In A Vec
-    pub fn merklize(transactions: Vec<SignedTX>) -> String {
+    pub fn merklize_block(transactions: Vec<SignedTX>) -> String {
         
         let mut merkle = Vec::new();
 
@@ -447,7 +454,7 @@ impl State {
             timestamp: time::now().to_timespec().sec,
             nonce: 0,
             previous_block_hash: State::hash_any(& self.chain.last()),
-            merkle: State::merklize(transactions.clone()),
+            merkle: State::merklize_block(transactions.clone()),
         };
 
         let block = Block {
@@ -461,6 +468,9 @@ impl State {
     // Confirm TX in valid_tx Pool And Add Them To The History
     pub fn push_block(&mut self,
                       block: Block) {
+        
+        // THIS IS WHERE WE WANT TO ADD THE PROOF (of work)
+        // required BEFORE pushing a block
         
         println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         
