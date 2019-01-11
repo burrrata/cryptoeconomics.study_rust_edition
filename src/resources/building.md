@@ -11,6 +11,7 @@
 - Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum
 - Parity Substrate: https://www.parity.io/substrate/
 - Parity Polkadot: https://github.com/paritytech/polkadot
+- Parity WASM: https://github.com/paritytech/parity-wasm
 - POA's Honey Badger Byzantine Fault Tolerant (BFT) consensus algorithm: https://github.com/poanetwork/hbbft
 - POA's Threshold Crypto: https://github.com/poanetwork/threshold_crypto
 - Dalek Crypto: https://dalek.rs
