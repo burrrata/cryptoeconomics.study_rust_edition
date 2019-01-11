@@ -36,7 +36,8 @@
 - other?
 
 ### Cryptoeconomic Security / Game Theory Stuff
-- TBD
+- https://ethresear.ch/c/economics
+- http://tokenengineering.net/building-blocks
 
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
