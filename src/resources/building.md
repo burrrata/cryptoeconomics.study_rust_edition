@@ -19,7 +19,9 @@
 - Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
 - Bellman zk-SNARKS in Rust: https://z.cash/blog/bellman-zksnarks-in-rust/
 - (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
-- and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
+- and these: 
+    - https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
+    - https://github.com/rust-unofficial/awesome-rust#cryptography
 
 ### Cryptoeconomic Security / Game Theory Stuff
 - https://ethresear.ch/c/economics
