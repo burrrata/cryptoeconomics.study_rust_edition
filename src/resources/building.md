@@ -15,13 +15,12 @@
 - Dalek Crypto: https://dalek.rs
 - Grin: https://github.com/mimblewimble/grin
 - Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
+- Bellman zk-SNARKS in Rust: https://z.cash/blog/bellman-zksnarks-in-rust/
 - (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
 - and this list: https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
 
-
-### Core Blockchain Dev
-- are there resources for this stuff?
-- maybe resources that talk about cryptoeconomic security for L1 and L2 systems?
+### Ethereum Core Dev
+- TBD
 
 ### General Ethereum Dev
 - https://github.com/ConsenSys/ethereum-developer-tools-list
@@ -35,6 +34,9 @@
 - plasma
 - state channels
 - other?
+
+### Cryptoeconomic Security / Game Theory Stuff
+- TBD
 
 ### Need some inspiration on what to build?
 - https://ethresear.ch/c/applications
