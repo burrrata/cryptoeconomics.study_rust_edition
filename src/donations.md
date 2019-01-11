@@ -21,7 +21,7 @@ Litecoin:
 - ltc1qxyxjuszc765e8eszr8yj0v5cgnd9rf9ujjh6yy
 
 Doge:
-- D8iocZKo9seMPBK6vpVPuA3Nwdkp6EyJ6j
+- DQ4eMuxEQi49GBeRNGEYXpaLLhftvnaC36
 
 Ethereum:
 - 0xAB30757feDDc162C788d748f6F89AbeC4bB78cAD
