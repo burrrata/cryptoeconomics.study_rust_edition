@@ -26,7 +26,7 @@ use std::hash::Hasher;
 #[derive(Debug)]
 struct State {
     modulo: i32,
-    pow_difficulty: i32, // 0 is instantanious, but 1, 2, and 3 take a while
+    pow_difficulty: i32,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<SignedTX>,
     chain: Vec<Block>,
@@ -57,7 +57,7 @@ struct SignedTX {
 pub struct Blockheader {
     timestamp: i64,
     block_number: i32,
-    nonce: i32, // PoW difficulty
+    nonce: i32,
     previous_block_hash: String,  
     merkle: String,  
 }
@@ -205,7 +205,7 @@ impl State {
     pub fn new_blockchain() -> State {
         let mut state = State {
             modulo: 0,
-            pow_difficulty: 0,
+            pow_difficulty: 5,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             chain: Vec::new(),
@@ -431,48 +431,38 @@ impl State {
         
         merkle.pop().unwrap()
     }
-
-    // Prove you've earned the right to submit a valid block
-    // to the network and claim the corresponding prise.
-    // 
-    // GOALS
-    // - add successful hash to block
-    // - update blockheader with nonce that creates said hash
-    // - propigate new block to network so it's easy to check
-    //   that a hash of the blockheader matches the hash attached
-    //   to the block
-    pub fn proof_of_work(mut block_header: Blockheader) -> String {
     
-        println!("\n/// PoW ///\n");
+    // PoW, but easy so that it runs in the Rust Playground 
+    pub fn easy_proof_of_work(&mut self, mut block_header: Blockheader) -> (Blockheader, String) {
     
-        let mut header = block_header.clone();
-        header.nonce = 0;
-        println!("header: {:#?}\n", header);
-    
-        let target = String::from("0");
+        let difficulty = self.pow_difficulty;
         let max = 1000000;
         
         for i in 0..max {
         
-            let hash = State::hash_any(&header);
-            //let hash = String::from("0x000000");
-            let slice = &hash[2..2+target.len()];
+            let mut count = 0;
+            let hash = State::hash_any(&block_header);
             
-            //println!("");
-            //println!("hash: {:#?}", hash);
-            //println!("slice: {:#?}", slice);
-            
-            if slice == &target {
-                println!("Winning PoW Hash\n{:#?}\n", &hash);
-                return hash;
+            for i in hash.chars() {
+                if i == '0' {
+                    count += 1;
+                }
             }
             
-            header.nonce += 1;
+            if count > difficulty {
+                println!("iter: {}", i);
+                println!("count: {}", count);
+                println!("hash: {}", hash);
+                return (block_header, hash);
+            }
+            
+            block_header.nonce += 1;
         }
-        println!("Matching Hash Not Found.");
-        return String::from("!!! PoW ERROR !!!") 
+        println!("\n!!! {} Iterations !!!", max);
+        println!("!!! Matching Hash Not Found !!!\n");
+        return (block_header, String::from("!!! PoW ERROR !!!") )
     }
-
+    
     // Create A New Block With Valid Transactions
     pub fn new_block(&mut self) -> Block {
     
@@ -481,14 +471,14 @@ impl State {
         let pending_tx = self.pending_tx.clone();
         
         let transactions = State::verify_tx(self, pending_tx);
-        let header = Blockheader {
+        let mut unworked_header = Blockheader {
             timestamp: time::now().to_timespec().sec,
             block_number: self.block_height + 1,
-            nonce: self.pow_difficulty,
+            nonce: 0,
             previous_block_hash: State::hash_any(& self.chain.last()),
             merkle: State::merklize_block(transactions.clone()),
         };
-        let pow= State::proof_of_work(header.clone());
+        let (header, pow) = State::easy_proof_of_work(self, unworked_header);
 
         let block = Block {
             header: header,
