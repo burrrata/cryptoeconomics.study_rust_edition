@@ -36,8 +36,12 @@
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
 
 ### Ethereum Contract Dev
-- testing via manticore
-- formal verification
+- Trail Of Bits: 
+    - https://www.trailofbits.com/
+    - https://github.com/trailofbits
+    - Manticore: https://github.com/trailofbits/manticore
+    - Echidna: https://github.com/trailofbits/echidna
+- formal verification?
 - this stuff: https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch
 
 ### Ethereum L2 Dev
