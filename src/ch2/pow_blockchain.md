@@ -7,7 +7,7 @@ Woke commentary tbd.
 ## Code
 ```rust, ignore
 // WIP
-// see pow_blockchain.rs for latest iteration
+// see pow_blockchain2.rs for latest iteration
 ```
 
 
