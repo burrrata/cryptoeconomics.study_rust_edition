@@ -1,23 +1,24 @@
 // TODO
 /*
-
  Neccessary ASAP
  - Add PoW
     - do we want to just add a field in every block that has
       the proof of work? And then blocks can be checked that
       their PoW matched the header of the last block?
  - funciton to check PoW
- 
- Nice to have
  - Make check_signed_tx_signature() NOT crash the entire
    program if the tx signature does not match the sender.
- - Maybe use 65537 as the modulo rather than following
+
+ Nice To Have
+ - Maybe use 65537 as the "RSA" modulo rather than
    the toy setup in the wikipedia article? 
- - RLP Stepping Stone: How much faster would the program be if we used &[u8]
-   for all values rather than i32 and f32? Or would the ux
-   be too much of a pain in ass and is i32 easier because
-   the user just types a number like python and it works?
+ - RLP: 
+    - How much faster would the program be if values were
+      converted to a standard data format? 
+    - Or is the ux better with i32 because the user just types
+      a number without thinking about type like in Javascript?
 */
+
 
 extern crate rand;
 use rand::prelude::*;
@@ -30,6 +31,7 @@ use std::hash::Hasher;
 #[derive(Debug)]
 struct State {
     modulo: i32,
+    pow_difficulty: i32, // 0 is instantanious, but 1, 2, and 3 take a while
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<SignedTX>,
     chain: Vec<Block>,
@@ -67,17 +69,15 @@ pub struct Blockheader {
 pub struct Block {
     header: Blockheader,
     transactions: Vec<SignedTX>,
-    PoW: i32, // literally the Proof of doing the work
+    PoW: String, // literally the proof of doing the work
 }
 
 
 impl State {
 
     /// "RSA" KEY GENERATION STUFF ///
-    
-    // variable names based off Euclidean divison equation: a = b · q + r
-    // https://crates.io/crates/gcd
-    // https://en.wikipedia.org/wiki/Greatest_common_divisor
+
+    // greatest common divisor
     pub fn gcd(a: i32,
            b: i32) -> i32 {
         
@@ -97,7 +97,6 @@ impl State {
     }
     
     // lowest common multiple
-    // https://en.wikipedia.org/wiki/Least_common_multiple
     pub fn lcm(a: i32,
            b: i32) -> i32 {
         
@@ -107,7 +106,6 @@ impl State {
     }
     
     // Carmichael's totient function
-    // https://en.wikipedia.org/wiki/Carmichael_function
     pub fn ctf(a: i32,
            b: i32) -> i32 {
         
@@ -180,11 +178,6 @@ impl State {
     }
     
     // Because... Rust.
-    // exp_mod() is like pow() with a mod option
-    // (like python does natively, but not Rust)
-    // https://docs.python.org/3/library/functions.html#pow
-    // https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
-    // https://en.wikipedia.org/wiki/Modular_exponentiation
     pub fn exp_mod(input: i32,
                power: i32,
                modulo: i32) -> i32 {
@@ -215,6 +208,7 @@ impl State {
     pub fn new_blockchain() -> State {
         let mut state = State {
             modulo: 0,
+            pow_difficulty: 1,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             chain: Vec::new(),
@@ -439,40 +433,22 @@ impl State {
         
         merkle.pop().unwrap()
     }
-    
-    // Create A New Block With Valid Transactions
-    pub fn new_block(&mut self) -> Block {
-    
-        let transactions = State::verify_tx(self);
-        let header = Blockheader {
-            timestamp: time::now().to_timespec().sec,
-            nonce: 0, // difficulty
-            previous_block_hash: State::hash_any(& self.chain.last()),
-            merkle: State::merklize_block(transactions.clone()),
-        };
-
-        let block = Block {
-            header: header,
-            transactions: transactions,
-            PoW: 0,
-        };
-        
-        block
-    }
 
     // Create a proof of work computed to earn the right
     // to submit a valid block
-    pub fn proof_of_work(header: &mut Blockheader) {
+    pub fn proof_of_work(mut block_header: Blockheader) -> String {
+    
+        let mut header = block_header.clone();
+    
         loop {
-            let hash = State::hash_any(header);
+            let hash = State::hash_any(&header);
             let slice = &hash[..header.nonce as usize];
             match slice.parse::<u32>() {
                 Ok(val) => {
                     if val != 0 {
                         header.nonce += 1;
                     } else {
-                        println!("Block hash: {}", hash);
-                        break;
+                        return hash;
                     }
                 },
                 Err(_) => {
@@ -481,16 +457,35 @@ impl State {
                 }
             };
         }
+        return String::from("invalid") 
     }
 
+    // Create A New Block With Valid Transactions
+    pub fn new_block(&mut self) -> Block {
+    
+        let transactions = State::verify_tx(self);
+        let header = Blockheader {
+            timestamp: time::now().to_timespec().sec,
+            nonce: self.pow_difficulty, // difficulty
+            previous_block_hash: State::hash_any(& self.chain.last()),
+            merkle: State::merklize_block(transactions.clone()),
+        };
+        let pow= State::proof_of_work(header.clone());
+
+        let block = Block {
+            header: header,
+            transactions: transactions,
+            PoW: pow,
+        };
+        
+        block
+    }
+    
     // Confirm TX in valid_tx Pool And Add Them To The History
     pub fn push_block(&mut self,
                       block: Block) {
         
-        // THIS IS WHERE WE WANT TO ADD THE PROOF (of work)
-        // required BEFORE pushing a block
-        let mut header = block.header.clone();
-        State::proof_of_work(&mut header);
+        
         
         println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         
