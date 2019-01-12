@@ -1,14 +1,9 @@
-// TODO
 /*
- Neccessary ASAP
- - Add PoW
-    - do we want to just add a field in every block that has
-      the proof of work? And then blocks can be checked that
-      their PoW matched the header of the last block?
- - funciton to check PoW
+ TODO ASAP
+ - Funciton to check block PoW and TX before updating state
  - Make check_signed_tx_signature() NOT crash the entire
    program if the tx signature does not match the sender.
-
+ 
  Nice To Have
  - Maybe use 65537 as the "RSA" modulo rather than
    the toy setup in the wikipedia article? 
@@ -16,7 +11,7 @@
     - How much faster would the program be if values were
       converted to a standard data format? 
     - Or is the ux better with i32 because the user just types
-      a number without thinking about type like in Javascript?
+      a number without thinking about type like in Javascript?   
 */
 
 
@@ -35,6 +30,7 @@ struct State {
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<SignedTX>,
     chain: Vec<Block>,
+    block_height: i32,
 }
 
 #[derive(Debug, Clone)]
@@ -60,6 +56,7 @@ struct SignedTX {
 #[derive(Debug, Clone)]
 pub struct Blockheader {
     timestamp: i64,
+    block_number: i32,
     nonce: i32, // PoW difficulty
     previous_block_hash: String,  
     merkle: String,  
@@ -212,6 +209,7 @@ impl State {
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             chain: Vec::new(),
+            block_height: 0,
         };
     
         state
@@ -466,6 +464,7 @@ impl State {
         let transactions = State::verify_tx(self);
         let header = Blockheader {
             timestamp: time::now().to_timespec().sec,
+            block_number: self.block_height + 1,
             nonce: self.pow_difficulty, // difficulty
             previous_block_hash: State::hash_any(& self.chain.last()),
             merkle: State::merklize_block(transactions.clone()),
@@ -485,7 +484,9 @@ impl State {
     pub fn push_block(&mut self,
                       block: Block) {
         
-        
+        // TODO: check if block is valid
+        // - valid proof of work
+        // - valid tx
         
         println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         
@@ -499,6 +500,7 @@ impl State {
         }
         
         self.chain.push(block);
+        self.block_height += 1;
         println!("Block pushed to Chain");
     }
 }
