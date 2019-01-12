@@ -659,5 +659,5 @@ fn main() {
     
     // Push New Block To The "Blockchain"
     state.push_block(pending_block);
-    //println!("\nState With New Block\n{:#?}", state);
+    println!("\nState With New Block\n{:#?}", state);
 }
