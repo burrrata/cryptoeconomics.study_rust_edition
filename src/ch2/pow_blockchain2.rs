@@ -436,30 +436,48 @@ impl State {
     // to submit a valid block
     pub fn proof_of_work(mut block_header: Blockheader) -> String {
     
+        println!("\n/// PoW ///\n");
+    
         let mut header = block_header.clone();
+        header.nonce = 1; // length of slice hash must match
+        println!("header: {:#?}\n", header);
     
         loop {
+            println!("");
+            
             let hash = State::hash_any(&header);
-            let slice = &hash[..header.nonce as usize];
+            println!("hash: {:#?}", hash);
+            
+            println!("header.nonce: {:#?}", header.nonce);
+            let slice = &hash[2..2+header.nonce as usize];
+            println!("slice: {:#?}", slice);
+            
+            println!("slice.parse::<u32>(): {:#?}", slice.parse::<u32>());
             match slice.parse::<u32>() {
+            
                 Ok(val) => {
                     if val != 0 {
-                        header.nonce += 1;
+                        continue
+                        
                     } else {
+                        println!("final PoW hash: {:#?}", &hash);
                         return hash;
                     }
                 },
+                
                 Err(_) => {
-                    header.nonce += 1;
+                    println!("\n!!! PoW LOOP ERROR !!!\n{:#?}\n", header.nonce);
                     continue;
                 }
             };
         }
-        return String::from("invalid") 
+        return String::from("!!! PoW ERROR !!!") 
     }
 
     // Create A New Block With Valid Transactions
     pub fn new_block(&mut self) -> Block {
+    
+        println!("\n/// Creating New Block ///\n");
     
         let pending_tx = self.pending_tx.clone();
         
@@ -479,6 +497,7 @@ impl State {
             PoW: pow,
         };
         
+        println!("\n/// Block Successfully Created! ///\n");
         block
     }
     
@@ -503,16 +522,16 @@ impl State {
         // If PoW and TX are valid,
         // - process tx and change state
         // - push block to state history
-        println!("\nPushing Block To Blockchain:\n{:#?}", &block);
+        //println!("\nPushing Block To Blockchain:\n{:#?}", &block);
         for i in & block.transactions {
             self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
             self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
             self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
-            println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
+            //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
         }
         self.chain.push(block);
         self.block_height += 1;
-        println!("Block pushed to Chain");
+        //println!("Block pushed to Chain");
     }
 }
 
@@ -571,6 +590,7 @@ fn main() {
     // and see their params
     let pub_key = State::pub_key_gen(1, ctf_pq);
     let priv_key = State::priv_key_gen(ctf_pq, pub_key);
+    /*
     println!("p: {}", &p);
     println!("q: {}", &q);
     println!("m: {}", &m);
@@ -579,7 +599,7 @@ fn main() {
     println!("priv_key: {}", &priv_key);
     // check results
     println!("\nInitial {:#?}", state);
-
+    */
     
     // Create Test TX
     state.new_signed_tx(acc_0_pub_key,
@@ -587,12 +607,12 @@ fn main() {
                         acc_1_pub_key,
                         50.0,
                         m);
-    println!("\nAdded Pending TX\n{:#?}", state);
+    //println!("\nAdded Pending TX\n{:#?}", state);
     
     // Create New Block
     let pending_block = state.new_block();
     
     // Push New Block To The "Blockchain"
     state.push_block(pending_block);
-    println!("\nState With New Block\n{:#?}", state);
+    //println!("\nState With New Block\n{:#?}", state);
 }
