@@ -65,8 +65,8 @@ pub struct Blockheader {
 #[derive(Debug, Clone, PartialEq)]
 pub struct Block {
     header: Blockheader,
+    PoW: String,
     transactions: Vec<SignedTX>,
-    PoW: String, // literally the proof of doing the work
 }
 
 
@@ -205,7 +205,7 @@ impl State {
     pub fn new_blockchain() -> State {
         let mut state = State {
             modulo: 0,
-            pow_difficulty: 5,
+            pow_difficulty: 3,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             chain: Vec::new(),
@@ -433,15 +433,19 @@ impl State {
     }
     
     // PoW, but easy so that it runs in the Rust Playground 
-    pub fn easy_proof_of_work(&mut self, mut block_header: Blockheader) -> (Blockheader, String) {
+    pub fn easy_proof_of_work(&mut self, mut block: Block) -> (Blockheader, String) {
     
+        let mut block_header = block.header.clone();
         let difficulty = self.pow_difficulty;
         let max = 1000000;
         
         for i in 0..max {
         
+            //println!("block_header: {:#?}", block_header);
+        
             let mut count = 0;
             let hash = State::hash_any(&block_header);
+            //println!("hash: {}", hash);
             
             for i in hash.chars() {
                 if i == '0' {
@@ -450,9 +454,12 @@ impl State {
             }
             
             if count > difficulty {
-                println!("iter: {}", i);
-                println!("count: {}", count);
+                println!("\n/// WINNING ///");
+                //println!("iter: {}", i);
+                //println!("count: {}", count);
+                println!("block_header: {:#?}", block_header);
                 println!("hash: {}", hash);
+                println!("hash check: {}", State::hash_any(&block_header));
                 return (block_header, hash);
             }
             
@@ -466,28 +473,71 @@ impl State {
     // Create A New Block With Valid Transactions
     pub fn new_block(&mut self) -> Block {
     
-        println!("\n/// Creating New Block ///\n");
+        //println!("\n/// Creating New Block ///\n");
     
-        let pending_tx = self.pending_tx.clone();
+        let verified_tx = State::verify_tx(self, self.pending_tx.clone());
         
-        let transactions = State::verify_tx(self, pending_tx);
-        let mut unworked_header = Blockheader {
+        let mut naive_header = Blockheader {
             timestamp: time::now().to_timespec().sec,
             block_number: self.block_height + 1,
             nonce: 0,
             previous_block_hash: State::hash_any(& self.chain.last()),
-            merkle: State::merklize_block(transactions.clone()),
+            merkle: State::merklize_block(verified_tx.clone()),
         };
-        let (header, pow) = State::easy_proof_of_work(self, unworked_header);
+        let naive_pow = String::from("TBD");
+        let naive_block = Block {
+            header: naive_header,
+            PoW: naive_pow,
+            transactions: verified_tx.clone(),
 
-        let block = Block {
-            header: header,
-            transactions: transactions,
-            PoW: pow,
         };
         
-        println!("\n/// Block Successfully Created! ///\n");
+        let (header, pow) = State::easy_proof_of_work(self, naive_block);
+        let block = Block {
+            header: header,
+            PoW: pow,
+            transactions: verified_tx,
+        };
+        
+        //println!("\n/// Block Successfully Created! ///\n");
         block
+    }
+    
+    // check that PoW hash matches blockheader
+    pub fn check_pow(&mut self, block: Block) -> bool {
+        
+        println!("\n /// CHECKING BLOCK ///");
+        
+        println!("{:#?}", block.header);
+        
+        // Check hash matches header
+        let hash_check = State::hash_any(&block.header);
+        let hash_check2 = State::hash_any(&block.header);
+        
+        println!("\n/// CHECHING HASHES ///");
+        println!("hash_check: {}", hash_check);
+        println!("hash_check2: {}", hash_check2);
+        println!("block.PoW: {}\n", block.PoW);
+        
+        if hash_check != block.PoW {
+            println!("PoW Error! Invalid PoW Hash.");
+            return false
+        }
+        
+        // Check difficulty matches target
+        let target = self.pow_difficulty; 
+        let mut count = 0;
+        for i in hash_check.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+        if count < target {
+            println!("PoW Error! Difficulty Not Satisfied.");
+            return false
+        }
+        
+        return true
     }
     
     // Confirm TX in valid_tx Pool And Add Them To The History
@@ -506,21 +556,24 @@ impl State {
         }
         
         // Check block PoW
-        //let checked_pow = State::
+        if State::check_pow(self, block.clone()) {
         
-        // If PoW and TX are valid,
-        // - process tx and change state
-        // - push block to state history
-        //println!("\nPushing Block To Blockchain:\n{:#?}", &block);
-        for i in & block.transactions {
-            self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
-            self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
-            self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
-            //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
+            // If PoW and TX are valid,
+            // - process tx and change state
+            // - push block to state history
+            println!("\nPushing Block To Blockchain:\n{:#?}", &block);
+            for i in & block.transactions {
+                self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
+                self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
+                self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
+                //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
+            }
+            self.chain.push(block);
+            self.block_height += 1;
+            println!("Block pushed to Chain");
         }
-        self.chain.push(block);
-        self.block_height += 1;
-        //println!("Block pushed to Chain");
+        
+        println!("Block Error: check_pow() failed.")
     }
 }
 
