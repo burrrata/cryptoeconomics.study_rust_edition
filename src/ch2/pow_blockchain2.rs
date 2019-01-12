@@ -432,45 +432,44 @@ impl State {
         merkle.pop().unwrap()
     }
 
-    // Create a proof of work computed to earn the right
-    // to submit a valid block
+    // Prove you've earned the right to submit a valid block
+    // to the network and claim the corresponding prise.
+    // 
+    // GOALS
+    // - add successful hash to block
+    // - update blockheader with nonce that creates said hash
+    // - propigate new block to network so it's easy to check
+    //   that a hash of the blockheader matches the hash attached
+    //   to the block
     pub fn proof_of_work(mut block_header: Blockheader) -> String {
     
         println!("\n/// PoW ///\n");
     
         let mut header = block_header.clone();
-        header.nonce = 1; // length of slice hash must match
+        header.nonce = 0;
         println!("header: {:#?}\n", header);
     
-        loop {
-            println!("");
-            
+        let target = String::from("0");
+        let max = 1000000;
+        
+        for i in 0..max {
+        
             let hash = State::hash_any(&header);
-            println!("hash: {:#?}", hash);
+            //let hash = String::from("0x000000");
+            let slice = &hash[2..2+target.len()];
             
-            println!("header.nonce: {:#?}", header.nonce);
-            let slice = &hash[2..2+header.nonce as usize];
-            println!("slice: {:#?}", slice);
+            //println!("");
+            //println!("hash: {:#?}", hash);
+            //println!("slice: {:#?}", slice);
             
-            println!("slice.parse::<u32>(): {:#?}", slice.parse::<u32>());
-            match slice.parse::<u32>() {
+            if slice == &target {
+                println!("Winning PoW Hash\n{:#?}\n", &hash);
+                return hash;
+            }
             
-                Ok(val) => {
-                    if val != 0 {
-                        continue
-                        
-                    } else {
-                        println!("final PoW hash: {:#?}", &hash);
-                        return hash;
-                    }
-                },
-                
-                Err(_) => {
-                    println!("\n!!! PoW LOOP ERROR !!!\n{:#?}\n", header.nonce);
-                    continue;
-                }
-            };
+            header.nonce += 1;
         }
+        println!("Matching Hash Not Found.");
         return String::from("!!! PoW ERROR !!!") 
     }
 
