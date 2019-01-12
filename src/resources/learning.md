@@ -1,5 +1,9 @@
 # Learning: things to read
 
+### Cryptoeconomic Security / Game Theory Stuff
+- Cryptoeconomic Primitives and Staking: carrots, sticks, and attack vectors for PoS: https://www.zeroknowledge.fm/49
+- Chat with Richard Craib from Numerai on using staking in applications to prevent sybil attacks and filter signal from noise: https://www.zeroknowledge.fm/47
+
 ### The Ethereum Papers
 - white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
 - beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
