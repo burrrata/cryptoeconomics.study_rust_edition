@@ -1,13 +1,16 @@
 /*
- TODO ASAP
- - Funciton to check block PoW and TX before updating state
- - Make check_signed_tx_signature() NOT crash the entire
-   program if the tx signature does not match the sender.
+
+NOTE!
+- hash(block) != hash(cloned_block)
+
+TODO ASAP
+- Make check_signed_tx_signature() NOT crash the entire
+  program if the tx signature does not match the sender.
  
- Nice To Have
- - Maybe use 65537 as the "RSA" modulo rather than
+Nice To Have
+- Maybe use 65537 as the "RSA" modulo rather than
    the toy setup in the wikipedia article? 
- - RLP: 
+- RLP: 
     - How much faster would the program be if values were
       converted to a standard data format? 
     - Or is the ux better with i32 because the user just types
@@ -435,7 +438,7 @@ impl State {
     // PoW, but easy so that it runs in the Rust Playground 
     pub fn easy_proof_of_work(&mut self, mut block: Block) -> (Blockheader, String) {
     
-        let mut block_header = block.header.clone();
+        //let mut block_header = block.header.clone();
         let difficulty = self.pow_difficulty;
         let max = 1000000;
         
@@ -444,7 +447,7 @@ impl State {
             //println!("block_header: {:#?}", block_header);
         
             let mut count = 0;
-            let hash = State::hash_any(&block_header);
+            let hash = State::hash_any(&block.header);
             //println!("hash: {}", hash);
             
             for i in hash.chars() {
@@ -457,17 +460,17 @@ impl State {
                 println!("\n/// WINNING ///");
                 //println!("iter: {}", i);
                 //println!("count: {}", count);
-                println!("block_header: {:#?}", block_header);
-                println!("hash: {}", hash);
-                println!("hash check: {}", State::hash_any(&block_header));
-                return (block_header, hash);
+                println!("{:#?}", &block.header);
+                println!("{}", hash);
+                println!("{}", State::hash_any(&block.header));
+                return (block.header, hash);
             }
             
-            block_header.nonce += 1;
+            block.header.nonce += 1;
         }
         println!("\n!!! {} Iterations !!!", max);
         println!("!!! Matching Hash Not Found !!!\n");
-        return (block_header, String::from("!!! PoW ERROR !!!") )
+        return (block.header, String::from("!!! PoW ERROR !!!") )
     }
     
     // Create A New Block With Valid Transactions
@@ -504,23 +507,19 @@ impl State {
     }
     
     // check that PoW hash matches blockheader
-    pub fn check_pow(&mut self, block: Block) -> bool {
+    pub fn check_pow(&mut self, mut block: Block) -> bool {
         
-        println!("\n /// CHECKING BLOCK ///");
-        
-        println!("{:#?}", block.header);
+        println!("\n/// CHECKING BLOCK ///");
         
         // Check hash matches header
         let hash_check = State::hash_any(&block.header);
-        let hash_check2 = State::hash_any(&block.header);
         
-        println!("\n/// CHECHING HASHES ///");
-        println!("hash_check: {}", hash_check);
-        println!("hash_check2: {}", hash_check2);
-        println!("block.PoW: {}\n", block.PoW);
+        println!("{:#?}", block.header);
+        println!("{}", hash_check);
+        println!("{}", hash_check);
         
         if hash_check != block.PoW {
-            println!("PoW Error! Invalid PoW Hash.");
+            println!("\nPoW Error: Invalid PoW Hash.");
             return false
         }
         
@@ -533,7 +532,7 @@ impl State {
                 }
             }
         if count < target {
-            println!("PoW Error! Difficulty Not Satisfied.");
+            println!("\nPoW Error! Difficulty Not Satisfied.");
             return false
         }
         
@@ -542,7 +541,9 @@ impl State {
     
     // Confirm TX in valid_tx Pool And Add Them To The History
     pub fn push_block(&mut self,
-                      block: Block) {
+                      mut block: Block) {
+        
+        let block_copy = block.clone();
         
         // Check block tx
         let checked_tx = State::verify_tx(self, block.transactions.clone());
@@ -556,24 +557,26 @@ impl State {
         }
         
         // Check block PoW
-        if State::check_pow(self, block.clone()) {
-        
-            // If PoW and TX are valid,
-            // - process tx and change state
-            // - push block to state history
-            println!("\nPushing Block To Blockchain:\n{:#?}", &block);
-            for i in & block.transactions {
-                self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
-                self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
-                self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
-                //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
-            }
-            self.chain.push(block);
-            self.block_height += 1;
-            println!("Block pushed to Chain");
+        if !(State::check_pow(self, block)) {
+            println!("Block Error: check_pow() failed.");
+            return
         }
+    
+        // If PoW and TX are valid,
+        // - process tx and change state
+        // - push block to state history
+        println!("\nPushing Block To Blockchain:\n{:#?}", &block_copy);
+        for i in &block_copy.transactions {
+            self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
+            self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
+            self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
+            //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
+        }
+        self.chain.push(block_copy);
+        self.block_height += 1;
+        println!("Block pushed to Chain");
         
-        println!("Block Error: check_pow() failed.")
+        
     }
 }
 
