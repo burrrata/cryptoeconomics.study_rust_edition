@@ -1,6 +1,14 @@
-<h1 align="center">
-    State Transitions: getting from A to B.
-</h1>
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        State Transitions
+    </h1>
+    <p align="center">
+        Getting from A to B.
+    </p>
+</div>
 
 <br>
 
