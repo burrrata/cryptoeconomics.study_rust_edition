@@ -1,12 +1,17 @@
+<br>
+
 <div align="center">
-    <div align="center">
+    <p align="center">
         <img src="intro.png">  
-    </div>
+    </p>
+    <br>
     <h1 align="center">
         Welcome!
     </h1>
 </div>
+
 <br>
+
 <p>
 A blockchain is, at it's heart, just a glorified database. It keeps track of stuff. In this book we'll explore how that works and why anyone should care.
 
