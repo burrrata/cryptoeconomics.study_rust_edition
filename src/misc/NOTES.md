@@ -25,10 +25,6 @@ References:
 External crates in mdBook:
 - https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
-<br>
-<hr>
-<br>
-
 ### Ch 1: Centralized Database Manager
 - moar resources
 - clean up comments
@@ -55,23 +51,6 @@ External crates in mdBook:
 
 <br>
 <hr>
-<br>
-
-### Ch 4: Harder Better Faster Stronger
-- https://www.parity.io/substrate/
-- https://substrate.readme.io/docs
-- https://github.com/paritytech/substrate
-- ecdsa
-- rlp
-- scale
-- patricia tries
-- etc...
-
-It would be so lit to replicate something like Polkadot within a fun tutorial!
-- https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
-- 2.2. Previous work: https://polkadot.network/PolkaDotPaper.pdf
-- https://github.com/paritytech/polkadot
-
 <br>
 
 
