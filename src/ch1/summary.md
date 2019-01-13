@@ -152,6 +152,7 @@ impl State {
         new
     }
     
+    
     /// ACCOUNT FUNCTIONS ///
     
     // Create a new account
