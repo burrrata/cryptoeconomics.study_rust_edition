@@ -8,6 +8,12 @@
 
 <br>
 
+# Game Theory
+
+In addition to adding stuff about crypto, it would help to also explain some mental models used to reason about game theory, esp in the context of cryptoeconomic games. 
+
+<br>
+
 # Generalizable Data Structures
 - focus LESS on payments, and MORE on data and access to computation, information, identity, social networks, and services.
 
