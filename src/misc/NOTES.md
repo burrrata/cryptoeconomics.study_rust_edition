@@ -5,13 +5,6 @@
 
 ## Questions
 
-Does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS, and then save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? 
-- chapters 1-3: minimal viable blockchain demos
-- chapters 4+: upgrades towards Ethereum, Substrate, or other systems/networks
-- https://www.parity.io/substrate/
-- https://substrate.readme.io/docs
-- https://github.com/paritytech/substrate
-
 How important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
 - it would be so lit to replicate something like Polkadot within a fun tutorial!
 - https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
@@ -30,17 +23,17 @@ How important is it to build in concurrent threads to simulate network activity 
 
 <br>
 
-### Ch 1
+### Ch 1: Centralized Database Manager
 - moar resources
 - clean up comments
 - create a function to simulate multiple threads as if multiple users were using the service
 
-### Ch 2
+### Ch 2: Minimal Viable PoS "Blockchain"
 - add words and links to relevant white/yellow paper sections
 - add PoW and Block numbers to the final demo
 - decompose the demo into sections
 
-### Ch 3
+### Ch 3: Minimal Viable PoW "Blockchain"
 - add relevant white/yellow paper sections
 - add relevant production libraries for each upgrade
 - end chapter demo
@@ -55,8 +48,21 @@ How important is it to build in concurrent threads to simulate network activity 
 - encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
 
 <br>
+<hr>
 <br>
+
+### Ch 4: Harder Better Faster Stronger
+- https://www.parity.io/substrate/
+- https://substrate.readme.io/docs
+- https://github.com/paritytech/substrate
+- ecdsa
+- rlp
+- scale
+- patricia tries
+- etc...
+
 <br>
+
 
 # Interactive Art
 - how can I simulate multiple users in an environment so that everything doesn't just run in the main() thread?
