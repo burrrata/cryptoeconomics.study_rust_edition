@@ -12,8 +12,6 @@
 
 <br>
 
-## Words
-
 Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both have one thing in common: they allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
 - money,
 - social connections,
@@ -24,8 +22,8 @@ This data is mostly stored in centralized databases. The "state" of these databa
 In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data. 
 
 <br>
-
-## Video
+<hr>
+<br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
@@ -34,8 +32,9 @@ In this example we'll explore some of the common data structures that banks keep
 </p>
 
 <br>
+<hr>
+<br>
 
-## Code
 ```rust, editable
 // This is live editable Rust code. That means 
 // that you can push the play button (little white triangle)
