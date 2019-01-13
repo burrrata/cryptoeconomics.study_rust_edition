@@ -1,3 +1,5 @@
+<br>
+
 <div align="center">
     <p align="center">
         <img src="TBD" alt="TBD">
@@ -10,7 +12,7 @@
     </p>
 </div>
 
-<br>
+<br><br><br>
 
 For every database that has a state, there's a way to change that state. Every time you're in state s and then make a change, you're now in state s'. The history of state transitions is the history of the database. When multiple people are using this database it's important that they all agree on the current state. If they don't, in meatspace we get wars and in cyberspace we get forks. 
 
@@ -18,9 +20,7 @@ Since in this example we have a centralized database controlled by a single oper
 
 Let's try it out and become kings of our own little hills!
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
@@ -28,9 +28,7 @@ Let's try it out and become kings of our own little hills!
     <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
 </p>
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 ```rust, ignore
 
@@ -419,9 +417,9 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - TBD
 
-<br>
+<br><br><br>
