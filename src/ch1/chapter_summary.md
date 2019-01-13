@@ -14,26 +14,16 @@
 
 <br><br><br>
 
-Core Concepts: 
-- When you use a centralized database you trust that they have the correct state.
-- The central operator controls:
-    - accounts / identity
-    - tx / operations
-    - history / data
-    - creation of new data
-
-<br><br><br>
-
 So to recap...
 
-The bank:
-- gets to print money out of thin air
-- controls the access to the movement and informatino of that money
-- has minimal downside when things go wrong due to bailouts and insurance
+The centralized database manager:
+- gets to create new data and accounts out of thin air (or money and debt)
+- controls read/write access to that data (ability to move/create money)
+- has minimal downside when things go wrong due to bailouts and insurance (what is regulatory capture?)
 
 The users:
-- trust the bank
-- are only allows as much money as they can figure out how to convince the bank or anyone else to give them
+- trust the central operator is showing them the correct state for their data or money
+- are only allowed as much money or control as they can figure out how to convince the bank or anyone else to give them
 - get their lives turned upside down if things go wrong
 
 Seems a little odd that such an essential piece of modern living is so opaque and fragile... 🤔
