@@ -22,7 +22,7 @@ This data is mostly stored in centralized databases. The "state" of these databa
 In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data. 
 
 <br>
-<hr>
+<br>
 <br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
@@ -30,7 +30,7 @@ In this example we'll explore some of the common data structures that banks keep
 <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
 
 <br>
-<hr>
+<br>
 <br>
 
 ```rust, editable
