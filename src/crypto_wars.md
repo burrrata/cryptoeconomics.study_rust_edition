@@ -1,3 +1,5 @@
+<br>
+
 <p align="center">
   <h2 align="center">
     If you're looking for a whimsical yet accessible intro to some of the concepts in this book, look no further than...
@@ -10,3 +12,4 @@
   </p>
 </p>
 
+<br>
