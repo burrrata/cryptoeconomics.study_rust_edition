@@ -13,7 +13,7 @@
 
 ## Words
 
-In this chapter we'll transition our PoW "blockchain" style network towards a PoS network. This has many benefits:
+In this chapter we'll transition our PoW "blockchain" towards a PoS "blockchain". This has many benefits:
 - we don't consume physical resources for digital security
 - we can create more compelling incentive mechanisms
 - we can destroy an attacker's ability to make repeated attacks
