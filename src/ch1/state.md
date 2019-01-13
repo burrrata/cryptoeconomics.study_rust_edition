@@ -12,12 +12,12 @@
 
 <br>
 
-Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both have one thing in common: they allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
+Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
 - money,
 - social connections,
 - and identity.
 
-This data is mostly stored in centralized databases. The "state" of these databases is what we reference to determine what is "true" or not. Ever gone to a restaurant and been told they can't find your reservation, or tried to register to vote and been told that you're not in the system? Data. 
+This data is most often stored in centralized databases. The "state" of these databases is what we look at to determine what is "true" or not. Ever gone to a restaurant and been told they can't find your reservation, or tried to register to vote and been told that you're not in the system? Data. 
 
 In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data. 
 
