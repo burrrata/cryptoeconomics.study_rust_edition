@@ -1,6 +1,6 @@
 <div align="center">
     <p align="center">
-        <img src="feedback.png" alt="The Knowledge Loop">
+        <img src="feedback.png">
     </p>
     <h1 align="center">
         :)
