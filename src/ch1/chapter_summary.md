@@ -12,8 +12,6 @@
 
 <br>
 
-## Words
-
 Core Concepts: 
 - When you use a centralized database you trust that they have the correct state.
 - The central operator controls:
@@ -21,6 +19,8 @@ Core Concepts:
     - tx / operations
     - history / data
     - creation of new data
+
+<br>
 
 So to recap...
 The bank gets to print money out of thin air, controls the access to the movement and informatino of that money, and has minimal downside when things go wrong due to bailouts and insurance. The users trust the bank, are only allows as much money as they can figure out how to convince the bank or anyone else to give them, and are the ones who are really screwed if things go wrong.
@@ -33,8 +33,8 @@ Seems a little odd that such an essential piece of modern living is so opaque an
 Let's go to chapter 2 and see how that works!
 
 <br>
-
-## Video
+<hr>
+<br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/ckzi8iqGilE/0.jpg)](https://www.youtube.com/watch?v=ckzi8iqGilE)
 
@@ -43,8 +43,8 @@ Let's go to chapter 2 and see how that works!
 </p>
 
 <br>
-
-## Code
+<hr>
+<br>
 
 Here is the code without extra commentary so you can explore and see how all the parts interact. Go ahead and try to modify or play with it :)
 
@@ -407,7 +407,7 @@ fn main() {
 
 <br>
 
-## Resources
-TBD
+## Resources To Learn More
+- TBD
 
 <br>
