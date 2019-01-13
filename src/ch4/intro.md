@@ -1,6 +1,6 @@
 <div align="center">
     <div align="center">
-        <img src="intro.jpg" alt="Safari">  
+        <img src="intro.jpg">  
     </div>
     <h1 align="center">
         Harder Better Faster Stronger
