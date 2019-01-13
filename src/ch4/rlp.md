@@ -12,6 +12,7 @@
 
 ### Open Questions
 - WHY is RLP faster than other data formats?
+- How does RLP in Ethereum compare to SCALE in Substrate? (https://substrate.readme.io/docs/low-level-data-formats)
 - Just presenting it is nice, but it's really not very interesting unless we show WHY it matters (aka what problem does it solve)
 
 ### Serialization:
