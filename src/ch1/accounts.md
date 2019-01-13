@@ -1,3 +1,5 @@
+<br>
+
 <div align="center">
     <p align="center">
         <img src="TBD" alt="TBD">
@@ -10,15 +12,13 @@
     </p>
 </div>
 
-<br>
+<br><br><br>
 
 An account is just a way to store data to make it more useful. As we said before, he who controls the data controls the world. Let's put all our eggs in one basket via a centralized database and see how that works.
 
 Some people like centralized databases and services because they're fast and there's someone to blame if/when things go wrong. This makes users feel safe because it's familiar, they don't have to think too much, and someone seems responsible. Time has told us however that this is merely a mirage to make us feel good and in reality centralized operators have most of the upside but limited downside, while for users it's reversed. Sound fun? Great! Let's go...
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 [![Cryptoeconomics - 1.0 - Chapter 1 Overview](https://img.youtube.com/vi/VaUTTE5xb54/0.jpg)](https://www.youtube.com/watch?v=VaUTTE5xb54)
 
@@ -26,9 +26,7 @@ Some people like centralized databases and services because they're fast and the
     <a href="https://cryptoeconomics.study/lectures/chapter-01-0.html">Cryptoeconomics - 1.0 - Chapter 1 Overview</a>.
 </p>
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 ```rust, ignore
 // This is Rust code.
@@ -240,10 +238,10 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - TBD
 
-<br>
+<br><br><br>
     
