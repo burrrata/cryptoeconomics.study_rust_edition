@@ -66,7 +66,7 @@ struct TX {
 // Central Payment Processor
 impl State {
     
-    // USEFUL FUNCTIONS
+    /// GENERALLY USEFUL FUNCTIONS ///
     
     // Turn stuff into &[u8] slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -99,7 +99,7 @@ impl State {
     }
     
     
-    // INIT STATE
+    /// FUNCTION TO INIT THE STATE ///
     
     // Create a new state
     pub fn new_state() -> State {
@@ -119,7 +119,7 @@ impl State {
         new
     }
     
-    // ACCOUNT STUFF
+    /// ACCOUNT FUNCTIONS ///
     
     // Create a new account
     pub fn new_account(&mut self) {
@@ -185,7 +185,7 @@ impl State {
         self.frozen_accounts.insert(account.0, account.1);
     }
     
-    // TX STUFF
+    /// TX FUNCTIONS ///
     
     // Add funds to an account
     pub fn add_funds(&mut self,
@@ -220,21 +220,6 @@ impl State {
     pub fn new_bank_tx(&mut self,
                        receiver: String,
                        amount: i32) {
-        
-        // When banks give people loans or credit it's actually processed
-        // as debt which banks can then trade amongst each other at a market
-        // rate based on how likely the debtor is likely to pay back in full
-        // Yes you heard this right, they print money and profit from doing so.
-        // Carpenters make cabinets, comedians make jokes, banks make money,
-        // literaly...
-        // Fun Fact: debt on a banks balance sheet is an ASSET to the bank and
-        // not a liability. It's a liability to users, but banks can buy, sell, 
-        // and trade this debt as a financial product. One of a banks primary 
-        // products is loans, but as a user of a bank you're actually the product 
-        // they're selling to other banks and investment funds. Kind of like how 
-        // with social media platforms access to the users attention is the 
-        // product that they sell to 3rd party advertisers.
-        // https://en.wikipedia.org/wiki/Fractional-reserve_banking
 
         // Tx is legit by default because it's from the bank so let's just process it.
         let tx = TX {
@@ -255,9 +240,12 @@ impl State {
         // add processed TX to history
         self.history.push(tx.clone());        
     }
-
+    
+    /// STATE TRANSITION FUNCTIONS ///
+    
     // Verify pending user TX
-    // Notice how the bank (or any hacker) gets to bypass this check
+    // - notice how the bank (or any hacker) gets to bypass this check
+    //   using a bank tx rather than a user tx
     pub fn process_pending_tx(&mut self) {
         
         // check pending tx
@@ -326,6 +314,24 @@ impl State {
         // clear pending tx
         self.pending_tx = Vec::new();
     }
+    
+    // Arbitrary function to add funds to an account
+    pub fn add_funds(&mut self,
+                     account_id: String,
+                     amount: i32) {
+        
+        // A very important function for any private and seldom audited
+        // for-profit enterprise. Convenient because it
+        // just directly changes the state of the ledger
+        // without going through any checks or being recorded
+        // in the hisroty. What could go wrong?
+        // https://en.wikipedia.org/wiki/Enron_scandal
+        
+        if let Some(x) = self.accounts.get_mut(&account_id) {
+            x.balance += amount;
+        }
+    }
+
 }
 
 
