@@ -12,6 +12,8 @@ In a Proof of Work blockchain the state is divided by blocks; each new block rep
 
 All in all this accomplishes something that was not possible before: a shared state that people can trust to be a legitimate source of information. Before you had to trust a centralized operator because it was to complicated for a large network to process and manage a complex state asynchronously. With blockchain technology however, this is possible. In this chapter we'll explore the simplest version of this: a financial transaction network that uses proof of work to solve a simple puzzle. 
 
+### Idea To Add
+- because accounts are not in a centralized database the user controls the account, and as long as the network is operational, the user's account is too. Just like if your bank went under (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be gone, if the P2P network you're on goes under same deal. 
 
 ## Code
 
