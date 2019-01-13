@@ -72,7 +72,8 @@ struct TX {
 // Central Payment Processor
 impl State {
     
-    // USEFUL FUNCTIONS
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
     
     // Turn stuff into &[u8] slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -105,7 +106,7 @@ impl State {
     }
     
     
-    // INIT STATE
+    /// FUNCTION TO INIT THE STATE ///
     
     // Create a new state
     pub fn new_state() -> State {
@@ -125,7 +126,8 @@ impl State {
         new
     }
     
-    // ACCOUNT STUFF
+    
+    /// ACCOUNT FUNCTIONS ///
     
     // Create a new account
     pub fn new_account(&mut self) {
@@ -191,7 +193,8 @@ impl State {
         self.frozen_accounts.insert(account.0, account.1);
     }
 
-    /// TX STUFF ///
+
+    /// TX FUNCTIONS ///
     
     // Create a new TX for the bank
     pub fn new_bank_tx(&mut self,
