@@ -99,21 +99,7 @@ mdBook says nothing about adding depdancies to external crates
 - https://github.com/K-Ho/code/tree/networkVisualization
 - https://docs.google.com/document/d/1R85zczC1-nklLXEFx-dZfQdlZexRAk8S9G9Hc3Zjkx4/edit
 
-
-# Centralized Database
-- users trust bank state
-- bank creates and controls accounts
-- users request tx to be approved by bank
-- bank controls any state transitions including freezing accounts or new money creation
-
-
-# PoW "Blockchain"
-- centralized state database => new p2p database structure
-- trust => agreed upon pub key crypto accounts and network params (randomness + crypto basics)
-- accounts => accounts created via "secure" random key generation (accounts + pub key crypto)
-- tx => signed tx (tx + digital signatures)
-- history => blocks and merkle tries (blocks + hashing)
-- bank approved state transition => PoW state transition 
+### PoW "Blockchain"
 
 It's really important here that we can simulate multiple miners creating blocks to showcase how we deal with forks and decide which chain is the main chain.
 
@@ -136,11 +122,7 @@ UX Feature Ideas from C.S:
 - Users can also toggle a miner into a selfish miner.
 - Simulation of cost of mining to demonstrate when miners are profitable (and show that they lose money under the attack of selfish mining)
 
-# PoS "Blockchain"
-- signed "RSA" tx => ECDSA
-- generic merkle trie => patricia tries
-- generic String/u8 conversion => RSL data encoding
-- PoW => PoS
+### PoS "Blockchain"
 
 C.S Casper Beacon Chain Ideas:
 - Add validator class
@@ -156,6 +138,3 @@ C.S Feature Ideas:
 - Controls to adjust the stake of each node
 
 <br>
-<br>
-<br>
-
