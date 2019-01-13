@@ -3,7 +3,7 @@
         <img src="neurons.jpg" alt="neurons">  
     </div>
     <h1 align="center">
-        PoW "Blockchain"
+        Minimal Viable PoW "Blockchain"
     </h1>
     <p align="center">
         If you love your data, set it free.
