@@ -12,8 +12,6 @@
 
 <br>
 
-## Words
-
 For every database that has a state, there's a way to change that state. Every time you're in state s and then make a change, you're now in state s'. The history of state transitions is the history of the database. When multiple people are using this database it's important that they all agree on the current state. If they don't, in meatspace we get wars and in cyberspace we get forks. 
 
 Since in this example we have a centralized database controlled by a single operator, it's their database so they make the rules. Because they control the state they also control the state changes. Users can submit TX for consideration, but ultimately the bank decides what goes through or not.
@@ -21,8 +19,8 @@ Since in this example we have a centralized database controlled by a single oper
 Let's try it out and become kings of our own little hills!
 
 <br>
-
-## Videos
+<hr>
+<br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
@@ -31,8 +29,9 @@ Let's try it out and become kings of our own little hills!
 </p>
 
 <br>
+<hr>
+<br>
 
-## Code
 ```rust, ignore
 
 extern crate rand;
@@ -422,6 +421,7 @@ fn main() {
 
 <br>
 
-## Resources
+## Resources To Learn More
+- TBD
 
 <br>
