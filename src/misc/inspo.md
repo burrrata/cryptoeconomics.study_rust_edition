@@ -8,6 +8,12 @@
 
 <br>
 
+# Goals
+- For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
+- Maybe create a CLI tutorial that shows how to iteratively ugrade each component and function in the standard model to make it more secure
+- Stetch Goal: work towards recreating the Parity Ethereum Client and/or arbitrary blockchain architectures like Substrate, but that's probably not realistic lol
+- Add storylines to explain the code and concepts.
+
 # Programming On Blockchains
 
 So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot... Would it make more sense to dive into solidity at this point, or is it possible to replicate aspects of the Parity Ethereum client if I can roll external libraries in mdBook or build it out as a CLI tutorial?
