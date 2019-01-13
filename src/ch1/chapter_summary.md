@@ -25,12 +25,23 @@ Core Concepts:
 <br><br><br>
 
 So to recap...
-The bank gets to print money out of thin air, controls the access to the movement and informatino of that money, and has minimal downside when things go wrong due to bailouts and insurance. The users trust the bank, are only allows as much money as they can figure out how to convince the bank or anyone else to give them, and are the ones who are really screwed if things go wrong.
 
-Seems a little odd that such an essential piece of modern living is so opaque and fragile 🤔 Can we do better? Maybe! Some people have some ideas on how to at least make this process a little more secure. In the next chapter we'll explore how we can change the architecture of the system to make it better for users. This includes:
+The bank:
+- gets to print money out of thin air
+- controls the access to the movement and informatino of that money
+- has minimal downside when things go wrong due to bailouts and insurance
+
+The users:
+- trust the bank
+- are only allows as much money as they can figure out how to convince the bank or anyone else to give them
+- get their lives turned upside down if things go wrong
+
+Seems a little odd that such an essential piece of modern living is so opaque and fragile... 🤔
+
+Can we do better? Maybe! Some people have some ideas on how to at least make this process a little more secure. In the next chapter we'll explore how we can change the architecture of the system to make it better for users. This includes:
 - giving everyone on the network the option to verify TX to make sure no one is cheating
-- creating account IDs and passwords via cryptography so that they are more useful and not all located in a centralized database
-- because accounts are not in a centralized database the user controls the account, and as long as the network is operational, the user's account is too. Just like if your bank went under (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be gone, if the P2P network you're on goes under same deal. 
+- creating account IDs and passwords via cryptography so that they are not all located in a centralized database
+- creating costs and rewards for managing state transitions to create reliability and security
 
 Let's go to chapter 2 and see how that works!
 
