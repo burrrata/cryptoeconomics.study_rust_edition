@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/src/rusty_ethereum.png" alt="Rusty Ethereum">  
+    <img src="/src/intro.png" alt="Rusty Ethereum">  
 </p>
 <br>
 <p>
