@@ -26,15 +26,6 @@ The users:
 - are only allowed as much money or control as they can figure out how to convince the bank or anyone else to give them
 - get their lives turned upside down if things go wrong
 
-Seems a little odd that such an essential piece of modern living is so opaque and fragile... 🤔
-
-Can we do better? Maybe! Some people have some ideas on how to at least make this process a little more secure. In the next chapter we'll explore how we can change the architecture of the system to make it better for users. This includes:
-- giving everyone on the network the option to verify TX to make sure no one is cheating
-- creating account IDs and passwords via cryptography so that they are not all located in a centralized database
-- creating costs and rewards for managing state transitions to create reliability and security
-
-Let's go to chapter 2 and see how that works!
-
 <br><br><br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/ckzi8iqGilE/0.jpg)](https://www.youtube.com/watch?v=ckzi8iqGilE)
@@ -400,5 +391,16 @@ fn main() {
 
 ## Resources To Learn More
 - TBD
+
+<br><br><br>
+
+Seems a little odd that such an essential piece of modern living is so opaque and fragile... 🤔
+
+Can we do better? Maybe! Some people have some ideas on how to at least make this process a little more secure. In the next chapter we'll explore how we can change the architecture of the system to make it better for users. This includes:
+- giving everyone on the network the option to verify TX to make sure no one is cheating
+- creating account IDs and passwords via cryptography so that they are not all located in a centralized database
+- creating costs and rewards for managing state transitions to create reliability and security
+
+Let's go to chapter 2 and see how that works!
 
 <br><br><br>
