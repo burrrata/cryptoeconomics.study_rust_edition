@@ -5,6 +5,8 @@
   <a href="https://burrrata.github.io/crypto_wars/">
     <img src="crypto_wars.png" style="border:1px solid black;max-width:100%;">
   </a>
+  <p align="center">
+    (WIP)
+  </p>
 </p>
 
-(WIP)
