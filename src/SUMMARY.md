@@ -9,7 +9,7 @@
   - [Accounts](./ch1/accounts.md)
   - [TX](./ch1/tx.md)
   - [State Transitions](./ch1/state_transitions.md)
-  - [Roll Your Own Centralized Database](./ch1/centralized_database_manager.md)
+  - [Roll Your Own Centralized Database](./ch1/summary.md)
   
 - [PoW "Blockchain"](./ch2/intro.md)
   - [State](./ch2/state.md)
@@ -17,14 +17,14 @@
   - [Accounts](./ch2/accounts.md)
   - [TX](./ch2/tx.md)
   - [State Transitions](./ch2/state_transitions.md)
-  - [Roll Your Own PoW "Blockchain"](./ch2/pow_blockchain.md)
+  - [Roll Your Own PoW "Blockchain"](./ch2/summary.md)
   
 - [PoS "Blockchain"](./ch3/intro.md)
   - [State](./ch3/state.md)
   - [Accounts](./ch3/accounts.md)
   - [Patricia Tries](./ch3/patricia_tries.md)
   - [State Transitions](./ch3/state_transitions.md)
-  - [Roll Your Own PoS "Blockchain"](./ch3/pos_blockchain.md)
+  - [Roll Your Own PoS "Blockchain"](./ch3/summary.md)
   
 - [Resources](./resources/intro.md)
   - [Learning](./resources/learning.md)
