@@ -66,6 +66,7 @@ struct TX {
 // Central Payment Processor
 impl State {
     
+    
     /// GENERALLY USEFUL FUNCTIONS ///
     
     // Turn stuff into &[u8] slice
@@ -118,6 +119,7 @@ impl State {
         
         new
     }
+    
     
     /// ACCOUNT FUNCTIONS ///
     
@@ -185,6 +187,7 @@ impl State {
         self.frozen_accounts.insert(account.0, account.1);
     }
     
+    
     /// TX FUNCTIONS ///
     
     // Add funds to an account
@@ -240,6 +243,7 @@ impl State {
         // add processed TX to history
         self.history.push(tx.clone());        
     }
+    
     
     /// STATE TRANSITION FUNCTIONS ///
     
