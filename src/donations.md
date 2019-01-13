@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="gratitude.png" alt="Thank You">  
+    <img src="donations.png" alt="Thank You">  
 </p>
 <p align="center">
   The best things in life are free, but for everthing else...
