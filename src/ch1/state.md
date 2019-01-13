@@ -11,6 +11,8 @@
 </div>
 
 <br>
+<br>
+<br>
 
 Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
 - money,
@@ -180,10 +182,14 @@ fn main() {
 ```
 
 <br>
+<br>
+<br>
 
 ## Resources To Learn More
 - https://en.wikipedia.org/wiki/Database
 - https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database
 - https://github.com/rust-unofficial/awesome-rust#database
 
+<br>
+<br>
 <br>
