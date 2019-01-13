@@ -10,18 +10,19 @@
 # TODO
 - in order of operations
 
-Ch intros and code summaries
+### Ch intros and code summaries
 - create intro that explains the topic/goal
 - create code summary shows what we're doing
 - clean up code so that it's readable/usable
 - copy code sections into book sections and add comments
+- then add resources and links to production code examples
 
-Current
+### Current
 - clean up chapters 1 & 2
 - build chapter 3 code
 - THEN go back and do the sections
 
-
+### General
 
 Less Cloning, More Borrowing: 
 - update code to use borrows and lifetimes rather than cloning everything.
@@ -35,21 +36,6 @@ References:
 External crates in mdBook:
 - https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
-### Ch 1: Centralized Database Manager
-- moar resources
-- clean up comments
-- create a function to simulate multiple threads as if multiple users were using the service
-
-### Ch 2: Minimal Viable PoS "Blockchain"
-- add words and links to relevant white/yellow paper sections
-- add PoW and Block numbers to the final demo
-- decompose the demo into sections
-
-### Ch 3: Minimal Viable PoW "Blockchain"
-- add relevant white/yellow paper sections
-- add relevant production libraries for each upgrade
-- end chapter demo
-- decompose the demo into sections
 
 ### UX / UI
 - reformat the Resources sections to look like Awesome Lists, and then add relevant stuff to the relevant lists
