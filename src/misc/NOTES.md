@@ -3,14 +3,14 @@
 </h1>
 <br>
 
-## Questions
+# Open Questions
 
 How important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
-
+- https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
 <br>
 
-## TODO
+# TODO
 
 ### ASAP
 Less Cloning, More Borrowing: 
@@ -49,15 +49,49 @@ External crates in mdBook:
 - better feedback flow
 - encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
 
-<br>
-<hr>
+### Better Rust Code
+- It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
+- It would also be nice to have better errors so that when functions fail we (or the users) know why.
+- enums and how they interact with structs and implementations
+- pub vs priv functions
+- also I suck at traits
+
+### Feedback
+
+There needs to be a clear and easy way for people to provide feedback.
+- email: rustycryptoeconomics@protonmail.com
+- forum? 
+- reddit?
+
+People to reach out to once the first draft is ready
+- Tensor Programming (they rolled the Rust blockchain tutorial this is based on)
+- Cryptoeconomics.Study forum (so far 0 engagement)
+- r/ethereum
+- r/cryptoeconomics
+- TWIE newsletter
+- other crypto newsletters
+
 <br>
 
+# mdBook and External Libraries
+- If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
 
-# Interactive Art
-- how can I simulate multiple users in an environment so that everything doesn't just run in the main() thread?
-- can fearless concurrency be simulated in mdBook or the Rust Playground?
-- https://doc.rust-lang.org/book/ch16-00-concurrency.html
+Asked on the Rust Forum and apparently there's a few workarounds:
+- https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+- https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/.travis.yml
+- https://github.com/burrrata/cryptoeconomics.study_rust_edition/tree/master/target/release
+- https://rust-lang-nursery.github.io/mdBook/cli/test.html#a--library-path
+
+How did The Rust Cookbook do it?
+- https://github.com/rust-lang-nursery/rust-cookbook
+- they have a Cargo.toml with dependancies: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/Cargo.toml
+  - is that enough?
+- their book.toml is standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/book.toml
+- their travis.yml is also standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/.travis.yml
+
+mdBook says nothing about adding depdancies to external crates
+- https://rust-lang-nursery.github.io/mdBook/index.html
+- https://github.com/rust-lang-nursery/mdBook
 
 <br>
 
@@ -128,82 +162,6 @@ C.S Feature Ideas:
 - Controls to adjust the stake of each node
 
 <br>
-
-# Programming On Blockchains
-
-So... if we want to do interesting things with cryptoecnomics... we need a scripting language, and that means replicating the EVM... and that's a lot... Would it make more sense to dive into solidity at this point, or is it possible to replicate aspects of the Parity Ethereum client if I can roll external libraries in mdBook or build it out as a CLI tutorial?
-
-Would it be possible to reimpliment the py-evm in Rust?
-- https://github.com/ethereum/py-evm
-
-### L2: state channels
-
-### L2: plasma
-
-### Cryptoeconomic Applications
-
-<br>
-
-# Better Rust Code
-- It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
-- It would also be nice to have better errors so that when functions fail we (or the users) know why.
-- enums and how they interact with structs and implementations
-- pub vs priv functions
-- also I suck at traits
-
-<br>
 <br>
 <br>
 
-# Feedback
-- There needs to be a clear and easy way for people to provide feedback.
-    - email: rustycryptoeconomics@protonmail.com
-    - forum? 
-    - reddit?
-- Tensor Programming (they rolled the Rust blockchain tutorial this is based on)
-- Cryptoeconomics.Study forum (so far 0 engagement)
-- r/ethereum
-- r/cryptoeconomics
-- TWIE newsletter
-- other crypto newsletters
-
-
-<br>
-
-# mdBook and External Libraries
-- If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
-
-Asked on the Rust Forum and apparently there's a few workarounds:
-- https://users.rust-lang.org/t/diy-digital-signatures/23739/5
-- https://github.com/burrrata/cryptoeconomics.study_rust_edition/blob/master/.travis.yml
-- https://github.com/burrrata/cryptoeconomics.study_rust_edition/tree/master/target/release
-- https://rust-lang-nursery.github.io/mdBook/cli/test.html#a--library-path
-
-How did The Rust Cookbook do it?
-- https://github.com/rust-lang-nursery/rust-cookbook
-- they have a Cargo.toml with dependancies: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/Cargo.toml
-  - is that enough?
-- their book.toml is standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/book.toml
-- their travis.yml is also standard: https://github.com/rust-lang-nursery/rust-cookbook/blob/master/.travis.yml
-
-mdBook says nothing about adding depdancies to external crates
-- https://rust-lang-nursery.github.io/mdBook/index.html
-- https://github.com/rust-lang-nursery/mdBook
-
-<br>
-
-# Goals
-- For education purposes build a fully functional (but not secure) blockchain using standard Rust code so that the main concepts can be understood as simply as possible in mdBook or the Rust Playground.
-- Maybe create a CLI tutorial that shows how to iteratively ugrade each component and function in the standard model to make it more secure
-- Stetch Goal: work towards recreating the Parity Ethereum Client and/or arbitrary blockchain architectures like Substrate, but that's probably not realistic lol
-- Add storylines to explain the code and concepts.
-
-<br>
-
-# Why this book?
-
-Wanted to build something that runs in the [Rust Playground](https://play.rust-lang.org) and [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html). This means no external Ethereum or crypto libraries. The goal is to explain the core concepts as simply as possible with working Rust code.
-- Cryptoeconomics.Study code is written in JS and references external Ethereum libraries
-- there's no functionality for accounts, keys, or tx signatures in the Rust tutorial
-
-So here we are!
