@@ -195,16 +195,6 @@ impl State {
     
     /// TX FUNCTIONS ///
     
-    // Add funds to an account
-    pub fn add_funds(&mut self,
-                     account_id: String,
-                     amount: i32) {
-        
-        if let Some(x) = self.accounts.get_mut(&account_id) {
-            x.balance += amount;
-        }
-    }
-
     // Create a new TX
     pub fn new_user_tx(&mut self,
                        sender: String,
