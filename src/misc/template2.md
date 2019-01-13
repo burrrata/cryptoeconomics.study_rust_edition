@@ -12,33 +12,23 @@
     </p>
 </div>
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 Words
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 Videos
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 ```rust, ignore
 // code
 ```
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - TBD
 
-<br>
-<br>
-<br>
+<br><br><br>
