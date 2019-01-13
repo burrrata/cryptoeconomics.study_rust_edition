@@ -1,6 +1,14 @@
-<h1 align="center">
-    TX: making stuff happen.
-</h1>
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        TX
+    </h1>
+    <p align="center">
+        Making stuff happen.
+    </p>
+</div>
 
 <br>
 
