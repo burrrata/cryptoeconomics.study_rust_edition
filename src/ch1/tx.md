@@ -12,15 +12,13 @@
 
 <br>
 
-## Words
-
 Core Concept: tx is a way to request a state change, but...
 - the state transition function is how we make that state change
 - the central operator controls the state and thus all state changes including freezing accounts or printing money
 
 <br>
-
-## Videos
+<hr>
+<br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
@@ -37,8 +35,9 @@ Core Concept: tx is a way to request a state change, but...
 </p>
 
 <br>
+<hr>
+<br>
 
-## Code
 ```rust, ignore
 
 extern crate rand;
@@ -321,6 +320,7 @@ fn main() {
 
 <br>
 
-## Resources
+## Resources To Learn More
+- TBD
 
 <br>
