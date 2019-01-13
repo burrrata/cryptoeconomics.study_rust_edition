@@ -46,6 +46,8 @@ Let's go to chapter 2 and see how that works!
 
 ## Code
 
+Here is the code without extra commentary so you can explore and see how all the parts interact. Go ahead and try to modify or play with it :)
+
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
