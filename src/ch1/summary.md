@@ -22,6 +22,30 @@ Core Concepts:
     - history / data
     - creation of new data
 
+    // So to recap...
+    // The bank gets to print money out of thin air, controls the access to 
+    // the movement and informatino of that money, and has minimal downside
+    // when things go wrong due to bailouts and insurance.
+    // The users trust the bank, are only allows as much money as they can 
+    // figure out how to convince the bank or anyone else to give them, and
+    // are the ones who are really screwed if things go wrong.
+    // Seems a little odd that such an essential piece of modern living is so
+    // opaque and fragile 🤔
+    // Can we do better? Maybe! Some people have some ideas on how to at least
+    // make this process a little more secure. In the next chapter we'll explore
+    // how we can change the architecture of the system to make it better for
+    // users. This includes:
+    // - giving everyone on the network the option to verify TX to make sure no
+    //   one is cheating
+    // - creating account IDs and passwords via cryptography so that they are
+    //   more useful and not all located in a centralized database
+    // - because accounts are not in a centralized database the user controls
+    //   the account, and as long as the network is operational, the user's
+    //   account is too. Just like if your bank went under
+    //   (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be
+    //   gone, if the P2P network you're on goes under same deal. 
+    // Let's see how that works!
+
 <br>
 
 ## Video
@@ -76,7 +100,8 @@ struct TX {
 // Central Payment Processor
 impl State {
     
-    // USEFUL FUNCTIONS
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
     
     // Turn stuff into &[u8] slice
     pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
@@ -109,7 +134,7 @@ impl State {
     }
     
     
-    // INIT STATE
+    /// FUNCTION TO INIT THE STATE ///
     
     // Create a new state
     pub fn new_state() -> State {
@@ -127,7 +152,7 @@ impl State {
         new
     }
     
-    // ACCOUNT STUFF
+    /// ACCOUNT FUNCTIONS ///
     
     // Create a new account
     pub fn new_account(&mut self) {
@@ -191,18 +216,9 @@ impl State {
         self.frozen_accounts.insert(account.0, account.1);
     }
     
-    // TX STUFF
     
-    // Add funds to an account
-    pub fn add_funds(&mut self,
-                     account_id: String,
-                     amount: i32) {
+    /// TX FUNCTIONS ///
         
-        if let Some(x) = self.accounts.get_mut(&account_id) {
-            x.balance += amount;
-        }
-    }
-    
     // Create a new bank TX
     pub fn new_bank_tx(&mut self,
                        receiver: String,
@@ -253,6 +269,9 @@ impl State {
         
         self.pending_tx.push(tx);
     }
+
+    
+    /// STATE TRANSITION FUNCTIONS ///
 
     // Verify pending user TX
     pub fn process_pending_tx(&mut self) {
@@ -323,6 +342,16 @@ impl State {
         // clear pending tx
         self.pending_tx = Vec::new();
     }
+    
+    // Add funds to an account
+    pub fn add_funds(&mut self,
+                     account_id: String,
+                     amount: i32) {
+        
+        if let Some(x) = self.accounts.get_mut(&account_id) {
+            x.balance += amount;
+        }
+    }
 }
 
 
@@ -384,30 +413,6 @@ fn main() {
     // Try checking the balance of a frozen account
     println!("\n/// Checking Frozen Account ///");
     bank.print_account_info(test_account0.clone().to_string());
-    
-    // So to recap...
-    // The bank gets to print money out of thin air, controls the access to 
-    // the movement and informatino of that money, and has minimal downside
-    // when things go wrong due to bailouts and insurance.
-    // The users trust the bank, are only allows as much money as they can 
-    // figure out how to convince the bank or anyone else to give them, and
-    // are the ones who are really screwed if things go wrong.
-    // Seems a little odd that such an essential piece of modern living is so
-    // opaque and fragile 🤔
-    // Can we do better? Maybe! Some people have some ideas on how to at least
-    // make this process a little more secure. In the next chapter we'll explore
-    // how we can change the architecture of the system to make it better for
-    // users. This includes:
-    // - giving everyone on the network the option to verify TX to make sure no
-    //   one is cheating
-    // - creating account IDs and passwords via cryptography so that they are
-    //   more useful and not all located in a centralized database
-    // - because accounts are not in a centralized database the user controls
-    //   the account, and as long as the network is operational, the user's
-    //   account is too. Just like if your bank went under
-    //   (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be
-    //   gone, if the P2P network you're on goes under same deal. 
-    // Let's see how that works!
 }
 ```
 
