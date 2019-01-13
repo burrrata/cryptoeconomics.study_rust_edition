@@ -1,6 +1,6 @@
 <div align="center">
     <div align="center">
-        <img src="intro.png" alt="Rusty Ethereum">  
+        <img src="intro.png">  
     </div>
     <h1 align="center">
         Welcome!
