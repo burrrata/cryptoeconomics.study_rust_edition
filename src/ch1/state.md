@@ -12,9 +12,7 @@
     </p>
 </div>
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:
 - money,
@@ -25,17 +23,13 @@ This data is most often stored in centralized databases. The "state" of these da
 
 In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data. 
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
 <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 ```rust, editable
 // This is live editable Rust code. That means 
@@ -183,15 +177,11 @@ fn main() {
 }
 ```
 
-<br>
-<br>
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - https://en.wikipedia.org/wiki/Database
 - https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database
 - https://github.com/rust-unofficial/awesome-rust#database
 
-<br>
-<br>
-<br>
+<br><br><br>
