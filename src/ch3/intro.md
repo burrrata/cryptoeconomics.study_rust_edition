@@ -1,6 +1,6 @@
 <div align="center">
     <p align="center">
-        <img src="intro.jpg" alt="Happiness">
+        <img src="intro.jpg">
     </p>
     <h1 align="center">
         Minimal Viable Proof of Stake "Blockchain"
