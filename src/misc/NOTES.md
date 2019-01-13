@@ -6,21 +6,27 @@
 ## Questions
 
 How important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
-- it would be so lit to replicate something like Polkadot within a fun tutorial!
-- https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
-- 2.2. Previous work: https://polkadot.network/PolkaDotPaper.pdf
-- https://github.com/paritytech/polkadot
+
 
 <br>
 
 ## TODO
 
 ### ASAP
-- Less Cloning, More Borrowing: update code to use borrows and lifetimes rather than cloning everything.
-- Code Commentary: reorganize so that code commentary is in the sections, but not in the final demo. The final demo is for exploring how the pieces all interact together, not explaining individual parts.
-- References: white/beige/yellow papers as well as non Ethereum references and libraries.
-- External crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+Less Cloning, More Borrowing: 
+- update code to use borrows and lifetimes rather than cloning everything.
 
+Code Commentary:
+- reorganize so that code commentary is in the sections, but not in the final demo. The final demo is for exploring how the pieces all interact together, not explaining individual parts.
+
+References:
+- white/beige/yellow papers as well as non Ethereum references and libraries.
+
+External crates in mdBook:
+- https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+
+<br>
+<hr>
 <br>
 
 ### Ch 1: Centralized Database Manager
@@ -60,6 +66,11 @@ How important is it to build in concurrent threads to simulate network activity 
 - scale
 - patricia tries
 - etc...
+
+It would be so lit to replicate something like Polkadot within a fun tutorial!
+- https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux
+- 2.2. Previous work: https://polkadot.network/PolkaDotPaper.pdf
+- https://github.com/paritytech/polkadot
 
 <br>
 
