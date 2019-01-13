@@ -3,7 +3,7 @@
         <img src="intro.jpg" alt="Happiness">
     </p>
     <h1 align="center">
-        Proof of Stake
+        Minimal Viable Proof of Stake "Blockchain"
     </h1>
     <p align="center">
         Because you can't eat money.
