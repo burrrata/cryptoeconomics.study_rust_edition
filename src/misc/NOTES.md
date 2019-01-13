@@ -95,12 +95,6 @@ mdBook says nothing about adding depdancies to external crates
 
 <br>
 
-# Generalizable Data Structures
-- focus LESS on payments, and MORE on data and access to computation, information, identity, social networks, and services.
-
-While banks or central operators can change the data in our bank accounts, they can also change our ability to communicate with our friends or access goods and services on social media platforms and marketplaces. When we move to more generalizable and abstract state machines (EVM) it's really about data and not money. Like the intro says: he who controls the data controls the world. Putting this back in the hands of users is the only way to do that. World peace comes about one person at a time, and world order comes about when power is evenly distributed. That's why this tutorial exists so that more people can learn about this stuff! Would be good to emphasize that :)
-
-
 # Ideas From C.S
 - https://github.com/K-Ho/code/tree/networkVisualization
 - https://docs.google.com/document/d/1R85zczC1-nklLXEFx-dZfQdlZexRAk8S9G9Hc3Zjkx4/edit
