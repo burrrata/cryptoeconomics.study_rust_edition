@@ -3,16 +3,26 @@
 </h1>
 <br>
 
-# Open Questions
 
-How important is it to build in concurrent threads to simulate network activity vs having everything in a main() function?
-- https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
 <br>
 
 # TODO
+- in order of operations
 
-### ASAP
+Ch intros and code summaries
+- create intro that explains the topic/goal
+- create code summary shows what we're doing
+- clean up code so that it's readable/usable
+- copy code sections into book sections and add comments
+
+Current
+- clean up chapters 1 & 2
+- build chapter 3 code
+- THEN go back and do the sections
+
+
+
 Less Cloning, More Borrowing: 
 - update code to use borrows and lifetimes rather than cloning everything.
 
@@ -70,6 +80,13 @@ People to reach out to once the first draft is ready
 - r/cryptoeconomics
 - TWIE newsletter
 - other crypto newsletters
+
+<br>
+
+# Stretch Goal
+
+Build in concurrent threads to simulate network activity and forks rather than having everything in a main() function
+- https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
 <br>
 
