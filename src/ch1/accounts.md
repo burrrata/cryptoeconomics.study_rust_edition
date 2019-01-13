@@ -1,6 +1,14 @@
-<h1 align="center">
-    Accounts: the stuff you care about.
-</h1>
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        Accounts
+    </h1>
+    <p align="center">
+        The stuff you care about.
+    </p>
+</div>
 
 <br>
 
