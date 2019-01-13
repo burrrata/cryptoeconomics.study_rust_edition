@@ -1,6 +1,6 @@
 <div align="center">
     <div align="center">
-        <img src="neurons.jpg" alt="neurons">  
+        <img src="intro.jpg" alt="neurons">  
     </div>
     <h1 align="center">
         Minimal Viable Proof of Work "Blockchain"
