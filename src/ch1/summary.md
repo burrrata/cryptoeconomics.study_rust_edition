@@ -1,6 +1,14 @@
-<h1 align="center">
-    Centralized Payment Processor: bringing it all together.
-</h1>
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        Centralized Payment Processor
+    </h1>
+    <p align="center">
+        If it's not broke don't fix it?
+    </p>
+</div>
 
 <br>
 
