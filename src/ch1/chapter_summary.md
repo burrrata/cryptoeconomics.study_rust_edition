@@ -8,7 +8,7 @@
         Centralized Payment Processor
     </h1>
     <p align="center">
-        If it's not broke don't fix it?
+        Feel the power.
     </p>
 </div>
 
