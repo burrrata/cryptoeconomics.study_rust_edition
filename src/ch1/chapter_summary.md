@@ -210,24 +210,17 @@ impl State {
     pub fn new_bank_tx(&mut self,
                        receiver: String,
                        amount: i32) {
-        
-        let tx = TX {
-            sender: self.accounts.get(&bank_debt).unwrap(),
-            receiver: receiver,
-            amount: amount,
-        };
 
-        // Tx is legit by default because it's from the bank so let's process it.
-        // decrease the balance from sender's account
-        self.accounts
-            .get_mut(&tx.sender)
-            .unwrap()
-            .balance -= tx.amount;
-        // increase sender's nonce to prevent replay glitches
-        self.accounts
-            .get_mut(&tx.sender)
-            .unwrap()
-            .nonce += 1;
+        // Tx is legit by default because it's from the bank so let's just process it.
+        let tx = TX {
+            sender: "bank".to_string(),
+            sender_password: 0,
+            sender_nonce: self.accounts.get("bank").unwrap().nonce,
+            receiver: receiver,
+            amount: amount, 
+        };
+        // decrease the balance in the bank's debt account
+        self.debt_pool -= tx.amount;
         // increase the balance of the reciever's account
         self.accounts
             .get_mut(&tx.receiver)
@@ -366,21 +359,20 @@ fn main() {
     println!("\n/// Added Funds To Accounts ///");
     println!("{:#?}", bank);
 
-    // Simulate some TX
+    // Let's make some TX requests
     for i in 0..10 {
         
         let sender = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
         let receiver = &bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
         
         if sender != receiver {
-        
-            bank.new_bank_tx(sender.to_string(),
+            bank.new_user_tx(sender.to_string(),
                         bank.accounts.get(sender).unwrap().password,
                         bank.accounts.get(sender).unwrap().nonce,
                         receiver.to_string(),
                         thread_rng().gen_range(100, 1000))
         }
-    }
+    } 
     println!("\n/// Simulated Some TX ///");
     println!("{:#?}", bank);
     
