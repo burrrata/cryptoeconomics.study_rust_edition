@@ -1,3 +1,5 @@
+<br>
+
 <p align="center">
     <img src="donations.png">  
 </p>
@@ -5,7 +7,7 @@
   The best things in life are free, but for everthing else...
 </p>
 
-<br>
+<br><br><br>
 
 <p>
   I hope you liked this book/tutorial and got some value out of it! I'll keep building learning tools and resources as long as I can, but it takes a lot of work and I'm doing it for free. If you feel so inspired please consider donating to support the ongoing maintenance and development of this and future books :)
@@ -40,7 +42,9 @@ PIVX:
 
 and of courrse if you'd like to donate with a token that is not represented here just let me know and I'll add it. 
 
-<br>
+<br><br><br>
 
 ### Also, if you know of a grant program that you think would be a good fit for this project, please reach out and let me know!
 - rustycryptoeconomics@protonmail.com
+
+<br><br><br>
