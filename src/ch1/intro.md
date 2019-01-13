@@ -1,6 +1,6 @@
 <div align="center">
     <div align="center">
-        <img src="fun.png" alt="fun">  
+        <img src="intro.png" alt="fun">  
     </div>
     <h1 align="center">
         Ch1: Centralized Database Managers
