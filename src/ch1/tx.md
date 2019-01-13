@@ -190,30 +190,66 @@ impl State {
     
         self.frozen_accounts.insert(account.0, account.1);
     }
-    
-    // TX STUFF
-    
-    // Add funds to an account
-    pub fn add_funds(&mut self,
-                     account_id: String,
-                     amount: i32) {
-        
-        // A very important function for any private and seldom audited
-        // for-profit enterprise. What could go wrong?
-        // https://en.wikipedia.org/wiki/Enron_scandal
-        
-        if let Some(x) = self.accounts.get_mut(&account_id) {
-            x.balance += amount;
-        }
-    }
 
-    // Create a new TX
+    /// TX STUFF ///
+    
+    // Create a new TX for the bank
+    pub fn new_bank_tx(&mut self,
+                       receiver: String,
+                       amount: i32) {
+        
+        // When banks give people loans or credit it's actually processed
+        // as debt which banks can then trade amongst each other at a market
+        // rate based on how likely the debtor is likely to pay back in full
+        // Yes you heard this right, they print money and profit from doing so.
+        // Carpenters make cabinets, comedians make jokes, banks make money,
+        // literaly...
+        // Fun Fact: debt on a banks balance sheet is an ASSET to the bank and
+        // not a liability. It's a liability to users, but banks can buy, sell, 
+        // and trade this debt as a financial product. One of a banks primary 
+        // products is loans, but as a user of a bank you're actually the product 
+        // they're selling to other banks and investment funds. Kind of like how 
+        // with social media platforms access to the users attention is the 
+        // product that they sell to 3rd party advertisers.
+        // https://en.wikipedia.org/wiki/Fractional-reserve_banking
+        let tx = TX {
+            sender: String::from("bank"),
+            sender_password: 0,
+            sender_nonce: self.accounts.get("bank").unwrap().nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+
+        // Tx is legit by default because it's from the bank so let's process it.
+        // decrease the balance from sender's account
+        self.accounts
+            .get_mut(&tx.sender)
+            .unwrap()
+            .balance -= tx.amount;
+        // increase sender's nonce to prevent replay glitches
+        self.accounts
+            .get_mut(&tx.sender)
+            .unwrap()
+            .nonce += 1;
+        // increase the balance of the reciever's account
+        self.accounts
+            .get_mut(&tx.receiver)
+            .unwrap()
+            .balance += tx.amount;
+            
+        // add processed TX to history
+        self.history.push(tx.clone());        
+    }
+    
+    // Create a new TX for a bank user
     pub fn new_user_tx(&mut self,
                        sender: String,
                        sender_password: i32,
                        sender_nonce: i32,
                        receiver: String,
                        amount: i32) {
+        
+        // This is really more of a TX request, but that's ok
         
         let tx = TX {
             sender: sender,
@@ -229,17 +265,7 @@ impl State {
 
 
 fn main() {
-    
-    // Note that every function that starts with
-    // bank.function() is a function that only the
-    // centralized operator can perform. Users can
-    // submit TX for review, but ultimately they 
-    // have no control. Same for viewing their 
-    // account history or controlling if/when
-    // their funds are accessible. Users can
-    // make requests, but the central operator
-    // makes the rules.
-    
+
     // Init bank state
     let mut bank = State::new_state();
     println!("\n/// Initialized Bank State ///");
