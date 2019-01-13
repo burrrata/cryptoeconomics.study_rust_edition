@@ -1,3 +1,5 @@
+<br>
+
 <div align="center">
     <p align="center">
         <img src="TBD" alt="TBD">
@@ -10,7 +12,7 @@
     </p>
 </div>
 
-<br>
+<br><br><br>
 
 Core Concepts: 
 - When you use a centralized database you trust that they have the correct state.
@@ -20,7 +22,7 @@ Core Concepts:
     - history / data
     - creation of new data
 
-<br>
+<br><br><br>
 
 So to recap...
 The bank gets to print money out of thin air, controls the access to the movement and informatino of that money, and has minimal downside when things go wrong due to bailouts and insurance. The users trust the bank, are only allows as much money as they can figure out how to convince the bank or anyone else to give them, and are the ones who are really screwed if things go wrong.
@@ -32,9 +34,7 @@ Seems a little odd that such an essential piece of modern living is so opaque an
 
 Let's go to chapter 2 and see how that works!
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/ckzi8iqGilE/0.jpg)](https://www.youtube.com/watch?v=ckzi8iqGilE)
 
@@ -42,9 +42,7 @@ Let's go to chapter 2 and see how that works!
     <a href="https://cryptoeconomics.study/lectures/chapter-01-5.html">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
 </p>
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 Here is the code without extra commentary so you can explore and see how all the parts interact. Go ahead and try to modify or play with it :)
 
@@ -405,9 +403,9 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - TBD
 
-<br>
+<br><br><br>
