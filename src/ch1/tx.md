@@ -1,3 +1,5 @@
+<br>
+
 <div align="center">
     <p align="center">
         <img src="TBD" alt="TBD">
@@ -10,15 +12,13 @@
     </p>
 </div>
 
-<br>
+<br><br><br>
 
 Core Concept: tx is a way to request a state change, but...
 - the state transition function is how we make that state change
 - the central operator controls the state and thus all state changes including freezing accounts or printing money
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 [![Cryptoeconomics - 1.5 - Properties of Centralized Systems](https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg)](https://www.youtube.com/watch?v=XIsn8-5Xekc)
 
@@ -26,17 +26,13 @@ Core Concept: tx is a way to request a state change, but...
     <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
 </p>
 
-<br>
-
 [![Cryptoeconomics - 1.3 - Replay Protection](https://img.youtube.com/vi/j7Mbx8laZwY/0.jpg)](https://www.youtube.com/watch?v=j7Mbx8laZwY)
 
 <p>
     <a href="https://cryptoeconomics.study/lectures/chapter-01-3.html">Cryptoeconomics - 1.3 - Replay Protection</a>.
 </p>
 
-<br>
-<hr>
-<br>
+<br><br><br>
 
 ```rust, ignore
 
@@ -318,9 +314,9 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
 ## Resources To Learn More
 - TBD
 
-<br>
+<br><br><br>
