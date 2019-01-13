@@ -114,9 +114,6 @@ impl State {
     // Create a new state
     pub fn new_state() -> State {
     
-        // Ah... a blank canvas. So clean. So pure. So beautiful.
-        // Let the games begin.
-    
         let mut new = State {
             accounts: HashMap::new(),
             frozen_accounts: HashMap::new(),
@@ -135,16 +132,6 @@ impl State {
     // Create a new account
     pub fn new_account(&mut self) {
         
-        // Notice how the only thing tying the account_id to the password
-        // is that the bank stores them in the same database. If the bank
-        // were to change this by accident, or a hacker were to get access to
-        // that data via hacking the bank directly or a relevant 3rd party...
-        // well... life would get very interesting very fast. Mostly for you 
-        // though because the banks are insured so for them it's a write-off
-        // that affects them minimally. 
-        // https://en.wikipedia.org/wiki/Write-off
-        // https://en.wikipedia.org/wiki/Equifax
-        
         let account_id = State::hash(&thread_rng().gen_range(0, 1000000));
         let account_data = Account {
             password: thread_rng().gen_range(0, 1000000),
@@ -159,17 +146,7 @@ impl State {
     // Create multiple new accounts
     pub fn new_accounts(&mut self,
                         num_accounts: i32) {
-        
-        // Sock puppets ahoy!
-        // Good thing banks are honest and would never create accounts to
-        // simulate activity when there was none. Even better that crypto
-        // exchanges are even more honest because, well... crypto! It's 
-        // different this time right?
-        // https://en.wikipedia.org/wiki/Sockpuppet_(Internet)
-        // https://en.wikipedia.org/wiki/Wash_trade
-        // https://medium.com/@bitfinexed/wash-trading-bitcoin-how-bitfinex-benefits-from-fraudulent-trading-8bd66be73215
-        // https://medium.com/@bitfinexed/the-tether-truth-machine-the-wheels-of-justice-turn-slowly-but-grind-exceedingly-finely-8e3bd72ad011
-        
+
         for i in 0..num_accounts {
             self.new_account()
         }
@@ -178,8 +155,6 @@ impl State {
     // Print account info
     pub fn print_account_info(&mut self,
                          account_id: String) {
-        
-        // If it's written down it must be true.
         
         if let Some(x) = self.accounts.get(&account_id) {
             println!("Your Account:\n{:#?}", self.accounts.get(&account_id).unwrap());
@@ -190,11 +165,6 @@ impl State {
     // Print account history
     pub fn print_account_history(&mut self,
                                  account_id: String,) {
-        
-        // Assuming the bank's records are accurate and up to date, which
-        // we assume they are, probably, but we don't know ¯\_(ツ)_/¯ 
-        // https://www.bbc.com/news/business-43985233
-        // https://www.cnet.com/news/commonwealth-bank-of-australia-financial-data-breach-20-million-accounts/
         
         let mut account_history = Vec::new();
         let list = self.history.clone();
@@ -216,8 +186,6 @@ impl State {
     pub fn freeze_account(&mut self,
                           account_id: String) {
         
-        // The end of your life savings are just a click away...
-        
         let account = self.accounts.remove_entry(&account_id).unwrap();
     
         self.frozen_accounts.insert(account.0, account.1);
@@ -230,10 +198,6 @@ impl State {
                      account_id: String,
                      amount: i32) {
         
-        // A very important function for any private and seldom audited
-        // for-profit enterprise. What could go wrong?
-        // https://en.wikipedia.org/wiki/Enron_scandal
-        
         if let Some(x) = self.accounts.get_mut(&account_id) {
             x.balance += amount;
         }
@@ -244,20 +208,6 @@ impl State {
                        receiver: String,
                        amount: i32) {
         
-        // When banks give people loans or credit it's actually processed
-        // as debt which banks can then trade amongst each other at a market
-        // rate based on how likely the debtor is likely to pay back in full
-        // Yes you heard this right, they print money and profit from doing so.
-        // Carpenters make cabinets, comedians make jokes, banks make money,
-        // literaly...
-        // Fun Fact: debt on a banks balance sheet is an ASSET to the bank and
-        // not a liability. It's a liability to users, but banks can buy, sell, 
-        // and trade this debt as a financial product. One of a banks primary 
-        // products is loans, but as a user of a bank you're actually the product 
-        // they're selling to other banks and investment funds. Kind of like how 
-        // with social media platforms access to the users attention is the 
-        // product that they sell to 3rd party advertisers.
-        // https://en.wikipedia.org/wiki/Fractional-reserve_banking
         let tx = TX {
             sender: self.accounts.get(&bank_debt).unwrap(),
             receiver: receiver,
@@ -305,7 +255,6 @@ impl State {
     }
 
     // Verify pending user TX
-    // Notice how the bank (or any hacker) gets to bypass this check
     pub fn process_pending_tx(&mut self) {
         
         // check pending tx
