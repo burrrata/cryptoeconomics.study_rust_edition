@@ -5,7 +5,9 @@
 
 ## Questions
 
-Does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS and save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? Maybe have chapters 1-3 be minimal viable blockchain demos, and then do separate books for Ethereum, Substrate, or other systems/networks? So... is that basically building Substrate then instead of Ethereum?
+Does it make more sense to keep chapter 3 focused ONLY on what's neccessary to go form PoW to PoS, and then save upgrades that are not essential to that process (like RLP, ECDSA, and Patricia Tries) for later chapters? 
+- chapters 1-3: minimal viable blockchain demos
+- chapters 4+: upgrades towards Ethereum, Substrate, or other systems/networks
 - https://www.parity.io/substrate/
 - https://substrate.readme.io/docs
 - https://github.com/paritytech/substrate
@@ -20,10 +22,11 @@ How important is it to build in concurrent threads to simulate network activity 
 
 ## TODO
 
-### Immediate
-- reorganize chapters so that code commentary is in the sections, but not in the final demo. (to hopefully make it easier to use, explore, and reason about the code)
-- read white/beige/yellow papers to sketch out the framework for chapters 1, 2, and 3 BEFORE writing code
-- external crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
+### ASAP
+- Less Cloning, More Borrowing: update code to use borrows and lifetimes rather than cloning everything.
+- Code Commentary: reorganize so that code commentary is in the sections, but not in the final demo. The final demo is for exploring how the pieces all interact together, not explaining individual parts.
+- References: white/beige/yellow papers as well as non Ethereum references and libraries.
+- External crates in mdBook: https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
 <br>
 
