@@ -1,17 +1,23 @@
-<h1 align="center">
-    Crypto & Trust
-</h1>
-<p align="center">
-    Why they matter.
-</p>
 <br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        Crypto & Trust
+    </h1>
+    <p align="center">
+        How we go from a b2c centralized database to a p2p decentralized database.
+    </p>
+</div>
+
+<br><br><br>
 
 Core Concepts:
-- randomness and why it's essential in key generation
-- strong crypto and why it's essential as a foundation of trust (and security)
-- hash functions and why they're usefu? (rather than dumping it all in the PoW section)
+- cryptographic hardness (a foundation of trust and security)
+- randomness (key generation)
+- hash functions (data on lock)
 
 ### Computational infeasibility:
 A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.
@@ -43,9 +49,8 @@ Heninger says in her blog that the bad keys occurred almost entirely in embedded
 
 Strong random number generation is important throughout every phase of public key cryptography. For instance, if a weak generator is used for the symmetric keys that are being distributed by RSA, then an eavesdropper could bypass RSA and guess the symmetric keys directly.
 
-<br>
+<br><br><br>
 
-## Code
 If you want to explore this code, copy the commented part into the Rust Playground:
 - https://play.rust-lang.org
 
@@ -71,9 +76,9 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
-# Resources
+## Resources & References
 
 ### Ethereum Wiki Glossary
 - https://github.com/ethereum/wiki/wiki/Glossary
@@ -93,4 +98,4 @@ fn main() {
 - https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
 - https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
 
-<br>
+<br><br><br>
