@@ -1,12 +1,18 @@
-<h1 align="center">
-    State Transitions
-</h1>
-<p align="center">
-    The proof (of work) is in the pudding.
-</p>
 <br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        State Transitions
+    </h1>
+    <p align="center">
+        The proof is in the pudding.
+    </p>
+</div>
+
+<br><br><br>
 
 Goal
 - Upgrade our state transition function from a consensus model of "because the central operator says so" to "because someone did the work and proved that they earned the right to make these changes for the community".
@@ -42,7 +48,7 @@ A stale is a block that is created when there is already another block with the 
 ### Fork:
 A situation where two blocks are generated pointing to the same block as their parent, and some portion of miners see one block first and some see the other. This may lead to two blockchains growing at the same time. Generally, it is mathematically near-certain that a fork will resolve itself within four blocks as miners on one chain will eventually get lucky and that chain will grow longer and all miners switch to it; however, forks may last longer if miners disagree on whether or not a particular block is valid.
 
-<br>
+<br><br><br>
 
 ## Videos
 
@@ -52,9 +58,7 @@ A situation where two blocks are generated pointing to the same block as their p
     <a href="https://cryptoeconomics.study/lectures/chapter-01-1.html">Cryptoeconomics - 1.1 - Hashes and Signatures</a>.
 </p>
 
-<br>
-
-## Code
+<br><br><br>
 
 Code Resources:
 - https://github.com/cryptoeconomics-study/code/blob/master/c3_ProofOfWork/proofOfWork.js
@@ -165,9 +169,9 @@ fn main() {
 }
 ```
 
-<br>
+<br><br><br>
 
-## Resources
+### But wait... there's more
 
 Hashing and Merkle Trees
 - https://en.wikipedia.org/wiki/Merkle_tree
