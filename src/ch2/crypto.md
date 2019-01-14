@@ -19,6 +19,8 @@ Core Concepts:
 - randomness (key generation)
 - cryptographic hash functions (merkle tries)
 
+<br><br><br>
+
 ### Computational infeasibility:
 A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.
 
