@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="intro_blockchain.png">  
+        <img src="intro_blockchain.jpg">  
     </p>
     <br>
     <h1 align="center">
