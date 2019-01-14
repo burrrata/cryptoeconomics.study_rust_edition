@@ -41,7 +41,7 @@ Let's start with a few foundational concepts that will help us get started :)
 - Why should we care? Well we're actually going to use random data to create accounts in such a way that only the person who created the account can use it to send transactions or sign data. We're also going to use random data to create a random string of characters that people have to guess in order to earn a reward and create the next state transition. The longest chain of valid state transitions is the agreed upon valid state, and since people are competing to earn the rewards that come with processing valid state transitions, anyone who wants to spam or overwrite the network would have to solve more puzzles faster than everyone else competing to do so, which on networks like Bitcoin or Ethereum is many.   
 
 ```rust, ignore
-// note you need to copypasta this to the Rust Playground to run it
+// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
 // - https://play.rust-lang.org
 
 extern crate rand;
@@ -68,6 +68,56 @@ fn main() {
 ### Hash:
 - A hash function (or hash algorithm) is a process by which a piece of data of arbitrary size (could be anything; a piece of text, a picture, or even a list of other hashes) is processed into a small piece of data (usually 32 bytes) which looks completely random, and from which no meaningful data can be recovered about the document, but which has the important property that the result of hashing one particular document is always the same. Additionally, it is crucially important that it is computationally infeasible to find two documents that have the same hash. Generally, changing even one letter in a document will completely randomize the hash; for example, the SHA3 hash of "Saturday" is c38bbc8e93c09f6ed3fe39b5135da91ad1a99d397ef16948606cdcbd14929f9d, whereas the SHA3 hash of Caturday is b4013c0eed56d5a0b448b02ec1d10dd18c1b3832068fbbdc65b98fa9b14b6dbf. Hashes are usually used as a way of creating a globally agreed-upon identifier for a particular document that cannot be forged.
 - Why should we care? Well we're acually going us a hash function to create the random string of characters that need to be guessed in order to earn a reward and create the next state transition. We're also going to use a hash function to store the history of all those state transitions. Since every hash is completely deterministic, if someone were to change 1 datapoint in the past, it would literally change every piece of data that came after it. This means that in order to cheat and arbitrarily rewrite the state someone would have to re-solve all the puzzles after that change, and do so faster than everyone else working on the current puzzles. The more people are working to solve puzzles on the network the harder someone who wants to cheat would have to work as well. This means that the security of the network is tied to the amount of people working to earn rewards by creating valid state transitions, which is often tied to the monetary value of those rewards, which for networks like Bitcoin or Ethereum is generally quite high. 
+
+```rust, ignore
+// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+// Turn Arbitrary Stuff Into &[u8] Slice
+pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::<T>(),
+    )
+}
+
+// Hash &[u8] Into Hex String
+pub fn hash_u8(stuff: &[u8]) -> String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!("{:#X}", digest);
+        
+    hex_digest
+}    
+
+// Takes in stuff
+// Turns it to a u8 slice
+// Hashes that slice into a hex string
+pub fn hash_stuff<T>(stuff: &T) -> String {
+    
+    let u8_stuff = unsafe {
+        any_as_u8_slice(stuff)
+    };
+    let hash_of_stuff = hash_u8(u8_stuff);
+    
+    hash_of_stuff
+}
+
+fn main() {
+    
+    let my_data = String::from("stuff and stuff");
+    println!("my data: {}", my_data);
+    
+    let my_hash = hash_stuff(&my_data);
+    println!("my hash: {}", my_hash);
+}
+```
+
 
 ### Merkle Trees:
 - A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the "root" or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a "tree" in that the "root" is a single hash, but there's lots of things ("leaves") that get hashed together ("branches"), and then hashed together again and again until it's all been hashed together and there's a single hash "root". The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).
