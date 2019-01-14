@@ -409,7 +409,7 @@ fn main() {
 
 <br><br><br>
 
-## Resources To Learn More
-- TBD
+### But wait... there's more
+- https://en.wikipedia.org/wiki/Transition_system
 
 <br><br><br>
