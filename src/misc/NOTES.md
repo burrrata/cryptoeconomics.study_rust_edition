@@ -1,20 +1,18 @@
 <h1 align="center">
     NOTES
 </h1>
-<br>
-
-
-
-<br>
+<br><br><br>
 
 # TODO
-- in order of operations
 
 ### Explore New Resources
 - everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
 
 Code Tutorials
 - https://github.com/justinmoon/digital-cash
+- BUIDL Bootcamp: https://www.youtube.com/playlist?list=PLQ56Yiu6lEaxIPm9-GB5M393CmtYRZFGY
+
+<br>
 
 # Other TODO
 
