@@ -26,15 +26,20 @@ All in all this accomplishes something that was not possible before: a shared st
 ### Idea To Add
 - because accounts are not in a centralized database the user controls the account, and as long as the network is operational, the user's account is too. Just like if your bank went under (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be gone, if the P2P network you're on goes under same deal. 
 
-## Code
+<br><br><br>
 
 ```rust
 use std::collections::HashMap;
 
-// First we're going to create a struct that will hold the important state data we want to keep our database functioning:
-// - accounts: this is where people's money and addresses live
-// - pending_tx: a pool of pending tx that have not yet been verified as legit or not
-// - chain: this is where TX that have been verified and processed are stored. Think of it as the history, but rather than a bank telling you what your balance is, you can check the history to make sure everything is legit. 
+// First we're going to create a struct that will hold the important 
+// state data we want to keep our database functioning:
+//  - accounts: this is where people's money and addresses live
+//  - pending_tx: a pool of pending tx that have not yet been verified 
+//    as legit or not
+//  - chain: this is where TX that have been verified and processed are 
+//    stored. Think of it as the history, but rather than a bank telling
+//    you what your balance is, you can check the history to make sure 
+//    everything is legit. 
 
 #[derive(Debug)]
 struct State {
@@ -45,9 +50,10 @@ struct State {
 }
 
 // As promised, accounts have a balance.
-// They also have a nonce which is used to add a unique 
-// serial number to every tx and prevent duplicates from
-// being processed. 
+// Accounts also have a nonce which is a number that
+// gets incremented with every valid transaction sent.
+// The nonce is added to every tx and this helps prevent
+// duplicates from being processed. 
 #[derive(Debug, Clone)]
 struct Account {
     balance: f32,
