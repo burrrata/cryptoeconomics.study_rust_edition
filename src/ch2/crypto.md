@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="TBD" alt="TBD">
+        <img src="crypto.png">
     </p>
     <h1 align="center">
         Crypto & Trust
