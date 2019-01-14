@@ -8,7 +8,7 @@
         Accounts
     </h1>
     <p align="center">
-        The stuff you care about.
+        You and your stuff.
     </p>
 </div>
 
