@@ -29,7 +29,7 @@ Let's start with a few foundational concepts that will help us get started :)
 
 <br>
 
-### Computational Infeasibility:
+### Computational Infeasibility (aka cryptographic hardness)
 - A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. 
 - Why should we care? Well, without knowing the computational feasibility or infeasibility of a problem we cannot make any claims that people can't cheat on our network by overwriting data or creating data without following the rules. Say for example I know the password to my account and I think that it's secure. If it takes you 3 days to randomly guess all the possible combinations of characters that my password might be, then it's really only secure as long as someone doesn't decide to take the time to figure it out. If it takes you 3 billion years to guess all the possible combinations though, then the story is quite different and I can rest assured that I'm not going to wake up one day and have all my data changed or stolen.
 
