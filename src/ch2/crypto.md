@@ -37,6 +37,7 @@ Let's start with a few foundational concepts that will help us get started :)
 // For example, pick any Ethereum address and try to guess the private key that unlocks it. Go ahead! 
 // https://www.myetherwallet.com/#send-transaction
 ```
+- https://en.wikipedia.org/wiki/Computational_hardness_assumption
 
 <br>
 
@@ -68,16 +69,12 @@ fn main() {
 // - https://crates.io/crates/rand
 // - https://rust-random.github.io/book/intro.html
 ```
-
-Rust Rand Book
-- https://rust-random.github.io/book/intro.html
-
 Ethereum Specific Randomness
 - https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
 - https://vitalik.ca/files/randomness.html
 - https://ethresear.ch/t/posw-random-beacon/1814
 
-Other Randomness Resources
+Random Randomness
 - https://blog.cloudflare.com/why-randomness-matters/
 - https://en.wikipedia.org/wiki/Entropy_(information_theory)
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Security_and_practical_considerations
