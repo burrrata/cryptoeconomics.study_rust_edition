@@ -45,9 +45,7 @@ A special kind of encryption where there is a process for generating two keys at
 ### Digital signature:
 A digital signing algorithm is a process by which a user can produce a short string of data called a "signature" of a document using a private key such that anyone with the corresponding public key, the signature and the document can verify that (1) the document was "signed" by the owner of that particular private key, and (2) the document was not changed after it was signed. Note that this differs from traditional signatures where you can scribble extra text onto a document after you sign it and there's no way to tell the difference; in a digital signature any change to the document will render the signature invalid.
 
-<br>
-
-## Code
+<br><br><br>
 
 This recreates the RSA style protocol explained in the [RSA wiki page](https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation), randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)
 
@@ -263,9 +261,10 @@ fn main() {
 }
 
 ```
-<br>
 
-## Resources
+<br><br><br>
+
+### Always Good To Get A Second Opinion
 
 Ethereum Wiki Glossary
 - https://github.com/ethereum/wiki/wiki/Glossary
