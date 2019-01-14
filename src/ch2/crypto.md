@@ -180,12 +180,6 @@ fn main() {
     }
 }
 ```
-<p align="center">
-    <img src="crypto_hash_tree.png">
-    <p>
-        An example of a binary hash tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
-    </p>
-</p>
 
 - https://en.wikipedia.org/wiki/Hash_function
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
@@ -195,8 +189,8 @@ fn main() {
 
 <br>
 
-### Merkle Trees
-- A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the "root" or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a "tree" in that the "root" is a single hash, but there's lots of things ("leaves") that get hashed together ("branches"), and then hashed together again and again until it's all been hashed together and there's a single hash "root". The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).
+### Hash Trees (aka Merkle trees)
+- The concept of a hash tree is often referred to as a "Merkle Tree", named after Ralph Merkle who patented the idea in 1979. A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the "root" or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a "tree" in that the "root" is a single hash, but there's lots of things ("leaves") that get hashed together ("branches"), and then hashed together again and again until it's all been hashed together and there's a single hash "root". The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).
 - Why should we care? This is how we're going to store the history of all state transitions. Everytime someone earns the right to create a new valid state transition they're going to look at all the pending transactions that were requested between the last state change. They'll then check that all the transaction requests are valid and update the state accordingly. They then publish the new state along with the transactions that were processed to get to that state, the hash of the previous state, and a hash of the new state combined with the previous state's hash. This is called a block, because it's a bunch of data that gets processed together in batches, or "blocks". Every time there's a state transition a new block is created, and since every block comes published with a hash of the previous blocks, they're all chained together such that if you change something in a past block you also change all the hashes of any blocks after that. This is why our p2p decentralized database is called a "blockchain". It's also called a merkle tree because the only way to get to that latest hash is to include all the previous data. The "root" is the latest hash, and the branches are all the data that went into that hash, and all the data that went into those hashes, and so on...
 
 ```rust, ignore
@@ -271,6 +265,14 @@ fn main() {
     
 }
 ```
+
+<p align="center">
+    <img src="crypto_hash_tree.png">
+    <p>
+        An example of a binary merkle tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
+    </p>
+</p>
+
 - https://en.wikipedia.org/wiki/Merkle_tree
 - https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
 - https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
