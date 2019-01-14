@@ -182,6 +182,8 @@ fn main() {
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use
 
+
+
 <br>
 
 ### Merkle Trees
@@ -261,6 +263,9 @@ fn main() {
 }
 ```
 - https://en.wikipedia.org/wiki/Merkle_tree
+- https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
+- https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
+- Merklize this! Merkle Trees & Patricia Tries: https://www.zeroknowledge.fm/57
 
 <br><br><br>
 
