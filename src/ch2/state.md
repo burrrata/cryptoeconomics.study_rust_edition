@@ -143,7 +143,9 @@ fn main() {
 }
 ```
 
-## Resources
+<br><br><br>
+
+### Resources & References
 
 The Ethereum Whitepaper: state machine sections
 - https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system
