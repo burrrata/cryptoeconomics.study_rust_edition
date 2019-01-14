@@ -25,17 +25,45 @@ It turns out, there is! It's called cryptography. Roughly speaking, cryptography
 
 In this section we'll cover some of the basic concepts in cryptography that allow us to do this, then throughout the chapter we'll apply those concepts to create the mechanisms that do that, and then in the chapter summary we'll have our own working network that we can use to simulate these things.  
 
-<br><br><br>
-
 Let's start with a few foundational concepts that will help us get started :)
 
 Computational Infeasibility:
 - A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. 
 - Why should we care? Well, without knowing the computational feasibility or infeasibility of a problem we cannot make any claims that people can't cheat on our network by overwriting data or creating data without following the rules. Say for example I know the password to my account and I think that it's secure. If it takes you 3 days to randomly guess all the possible combinations of characters that my password might be, then it's really only secure as long as someone doesn't decide to take the time to figure it out. If it takes you 3 billion years to guess all the possible combinations though, then the story is quite different and I can rest assured that I'm not going to wake up one day and have all my data changed or stolen.
 
+```rust, ignore
+// For example, pick any Ethereum address and try to guess the private key that unlocks it. Go ahead! 
+// https://www.myetherwallet.com/#send-transaction
+```
+
 Randomness:
 - Random data does not have a pattern. If one were to take a series of random data and cut it in half, then ask someone to guess the second half given the first, any possible values would be equally likely and no one could do better than a wild guess. In computer science and information theory, we often say that if a random string of data is long enough it is computationally infeasable to guess it, and thus it is secure against attacks.
 - Why should we care? Well we're actually going to use random data to create accounts in such a way that only the person who created the account can use it to send transactions or sign data. We're also going to use random data to create a random string of characters that people have to guess in order to earn a reward and create the next state transition. The longest chain of valid state transitions is the agreed upon valid state, and since people are competing to earn the rewards that come with processing valid state transitions, anyone who wants to spam or overwrite the network would have to solve more puzzles faster than everyone else competing to do so, which on networks like Bitcoin or Ethereum is many.   
+
+```rust, ignore
+// note you need to copypasta this to the Rust Playground to run it
+// - https://play.rust-lang.org
+
+extern crate rand;
+use rand::prelude::*;
+
+// generate a large random number
+fn key_gen() -> String {
+    
+    let rn: i32 = thread_rng().gen_range(100000, 1000000);
+    rn.to_string()
+}
+
+fn main() {
+
+    let key = key_gen();
+    println!("key: {}", key);
+}
+
+// if you want to learn more about how the rand crate works in Rust, they've got a great book and docs
+// - https://crates.io/crates/rand
+// - https://rust-random.github.io/book/intro.html
+```
 
 Hash:
 - A hash function (or hash algorithm) is a process by which a piece of data of arbitrary size (could be anything; a piece of text, a picture, or even a list of other hashes) is processed into a small piece of data (usually 32 bytes) which looks completely random, and from which no meaningful data can be recovered about the document, but which has the important property that the result of hashing one particular document is always the same. Additionally, it is crucially important that it is computationally infeasible to find two documents that have the same hash. Generally, changing even one letter in a document will completely randomize the hash; for example, the SHA3 hash of "Saturday" is c38bbc8e93c09f6ed3fe39b5135da91ad1a99d397ef16948606cdcbd14929f9d, whereas the SHA3 hash of Caturday is b4013c0eed56d5a0b448b02ec1d10dd18c1b3832068fbbdc65b98fa9b14b6dbf. Hashes are usually used as a way of creating a globally agreed-upon identifier for a particular document that cannot be forged.
@@ -45,33 +73,6 @@ Merkle Trees:
 - A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the "root" or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a "tree" in that the "root" is a single hash, but there's lots of things ("leaves") that get hashed together ("branches"), and then hashed together again and again until it's all been hashed together and there's a single hash "root". The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).
 - Why should we care? This is how we're going to store the history of all state transitions. Everytime someone earns the right to create a new valid state transition they're going to look at all the pending transactions that were requested between the last state change. They'll then check that all the transaction requests are valid and update the state accordingly. They then publish the new state along with the transactions that were processed to get to that state, the hash of the previous state, and a hash of the new state combined with the previous state's hash. This is called a block, because it's a bunch of data that gets processed together in batches, or "blocks". Every time there's a state transition a new block is created, and since every block comes published with a hash of the previous blocks, they're all chained together such that if you change something in a past block you also change all the hashes of any blocks after that. This is why our p2p decentralized database is called a "blockchain". It's also called a merkle tree because the only way to get to that latest hash is to include all the previous data. The "root" is the latest hash, and the branches are all the data that went into that hash, and all the data that went into those hashes, and so on...
 - Overall this is really just a good high level explanation of state transitions, but a really poor explanation of merkle trees. Maybe put it somewhere else?
-
-<br><br><br>
-
-If you want to explore this code, copy the commented part into the Rust Playground:
-- https://play.rust-lang.org
-
-```rust, ignore
-
-extern crate rand;
-
-use rand::prelude::*;
-
-// generate a new key
-fn key_gen() -> String {
-    
-    let rn: i32 = thread_rng().gen_range(100000, 1000000);
-    
-    rn.to_string()
-}
-
-fn main() {
-
-    let key = key_gen();
-    println!("key: {}", key);
-    
-}
-```
 
 <br><br><br>
 
