@@ -1,4 +1,4 @@
-# Engaging: people to talk to
+# Yay people...
 because sharing is caring
 
 ### Ethereum Research Forum
