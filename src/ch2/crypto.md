@@ -8,7 +8,9 @@
         Crypto & Trust
     </h1>
     <p align="center">
-        How do we go from trusting a b2c centralized database to trusting a p2p decentralized database, and why would we want to?
+        How do we go from trusting a b2c centralized database to trusting a p2p decentralized database?
+        <br>
+        and why would we want to?
     </p>
 </div>
 
