@@ -56,6 +56,7 @@
 - white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
 - beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
 - yellow: https://ethereum.github.io/yellowpaper/paper.pdf
+- Mastering Ethereum: https://github.com/ethereumbook
 - Ethereum Research: https://ethresear.ch
 - Ethereum Improvement Research: https://ethereum-magicians.org/
 - Reddit: https://www.reddit.com/r/ethereum/
