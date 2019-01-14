@@ -1,4 +1,4 @@
-# Learning: things to read
+# Knowledge is power.
 
 ### Cryptoeconomic Security / Game Theory Stuff
 - Cryptoeconomic Primitives and Staking: carrots, sticks, and attack vectors for PoS: https://www.zeroknowledge.fm/49
