@@ -3,6 +3,18 @@
 </h1>
 <br><br><br>
 
+# IDEA
+
+What if rather than structuring the chapters as
+- b2c database manager
+- p2p PoW blockchain
+- p2p PoS blockchain
+
+I built it to be as generic as possible so that you can plug in the consensus mechanism, or key signing function, or database type?
+- essentially like Substrate
+
+and then had different variations for Bitcoin, Ethereum, etc showing what configurations lead to those properties
+
 # TODO
 
 ### Explore New Resources
