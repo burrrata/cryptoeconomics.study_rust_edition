@@ -1,12 +1,12 @@
 <div align="center">
     <p align="center">
-        <img src="state_transitions.jpg">  
+        <img src="state_transitions.png">  
     </p>
     <h1 align="center">
         State Transitions
     </h1>
     <p align="center">
-        PoS
+        Marching forward.
     </p>
 </div>
 <br>
