@@ -16,12 +16,12 @@
 
 So to recap...
 
-The centralized database manager:
+Centralized database managers:
 - gets to create new data and accounts out of thin air (or money and debt)
 - controls read/write access to that data (ability to move/create money)
 - has minimal downside when things go wrong due to bailouts and insurance (what is regulatory capture?)
 
-The users:
+Users:
 - trust the central operator is showing them the correct state for their data or money
 - are only allowed as much money or control as they can figure out how to convince the bank or anyone else to give them
 - get their lives turned upside down if things go wrong
