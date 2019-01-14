@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="TBD" alt="TBD">
+        <img src="tx.jpg">
     </p>
     <h1 align="center">
         TX
