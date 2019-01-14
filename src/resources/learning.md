@@ -1,4 +1,18 @@
-# Knowledge is power.
+<br>
+
+<div align="center">
+    <p align="center">
+        <img src="learning.jpg">
+    </p>
+    <h1 align="center">
+        Knowledge Is Power
+    </h1>
+    <p align="center">
+        So let's learn some stuff!
+    </p>
+</div>
+
+<br><br><br>
 
 ### Cryptoeconomic Security / Game Theory Stuff
 - Cryptoeconomic Primitives and Staking: carrots, sticks, and attack vectors for PoS: https://www.zeroknowledge.fm/49
