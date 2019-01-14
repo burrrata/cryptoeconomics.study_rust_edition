@@ -110,7 +110,9 @@ pub fn hash<T>(stuff: &T) -> String {
 
 fn main() {
     
+    
     // Let's hash something!
+    
     let my_data = String::from("stuff and stuff");
     println!("my data: {}", my_data);
     
@@ -119,10 +121,13 @@ fn main() {
     
     
     // Let's try to find a hash that has an arbitrary amount of 0s
-    // since we're guessing we might as well start at 0
+    
+    // this is the number that we will hash
     let mut random_number = 0;
-    // amount of 0s we want
-    // - note: in the Rust Playground > 8 will often exit
+    
+    // difficulty = the amount of 0s we want in our hash
+    // - note: in the Rust Playground a difficulty > 8 
+    // - will often fail or simply spin and do nothing
     let difficulty = 7; 
     
     // amount of times to guess
