@@ -14,21 +14,21 @@
 
 <br><br><br>
 
-Words
+Words TBD
 
 <br><br><br>
 
-Videos
+Videos TBD
 
 <br><br><br>
 
 ```rust, ignore
-// code
+// code TBD
 ```
 
 <br><br><br>
 
-## Resources To Learn More
+### Resources To Learn More
 - TBD
 
 <br><br><br>
