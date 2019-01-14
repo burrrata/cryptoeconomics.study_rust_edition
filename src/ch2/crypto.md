@@ -180,6 +180,13 @@ fn main() {
     }
 }
 ```
+<p align="center">
+    <img src="hash_tree.png">
+    <p>
+        An example of a binary hash tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
+    </p>
+</p>
+
 - https://en.wikipedia.org/wiki/Hash_function
 - https://en.wikipedia.org/wiki/Cryptographic_hash_function
 - https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use
