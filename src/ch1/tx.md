@@ -316,7 +316,6 @@ fn main() {
 
 <br><br><br>
 
-## Resources To Learn More
-- TBD
+- https://en.wikipedia.org/wiki/Database_transaction
 
 <br><br><br>
