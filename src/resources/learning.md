@@ -3,11 +3,10 @@
 ### Cryptoeconomic Security / Game Theory Stuff
 - Cryptoeconomic Primitives and Staking: carrots, sticks, and attack vectors for PoS: https://www.zeroknowledge.fm/49
 - Chat with Richard Craib from Numerai on using staking in applications to prevent sybil attacks and filter signal from noise: https://www.zeroknowledge.fm/47
-
-### The Ethereum Papers
-- white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
-- beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
-- yellow: https://ethereum.github.io/yellowpaper/paper.pdf
+- Awesome Cryptoeconomics jpantunes: https://github.com/jpantunes/awesome-cryptoeconomics
+- Awesome Cryptoeconomics L4ventures: https://github.com/L4ventures/awesome-cryptoeconomics
+- https://www.reddit.com/r/cryptoeconomics/
+- https://theethereum.wiki/w/index.php/Cryptoeconomics
 
 ### Cryptoeconomics.Study
 - Overview: https://cryptoeconomics.study/overview.html
@@ -15,36 +14,33 @@
 - Code: https://github.com/cryptoeconomics-study/code
 - Forum: http://forum.cryptoeconomics.study
 
-### Ethereum Research
-- https://ethresear.ch
-- https://ethereum-magicians.org/
-
-### Rust Blockchain Tutorial
+### General Blockchain Resources
+- https://a16z.com/2018/02/10/crypto-readings-resources/
+- https://en.wikipedia.org/wiki/Blockchain
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
 
-### Awesome Lists
-- Awesome Awesome Lists: https://github.com/sindresorhus/awesome
-- Awesome Crypto: https://github.com/sobolevn/awesome-cryptography
-- Awesome Ethereum: https://github.com/btomashvili/awesome-ethereum
-- Awesome Cryptoeconomics: https://github.com/jpantunes/awesome-cryptoeconomics
-- Awesome Cryptoeconomics: https://github.com/L4ventures/awesome-cryptoeconomics
+### Bitcoin
+- Yuge compendium of resources: https://lopp.net/bitcoin.html
+- M Nielsen explains Bitcoin: http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
+- Awesome Bitcoin: https://github.com/igorbarinov/awesome-bitcoin
 
-### Reddit
-- https://www.reddit.com/r/ethereum/
-- https://www.reddit.com/r/cryptoeconomics/
-- https://www.reddit.com/r/crypto
-
-### Wikis
-- https://theethereum.wiki/w/index.php/Cryptoeconomics
+### Ethereum
+- white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
+- beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
+- yellow: https://ethereum.github.io/yellowpaper/paper.pdf
+- https://ethresear.ch
+- https://ethereum-magicians.org/
 - https://en.wikipedia.org/wiki/Ethereum
-- https://en.wikipedia.org/wiki/Blockchain
+- Reddit: https://www.reddit.com/r/ethereum/
+- Awesome Ethereum: https://github.com/btomashvili/awesome-ethereum
+
+### Crypto
+- Awesome Crypto: https://github.com/sobolevn/awesome-cryptography
+- https://www.reddit.com/r/crypto
 
 ### Podcasts
 - https://www.zeroknowledge.fm/
 
-### a16z Crypto Canon
-- https://a16z.com/2018/02/10/crypto-readings-resources/
-
-### Bitcoin Stuff
-- http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
+### Other
+- Awesome Awesome Lists: https://github.com/sindresorhus/awesome
