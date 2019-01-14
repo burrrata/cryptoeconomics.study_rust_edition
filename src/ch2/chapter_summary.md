@@ -681,7 +681,7 @@ fn main() {
 ```
 
 
-### Even more?
+### Want even more?
 
 Cryptoeconomics.Study
 - https://cryptoeconomics.study/overview.html
