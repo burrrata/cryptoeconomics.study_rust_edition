@@ -15,10 +15,11 @@
 - Forum: http://forum.cryptoeconomics.study
 
 ### General Blockchain Resources
-- https://a16z.com/2018/02/10/crypto-readings-resources/
 - https://en.wikipedia.org/wiki/Blockchain
-- https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
+- https://github.com/reiver/blockchain-reading-list
+- https://a16z.com/2018/02/10/crypto-readings-resources/
 - https://github.com/tensor-programming/Rust_block_chain
+- https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 
 ### Bitcoin
 - Yuge compendium of resources: https://lopp.net/bitcoin.html
