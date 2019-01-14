@@ -98,7 +98,7 @@ pub fn hash_u8(stuff: &[u8]) -> String {
 // Takes in stuff
 // Turns it to a u8 slice
 // Hashes that slice into a hex string
-pub fn hash_stuff<T>(stuff: &T) -> String {
+pub fn hash<T>(stuff: &T) -> String {
     
     let u8_stuff = unsafe {
         any_as_u8_slice(stuff)
@@ -110,11 +110,48 @@ pub fn hash_stuff<T>(stuff: &T) -> String {
 
 fn main() {
     
+    // Let's hash something!
     let my_data = String::from("stuff and stuff");
     println!("my data: {}", my_data);
     
-    let my_hash = hash_stuff(&my_data);
+    let my_hash = hash(&my_data);
     println!("my hash: {}", my_hash);
+    
+    
+    // Let's try to find a hash that has an arbitrary amount of 0s
+    // since we're guessing we might as well start at 0
+    let mut random_number = 0;
+    // amount of 0s we want
+    // - note: in the Rust Playground > 8 will often exit
+    let difficulty = 7; 
+    
+    // amount of times to guess
+    for i in 0..100000 {
+        
+        // let's hash our random number to create a guess
+        let guess = hash(&random_number);
+        
+        // count the amount of 0s in the hash of your guess
+        let mut count = 0;
+        for i in guess.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+        
+        // if your guess has enough 0s print the results
+        if count > difficulty {
+            println!("\n/// WINNING ///");
+            println!("Difficulty: {}", difficulty);
+            println!("Winning Number: {}", random_number);
+            println!("Winning Hash: {}", guess);
+            break
+        }
+        
+        // if you were incorrect augment the number by 1
+        // and try again
+        random_number += 1;
+    }
 }
 ```
 
