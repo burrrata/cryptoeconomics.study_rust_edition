@@ -40,6 +40,9 @@
 - https://en.wikipedia.org/wiki/Ethereum
 - https://en.wikipedia.org/wiki/Blockchain
 
+### Podcasts
+- https://www.zeroknowledge.fm/
+
 ### a16z Crypto Canon
 - https://a16z.com/2018/02/10/crypto-readings-resources/
 
