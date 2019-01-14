@@ -36,10 +36,16 @@
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 
 ### Bitcoin
+- Bitcoin Whitepaper: https://bitcoin.org/bitcoin.pdf
 - Mastering Bitcoin: https://github.com/bitcoinbook/bitcoinbook
 - Yuge compendium of resources: https://lopp.net/bitcoin.html
 - M Nielsen explains Bitcoin: http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/
 - Awesome Bitcoin: https://github.com/igorbarinov/awesome-bitcoin
+
+### Mimblewimble
+- Mimblewimble Whitepaper: https://scalingbitcoin.org/papers/mimblewimble.txt
+- Mimblewimble Paper Update via Andrew Poelstra: https://scalingbitcoin.org/papers/mimblewimble.pdf
+- Grin: https://grin-tech.org/
 
 ### Ethereum
 - white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum
