@@ -27,6 +27,8 @@ In this section we'll cover some of the basic concepts in cryptography that allo
 
 Let's start with a few foundational concepts that will help us get started :)
 
+<br>
+
 ### Computational Infeasibility:
 - A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. 
 - Why should we care? Well, without knowing the computational feasibility or infeasibility of a problem we cannot make any claims that people can't cheat on our network by overwriting data or creating data without following the rules. Say for example I know the password to my account and I think that it's secure. If it takes you 3 days to randomly guess all the possible combinations of characters that my password might be, then it's really only secure as long as someone doesn't decide to take the time to figure it out. If it takes you 3 billion years to guess all the possible combinations though, then the story is quite different and I can rest assured that I'm not going to wake up one day and have all my data changed or stolen.
@@ -35,6 +37,8 @@ Let's start with a few foundational concepts that will help us get started :)
 // For example, pick any Ethereum address and try to guess the private key that unlocks it. Go ahead! 
 // https://www.myetherwallet.com/#send-transaction
 ```
+
+<br>
 
 ### Randomness:
 - Random data does not have a pattern. If one were to take a series of random data and cut it in half, then ask someone to guess the second half given the first, any possible values would be equally likely and no one could do better than a wild guess. In computer science and information theory, we often say that if a random string of data is long enough it is computationally infeasable to guess it, and thus it is secure against attacks.
@@ -64,6 +68,24 @@ fn main() {
 // - https://crates.io/crates/rand
 // - https://rust-random.github.io/book/intro.html
 ```
+
+Rust Rand Book
+- https://rust-random.github.io/book/intro.html
+
+Ethereum Specific Randomness
+- https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
+- https://vitalik.ca/files/randomness.html
+- https://ethresear.ch/t/posw-random-beacon/1814
+
+Other Randomness Resources
+- https://blog.cloudflare.com/why-randomness-matters/
+- https://en.wikipedia.org/wiki/Entropy_(information_theory)
+- https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Security_and_practical_considerations
+- https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator
+- https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
+
+<br>
 
 ### Hash:
 - A hash function (or hash algorithm) is a process by which a piece of data of arbitrary size (could be anything; a piece of text, a picture, or even a list of other hashes) is processed into a small piece of data (usually 32 bytes) which looks completely random, and from which no meaningful data can be recovered about the document, but which has the important property that the result of hashing one particular document is always the same. Additionally, it is crucially important that it is computationally infeasible to find two documents that have the same hash. Generally, changing even one letter in a document will completely randomize the hash; for example, the SHA3 hash of "Saturday" is c38bbc8e93c09f6ed3fe39b5135da91ad1a99d397ef16948606cdcbd14929f9d, whereas the SHA3 hash of Caturday is b4013c0eed56d5a0b448b02ec1d10dd18c1b3832068fbbdc65b98fa9b14b6dbf. Hashes are usually used as a way of creating a globally agreed-upon identifier for a particular document that cannot be forged. In the biz they call the input to a hash function the "preimage" and the output is called the "digest". 
@@ -159,7 +181,11 @@ fn main() {
     }
 }
 ```
+- https://en.wikipedia.org/wiki/Hash_function
+- https://en.wikipedia.org/wiki/Cryptographic_hash_function
+- https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use
 
+<br>
 
 ### Merkle Trees:
 - A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the "root" or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a "tree" in that the "root" is a single hash, but there's lots of things ("leaves") that get hashed together ("branches"), and then hashed together again and again until it's all been hashed together and there's a single hash "root". The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).
@@ -237,31 +263,15 @@ fn main() {
     
 }
 ```
-
-### PROBLEM
-- Overall these explanations are a good high level explanation of blockchain basics and state transitions, but don't do a very good job explaining the cryptographic functions being used. Either add more robust explanations and terminology so that after this someone can ~read other crypto tutorials, or maybe move this to the State Transitions section?
+- https://en.wikipedia.org/wiki/Merkle_tree
 
 <br><br><br>
 
-## Resources & References
-
-### Ethereum Wiki Glossary
+## General Resources & References
+- https://en.wikipedia.org/wiki/Cryptography
 - https://github.com/ethereum/wiki/wiki/Glossary
 
-### Rust Rand Book
-- https://rust-random.github.io/book/intro.html
-
-### Ethereum Specific Randomness
-- https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics
-- https://vitalik.ca/files/randomness.html
-- https://ethresear.ch/t/posw-random-beacon/1814
-
-### Other Randomness Resources
-- https://blog.cloudflare.com/why-randomness-matters/
-- https://en.wikipedia.org/wiki/Entropy_(information_theory)
-- https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Security_and_practical_considerations
-- https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator
-- https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/
-- https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
-
 <br><br><br>
+
+# PROBLEM / TODO
+- Overall these explanations are a good high level explanation of blockchain basics and state transitions, but don't do a very good job explaining the cryptographic functions being used. Either add more robust explanations and terminology so that after this someone can ~read other crypto tutorials, or maybe move this to the State Transitions section?
