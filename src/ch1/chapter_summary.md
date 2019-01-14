@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="TBD" alt="TBD">
+        <img src="chapter_summary.jpg">
     </p>
     <h1 align="center">
         Centralized Payment Processor
