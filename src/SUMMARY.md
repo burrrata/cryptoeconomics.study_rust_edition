@@ -21,7 +21,6 @@
   
 - [PoS "Blockchain"](./ch3/intro.md)
   - [State](./ch3/state.md)
-  - [Accounts](./ch3/accounts.md)
   - [State Transitions](./ch3/state_transitions.md)
   - [Roll Your Own PoS "Blockchain"](./ch3/chapter_summary.md)
   
