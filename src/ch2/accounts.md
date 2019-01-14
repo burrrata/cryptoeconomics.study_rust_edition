@@ -1,12 +1,25 @@
-<h1 align="center">
-    Accounts: crypto in action.
-</h1>
-
 <br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        Accounts
+    </h1>
+    <p align="center">
+        Crypto in action.
+    </p>
+</div>
+
+<br><br><br>
 
 Core Concepts:
+- trusting math enforced via code vs an opaque centralized b2c database operator
+- creating accounts
+- creating signatures
+
+Other Concepts
 - how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around
 - how you can sign stuff with your private key, and others can verify that signature with your public key
 - this is grounded in the hardness of cryptography, not the choice of a central operator
