@@ -11,6 +11,9 @@ Core Concepts:
 - how you can sign stuff with your private key, and others can verify that signature with your public key
 - this is grounded in the hardness of cryptography, not the choice of a central operator
 
+Weak randomness can lead to hacked keys and crypto systems. This isn't a concern with our toy demo, but for any live working blockchain it's mission critical.
+- https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+
 TODO
 - add info about the data structure of accounts (nonces, balances, keys, etc)
 
