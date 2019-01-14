@@ -1,12 +1,18 @@
-<h1 align="center">
-    TX
-</h1>
-<p align="center">
-    doing stuff
-</p>
 <br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="TBD" alt="TBD">
+    </p>
+    <h1 align="center">
+        TX
+    </h1>
+    <p align="center">
+        Doing stuff.
+    </p>
+</div>
+
+<br><br><br>
 
 Core Concepts:
 - when you sign/do stuff with a public key crypto system you prove that it came from your address.
@@ -33,11 +39,7 @@ and added to the world state.
 ### TX Fees
 Every transaction is required to include a tx fee. Miners have the choice of including the transaction and collecting the fee or not. This is to prevent someone from spamming the network or creating a DoS attack. 
 
-<br>
-
-## Videos
-
-<br>
+<br><br><br>
 
 ## Code
 ```rust, ignore
@@ -47,11 +49,6 @@ use rand::prelude::*;
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
-
-
-
-
-
 
 /// RSA STUFF ///
 
@@ -359,11 +356,11 @@ fn main() {
 
 ```
 
-<br>
+<br><br><br>
 
-## Resources
+### But wait... there' smore
 - https://en.wikipedia.org/wiki/Digital_signature
 - https://en.wikipedia.org/wiki/Digital_Signature_Algorithm
 - https://github.com/ethereum/wiki/wiki/Glossary
 
-<br>
+<br><br><br>
