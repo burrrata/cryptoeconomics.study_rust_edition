@@ -4,9 +4,6 @@
     <p align="center">
         <img src="feedback.png">
     </p>
-    <h1 align="center">
-        :)
-    </h1>
 </div>
 
 <br><br><br>
