@@ -10,6 +10,14 @@
 # TODO
 - in order of operations
 
+### Explore New Resources
+- everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
+
+Code Tutorials
+- https://github.com/justinmoon/digital-cash
+
+# Other TODO
+
 ### Ch intros and code summaries
 - create intro that explains the topic/goal
 - create code summary shows what we're doing
