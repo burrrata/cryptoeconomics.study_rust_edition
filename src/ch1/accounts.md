@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="TBD" alt="TBD">
+        <img src="accounts.png">
     </p>
     <h1 align="center">
         Accounts
@@ -240,8 +240,8 @@ fn main() {
 
 <br><br><br>
 
-## Resources To Learn More
-- TBD
+## But wait... there's more
+-https://en.wikipedia.org/wiki/User_(computing)
 
 <br><br><br>
     
