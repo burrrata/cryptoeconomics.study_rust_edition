@@ -2,7 +2,7 @@
 
 <div align="center">
     <p align="center">
-        <img src="intro.png">  
+        <img src="intro_image.png">  
     </p>
     <br>
     <h1 align="center">
