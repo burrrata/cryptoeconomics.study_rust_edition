@@ -181,7 +181,7 @@ fn main() {
 }
 ```
 <p align="center">
-    <img src="hash_tree.png">
+    <img src="crypto_hash_tree.png">
     <p>
         An example of a binary hash tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
     </p>
