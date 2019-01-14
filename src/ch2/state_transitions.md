@@ -20,6 +20,10 @@ Open Questions
 - do people generally refer to the "consensus model" and the "state transition function" as the same thing, or are they different, or are they mostly the same but slightly different?
 - How do block nonces differ from TX nonces?
 
+
+### Idea To Add
+- because accounts are not in a centralized database the user controls the account, and as long as the network is operational, the user's account is too. Just like if your bank went under (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be gone, if the P2P network you're on goes under same deal. 
+
 ### Block:
 A block is a package of data that contains zero or more transactions, the hash of the previous block ("parent"), and optionally other data. Because each block (except for the initial "genesis block") points to the previous block, the data structure that they form is called a "blockchain".
 
