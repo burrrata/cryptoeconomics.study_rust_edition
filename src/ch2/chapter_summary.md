@@ -1,10 +1,19 @@
-# Bringing it all together.
+<br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="chapter_summary.jpg">
+    </p>
+    <h1 align="center">
+        Roll Your Own PoW "Blockchain"
+    </h1>
+    <p align="center">
+        I love the smell of progress in the morning. 
+    </p>
+</div>
 
-Woke commentary tbd.
+<br><br><br>
 
-## Code
 ```rust, ignore
 /*
 
@@ -672,13 +681,13 @@ fn main() {
 ```
 
 
-## Resources
+### Even more?
 
-### Cryptoeconomics.Study
+Cryptoeconomics.Study
 - https://cryptoeconomics.study/overview.html
 - https://cryptoeconomics.study/lectures/
 - https://github.com/cryptoeconomics-study/code/tree/master/c3_ProofOfWork
 
-### Rust Blockchain Tutorial
+Rust Blockchain Tutorial
 - https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain
 - https://github.com/tensor-programming/Rust_block_chain
