@@ -1,7 +1,18 @@
-# State
-All the things.
+<br>
 
-## Words
+<div align="center">
+    <p align="center">
+        <img src="state.jpg">
+    </p>
+    <h1 align="center">
+        State
+    </h1>
+    <p align="center">
+        All the things...
+    </p>
+</div>
+
+<br><br><br>
 
 So as we mentioned, a blockchain is a glorified database. As such, at it's heart is some data. Like any database that changes, the current state of things is literally called the "state". As we saw with a centralized database the owners of that database can change the state however and whenever they want. In a decentralized system where there is no centralized database manager, the state is agreed upon by a distributed group of verifiers based on some consensus rules that they all agree to.
 
