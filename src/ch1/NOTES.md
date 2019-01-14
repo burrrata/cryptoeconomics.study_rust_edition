@@ -1,5 +1,4 @@
-### Centralized Database
-- users trust bank state
-- bank creates and controls accounts
-- users request tx to be approved by bank
-- bank controls any state transitions including freezing accounts or new money creation
+# TODO
+
+Add examples and links to The Bitcoin Book to each section
+- https://github.com/bitcoinbook/bitcoinbook
