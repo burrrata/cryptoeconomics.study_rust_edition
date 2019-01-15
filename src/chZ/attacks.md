@@ -15,7 +15,9 @@
 <br><br><br>
 
 # Goal
-Each section will explore an attack as well as any defenses or architectures that can prevent it. Users will be able to see how various design decisions create trade-offs between security, livliness, and functionality.
+Each section will explore attack as well as any defenses or architectures that can prevent it. Users will be able to see how various design decisions create trade-offs between security, livliness, and functionality. At the end of the chapter will be a chart of various designs/architectures, their goals, and what they're vulnerable to. For example:
+- PoW: security, but only works if you're the largest chain
+- PoS: better carrots and sticks like slashing, but vulnerable to consolidation if a party aquires too much stake
 
 <br><br><br>
 
