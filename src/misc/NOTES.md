@@ -88,11 +88,20 @@ Code Tutorials
 - https://github.com/justinmoon/digital-cash
 - BUIDL Bootcamp: https://www.youtube.com/playlist?list=PLQ56Yiu6lEaxIPm9-GB5M393CmtYRZFGY
 
-<br>
+<br><br><br>
+
+# Resources and References
+
+These are ALL full of amazing references, and they need to be used as inspiration for the chapter descriptions and linked to as references if someone wants to learn more
+- aantonop videos
+- Mastering Bitcoin
+- Mastering Ethereum
+- https://github.com/jpantunes/awesome-cryptoeconomics
+- https://github.com/L4ventures/awesome-cryptoeconomics
+
+<br><br><br>
 
 # Other TODO
-
-### add aantonop videos and Mastering Bitcoin/Ethereum references and illustrations to the chapters 
 
 ### Ch intros and code summaries
 - create intro that explains the topic/goal
