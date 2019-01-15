@@ -21,8 +21,6 @@ The general blockchain architecture will remain the same, but the state transiti
 - verify that state transition requests (tx) conform to those rules,
 - and if so then process those changes and produce a new state. 
 
-<br>
-
 Core Concepts:
 - centralized database (CDM)
 - consortium database (PoA)
@@ -30,12 +28,15 @@ Core Concepts:
 
 <br><br><br>
 
-Videos TBD
+Videos
+- Cryptoeconomics.Study
+- aantonop
+- other
 
 <br><br><br>
 
 ```rust, ignore
-// code TBD
+// code will be in each section,  building the STF and then plugging it into a generic blockchain architecture
 ```
 
 <br><br><br>
