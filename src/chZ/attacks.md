@@ -1,4 +1,21 @@
-Once the general structure is determined, it would be cool to have an Attacks chapter where in each section a different attack is tried and then we reconfigure the network to prevent it. 
+<br>
+
+<div align="center">
+    <p align="center">
+        <img src="TBD">
+    </p>
+    <h1 align="center">
+        Attacks Chapter Sketch
+    </h1>
+    <p align="center">
+        Exploring attacks on various cryptoeconomic systems (applications or core blockchain protocols).
+    </p>
+</div>
+
+<br><br><br>
+
+# Goal
+Each section will explore an attack as well as any defenses or architectures that can prevent it. Users will be able to see how various design decisions create trade-offs between security, livliness, and functionality.
 
 <br><br><br>
 
@@ -29,6 +46,9 @@ Open Question:
 
 <br><br><br>
 
-### TBD
+### Resources
+- resources will be included within each example, but links to generic aggregations of stuff can be down here
+- https://github.com/jpantunes/awesome-cryptoeconomics
+- https://github.com/L4ventures/awesome-cryptoeconomics
 
 <br><br><br>
