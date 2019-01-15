@@ -11,6 +11,8 @@ These are ALL full of amazing references, and they need to be used as inspiratio
 - Mastering Ethereum
 - https://github.com/jpantunes/awesome-cryptoeconomics
 - https://github.com/L4ventures/awesome-cryptoeconomics
+- Bitcoin Whitepaper
+- Ethereum White/Beige/Yellow papers
 
 Explore New Resources
 - everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
@@ -34,24 +36,37 @@ General Template
 - create code summary shows what we're doing
 - clean up code so that it's readable/usable
 - copy code sections into book sections and add comments
+    - note that code comments are for the sections, but less for the final chapter summary
 - then add resources and links to production code examples
+
+<br><br><br>
 
 # Upgrading The Code
 
 Less Cloning, More Borrowing: 
 - update code to use borrows and lifetimes rather than cloning everything.
 
-Code Commentary:
-- reorganize so that code commentary is in the sections, but not in the final demo. The final demo is for exploring how the pieces all interact together, not explaining individual parts.
+Lifetimes
+- It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
 
-References:
-- white/beige/yellow papers as well as non Ethereum references and libraries.
+Errors
+- It would also be nice to have better errors so that when functions fail we (or the users) know why.
+
+Enums
+- enums and how they interact with structs and implementations
+
+Pub/Priv Functions
+- pub vs priv functions
+
+Structs and Traits
+- they're useful, but I'm not using them
 
 External crates in mdBook:
 - https://users.rust-lang.org/t/diy-digital-signatures/23739/5
 
+<br><br><br>
 
-### UX / UI
+# UX / UI
 - reformat the Resources sections to look like Awesome Lists, and then add relevant stuff to the relevant lists
 - rename all pictures to be the same name as the section they're featured in
 - pictures for each chapter intro
@@ -59,14 +74,9 @@ External crates in mdBook:
 - better feedback flow
 - encourage PRs so people can upgrade code or propose alternative versions of functions (ideally leading to modular systems people can play with)
 
-### Better Rust Code
-- It would be great to learn more about lifetimes so that every function can take in a reference rather than requiring a String that has to be cloned over and over and over...
-- It would also be nice to have better errors so that when functions fail we (or the users) know why.
-- enums and how they interact with structs and implementations
-- pub vs priv functions
-- also I suck at traits
+<br><br><br>
 
-### Feedback
+# Feedback
 
 There needs to be a clear and easy way for people to provide feedback.
 - email: rustycryptoeconomics@protonmail.com
@@ -81,14 +91,18 @@ People to reach out to once the first draft is ready
 - TWIE newsletter
 - other crypto newsletters
 
-<br>
+<br><br><br>
 
-# Stretch Goal
+# Networking
 
-Build in concurrent threads to simulate network activity and forks rather than having everything in a main() function
+Real
+- this means a CLI application rather than a browser sandbox
+
+Simulated
+- Build in concurrent threads to simulate network activity and forks rather than having everything in a main() function
 - https://doc.rust-lang.org/book/ch16-00-concurrency.html
 
-<br>
+<br><br><br>
 
 # mdBook and External Libraries
 - If you include any files that call external crates (rand) in the SUMMARY.md the mdBook build fails.
