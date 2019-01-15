@@ -14,7 +14,8 @@ I built it to be as generic as possible so that you can plug in the consensus me
 - essentially like Substrate
 
 Minimal Viable Chain
-- plugable (and chainable) modules for everything
+- plugable (and chainable) modules for everything.
+- ideally so modular you could have a chain of a chain of a chain of a...
 
     functions
     - state transition function (PoW, PoS, PoA, etc...)
@@ -65,7 +66,9 @@ impl Chain {
 }
 ```
 
-and then had different variations for Bitcoin, Ethereum, etc showing what configurations lead to those properties
+So in the "book" portion, each chapter would focus on an aspect of the blockchain, and each section in that chapter would explore variations within that aspect, for example: a chapter all about consensus mechanisms with each section exploring a minimal implimentation of various ones.
+
+and then after had different configurations of the blockchains for Bitcoin, Ethereum, etc showing what configurations lead to those properties and what the differences are
 
 <br><br><br>
 
