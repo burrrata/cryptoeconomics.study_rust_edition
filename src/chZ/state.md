@@ -5,7 +5,7 @@
         <img src="TBD">
     </p>
     <h1 align="center">
-        State
+        State Chapter Sketch
     </h1>
     <p align="center">
         Searching for the most generic blockchain architecture possible.
@@ -16,6 +16,7 @@
 
 GOAL
 - create a completely generic state with pluggable modules, then plug in various configurations to create toy examples of Bitcoin, Ethereum PoW, Ethereum PoS, Mimblewimble, etc...
+- each section will explain a component from a high level and impliment the minimal viable version of it (stuff like hashing, accounts/signatures, data serialization, consensus mechanisms, etc...)
 
 STRETCH GOAL
 - leave it open as a modular library so people can explore things like mimblewimble plasma (if that's even possible) or an ethereum chain of ethereum chains, or a private PoA network, or really whatever.
