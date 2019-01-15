@@ -15,10 +15,12 @@ I built it to be as generic as possible so that you can plug in the consensus me
 
 Minimal Viable Chain
 - plugable (and chainable) modules for everything
+
     functions
     - state transition function (PoW, PoS, PoA, etc...)
     - hash function (default, blake, other...)
     - signing / key creation function (toy "RSA", ecdsa, ed25519, lamport, etc...)
+    
     structs
     - address format (utxo, account based, other)
     - transaction format (nonces, balances, data, IDs, etc...)
