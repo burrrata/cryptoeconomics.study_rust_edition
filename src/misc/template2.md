@@ -28,7 +28,9 @@ Videos TBD
 
 <br><br><br>
 
-### Resources To Learn More
-- TBD
+### Awesomelist Formatted Resources
+- [Title](https://www.link_to_the_thing.com) explanation of the thing
+- [Title](https://www.link_to_the_thing.com) explanation of the thing
+- [Title](https://www.link_to_the_thing.com) explanation of the thing
 
 <br><br><br>
