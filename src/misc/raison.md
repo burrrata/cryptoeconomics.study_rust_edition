@@ -1,3 +1,14 @@
+What are we doing? Well, most people who learn about blockchains learn about Bitcoin or Ethereum. Most people who learn about Bitcoin or Ethereum learn about how it was and how it is. Then we expect them to go out into the world and bravely solve problems that have never before been solved! That's like teaching someone the stories from 2 books and expecting them to go write the next great novel... 
+
+What we need is to teach people the basics: nouns, verbs, adjectives, sentences, paragraphs, etc... Then people can combine language and concepts into stories and books. Just giving them 2 books isn't enough. They need command of the alphabet and the rules of the english language.
+
+Rusty Cryptoeconomics aims to do this with blockchains and cryptoeconomics; teaching people how to build them up from first principles with tools to iterate on and explore them. 
+
+
+
+
+# Stuff from EF Grants app
+
 burrrata: has a passion for learning and wants to make knowledge of cryptoeconomic protocols available to anyone with interest and a browser
 
 Building up blockchains and cryptoeconomic protocols, from first principles, in Rust, with english explanations and interactive live code tutorials, all in a browser based setting for anyone with an internet connection.
