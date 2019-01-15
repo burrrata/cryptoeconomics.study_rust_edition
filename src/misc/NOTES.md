@@ -3,84 +3,16 @@
 </h1>
 <br><br><br>
 
-# IDEA
-
-What if rather than structuring the chapters as
-- b2c database manager
-- p2p PoW blockchain
-- p2p PoS blockchain
-
-I built it to be as generic as possible so that you can plug in the consensus mechanism, or key signing function, or database type?
-- essentially like Substrate
-
-Minimal Viable Chain
-- plugable (and chainable) modules for everything.
-- ideally so modular you could have a chain of a chain of a chain of a...
-
-    functions
-    - state transition function (PoW, PoS, PoA, etc...)
-    - hash function (default, blake, other...)
-    - signing / key creation function (toy "RSA", ecdsa, ed25519, lamport, etc...)
-    
-    structs
-    - address format (utxo, account based, other)
-    - transaction format (nonces, balances, data, IDs, etc...)
-    - state (user defines state by filling it with other structs)
-
-```rust, ignore
-impl Chain {
-
-    impl STF {
-    
-        pub fn CDM() {}
-    
-        pub fn PoW() {}
-        
-        pub fn PoS() {}
-        
-        pub fn PoA() {}
-        
-        pub fn PoX() {}
-    }
-    
-    impl hash {
-    
-        pub fn default() {}
-        
-        pub fn blake() {}
-        
-        pub fn other() {}
-    
-    }
-    
-    impl keys {
-    
-        pub fn rn() {}
-    
-        pub fn toy_rsa() {}
-        
-        pub fn ecdsa() {}
-        
-        pub fn ed25519() {}
-    
-    }
-}
-```
-
-So in the "book" portion, each chapter would focus on an aspect of the blockchain, and each section in that chapter would explore variations within that aspect, for example: a chapter all about consensus mechanisms with each section exploring a minimal implimentation of various ones.
-
-Then showcase different configurations of the blockchains modules for Bitcoin, Ethereum, etc showing what configurations lead to those properties and what the differences are
-
-Then explore cryptoeconomic mechanisms built on or with these modules
-- like how Numerai incentivizes high signal/noise ratios
-- like how PoS creates stronger security
-- like how voting systems can be gamed
-
-<br><br><br>
-
 # Yet Another TODO
 
-### Explore New Resources
+These are ALL full of amazing references, and they need to be used as inspiration for the chapter descriptions and linked to as references if someone wants to learn more
+- aantonop videos
+- Mastering Bitcoin
+- Mastering Ethereum
+- https://github.com/jpantunes/awesome-cryptoeconomics
+- https://github.com/L4ventures/awesome-cryptoeconomics
+
+Explore New Resources
 - everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
 - also everything here: https://www.reddit.com/r/Bitcoin/comments/afxg6t/what_impacted_your_learning_experience_the_most/
 
@@ -90,32 +22,21 @@ Code Tutorials
 
 <br><br><br>
 
-# Resources and References
+# Current Book: CDM, PoW, PoS
 
-These are ALL full of amazing references, and they need to be used as inspiration for the chapter descriptions and linked to as references if someone wants to learn more
-- aantonop videos
-- Mastering Bitcoin
-- Mastering Ethereum
-- https://github.com/jpantunes/awesome-cryptoeconomics
-- https://github.com/L4ventures/awesome-cryptoeconomics
+TODO
+- clean up chapters 1 & 2
+- build chapter 3 code
+- THEN go back and do the sections
 
-<br><br><br>
-
-# Other TODO
-
-### Ch intros and code summaries
+General Template
 - create intro that explains the topic/goal
 - create code summary shows what we're doing
 - clean up code so that it's readable/usable
 - copy code sections into book sections and add comments
 - then add resources and links to production code examples
 
-### Current
-- clean up chapters 1 & 2
-- build chapter 3 code
-- THEN go back and do the sections
-
-### General
+# Upgrading The Code
 
 Less Cloning, More Borrowing: 
 - update code to use borrows and lifetimes rather than cloning everything.
