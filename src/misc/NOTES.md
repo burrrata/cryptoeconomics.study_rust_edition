@@ -69,7 +69,12 @@ impl Chain {
 
 So in the "book" portion, each chapter would focus on an aspect of the blockchain, and each section in that chapter would explore variations within that aspect, for example: a chapter all about consensus mechanisms with each section exploring a minimal implimentation of various ones.
 
-and then after had different configurations of the blockchains for Bitcoin, Ethereum, etc showing what configurations lead to those properties and what the differences are
+Then showcase different configurations of the blockchains modules for Bitcoin, Ethereum, etc showing what configurations lead to those properties and what the differences are
+
+Then explore cryptoeconomic mechanisms built on or with these modules
+- like how Numerai incentivizes high signal/noise ratios
+- like how PoS creates stronger security
+- like how voting systems can be gamed
 
 <br><br><br>
 
