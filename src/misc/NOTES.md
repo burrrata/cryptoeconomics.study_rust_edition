@@ -25,6 +25,7 @@ Minimal Viable Chain
     structs
     - address format (utxo, account based, other)
     - transaction format (nonces, balances, data, IDs, etc...)
+    - state (user defines state by filling it with other structs)
 
 ```rust, ignore
 impl Chain {
