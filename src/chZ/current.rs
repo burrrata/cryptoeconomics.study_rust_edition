@@ -1,3 +1,10 @@
+extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
 // GOAL
 // - Refactor the code so that you can change any of the modules and it still runs.
 
@@ -51,19 +58,6 @@
 //  - key gen function: user defined
 
 
-// STANDARD FUNCTIONS
-// These will keep the same name throughout the program, but their underlying
-// logic can be changed/upgraded.
-// - data_encode()
-// - data_decode()
-// - key_gen()
-// - hash()
-// - new_account()
-// - new_tx()
-// - new_state_transition() (checks pending tx and produces new block)
-// - check_state_transition() (checks the most recently produced block)
-
-
 // STANDARD STRUCTS
 // These will keep the same name throughout the program, but their underlying
 // logic can be changed/upgraded.
@@ -73,4 +67,64 @@
 // - Block
 // - State
 
+#[derive(Debug, Clone, PartialEq)]
+struct Account {
+    balance: f32,
+    nonce: i32,
+}
 
+#[derive(Debug, Clone, PartialEq)]
+struct TX {
+    sender: i32,
+    sender_nonce: i32,
+    sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
+    amount: f32,
+    receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Blockheader {
+    timestamp: i32,
+    block_number: i32,
+    nonce: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    header: Blockheader,
+    transactions: Vec<TX>,
+}
+
+#[derive(Debug)]
+struct State {
+    accounts: HashMap<i32, Account>,
+    pending_tx: Vec<TX>,
+    history: Vec<Block>,
+}
+
+
+// STANDARD FUNCTIONS
+// These will keep the same name throughout the program, but their underlying
+// logic can be changed/upgraded.
+// - data_encode()
+// - key_gen()
+// - hash()
+// - new_account()
+// - new_tx()
+// - new_state_transition() (checks pending tx and produces new block)
+// - check_state_transition() (checks the most recently produced block)
+
+impl State {
+    
+    // Turn Arbitrary Stuff Into &[u8] Slice
+    pub unsafe fn data_encode<T: Sized>(p: &T) -> &[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::<T>(),
+        )
+    }
+    
+}
