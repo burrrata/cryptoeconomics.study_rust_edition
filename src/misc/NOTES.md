@@ -28,33 +28,38 @@ impl Chain {
 
     impl STF {
     
-        pub fn PoXW()
+        pub fn CDM() {}
+    
+        pub fn PoW() {}
         
-        pub fn PoS()
+        pub fn PoS() {}
         
-        pub fn PoA()
+        pub fn PoA() {}
+        
+        pub fn PoX() {}
     }
     
     impl hash {
     
-        pub fn default()
+        pub fn default() {}
         
-        pub fn blake()
+        pub fn blake() {}
         
-        pub fn other()
+        pub fn other() {}
     
     }
     
     impl keys {
     
-        pub fn toy_rsa()
+        pub fn rn() {}
+    
+        pub fn toy_rsa() {}
         
-        pub fn ecdsa()
+        pub fn ecdsa() {}
         
-        pub fn ed25519()
+        pub fn ed25519() {}
     
     }
-
 }
 ```
 
