@@ -65,7 +65,9 @@ impl Chain {
 
 and then had different variations for Bitcoin, Ethereum, etc showing what configurations lead to those properties
 
-# TODO
+<br><br><br>
+
+# Yet Another TODO
 
 ### Explore New Resources
 - everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
