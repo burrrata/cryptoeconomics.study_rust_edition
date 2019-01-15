@@ -180,6 +180,7 @@ fn main() {
 <br><br><br>
 
 ## But wait... there's more
+- https://en.wikipedia.org/wiki/Record_(computer_science)
 - https://en.wikipedia.org/wiki/Database
 - https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database
 - https://github.com/rust-unofficial/awesome-rust#database
