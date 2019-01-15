@@ -166,5 +166,6 @@ balance without an equal and opposite increase elsewhere."
 A history of state machines
 - https://en.wikipedia.org/wiki/Analytical_Engine
 - https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22
+- https://en.wikipedia.org/wiki/Distributed_ledger
 - https://en.wikipedia.org/wiki/Transition_system
 - https://en.wikipedia.org/wiki/Blockchain
