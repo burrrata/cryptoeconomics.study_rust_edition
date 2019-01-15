@@ -13,6 +13,51 @@ What if rather than structuring the chapters as
 I built it to be as generic as possible so that you can plug in the consensus mechanism, or key signing function, or database type?
 - essentially like Substrate
 
+Minimal Viable Chain
+- plugable (and chainable) modules for everything
+    functions
+    - state transition function (PoW, PoS, PoA, etc...)
+    - hash function (default, blake, other...)
+    - signing / key creation function (toy "RSA", ecdsa, ed25519, lamport, etc...)
+    structs
+    - address format (utxo, account based, other)
+    - transaction format (nonces, balances, data, IDs, etc...)
+
+```rust, ignore
+impl Chain {
+
+    impl STF {
+    
+        pub fn PoXW()
+        
+        pub fn PoS()
+        
+        pub fn PoA()
+    }
+    
+    impl hash {
+    
+        pub fn default()
+        
+        pub fn blake()
+        
+        pub fn other()
+    
+    }
+    
+    impl keys {
+    
+        pub fn toy_rsa()
+        
+        pub fn ecdsa()
+        
+        pub fn ed25519()
+    
+    }
+
+}
+```
+
 and then had different variations for Bitcoin, Ethereum, etc showing what configurations lead to those properties
 
 # TODO
