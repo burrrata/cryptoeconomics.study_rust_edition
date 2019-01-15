@@ -92,6 +92,8 @@ Code Tutorials
 
 # Other TODO
 
+### add aantonop videos and Mastering Bitcoin/Ethereum references and illustrations to the chapters 
+
 ### Ch intros and code summaries
 - create intro that explains the topic/goal
 - create code summary shows what we're doing
