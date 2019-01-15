@@ -34,8 +34,6 @@ Videos TBD
 <br><br><br>
 
 ### Explorations
-- https://en.wikipedia.org/wiki/Peer-to-peer
-- https://en.wikipedia.org/wiki/Distributed_ledger
 - https://en.wikipedia.org/wiki/Blockchain
 - https://www.parity.io/substrate/
 - https://github.com/paritytech/substrate
