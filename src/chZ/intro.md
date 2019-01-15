@@ -1,3 +1,10 @@
+# PROBLEM
+
+Creating a modular pluggable blockchain is ~impossible if everything is all in one function in the Rust Playground.
+- IF if were compiled locally as a crate, each chapter could build stuff and have access to that stuff in future chapters
+- then it would work in mdBook or as a CLI tutorial, but not in the Rust Playground
+
+
 # IDEA
 
 What if rather than structuring the chapters as
