@@ -82,6 +82,7 @@ Then explore cryptoeconomic mechanisms built on or with these modules
 
 ### Explore New Resources
 - everything here: https://www.reddit.com/r/Bitcoin/comments/ag03jf/understanding_bitcoin/
+- also everything here: https://www.reddit.com/r/Bitcoin/comments/afxg6t/what_impacted_your_learning_experience_the_most/
 
 Code Tutorials
 - https://github.com/justinmoon/digital-cash
