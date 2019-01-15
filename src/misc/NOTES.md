@@ -3,7 +3,7 @@
 </h1>
 <br><br><br>
 
-# Yet Another TODO
+# Better Explanations & References
 
 These are ALL full of amazing references, and they need to be used as inspiration for the chapter descriptions and linked to as references if someone wants to learn more
 - aantonop videos
