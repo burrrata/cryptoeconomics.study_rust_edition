@@ -5,10 +5,10 @@
         <img src="TBD">
     </p>
     <h1 align="center">
-        Pluggable Consensus
+        State Transitions
     </h1>
     <p align="center">
-        Exploring architectures that will allow the user to swap PoW for PoS for PoA for whatever they want.
+        Exploring architectures that will allow the user to swap PoW for PoS for PoA for whatever they want (aka pluggable consensus mechanisms).
     </p>
 </div>
 
