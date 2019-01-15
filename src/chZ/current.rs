@@ -1,13 +1,8 @@
 // GOAL
 // - Refactor the code so that you can change any of the modules and it still runs.
-//
-// For example: 
-// - the code uses a function called hash()
-// - you can change the internal logic of the hash function, 
-//   without chaning anything else and it all still works 
-//   because hash() just takes in data and returns a string
 
-// Generic Blockchain:
+
+// GENERIC BLOCKCHAIN ARCHITECTURE
 //  - State Transition Function
 //  - Data Encoding Function
 //  - Hash Function
@@ -47,9 +42,35 @@
 //  - standard for now
 
 // State Data
-//  - history: Vec<TX>
 //  - accounts: HashMap<i32, Account>
+//  - pending_tx: Vec<TX>
+//  - history: Vec<Block>
 //  - data encoding: user defined
 //  - State transition function: user defined
 //  - hash function: user defined
 //  - key gen function: user defined
+
+
+// STANDARD FUNCTIONS
+// These will keep the same name throughout the program, but their underlying
+// logic can be changed/upgraded.
+// - data_encode()
+// - data_decode()
+// - key_gen()
+// - hash()
+// - new_account()
+// - new_tx()
+// - new_state_transition() (checks pending tx and produces new block)
+// - check_state_transition() (checks the most recently produced block)
+
+
+// STANDARD STRUCTS
+// These will keep the same name throughout the program, but their underlying
+// logic can be changed/upgraded.
+// - Account
+// - TX
+// - Blockheader
+// - Block
+// - State
+
+
