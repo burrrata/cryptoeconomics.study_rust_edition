@@ -24,6 +24,8 @@
 - Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/
 - Bellman zk-SNARKS in Rust: https://z.cash/blog/bellman-zksnarks-in-rust/
 - Zero-knowledge Cryptography in Rust: https://github.com/zkcrypto
+- Zokrates: A toolbox for zkSNARKS on Ethereum 
+    - https://github.com/Zokrates/ZoKrates
 - Dalek Crypto: https://dalek.rs
 - (WIP) Libp2p: https://github.com/libp2p/rust-libp2p
 - and these: 
