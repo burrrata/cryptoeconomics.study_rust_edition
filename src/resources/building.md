@@ -32,6 +32,7 @@
 - TBD
 
 ### General Ethereum Dev
+- https://github.com/trailofbits/awesome-ethereum-security
 - https://github.com/ConsenSys/ethereum-developer-tools-list
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
 
@@ -41,6 +42,7 @@
     - https://github.com/trailofbits
     - Manticore: https://github.com/trailofbits/manticore
     - Echidna: https://github.com/trailofbits/echidna
+    - Awesome Ethereum Security: https://github.com/trailofbits/awesome-ethereum-security
 - formal verification?
 - this stuff: https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch
 
