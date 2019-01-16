@@ -39,7 +39,8 @@
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
 
 ### Ethereum Security Stuff
-- https://securify.chainsecurity.com/
+- MythX: https://mythx.io/
+- SECURIFY: scanner for Ethereum smart contracts: https://securify.chainsecurity.com/
 - Trail Of Bits: 
     - https://www.trailofbits.com/
     - https://github.com/trailofbits
