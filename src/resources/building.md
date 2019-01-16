@@ -2,6 +2,12 @@
     Let's make things better by making better things.
 </h1>
 
+<br><br><br>
+
+### Cryptoeconomic Security / Game Theory Stuff
+- https://ethresear.ch/c/economics
+- http://tokenengineering.net/building-blocks
+
 ### Rust Dev
 - all the Rust docs and books! https://doc.rust-lang.org/
 - all the Rust Crates! https://crates.io/
@@ -24,10 +30,6 @@
     - https://github.com/rust-unofficial/awesome-rust#cryptocurrencies
     - https://github.com/rust-unofficial/awesome-rust#cryptography
 
-### Cryptoeconomic Security / Game Theory Stuff
-- https://ethresear.ch/c/economics
-- http://tokenengineering.net/building-blocks
-
 ### Ethereum Core Dev
 - TBD
 
@@ -36,7 +38,8 @@
 - https://github.com/ConsenSys/ethereum-developer-tools-list
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
 
-### Ethereum Contract Dev
+### Ethereum Security Stuff
+- https://securify.chainsecurity.com/
 - Trail Of Bits: 
     - https://www.trailofbits.com/
     - https://github.com/trailofbits
@@ -51,7 +54,7 @@
 - state channels
 - other?
 
-<br>
+<br><br><br>
 
 ### Need some inspiration on what to build?
 - Ethteruem Research Applications: https://ethresear.ch/c/applications
