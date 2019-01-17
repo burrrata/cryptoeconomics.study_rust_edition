@@ -8,6 +8,10 @@ use std::hash::Hasher;
 // GOAL
 // - Refactor the code so that you can change any of the modules and it still runs.
 
+// NOTES
+// - Currently all values are i32 to make sketching the draft easier.
+// - The goal is to use the DataEncoding library to encode all
+//   data into a fast and easy to use uniform format everywhere
 
 // GENERIC BLOCKCHAIN ARCHITECTURE
 //  - State Transition Function
@@ -99,7 +103,7 @@ impl DataEncoding {
         )
     }    
 
-    // convert string to Vec<i32>
+    // string => Vec<i32>
     pub fn s2v(input: String) -> Vec<i32> {
         
         let output: Vec<i32> = input.as_bytes()
@@ -110,7 +114,7 @@ impl DataEncoding {
         output
     }
     
-    // convert Vec<i32> to string
+    // Vec<i32> => string
     pub fn v2s(input: Vec<i32>) -> String {
         
         let output_u8: Vec<u8> = input.iter()
@@ -308,16 +312,13 @@ impl Keys {
     // - output needs to return an i32, not a Vec<i32>
     // Toy RSA function for creating digital signatures
     pub fn sign(self,
-                thing_to_be_signed: Vec<i32>,
-                private_key: i32) -> Vec<i32> {
+                thing_to_be_signed: i32,
+                private_key: i32) -> i32 {
         
-        let signature = thing_to_be_signed.iter()
-                                          .map(|x| Keys::exp_mod(self, *x, private_key))
-                                          .collect();
+        let signature = Keys::exp_mod(self, thing_to_be_signed, private_key);
         
         signature
     }
-    
 }
 
 
@@ -399,10 +400,9 @@ impl State {
                      receiver_pub_key: i32,
                      amount: i32) {
         
-        //let sender_nonce = self.accounts.get(&sender_pub_key).unwrap().nonce();
-        //let thing_to_be_signed = sender_nonce + sender_pub_key;
-        //let tx_signature = Keys::sign(KEY_PARAMS, thing_to_be_signed, sender_private_key);
-        let tx_signature = 0;
+        let sender_nonce = self.accounts.get(&sender_pub_key).unwrap().nonce;
+        let data_to_be_signed = sender_nonce + sender_pub_key;
+        let tx_signature = Keys::sign(KEY_PARAMS, data_to_be_signed, sender_priv_key);
         
         let tx = TX {
             sender: sender_pub_key,
