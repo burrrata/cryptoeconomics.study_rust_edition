@@ -367,27 +367,23 @@ impl Keys {
 }
 
 
-pub struct STF {
-    difficulty: i32,
-    max_attempts: i32,
-}
+pub struct STF;
 
 impl STF {
     
     // This function encodes the rules of what qualifies as a "valid tx"
-    pub fn verify_vec_of_tx(accounts: HashMap<i32, Account>,
-                            pending_tx: Vec<TX>) -> Vec<TX> {
+    pub fn verify_vec_of_tx(state: &mut State) -> Vec<TX> {
         
         let mut verified_tx = Vec::new();
         
-        for i in pending_tx {
+        for i in &state.pending_tx {
         
-            if !(accounts.contains_key(&i.data.sender)) {
+            if !(state.accounts.contains_key(&i.data.sender)) {
                 println!("Invalid TX: sender not found.");
                 break
             }
             
-            if !(accounts.contains_key(&i.data.receiver)) {
+            if !(state.accounts.contains_key(&i.data.receiver)) {
                 println!("Invalid TX: receiver not found.");
                 break
             }
@@ -398,15 +394,15 @@ impl STF {
                 break
             }
             
-            if !(accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
+            if !(state.accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
                 println!("Invalid TX: insufficient funds.");
                 println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
                 break            
             }
             
-            if !(i.data.sender_nonce == accounts.get(&i.data.sender).unwrap().nonce) {
+            if !(i.data.sender_nonce == state.accounts.get(&i.data.sender).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, state.accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
                 break
             }
             
@@ -423,7 +419,7 @@ impl STF {
 
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
-    pub fn proof(self, mut block: Block) -> (Blockheader, String) {
+    pub fn proof(mut block: Block) -> (Blockheader, String) {
     
         let difficulty = 5;
         let max = 1000000;
@@ -431,7 +427,7 @@ impl STF {
         for i in 0..max {
         
             let mut count = 0;
-            let hash = Hash::hash(&block.header);
+            let hash = Hash::hash(&block);
 
             for i in hash.chars() {
                 if i == '0' {
@@ -440,16 +436,75 @@ impl STF {
             }
             
             if count > difficulty {
-                return (block.header, hash);
+                // success
+                return (block.blockheader, hash);
             }
             
-            block.header.nonce += 1;
+            block.blockheader.nonce += 1;
         }
         
-        return (block.header, String::from("!!! PoW ERROR !!!") )
+        // failure
+        return (block.blockheader, String::from("!!! PoW ERROR !!!") )
     }
     
+    // Create A New Block With Valid Transactions
+    pub fn new_block(state: &mut State) -> Block {
     
+        let verified_tx = STF::verify_vec_of_tx(state);
+        
+        let mut naive_header = Blockheader {
+            nonce: 0,
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().blockheader.block_number + 1,
+            previous_block_hash: Hash::hash(&state.history.last().unwrap().blockheader.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
+        };
+        
+        let naive_block = Block {
+            proof: String::from("TBD"),
+            blockheader: naive_header,
+            transactions: verified_tx.clone(),
+        };
+        
+        let (blockheader, proof) = STF::proof(naive_block);
+        let block = Block {
+            proof: proof,
+            blockheader: blockheader,
+            transactions: verified_tx,
+        };
+        
+        block
+    }
+    
+    // check that PoW hash matches blockheader
+    pub fn check_pow(mut block: Block) -> bool {
+
+        let hash_check = Hash::hash(&block);
+        
+        if hash_check != block.proof {
+            println!("\nPoW Error: Invalid PoW Hash.");
+            return false
+        }
+        
+        return true
+    }
+    
+    pub fn push_block(state: &mut State,
+                      mut block: Block) {
+        
+        if !(STF::check_pow(block.clone())) {
+            println!("Block Error: check_pow() failed.");
+            return
+        }
+
+        for i in &block.transactions {
+            state.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
+            state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
+            state.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
+        }
+        
+        state.history.push(block);
+    }
     
 }
 
@@ -476,9 +531,9 @@ pub struct TX {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Blockheader {
+    nonce: i32,
     timestamp: i32,
     block_number: i32,
-    nonce: i32,
     previous_block_hash: String,  
     current_block_hash: String,  
 }
@@ -486,7 +541,7 @@ pub struct Blockheader {
 #[derive(Debug, Clone, PartialEq)]
 pub struct Block {
     proof: String,
-    header: Blockheader,
+    blockheader: Blockheader,
     transactions: Vec<TX>,
 }
 
@@ -550,11 +605,10 @@ impl State {
     // Create a new state transition
     pub fn state_transition_function(&mut self) {
         
-        let accounts = self.accounts.clone();
-        let pending_tx = self.pending_tx.clone();
-        let history = self.history.clone();
+        let new_block = STF::new_block(self);
+        let state_transition = STF::push_block(self, new_block);
         
-        let verified_tx = STF::verify_vec_of_tx(accounts, pending_tx);
+        state_transition
         
     }
 }
@@ -568,11 +622,19 @@ fn main() {
         pending_tx: Vec::new(),
         history: Vec::new(),
     };
-    //println!("blockchain:\n{:#?}", blockchain);
     
     for _i in 0..3 {
         blockchain.create_account();
     }
+    
+    // create some tx
+    /*
+    for _i in 0..3 {
+        blockchain.new_tx()
+    }
+    */
+    
+    //blockchain.state_transition_function();
     //println!("blockchain:\n{:#?}", blockchain);
     
 }
