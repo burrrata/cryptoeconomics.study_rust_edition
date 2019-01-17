@@ -310,12 +310,38 @@ impl Keys {
     //   type that is encoded to a standard format by the
     //   data_encode() function
     // - output needs to return an i32, not a Vec<i32>
-    // Toy RSA function for creating digital signatures
-    pub fn sign(self,
-                thing_to_be_signed: i32,
-                private_key: i32) -> i32 {
+    
+    // Toy RSA functions for creating digital signatures
+    
+    pub fn sign_i32(self,
+                    thing_to_be_signed: i32,
+                    priv_key: i32) -> i32 {
         
-        let signature = Keys::exp_mod(self, thing_to_be_signed, private_key);
+        let signature = Keys::exp_mod(self, thing_to_be_signed, priv_key);
+        
+        signature
+    }
+    
+    pub fn sign_vec_i32(self,
+                        thing_to_be_signed: Vec<i32>,
+                        priv_key: i32) -> Vec<i32> {
+        
+        let output = thing_to_be_signed.iter()
+                          .map(|x| Keys::exp_mod(self, *x, priv_key,))
+                          .collect();
+        output
+    }
+    
+    pub fn sign<T>(self,
+                   thing_to_be_signed: &T,
+                   priv_key: i32) -> String {
+        
+        let hashed_thing = Hash::hash(thing_to_be_signed);
+        let hashed_thing_vec = DataEncoding::s2v(hashed_thing);
+        let signed_vec = hashed_thing_vec.iter()
+                          .map(|x| Keys::exp_mod(self, *x, priv_key,))
+                          .collect();
+        let signature = DataEncoding::v2s(signed_vec);
         
         signature
     }
@@ -353,12 +379,17 @@ pub struct Account {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct TX {
+pub struct TxData {
     sender: i32,
     sender_nonce: i32,
-    sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
     amount: i32,
     receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    tx_data: TxData,
+    tx_signature: String,
 }
 
 #[derive(Debug)]
@@ -400,16 +431,18 @@ impl State {
                      receiver_pub_key: i32,
                      amount: i32) {
         
-        let sender_nonce = self.accounts.get(&sender_pub_key).unwrap().nonce;
-        let data_to_be_signed = sender_nonce + sender_pub_key;
-        let tx_signature = Keys::sign(KEY_PARAMS, data_to_be_signed, sender_priv_key);
-        
-        let tx = TX {
+        let tx_data = TxData {
             sender: sender_pub_key,
             sender_nonce: sender_priv_key,
-            sender_signature: tx_signature, // sender priv key signs a hash of the sending address and nonce
             receiver: receiver_pub_key,
             amount: amount,
+        };
+        
+        let tx_signature = Keys::sign(KEY_PARAMS, &tx_data, sender_priv_key);
+        
+        let tx = TX {
+            tx_data: tx_data,
+            tx_signature: tx_signature,
         };
         
         self.pending_tx.push(tx);
