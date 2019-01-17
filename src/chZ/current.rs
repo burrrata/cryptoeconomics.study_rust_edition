@@ -57,7 +57,6 @@ use std::hash::Hasher;
 //  - hash function: user defined
 //  - key gen function: user defined
 
-
 // STANDARD STRUCTS
 // These will keep the same name throughout the program, but their underlying
 // logic can be changed/upgraded.
@@ -67,10 +66,179 @@ use std::hash::Hasher;
 // - Block
 // - State
 
-#[derive(Debug, Clone, PartialEq)]
+// STANDARD FUNCTIONS
+// These will keep the same name throughout the program, but their underlying
+// logic can be changed/upgraded.
+// - data_encode()
+// - key_gen()
+// - hash()
+// - new_account()
+// - new_tx()
+// - new_state_transition() (checks pending tx and produces new block)
+// - check_state_transition() (checks the most recently produced block)
+
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Account {
-    balance: f32,
+    balance: i32,
     nonce: i32,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Keys {
+    min: i32,
+    max: i32,
+    p: i32,
+    q: i32,
+    modulo: i32,
+    ctf_pq: i32, 
+}
+
+// "RSA" Key Generation and Signing
+impl Keys {
+    
+    // Set range for keys
+    // - note: greater than 1000000 tends to break the Rust Playground
+    pub const min: i32 = 0;
+    pub const max: i32 = 1000000;
+    
+    // Set toy "RSA" parameters
+    pub const p: i32 = 61;
+    pub const q: i32 = 53;
+    pub const modulo: i32 = 3233; // Keys::p * Keys::q;
+    pub const ctf_pq: i32 = 780; // Keys::ctf(Keys::p, Keys::q);
+    
+    // These functionsare not needed as we have hard coded
+    // the modulo and ctf_pq values
+    /*
+    // greatest common divisor
+    pub fn gcd(a: i32,
+               b: i32) -> i32 {
+        
+        let (mut a, mut b) = if a > b {
+            (a, b)
+        } else {
+            (b, a)
+        };
+    
+        while b != 0 {
+            let r = a % b;
+            a = b;
+            b = r;
+        }
+    
+        a
+    }
+    
+    // lowest common multiple
+    pub fn lcm(a: i32,
+               b: i32) -> i32 {
+        
+        let lcm = (a * b) / Keys::gcd(a, b);
+        
+        lcm
+    }
+    
+    // Carmichael's totient function
+    pub fn ctf(a: i32,
+               b: i32) -> i32 {
+        
+        Keys::lcm(a - 1, b - 1)
+    }
+    */
+    
+    // slowly check if a number is prime
+    pub fn slow_prime_check(self,
+                            num: i32) -> bool {
+        
+        if num < self.min {
+            println!("number must be greater than {}", self.min);
+        }
+        
+        if num > self.max {
+            println!("number cannot be greater than {}", self.max);
+        }
+        
+        for i in 2..num{
+            if num % i == 0 {
+                return false
+            }
+        }
+        
+        true
+    }
+
+    // slowly, yet randomly, generate a prime number within a range
+    pub fn prime_gen(self) -> i32 {
+        
+        for _i in 0..self.max {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
+                return p
+            }
+        }
+        
+        0
+    }
+
+    // generate a private key within a range
+    pub fn priv_key_gen(self) -> i32 {
+        
+        let priv_key = Keys::prime_gen(self);
+        assert!(self.max % priv_key != 0);
+        
+        priv_key
+    }
+    
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(self,
+                    priv_key: i32)-> i32 {
+        
+        for i in 2..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
+                return i
+            }
+        }
+        println!("Try larger search?");
+        
+        0
+    }
+    
+    // create a public key from a pricate key and RSA param data
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -> i32 {
+        
+        let pub_key = Keys::slow_mmi(self, priv_key);
+        
+        pub_key
+    }
+    
+    // Because... Rust.
+    pub fn exp_mod(self,
+                   input: i32,
+                   power: i32) -> i32 {
+        
+        let mut out = (input * input) % self.modulo;
+        // because the first iter of out took 2 off the base
+        for _i in 0..power-2 {
+            out = (out * input) % self.modulo;
+        }
+        
+        out
+    }
+    
+    // toy RSA function for creating digital signatures
+    pub fn toy_rsa_sig(self,
+                       thing_to_be_signed: Vec<i32>,
+                       private_key: i32) -> Vec<i32> {
+        
+        let signature = thing_to_be_signed.iter()
+                                          .map(|x| Keys::exp_mod(self, *x, private_key))
+                                          .collect();
+        
+        signature
+    }
+    
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -78,7 +246,7 @@ struct TX {
     sender: i32,
     sender_nonce: i32,
     sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
-    amount: f32,
+    amount: i32,
     receiver: i32,
 }
 
@@ -98,6 +266,8 @@ pub struct Block {
     transactions: Vec<TX>,
 }
 
+
+
 #[derive(Debug)]
 struct State {
     accounts: HashMap<i32, Account>,
@@ -105,26 +275,19 @@ struct State {
     history: Vec<Block>,
 }
 
-
-// STANDARD FUNCTIONS
-// These will keep the same name throughout the program, but their underlying
-// logic can be changed/upgraded.
-// - data_encode()
-// - key_gen()
-// - hash()
-// - new_account()
-// - new_tx()
-// - new_state_transition() (checks pending tx and produces new block)
-// - check_state_transition() (checks the most recently produced block)
-
 impl State {
     
-    // Turn Arbitrary Stuff Into &[u8] Slice
+    // Turn stuff into an &[u8] slice
     pub unsafe fn data_encode<T: Sized>(p: &T) -> &[u8] {
         ::std::slice::from_raw_parts(
             (p as *const T) as *const u8,
             ::std::mem::size_of::<T>(),
         )
+    }
+    
+    // Create a new account
+    pub fn create_account() {
+        
     }
     
 }
