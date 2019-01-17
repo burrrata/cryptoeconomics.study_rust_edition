@@ -98,6 +98,29 @@ impl DataEncoding {
             ::std::mem::size_of::<T>(),
         )
     }    
+
+    // convert string to Vec<i32>
+    pub fn s2v(input: String) -> Vec<i32> {
+        
+        let output: Vec<i32> = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+    
+    // convert Vec<i32> to string
+    pub fn v2s(input: Vec<i32>) -> String {
+        
+        let output_u8: Vec<u8> = input.iter()
+                                      .map(|x| *x as u8)
+                                      .collect();
+        let output_string = String::from_utf8(output_u8).unwrap();
+        
+        output_string
+    }    
+    
     
 }
 
@@ -282,7 +305,7 @@ impl Keys {
     // - change thing_to_be_singed from Vec<i32> to any arbitrary
     //   type that is encoded to a standard format by the
     //   data_encode() function
-    // - output should be a String or i32, not a Vec
+    // - output needs to return an i32, not a Vec<i32>
     // Toy RSA function for creating digital signatures
     pub fn sign(self,
                 thing_to_be_signed: Vec<i32>,
@@ -390,5 +413,5 @@ impl State {
         };
         
         self.pending_tx.push(tx);
-    }   
+    }
 }
