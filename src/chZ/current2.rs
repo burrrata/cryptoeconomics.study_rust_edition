@@ -304,28 +304,22 @@ impl Keys {
         out
     }
     
-    // TODO
-    //
-    // - change thing_to_be_singed from Vec<i32> to any arbitrary
-    //   type that is encoded to a standard format by the
-    //   data_encode() function
-    // - output needs to return an i32, not a Vec<i32>
-    
-    // Toy RSA functions for creating digital signatures
+    // Sign a TX with a toy RSA function
     pub fn sign<T>(self,
                    thing_to_be_signed: &T,
-                   priv_key: i32) -> String {
+                   signing_key: i32) -> String {
         
         let hashed_thing = Hash::hash(thing_to_be_signed);
         let hashed_thing_vec = DataEncoding::s2v(hashed_thing);
         let signed_vec = hashed_thing_vec.iter()
-                          .map(|x| Keys::exp_mod(self, *x, priv_key,))
+                          .map(|x| Keys::exp_mod(self, *x, signing_key,))
                           .collect();
         let signature = DataEncoding::v2s(signed_vec);
         
         signature
     }
     
+    // Check signature on a TX
     pub fn check_tx_signature(self,
                               tx: TX) -> bool {
         
@@ -498,7 +492,9 @@ impl State {
     // Create a new state transition
     pub fn state_transition_function(&mut self) {
         
-        
+        let pending_tx = self.pending_tx.clone();
+        let accounts = self.accounts.clone();
+        STF::verify_vec_of_tx(accounts, pending_tx);
         
     }
 }
@@ -514,7 +510,7 @@ fn main() {
     };
     //println!("blockchain:\n{:#?}", blockchain);
     
-    for i in 0..3 {
+    for _i in 0..3 {
         blockchain.create_account();
     }
     //println!("blockchain:\n{:#?}", blockchain);
