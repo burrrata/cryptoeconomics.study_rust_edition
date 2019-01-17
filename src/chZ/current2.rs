@@ -150,6 +150,32 @@ impl Hash {
         hex_digest
     }    
     
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn hash_tree<T>(stuff: Vec<T>) -> String {
+        
+        let mut v = Vec::new();
+
+        for i in &stuff {
+            let hashed = Hash::hash(&i);
+            v.push(hashed);
+        }
+
+        if v.len() % 2 == 1 {
+            let last = v.last().cloned().unwrap();
+            v.push(last);
+        }
+
+        while v.len() > 1 {
+            let mut h1 = v.remove(0);
+            let mut h2 = v.remove(0);
+            h1.push_str(&mut h2);
+            let nh = Hash::hash(&h1);
+            v.push(nh);
+        }
+        
+        v.pop().unwrap()
+    }
+    
 }
 
 
@@ -341,13 +367,14 @@ impl Keys {
 }
 
 
-pub struct STF;
+pub struct STF {
+    difficulty: i32,
+    max_attempts: i32,
+}
 
 impl STF {
     
-    // Iterates through a Vec of TX
-    // Ignore invalid TX
-    // Add valid TX to a block
+    // This function encodes the rules of what qualifies as a "valid tx"
     pub fn verify_vec_of_tx(accounts: HashMap<i32, Account>,
                             pending_tx: Vec<TX>) -> Vec<TX> {
         
@@ -393,6 +420,37 @@ impl STF {
         
         verified_tx
     }
+
+    // This function creates a proof that authorizes the state transition
+    // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
+    pub fn proof(self, mut block: Block) -> (Blockheader, String) {
+    
+        let difficulty = 5;
+        let max = 1000000;
+        
+        for i in 0..max {
+        
+            let mut count = 0;
+            let hash = Hash::hash(&block.header);
+
+            for i in hash.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+            
+            if count > difficulty {
+                return (block.header, hash);
+            }
+            
+            block.header.nonce += 1;
+        }
+        
+        return (block.header, String::from("!!! PoW ERROR !!!") )
+    }
+    
+    
+    
 }
 
 
@@ -492,9 +550,11 @@ impl State {
     // Create a new state transition
     pub fn state_transition_function(&mut self) {
         
-        let pending_tx = self.pending_tx.clone();
         let accounts = self.accounts.clone();
-        STF::verify_vec_of_tx(accounts, pending_tx);
+        let pending_tx = self.pending_tx.clone();
+        let history = self.history.clone();
+        
+        let verified_tx = STF::verify_vec_of_tx(accounts, pending_tx);
         
     }
 }
