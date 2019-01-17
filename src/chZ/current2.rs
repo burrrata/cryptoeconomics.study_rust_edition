@@ -80,6 +80,54 @@ use std::hash::Hasher;
 
 
 
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &[u8] slice
+    pub unsafe fn to_u8<T: Sized>(p: &T) -> &[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::<T>(),
+        )
+    }    
+    
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage ("preimage" = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex string
+    pub fn hash<T>(preimage: &T) -> String {
+        
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        let digest = hasher.finish();
+        let hex_digest = format!("{:#X}", digest);
+        
+        hex_digest
+    }    
+    
+}
+
+
+
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Keys {
     min: i32,
@@ -90,24 +138,17 @@ pub struct Keys {
     ctf_pq: i32, 
 }
 
-
-//pub struct Keys;
+pub static KEY_PARAMS: Keys = Keys {
+    min: 0,
+    max: 1000000,
+    p: 61,
+    q: 53,
+    modulo: 3233,
+    ctf_pq: 780,
+};
 
 // "RSA" Key Generation and Signing
 impl Keys {
-    
-    /*
-    // Set range for keys
-    // - note: greater than 1000000 tends to break the Rust Playground
-    pub const min: i32 = 0;
-    pub const max: i32 = 1000000;
-    
-    // Set toy "RSA" parameters
-    pub const p: i32 = 61;
-    pub const q: i32 = 53;
-    pub const modulo: i32 = 3233; // Keys::p * Keys::q;
-    pub const ctf_pq: i32 = 780; // Keys::ctf(Keys::p, Keys::q);
-    */
     
     // These functionsare not needed as we have hard coded
     // the modulo and ctf_pq values
@@ -214,6 +255,13 @@ impl Keys {
         pub_key
     }
     
+    // generate a private/public key pair
+    pub fn generate_keypair(self) -> (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
+        (priv_key, pub_key)
+    }
+    
     // Because... Rust.
     pub fn exp_mod(self,
                    input: i32,
@@ -247,6 +295,11 @@ impl Keys {
     
 }
 
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct TX {
     sender: i32,
@@ -273,51 +326,6 @@ pub struct Block {
 }
 
 
-pub struct DataEncoding;
-
-impl DataEncoding {
-    
-    // TODO
-    //
-    // - Upgrade to something like what Substrate uses
-    //   https://github.com/paritytech/substrate/tree/master/core/serializer
-    // - Also, does it need it's own struct/impl or does it
-    //   make sense to have it in the State impl?
-    //
-    // Turn stuff into an &[u8] slice
-    pub unsafe fn to_u8<T: Sized>(p: &T) -> &[u8] {
-        ::std::slice::from_raw_parts(
-            (p as *const T) as *const u8,
-            ::std::mem::size_of::<T>(),
-        )
-    }    
-    
-}
-
-
-pub struct Hash;
-
-impl Hash {
-    
-    // Takes a preimage ("preimage" = fancy word for input to a hash function)
-    // Encodes it via the data_encode() function
-    // Hashes that data into a hex string
-    pub fn hash<T>(preimage: &T) -> String {
-        
-        let stuff_as_u8 = unsafe {
-            DataEncoding::to_u8(preimage)
-        };
-        
-        let mut hasher = DefaultHasher::new();
-        hasher.write(stuff_as_u8);
-        let digest = hasher.finish();
-        let hex_digest = format!("{:#X}", digest);
-        
-        hex_digest
-    }    
-    
-}
-
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Account {
@@ -327,7 +335,6 @@ pub struct Account {
 
 #[derive(Debug)]
 pub struct State {
-    key_params: Keys,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
@@ -338,8 +345,7 @@ impl State {
     // Create a new account
     pub fn create_account(&mut self) {
         
-        let priv_key = Keys::priv_key_gen(self.key_params);
-        let pub_key = Keys::pub_key_gen(self.key_params, priv_key);
+        let (priv_key, pub_key) = Keys::generate_keypair(KEY_PARAMS);
         let new_account = Account {
             balance: 0,
             nonce: 0,
