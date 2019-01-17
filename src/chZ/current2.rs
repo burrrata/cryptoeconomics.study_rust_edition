@@ -2,7 +2,7 @@
 // When we encrypt a TX in the sign() function
 // the resulting bytes are not valid utf8
 // and thus do not convert to a String
-// so v2s just fails the entire program shuts down
+// so v2s fails and the entire program shuts down
 
 
 
