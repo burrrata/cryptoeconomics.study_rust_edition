@@ -282,6 +282,7 @@ impl Keys {
     // - change thing_to_be_singed from Vec<i32> to any arbitrary
     //   type that is encoded to a standard format by the
     //   data_encode() function
+    // - output should be a String or i32, not a Vec
     // Toy RSA function for creating digital signatures
     pub fn sign(self,
                 thing_to_be_signed: Vec<i32>,
@@ -301,14 +302,7 @@ impl Keys {
 
 
 
-#[derive(Debug, Clone, PartialEq)]
-pub struct TX {
-    sender: i32,
-    sender_nonce: i32,
-    sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
-    amount: i32,
-    receiver: i32,
-}
+
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Blockheader {
@@ -332,6 +326,15 @@ pub struct Block {
 pub struct Account {
     balance: i32,
     nonce: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    sender: i32,
+    sender_nonce: i32,
+    sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
+    amount: i32,
+    receiver: i32,
 }
 
 #[derive(Debug)]
@@ -366,7 +369,26 @@ impl State {
         println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
     
-    
-    
-    
+    // Create a new TX
+    pub fn create_tx(&mut self,
+                     sender_pub_key: i32,
+                     sender_priv_key: i32,
+                     receiver_pub_key: i32,
+                     amount: i32) {
+        
+        //let sender_nonce = self.accounts.get(&sender_pub_key).unwrap().nonce();
+        //let thing_to_be_signed = sender_nonce + sender_pub_key;
+        //let tx_signature = Keys::sign(KEY_PARAMS, thing_to_be_signed, sender_private_key);
+        let tx_signature = 0;
+        
+        let tx = TX {
+            sender: sender_pub_key,
+            sender_nonce: sender_priv_key,
+            sender_signature: tx_signature, // sender priv key signs a hash of the sending address and nonce
+            receiver: receiver_pub_key,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
+    }   
 }
