@@ -90,9 +90,13 @@ pub struct Keys {
     ctf_pq: i32, 
 }
 
+
+//pub struct Keys;
+
 // "RSA" Key Generation and Signing
 impl Keys {
     
+    /*
     // Set range for keys
     // - note: greater than 1000000 tends to break the Rust Playground
     pub const min: i32 = 0;
@@ -103,6 +107,7 @@ impl Keys {
     pub const q: i32 = 53;
     pub const modulo: i32 = 3233; // Keys::p * Keys::q;
     pub const ctf_pq: i32 = 780; // Keys::ctf(Keys::p, Keys::q);
+    */
     
     // These functionsare not needed as we have hard coded
     // the modulo and ctf_pq values
@@ -224,13 +229,14 @@ impl Keys {
     }
     
     // TODO
+    //
     // - change thing_to_be_singed from Vec<i32> to any arbitrary
     //   type that is encoded to a standard format by the
     //   data_encode() function
-    // toy RSA function for creating digital signatures
-    pub fn toy_rsa_sig(self,
-                       thing_to_be_signed: Vec<i32>,
-                       private_key: i32) -> Vec<i32> {
+    // Toy RSA function for creating digital signatures
+    pub fn sign(self,
+                thing_to_be_signed: Vec<i32>,
+                private_key: i32) -> Vec<i32> {
         
         let signature = thing_to_be_signed.iter()
                                           .map(|x| Keys::exp_mod(self, *x, private_key))
@@ -242,7 +248,7 @@ impl Keys {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-struct TX {
+pub struct TX {
     sender: i32,
     sender_nonce: i32,
     sender_signature: i32, // sender priv key signs a hash of the sending address and nonce
@@ -267,14 +273,60 @@ pub struct Block {
 }
 
 
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &[u8] slice
+    pub unsafe fn to_u8<T: Sized>(p: &T) -> &[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::<T>(),
+        )
+    }    
+    
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage ("preimage" = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex string
+    pub fn hash<T>(preimage: &T) -> String {
+        
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        let digest = hasher.finish();
+        let hex_digest = format!("{:#X}", digest);
+        
+        hex_digest
+    }    
+    
+}
+
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct Account {
+pub struct Account {
     balance: i32,
     nonce: i32,
 }
 
 #[derive(Debug)]
-struct State {
+pub struct State {
     key_params: Keys,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
@@ -282,19 +334,7 @@ struct State {
 }
 
 impl State {
-    
-    
-    // TODO
-    // upgrade to something like what Substrate uses
-    // - https://github.com/paritytech/substrate/tree/master/core/serializer
-    // Turn stuff into an &[u8] slice
-    pub unsafe fn data_encode<T: Sized>(p: &T) -> &[u8] {
-        ::std::slice::from_raw_parts(
-            (p as *const T) as *const u8,
-            ::std::mem::size_of::<T>(),
-        )
-    }
-    
+
     // Create a new account
     pub fn create_account(&mut self) {
         
