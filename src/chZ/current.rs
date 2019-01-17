@@ -78,11 +78,7 @@ use std::hash::Hasher;
 // - check_state_transition() (checks the most recently produced block)
 
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct Account {
-    balance: i32,
-    nonce: i32,
-}
+
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Keys {
@@ -227,6 +223,10 @@ impl Keys {
         out
     }
     
+    // TODO
+    // - change thing_to_be_singed from Vec<i32> to any arbitrary
+    //   type that is encoded to a standard format by the
+    //   data_encode() function
     // toy RSA function for creating digital signatures
     pub fn toy_rsa_sig(self,
                        thing_to_be_signed: Vec<i32>,
@@ -267,9 +267,15 @@ pub struct Block {
 }
 
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct Account {
+    balance: i32,
+    nonce: i32,
+}
 
 #[derive(Debug)]
 struct State {
+    key_params: Keys,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
@@ -277,6 +283,10 @@ struct State {
 
 impl State {
     
+    
+    // TODO
+    // upgrade to something like what Substrate uses
+    // - https://github.com/paritytech/substrate/tree/master/core/serializer
     // Turn stuff into an &[u8] slice
     pub unsafe fn data_encode<T: Sized>(p: &T) -> &[u8] {
         ::std::slice::from_raw_parts(
@@ -286,8 +296,26 @@ impl State {
     }
     
     // Create a new account
-    pub fn create_account() {
+    pub fn create_account(&mut self) {
         
+        let priv_key = Keys::priv_key_gen(self.key_params);
+        let pub_key = Keys::pub_key_gen(self.key_params, priv_key);
+        let new_account = Account {
+            balance: 0,
+            nonce: 0,
+        };
+        
+        if self.accounts.contains_key(&pub_key) {
+            println!("Bummer... account collision.");
+        }
+        
+        self.accounts.insert(pub_key, new_account);
+        println!("\nThis is your public key: {:#?}", &pub_key);
+        println!("This is your private key: {:#?}", &priv_key);
+        println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
+    
+    
+    
     
 }
