@@ -312,26 +312,6 @@ impl Keys {
     // - output needs to return an i32, not a Vec<i32>
     
     // Toy RSA functions for creating digital signatures
-    
-    pub fn sign_i32(self,
-                    thing_to_be_signed: i32,
-                    priv_key: i32) -> i32 {
-        
-        let signature = Keys::exp_mod(self, thing_to_be_signed, priv_key);
-        
-        signature
-    }
-    
-    pub fn sign_vec_i32(self,
-                        thing_to_be_signed: Vec<i32>,
-                        priv_key: i32) -> Vec<i32> {
-        
-        let output = thing_to_be_signed.iter()
-                          .map(|x| Keys::exp_mod(self, *x, priv_key,))
-                          .collect();
-        output
-    }
-    
     pub fn sign<T>(self,
                    thing_to_be_signed: &T,
                    priv_key: i32) -> String {
@@ -344,6 +324,26 @@ impl Keys {
         let signature = DataEncoding::v2s(signed_vec);
         
         signature
+    }
+    
+    pub fn check_signature(self,
+                           signature: String,
+                           pub_key: i32,
+                           tx: TX) -> bool {
+        
+        let v = DataEncoding::s2v(signature);
+        let counter_signed_v = v.iter()
+                                .map(|x| Keys::exp_mod(self, *x, pub_key,))
+                                .collect();
+        let counter_signed_hash = DataEncoding::v2s(counter_signed_v);
+        
+        let hashed_tx = Hash::hash(&tx.data);
+        
+        if counter_signed_hash == hashed_tx {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
@@ -388,8 +388,8 @@ pub struct TxData {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct TX {
-    tx_data: TxData,
-    tx_signature: String,
+    data: TxData,
+    signature: String,
 }
 
 #[derive(Debug)]
@@ -431,18 +431,18 @@ impl State {
                      receiver_pub_key: i32,
                      amount: i32) {
         
-        let tx_data = TxData {
+        let data = TxData {
             sender: sender_pub_key,
             sender_nonce: sender_priv_key,
             receiver: receiver_pub_key,
             amount: amount,
         };
         
-        let tx_signature = Keys::sign(KEY_PARAMS, &tx_data, sender_priv_key);
+        let signature = Keys::sign(KEY_PARAMS, &data, sender_priv_key);
         
         let tx = TX {
-            tx_data: tx_data,
-            tx_signature: tx_signature,
+            data: data,
+            signature: signature,
         };
         
         self.pending_tx.push(tx);
