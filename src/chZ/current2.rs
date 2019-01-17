@@ -111,6 +111,24 @@ impl DataEncoding {
         )
     }    
 
+    // i32 -> String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn i2s(input: i32) -> String {
+        
+        let output = input.to_string();
+        
+        output
+    }
+    
+    // String -> i32
+    // https://stackoverflow.com/questions/27043268/convert-a-string-to-int-in-rust
+    pub fn s2i(input: String) -> i32 {
+        
+        let output = input.parse::<i32>().unwrap();
+        
+        output
+    }
+
     // string -> Vec<i32>
     pub fn s2v(input: String) -> Vec<i32> {
         
@@ -121,28 +139,10 @@ impl DataEncoding {
         
         output
     }
-    
-    // Vec<i32> -> string
-    pub fn v2s(input: Vec<i32>) -> String {
-        
-        let output_u8: Vec<u8> = input.iter()
-                                      .map(|x| *x as u8)
-                                      .collect();
-                                      
-        // TODO
-        // When we encrypto this value in the sign() function
-        // the resulting bytes are not valid utf8
-        // and thus do not convert to a String
-        //
-        // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
-        
-        let output_string = String::from_utf8(output_u8).unwrap();
-        println!("encoding");
-        output_string
-    }    
-    
+ 
     // Vec<i32> -> String
-    pub fn v2s_new(input: Vec<i32>) -> String {
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn v2s(input: Vec<i32>) -> String {
         
         let mut output_vec = Vec::new();
         for i in input {
