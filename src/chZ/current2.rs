@@ -326,14 +326,13 @@ impl Keys {
         signature
     }
     
-    pub fn check_signature(self,
-                           signature: String,
-                           pub_key: i32,
-                           tx: TX) -> bool {
+    pub fn check_tx_signature(self,
+                              tx: TX) -> bool {
         
-        let v = DataEncoding::s2v(signature);
+        let cloned = tx.clone();
+        let v = DataEncoding::s2v(cloned.signature);
         let counter_signed_v = v.iter()
-                                .map(|x| Keys::exp_mod(self, *x, pub_key,))
+                                .map(|x| Keys::exp_mod(self, *x, tx.data.sender,))
                                 .collect();
         let counter_signed_hash = DataEncoding::v2s(counter_signed_v);
         
@@ -348,28 +347,59 @@ impl Keys {
 }
 
 
+pub struct STF;
 
-
-
-
-
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct Blockheader {
-    timestamp: i32,
-    block_number: i32,
-    nonce: i32,
-    previous_block_hash: String,  
-    current_block_hash: String,  
+impl STF {
+    
+    // Iterates through a Vec of TX
+    // Ignore invalid TX
+    // Add valid TX to a block
+    pub fn verify_vec_of_tx(accounts: HashMap<i32, Account>,
+                            pending_tx: Vec<TX>) -> Vec<TX> {
+        
+        let mut verified_tx = Vec::new();
+        
+        for i in pending_tx {
+        
+            if !(accounts.contains_key(&i.data.sender)) {
+                println!("Invalid TX: sender not found.");
+                break
+            }
+            
+            if !(accounts.contains_key(&i.data.receiver)) {
+                println!("Invalid TX: receiver not found.");
+                break
+            }
+            
+            if !(i.data.amount > 0) {
+                println!("Invalid TX: negative amount error.");
+                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                break
+            }
+            
+            if !(accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
+                println!("Invalid TX: insufficient funds.");
+                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                break            
+            }
+            
+            if !(i.data.sender_nonce == accounts.get(&i.data.sender).unwrap().nonce) {
+                println!("Invalid TX: potential replay tx.");
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                break
+            }
+            
+            if !(Keys::check_tx_signature(KEY_PARAMS, i.clone())) {
+                println!("TX No Good!");
+                continue
+            }
+            
+            verified_tx.push(i.clone());
+        }
+        
+        verified_tx
+    }
 }
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct Block {
-    proof: String,
-    header: Blockheader,
-    transactions: Vec<TX>,
-}
-
 
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -390,6 +420,22 @@ pub struct TxData {
 pub struct TX {
     data: TxData,
     signature: String,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Blockheader {
+    timestamp: i32,
+    block_number: i32,
+    nonce: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    header: Blockheader,
+    transactions: Vec<TX>,
 }
 
 #[derive(Debug)]
@@ -416,6 +462,7 @@ impl State {
         
         if self.accounts.contains_key(&pub_key) {
             println!("Bummer... account collision.");
+            return
         }
         
         self.accounts.insert(pub_key, new_account);
@@ -447,4 +494,29 @@ impl State {
         
         self.pending_tx.push(tx);
     }
+    
+    // Create a new state transition
+    pub fn state_transition_function(&mut self) {
+        
+        
+        
+    }
+}
+
+
+
+fn main() {
+    
+    let mut blockchain = State {
+        accounts: HashMap::new(),
+        pending_tx: Vec::new(),
+        history: Vec::new(),
+    };
+    //println!("blockchain:\n{:#?}", blockchain);
+    
+    for i in 0..3 {
+        blockchain.create_account();
+    }
+    //println!("blockchain:\n{:#?}", blockchain);
+    
 }
