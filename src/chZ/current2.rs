@@ -128,6 +128,8 @@ impl Hash {
 
 
 
+/// "RSA" Key Generation and Signing ///
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Keys {
     min: i32,
@@ -147,7 +149,6 @@ pub static KEY_PARAMS: Keys = Keys {
     ctf_pq: 780,
 };
 
-// "RSA" Key Generation and Signing
 impl Keys {
     
     // These functionsare not needed as we have hard coded
@@ -345,6 +346,10 @@ impl State {
     // Create a new account
     pub fn create_account(&mut self) {
         
+        // TODO
+        // - How can I make Keys::generator_keypair() not
+        //   take in anything as input and have all the params
+        //   stored within the Keys library?
         let (priv_key, pub_key) = Keys::generate_keypair(KEY_PARAMS);
         let new_account = Account {
             balance: 0,
