@@ -175,7 +175,9 @@ impl Hash {
         let hex_digest = format!("{:#X}", digest);
         
         hex_digest
-        //digest.to_string()
+        
+        // IF we can make the hash function output an int rather than a string
+        // we can skip a lot of the data encoding/decoding steps
     }    
     
     // Create A Merkle Tree Of All TX In A Vec
