@@ -1,3 +1,11 @@
+// TODO
+// When we encrypt a TX in the sign() function
+// the resulting bytes are not valid utf8
+// and thus do not convert to a String
+// so v2s just fails the entire program shuts down
+
+
+
 extern crate rand;
 use rand::prelude::*;
 
@@ -120,8 +128,13 @@ impl DataEncoding {
         let output_u8: Vec<u8> = input.iter()
                                       .map(|x| *x as u8)
                                       .collect();
+                                      
+        // TODO
+        // When we encrypto this value in the sign() function
+        // the resulting bytes are not valid utf8
+        // and thus do not convert to a String
         let output_string = String::from_utf8(output_u8).unwrap();
-        
+        println!("encoding");
         output_string
     }    
     
@@ -341,7 +354,7 @@ impl Keys {
                           .map(|x| Keys::exp_mod(self, *x, signing_key,))
                           .collect();
         let signature = DataEncoding::v2s(signed_vec);
-        
+        println!("signing");
         signature
     }
     
@@ -585,6 +598,7 @@ impl State {
                      receiver_pub_key: i32,
                      amount: i32) {
         
+        
         let data = TxData {
             sender: sender_pub_key,
             sender_nonce: sender_priv_key,
@@ -593,6 +607,8 @@ impl State {
         };
         
         let signature = Keys::sign(KEY_PARAMS, &data, sender_priv_key);
+        
+        println!("creating tx");
         
         let tx = TX {
             data: data,
@@ -617,24 +633,49 @@ impl State {
 
 fn main() {
     
+    // Init "blockchain"
     let mut blockchain = State {
         accounts: HashMap::new(),
         pending_tx: Vec::new(),
         history: Vec::new(),
     };
+    println!("blockchain:\n{:#?}", blockchain);
     
+    // Create random accounts
     for _i in 0..3 {
         blockchain.create_account();
     }
+    println!("blockchain:\n{:#?}", blockchain);
     
-    // create some tx
-    /*
-    for _i in 0..3 {
-        blockchain.new_tx()
-    }
-    */
+    // Manually create testing account 0
+    let acc_0_pub_key = 773;
+    let acc_0_priv_key = 557;
+    let acc_0 = Account {
+        balance: 10000,
+        nonce: 0,
+    };
+    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    println!("blockchain:\n{:#?}", blockchain);
     
-    //blockchain.state_transition_function();
-    //println!("blockchain:\n{:#?}", blockchain);
+    // Manually create testing account 1
+    let acc_1_pub_key = 179;
+    let acc_1_priv_key = 719;
+    let acc_1 = Account {
+        balance: 10000,
+        nonce: 0,        
+    };
+    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    println!("blockchain:\n{:#?}", blockchain);
+    
+    // test a tx
+    blockchain.create_tx(acc_0_pub_key,
+                        acc_0_priv_key,
+                        acc_1_pub_key,
+                        50);
+    println!("blockchain:\n{:#?}", blockchain);
+    
+    // process the tx
+    blockchain.state_transition_function();
+    println!("blockchain:\n{:#?}", blockchain);
     
 }
