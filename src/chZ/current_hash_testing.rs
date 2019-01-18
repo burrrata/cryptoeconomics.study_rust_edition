@@ -1,9 +1,7 @@
-// TODO
-// When we encrypt a TX in the sign() function
-// the resulting bytes are not valid utf8
-// and thus do not convert to a String
-// so v2s fails and the entire program shuts down
-
+// PROBLEM
+// When you hash a TX, it creates a large integer
+// When you try to sign that TX the Rust Playground cannot multiply large integers
+// What to do...
 
 
 extern crate rand;
@@ -165,6 +163,7 @@ impl Hash {
     // Hashes that data into a hex or an integer (you choose)
     pub fn hash<T>(preimage: &T) -> i32 {
         
+        println!("\nHASHING");
         let stuff_as_u8 = unsafe {
             DataEncoding::to_u8(preimage)
         };
@@ -173,19 +172,15 @@ impl Hash {
         hasher.write(stuff_as_u8);
         
         // i32
-        let digest = hasher.finish() as i32;
-        digest 
-        
+        let digest = (hasher.finish() as i32).abs();
+        digest
+
         // hex
         //let hex_digest = format!("{:#X}", digest);
         //hex_digest
     }  
     
-    // TODO
-    // How does chaning the output of Hash::hash() 
-    // from String to i32 affect Hash::hash_tree() ?
-    
-    // Create A Merkle Tree Of All TX In A Vec
+    // Create a hash tree of all TX in a Vec
     pub fn hash_tree<T>(stuff: Vec<T>) -> i32 {
         
         let mut v = Vec::new();
@@ -201,8 +196,8 @@ impl Hash {
         }
 
         while v.len() > 1 {
-            let mut h1 = v.remove(0);
-            let mut h2 = v.remove(0);
+            let mut h1 = v.remove(0).to_string();
+            let mut h2 = v.remove(0).to_string();
             h1.push_str(&mut h2);
             let nh = Hash::hash(&h1);
             v.push(nh);
@@ -356,7 +351,19 @@ impl Keys {
                    input: i32,
                    power: i32) -> i32 {
         
+        println!("\nExponentially Multiplying");
+        println!("exp_mod input: {}", input);
+        println!("exp_mod power: {}", power);
+        
+        if input < 0 || power < 0 {
+            println!("ERROR: exp_mod inputs must be > 0");
+            return 0
+        }
+        
+        println!("!");
         let mut out = (input * input) % self.modulo;
+        println!("out: {}", out);
+        
         // because the first iter of out took 2 off the base
         for _i in 0..power-2 {
             out = (out * input) % self.modulo;
@@ -368,23 +375,24 @@ impl Keys {
     // Sign something with a toy RSA function
     pub fn sign<T>(self,
                    thing_to_be_signed: &T,
-                   signing_key: i32) -> String {
+                   signing_key: i32) -> i32 {
+        
+        println!("SIGNING");
+        //println!("thing to be signed: {:#?}", thing_to_be_signed);
+        println!("signing key: {}", signing_key);
         
         let hashed_thing = Hash::hash(thing_to_be_signed);
-        let hashed_thing_i32 = DataEncoding::s2i(hashed_thing);
-        let signed_thing = Keys::exp_mod(self, hashed_thing_i32, signing_key,);
-        let signature = DataEncoding::i2s(signed_thing);
+        let signed_thing = Keys::exp_mod(self, hashed_thing, signing_key,);
         
-        signature
+        signed_thing
     }
     
     // Check signature on a TX
     pub fn check_tx_signature(self,
                               tx: TX) -> bool {
         
-        let sig = DataEncoding::s2i(tx.signature);
-        let counter_signed_sig = Keys::sign(self, &sig, tx.data.sender);
-        
+        println!("CHEKCING TX SIG");
+        let counter_signed_sig = Keys::sign(self, &tx.signature, tx.data.sender);
         let hashed_tx = Hash::hash(&tx.data);
         
         if counter_signed_sig == hashed_tx {
@@ -448,17 +456,19 @@ impl STF {
 
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
-    pub fn proof(mut block: Block) -> (Blockheader, String) {
+    pub fn proof(mut block: Block) -> (Blockheader, i32) {
     
         let difficulty = 5;
         let max = 1000000;
         
         for i in 0..max {
         
-            let mut count = 0;
             let hash = Hash::hash(&block);
+        
+            let mut count = 0;
+            let hash_counter = hash.to_string();
 
-            for i in hash.chars() {
+            for i in hash_counter.chars() {
                 if i == '0' {
                     count += 1;
                 }
@@ -473,7 +483,7 @@ impl STF {
         }
         
         // failure
-        return (block.blockheader, String::from("!!! PoW ERROR !!!") )
+        return (block.blockheader, 0 )
     }
     
     // Create A New Block With Valid Transactions
@@ -490,7 +500,7 @@ impl STF {
         };
         
         let naive_block = Block {
-            proof: String::from("TBD"),
+            proof: 0,
             blockheader: naive_header,
             transactions: verified_tx.clone(),
         };
@@ -555,7 +565,7 @@ pub struct TxData {
 #[derive(Debug, Clone, PartialEq)]
 pub struct TX {
     data: TxData,
-    signature: String,
+    signature: i32,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -563,13 +573,13 @@ pub struct Blockheader {
     nonce: i32,
     timestamp: i32,
     block_number: i32,
-    previous_block_hash: String,  
-    current_block_hash: String,  
+    previous_block_hash: i32,  
+    current_block_hash: i32,  
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Block {
-    proof: String,
+    proof: i32,
     blockheader: Blockheader,
     transactions: Vec<TX>,
 }
@@ -622,6 +632,7 @@ impl State {
             amount: amount,
         };
         
+        println!("CREATING TX");
         let signature = Keys::sign(KEY_PARAMS, &data, sender_priv_key);
         
         println!("creating tx");
