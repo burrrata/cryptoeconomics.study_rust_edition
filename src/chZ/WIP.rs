@@ -511,12 +511,10 @@ impl STF {
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
     // You could change the logic of this function to satisfy PoS or PoA as well.
-    pub fn proof(mut block_data: BlockData) -> (BlockData, String) {
+    pub fn proof(state: &State,
+                 mut block_data: BlockData) -> (BlockData, String) {
     
-        let difficulty = 5;
-        let max = 1000000;
-        
-        for i in 0..max {
+        for i in 0..state.stf.max {
         
             let mut count = 0;
             let hash = Hash::hash(&block_data);
@@ -527,7 +525,7 @@ impl STF {
                 }
             }
             
-            if count > difficulty {
+            if count > state.stf.difficulty {
                 // success
                 return (block_data, hash);
             }
@@ -557,7 +555,7 @@ impl STF {
             transactions: verified_tx, 
         };
         
-        let (data, proof) = STF::proof(naive_data);
+        let (data, proof) = STF::proof(state, naive_data);
         let block = Block {
             proof: proof,
             data: data,
@@ -567,23 +565,32 @@ impl STF {
     }
     
     // function to transition the state
-    pub fn check_block(block: &mut Block) -> bool {
+    pub fn check_block(state: &State,
+                       block: &mut Block) -> bool {
         
-        // TODO
-        // There needs to be a way to check that 
-        // the difficulty/type of proof is correct.
-        // Does this need to be hard coded into the
-        // State for all "nodes" to see and verify
-        // against?
-        
-        // check proof (in this case PoW)
+        // proof to check
         let submitted_proof = &block.proof;
+        
+        // check proof difficulty is achieved
+        let mut count = 0;
+        for i in submitted_proof.chars() {
+            if i == '0' {
+                count += 1;
+            }
+        }
+        if !(count > state.stf.difficulty) {
+            println!("ERROR: block proof does not meet difficulty requirements.");
+            return false
+        }
+        
+        // check proof matches block
         let hash_check = Hash::hash(&block.data);
         if &hash_check != submitted_proof {
             println!("\nPoW Error: Invalid PoW Hash.");
             return false
         }
         
+        // if tests are passed, return true
         true
     }
     
@@ -731,22 +738,24 @@ impl State {
     // function to transition the state to a new state
     pub fn create_new_state(&mut self) {
         
-        let block = STF::create_block(self);
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
         
-        /*
-        // check that proof is valid
-        if !(STF::check_block(&block)) {
+        // check that the block proof is valid
+        if !(STF::check_block(&self, &mut block)) {
             println!("\nERROR: block not valid.");
             return
         }
-        */
         
-        // transition the state
+        // transition the state by incorporating the
+        // information in the new block
         for i in &block.data.transactions {
             self.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
             self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
             self.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
         }
+        
+        // add the block to the history
         self.history.push(block);
     }
 }
