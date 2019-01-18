@@ -27,6 +27,9 @@ A way to check that any proposed state transitions are valid
 
 ### Building Blocks
 
+Roll your own PoS blockchain! (Go)
+- https://medium.com/@mycoralhealth/code-your-own-proof-of-stake-blockchain-in-go-610cd99aa658
+
 EIP 1011
 - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
 
