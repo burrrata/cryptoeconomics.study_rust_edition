@@ -5,19 +5,16 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+/* GOAL
 
-
-
-
-
-// GOAL
-/*
-Modular architecture where you can change any of the modules,
+A modular architecture where you can change any of the modules,
 say changing PoW to PoS, and it still runs.
+
 */
 
-// TODO
-/*
+
+/* TODO
+
 1! DataEncoding
     - we need a pluggable standard library to encode all
       data into a fast and easy to use uniform format everywhere
@@ -28,8 +25,10 @@ say changing PoW to PoS, and it still runs.
     -!If we change the data format though, won't we need to change
       the architecture of every function too in order to operate
       on that format? Thus, data encoding isn't really "pluggable"?
+
 2! PoS
     - A minimal viable PoS consensus mechanism would be great.
+
 3! Networking
     - This toy example is misleading if you can't simulate network
       activity. We could start by simulating multiple nodes with
@@ -39,8 +38,9 @@ say changing PoW to PoS, and it still runs.
       - https://github.com/paritytech/substrate/tree/master/core/network
 */
 
-// NOTES
-/*
+
+/* NOTES
+
 1) YOU CANNOT CLONE SOMETHING AND GET THE SAME HASH 
 BACK AS YOU WOULD FROM HASHING THE ORIGINAL THING.
 
@@ -53,74 +53,76 @@ than a large number all at once.
 3) u64 and u8 are not iterators.
 */
 
-// ARCHITECTURE
-/*
-//  - State Transition Function
-//  - Data Encoding Function
-//  - Hash Function
-//  - Key Generation Function
-//  - Account Data
-//  - Transaction Data
-//  - State Data: a user defined configuration of the various blockchain modules
 
-// State Transition Function
-//  - determines what is a valid state transition by verifying tx
-//  - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
-//  - impliments the state change
-//  - this needs to contain all params out of the box including the difficulty level
-//    and/or any functions needed to upgrade/modify those params
+/* ARCHITECTURE SKETCH
 
-// Data Encoding Function
-//  - takes in arbitrary data and encodes it in a specific way
-//  - the entire "blockchain" uses this in order to allow any function
-//    to process arbitrary data inputs as well as sharing data between functions
-//  - standard for now, but may become upgradable as Ethreum and Substrate data is explored
+Functions
+- State Transition Function
+- Data Encoding Function
+- Hash Function
+- Key Generation Function
+- Account Data
+- Transaction Data
+- State Data: a user defined configuration of the various blockchain modules
 
-// Hash Function
-//  - takes in arbitrary data and returns a string
-//  - the way that data is hashes or the encoding of the string can be changed
+State Transition Function
+ - determines what is a valid state transition by verifying tx
+ - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
+ - impliments the state change
+ - this needs to contain all params out of the box including the difficulty level
+   and/or any functions needed to upgrade/modify those params
 
-// Key Generation Function
-//  - the method to generate public and private key pairs
-//  - can be a centralized system, RSA, elliptic curves, etc...
-//  - contains all parmas neccessary to work out of the box
+Data Encoding Function
+ - takes in arbitrary data and encodes it in a specific way
+ - the entire "blockchain" uses this in order to allow any function
+   to process arbitrary data inputs as well as sharing data between functions
+ - standard for now, but may become upgradable as Ethreum and Substrate data is explored
 
-// Account Data
-//  - these will ALWAYS be a key/value pair in a HashMap
-//  - what you can change is the data that the account struct holds
-//  - UTXOs TBD
+Hash Function
+ - takes in arbitrary data and returns a string
+ - the way that data is hashes or the encoding of the string can be changed
 
-// TX Data
-//  - standard for now
+Key Generation Function
+ - the method to generate public and private key pairs
+ - can be a centralized system, RSA, elliptic curves, etc...
+ - contains all parmas neccessary to work out of the box
 
-// State Data
-//  - accounts: HashMap<i32, Account>
-//  - pending_tx: Vec<TX>
-//  - history: Vec<Block>
-//  - data encoding: user defined
-//  - State transition function: user defined
-//  - hash function: user defined
-//  - key gen function: user defined
+Account Data
+ - these will ALWAYS be a key/value pair in a HashMap
+ - what you can change is the data that the account struct holds
+ - UTXOs TBD
 
-// STANDARD STRUCTS
-// These will keep the same name throughout the program, but their underlying
-// logic can be changed/upgraded.
-// - Account
-// - TX
-// - BlockHeader
-// - Block
-// - State
+TX Data
+ - standard for now
 
-// STANDARD FUNCTIONS
-// These will keep the same name throughout the program, but their underlying
-// logic can be changed/upgraded.
-// - data_encode()
-// - key_gen()
-// - hash()
-// - new_account()
-// - new_tx()
-// - new_state_transition() (checks pending tx and produces new block)
-// - check_state_transition() (checks the most recently produced block)
+State Data
+ - accounts: HashMap<i32, Account>
+ - pending_tx: Vec<TX>
+ - history: Vec<Block>
+ - data encoding: user defined
+ - State transition function: user defined
+ - hash function: user defined
+ - key gen function: user defined
+
+STANDARD STRUCTS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- Account
+- TX
+- BlockHeader
+- Block
+- State
+
+STANDARD FUNCTIONS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- data_encode()
+- key_gen()
+- hash()
+- new_account()
+- new_tx()
+- new_state_transition() (checks pending tx and produces new block)
+- check_state_transition() (checks the most recently produced block)
 */
 
 
