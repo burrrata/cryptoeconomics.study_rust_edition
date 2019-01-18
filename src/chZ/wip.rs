@@ -1,3 +1,5 @@
+// YOU CANNOT CLONE A BLOCK AND GET THE SAME HASH BACK
+
 // TODO
 // When we encrypt a TX in the sign() function
 // the resulting bytes are not valid utf8
@@ -100,7 +102,7 @@ use std::hash::Hasher;
 // logic can be changed/upgraded.
 // - Account
 // - TX
-// - Blockheader
+// - BlockHeader
 // - Block
 // - State
 
@@ -407,8 +409,6 @@ impl Keys {
                    thing_to_be_signed: &T,
                    signing_key: i32) -> Vec<i32> {
         
-        println!("\nSIGNING TX");
-        
         let hashed_thing = Hash::hash(thing_to_be_signed);
         
         let mut hashed_thing_vec = Vec::new();
@@ -420,13 +420,8 @@ impl Keys {
         for i in hashed_thing_vec {
             signed_vec.push(Keys::exp_mod(self, i, signing_key,));
         }
-        println!("signed_vec: {:?}", signed_vec);
-        
+
         signed_vec
-        
-        //let signature = DataEncoding::v2s(signed_vec);
-        //println!("signature: {}", signature);
-        //signature
     }
     
     // Check signature on a TX
@@ -508,15 +503,17 @@ impl STF {
 
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
-    pub fn proof(mut block: Block) -> (Blockheader, String) {
+    pub fn proof(mut block_data: BlockData) -> (BlockData, String) {
     
+        //println!("block input to proof function: {:#?}", &block);
+        
         let difficulty = 5;
         let max = 1000000;
         
         for i in 0..max {
         
             let mut count = 0;
-            let hash = Hash::hash(&block);
+            let hash = Hash::hash(&block_data);
 
             for i in hash.chars() {
                 if i == '0' {
@@ -526,14 +523,15 @@ impl STF {
             
             if count > difficulty {
                 // success
-                return (block.blockheader, hash);
+                println!("\nBlockData That Was Hashed:\n{:#?}", &block_data);
+                return (block_data, hash);
             }
             
-            block.blockheader.nonce += 1;
+            block_data.header.nonce += 1;
         }
         
         // failure
-        return (block.blockheader, String::from("ERROR: proof failed."))
+        return (block_data, String::from("ERROR: proof failed."))
     }
     
     // Create A New Block With Valid Transactions
@@ -541,31 +539,31 @@ impl STF {
     
         let verified_tx = STF::verify_vec_of_tx(state);
         
-        let mut naive_header = Blockheader {
+        let mut naive_header = BlockHeader {
             nonce: 0,
             timestamp: time::now().to_timespec().sec as i32,
-            block_number: state.history.last().unwrap().blockheader.block_number + 1,
-            previous_block_hash: Hash::hash(&state.history.last().unwrap().blockheader.current_block_hash),
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&state.history.last().unwrap().data.header.current_block_hash),
             current_block_hash: Hash::hash_tree(verified_tx.clone()),
         };
         
-        let naive_block = Block {
-            proof: String::from("TBD"),
-            blockheader: naive_header,
-            transactions: verified_tx.clone(),
+        let naive_data = BlockData {
+            header: naive_header,
+            transactions: verified_tx, 
         };
         
-        let (blockheader, proof) = STF::proof(naive_block);
+        let (data, proof) = STF::proof(naive_data);
         let block = Block {
             proof: proof,
-            blockheader: blockheader,
-            transactions: verified_tx,
+            data: data,
         };
+        println!("BLOCK: {:#?}", &block);
         
         block
     }
     
-    // check that PoW hash matches blockheader
+    /*
+    // check that PoW hash matches BlockHeader
     pub fn check_pow(mut block: Block) -> bool {
 
         let hash_check = Hash::hash(&block);
@@ -577,22 +575,32 @@ impl STF {
         
         return true
     }
+    */
     
+    // function to transition the state
     pub fn push_block(state: &mut State,
                       mut block: Block) {
         
-        if !(STF::check_pow(block.clone())) {
-            println!("Block Error: check_pow() failed.");
+        
+        
+        let submitted_proof = &block.proof;
+        
+        let hash_check = Hash::hash(&block.data);
+        
+        if &hash_check != submitted_proof {
+            println!("\nPoW Error: Invalid PoW Hash.");
             return
         }
-
-        for i in &block.transactions {
+        
+        // transition the state
+        for i in &block.data.transactions {
             state.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
             state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
             state.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
         }
         
         state.history.push(block);
+        
     }
     
 }
@@ -619,7 +627,7 @@ pub struct TX {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct Blockheader {
+pub struct BlockHeader {
     nonce: i32,
     timestamp: i32,
     block_number: i32,
@@ -628,10 +636,15 @@ pub struct Blockheader {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+pub struct BlockData {
+    header: BlockHeader,
+    transactions: Vec<TX>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
 pub struct Block {
     proof: String,
-    blockheader: Blockheader,
-    transactions: Vec<TX>,
+    data: BlockData,
 }
 
 #[derive(Debug)]
@@ -648,14 +661,16 @@ impl State {
         
         let genesis_block = Block {
                 proof: String::from("Hello World"),
-                blockheader: Blockheader {
-                    nonce: 0,
-                    timestamp: time::now().to_timespec().sec as i32,
-                    block_number: 0,
-                    previous_block_hash: String::from("?"),  
-                    current_block_hash: Hash::hash(&String::from("")),  
-                },
-                transactions: Vec::new(),
+                data: BlockData {
+                    header: BlockHeader {
+                        nonce: 0,
+                        timestamp: time::now().to_timespec().sec as i32,
+                        block_number: 0,
+                        previous_block_hash: String::from("?"),  
+                        current_block_hash: Hash::hash(&String::from("")),  
+                    },
+                    transactions: Vec::new(),
+                }
             };
         
         let new_state = State {
@@ -708,8 +723,6 @@ impl State {
         
         let signature = Keys::sign(KEY_PARAMS, &data, sender_priv_key);
         
-        println!("creating tx");
-        
         let tx = TX {
             data: data,
             signature: signature,
@@ -725,7 +738,6 @@ impl State {
         let state_transition = STF::push_block(self, new_block);
         
         state_transition
-        
     }
 }
 
