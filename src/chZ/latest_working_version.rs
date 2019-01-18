@@ -447,7 +447,18 @@ impl Keys {
 }
 
 
-pub struct STF;
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoW, but if you
+// wanted to impliment PoS you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32, // currently PoW difficulty
+    max: i32, // max time/tries for valid proof
+}
 
 impl STF {
     
@@ -500,12 +511,10 @@ impl STF {
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
     // You could change the logic of this function to satisfy PoS or PoA as well.
-    pub fn proof(mut block_data: BlockData) -> (BlockData, String) {
+    pub fn proof(state: &State,
+                 mut block_data: BlockData) -> (BlockData, String) {
     
-        let difficulty = 5;
-        let max = 1000000;
-        
-        for i in 0..max {
+        for i in 0..state.stf.max {
         
             let mut count = 0;
             let hash = Hash::hash(&block_data);
@@ -516,7 +525,7 @@ impl STF {
                 }
             }
             
-            if count > difficulty {
+            if count > state.stf.difficulty {
                 // success
                 return (block_data, hash);
             }
@@ -528,32 +537,61 @@ impl STF {
         return (block_data, String::from("ERROR: proof failed."))
     }
     
+    // Create A New Block With Valid Transactions
+    pub fn create_block(state: &mut State) -> Block {
+    
+        let verified_tx = STF::verify_pending_tx(state);
+        
+        let mut naive_header = BlockHeader {
+            nonce: 0,
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&state.history.last().unwrap().data.header.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
+        };
+        
+        let naive_data = BlockData {
+            header: naive_header,
+            transactions: verified_tx, 
+        };
+        
+        let (data, proof) = STF::proof(state, naive_data);
+        let block = Block {
+            proof: proof,
+            data: data,
+        };
+        
+        block
+    }
+    
     // function to transition the state
-    pub fn push_block(state: &mut State,
-                      mut block: Block) {
+    pub fn check_block(state: &State,
+                       block: &mut Block) -> bool {
         
-        // TODO
-        // There needs to be a way to check that 
-        // the difficulty/type of proof is correct.
-        // Does this need to be hard coded into the
-        // State for all "nodes" to see and verify
-        // against?
-        
-        // check proof (in this case PoW)
+        // proof to check
         let submitted_proof = &block.proof;
+        
+        // check proof difficulty is achieved
+        let mut count = 0;
+        for i in submitted_proof.chars() {
+            if i == '0' {
+                count += 1;
+            }
+        }
+        if !(count > state.stf.difficulty) {
+            println!("ERROR: block proof does not meet difficulty requirements.");
+            return false
+        }
+        
+        // check proof matches block
         let hash_check = Hash::hash(&block.data);
         if &hash_check != submitted_proof {
             println!("\nPoW Error: Invalid PoW Hash.");
-            return
+            return false
         }
         
-        // transition the state
-        for i in &block.data.transactions {
-            state.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
-            state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
-            state.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
-        }
-        state.history.push(block);
+        // if tests are passed, return true
+        true
     }
     
 }
@@ -607,6 +645,7 @@ pub struct Block {
 //   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
 #[derive(Debug)]
 pub struct State {
+    stf: STF,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
@@ -630,8 +669,15 @@ impl State {
                     transactions: Vec::new(),
                 }
             };
+            
+        let stf_data = STF {
+            version: String::from("PoW"),
+            difficulty: 5,
+            max: 1000000,
+        };
         
         let new_state = State {
+            stf: stf_data,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             history: vec![genesis_block],
@@ -689,40 +735,28 @@ impl State {
         self.pending_tx.push(tx);
     }
 
-    // Create A New Block With Valid Transactions
-    pub fn create_block(state: &mut State) -> Block {
-    
-        let verified_tx = STF::verify_pending_tx(state);
+    // function to transition the state to a new state
+    pub fn create_new_state(&mut self) {
         
-        let mut naive_header = BlockHeader {
-            nonce: 0,
-            timestamp: time::now().to_timespec().sec as i32,
-            block_number: state.history.last().unwrap().data.header.block_number + 1,
-            previous_block_hash: Hash::hash(&state.history.last().unwrap().data.header.current_block_hash),
-            current_block_hash: Hash::hash_tree(verified_tx.clone()),
-        };
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
         
-        let naive_data = BlockData {
-            header: naive_header,
-            transactions: verified_tx, 
-        };
+        // check that the block proof is valid
+        if !(STF::check_block(&self, &mut block)) {
+            println!("\nERROR: block not valid.");
+            return
+        }
         
-        let (data, proof) = STF::proof(naive_data);
-        let block = Block {
-            proof: proof,
-            data: data,
-        };
+        // transition the state by incorporating the
+        // information in the new block
+        for i in &block.data.transactions {
+            self.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
+        }
         
-        block
-    }
- 
-    // Create a new state transition
-    pub fn state_transition_function(&mut self) {
-        
-        let new_block = State::create_block(self);
-        let state_transition = STF::push_block(self, new_block);
-        
-        state_transition
+        // add the block to the history
+        self.history.push(block);
     }
 }
 
@@ -768,6 +802,6 @@ fn main() {
     //println!("blockchain:\n{:#?}", blockchain);
     
     // process the tx
-    blockchain.state_transition_function();
+    blockchain.create_new_state();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
