@@ -3,7 +3,33 @@
 // the resulting bytes are not valid utf8
 // and thus do not convert to a String
 // so v2s fails and the entire program shuts down
+// but if you don't then exp_mod() crashes because the numbers are too big
+// but if you use f64 then the hashmaps can't take them is as values
 
+/*
+Ohhhhhhhh
+The problem is that the signature is just the
+signature vec concatenated into a string
+
+but when you try to parse that string back to 
+a vec the program does so according to utf8 or
+something, not realizing that those numbers are
+meant to be as is
+
+So essentially, signatures and data formats need
+to be passed around in vector form, not as strings
+or as i32 or f64?
+
+Also, the signing function can't really operatre on
+the hex data within a hash, so that needs to be changed
+to something else
+Or... we need a function that takes a vec of u8 and 
+turns it into a hex string, and back...
+
+Why not just use the nice u64 that the default hash
+function outputs by default? 
+- nope: `u64` is not an iterator
+*/
 
 
 extern crate rand;
@@ -185,7 +211,7 @@ impl Hash {
     }    
     
     // Create A Merkle Tree Of All TX In A Vec
-    pub fn hash_tree<T>(stuff: Vec<T>) -> String {
+    pub fn hash_tree<T>(stuff: Vec<T>) -> u64 {
         
         let mut v = Vec::new();
 
@@ -200,8 +226,8 @@ impl Hash {
         }
 
         while v.len() > 1 {
-            let mut h1 = v.remove(0);
-            let mut h2 = v.remove(0);
+            let mut h1 = v.remove(0).to_string();
+            let mut h2 = v.remove(0).to_string();
             h1.push_str(&mut h2);
             let nh = Hash::hash(&h1);
             v.push(nh);
@@ -367,54 +393,34 @@ impl Keys {
     // Sign a TX with a toy RSA function
     pub fn sign<T>(self,
                    thing_to_be_signed: &T,
-                   signing_key: i32) -> String {
+                   signing_key: i32) -> u64 {
         
         println!("\nSIGNING TX");
         
         let hashed_thing = Hash::hash(thing_to_be_signed);
         println!("hashed thing: {}", hashed_thing);
         
-        let hashed_thing_vec = DataEncoding::s2v(hashed_thing);
-        println!("hashed thing vec: {:?}", hashed_thing_vec);
+        //let hashed_thing_vec = DataEncoding::s2v(hashed_thing);
+        //println!("hashed thing vec: {:?}", hashed_thing_vec);
         
-        let signed_vec = hashed_thing_vec.iter()
-                          .map(|x| Keys::exp_mod(self, *x, signing_key,))
-                          .collect();
+        let signed_vec = Vec::new();
+        for i in hashed_thing {
+            signed_vec.push(Keys::exp_mod(self, i, signing_key,));
+        }
         println!("signed_vec: {:?}", signed_vec);
         
-        let signature = DataEncoding::v2s(signed_vec);
-        println!("signature: {}", signature);
+        signed_vec
         
-        signature
+        //let signature = DataEncoding::v2s(signed_vec);
+        //println!("signature: {}", signature);
+        //signature
     }
     
     // Check signature on a TX
     pub fn check_tx_signature(self,
                               tx: TX) -> bool {
         
-        /*
-        Ohhhhhhhh
-        The problem is that the signature is just the
-        signature vec concatenated into a string
         
-        but when you try to parse that string back to 
-        a vec the program does so according to utf8 or
-        something, not realizing that those numbers are
-        meant to be as is
-        
-        So essentially, signatures and data formats need
-        to be passed around in vector form, not as strings
-        or as i32 or f64?
-        
-        Also, the signing function can't really operatre on
-        the hex data within a hash, so that needs to be changed
-        to something else
-        Or... we need a function that takes a vec of u8 and 
-        turns it into a hex string, and back...
-        
-        Why not just use the nice u64 that the default hash
-        function outputs by default? 
-        */
         
         println!("\nCHECKING TX SIGNATURE");
         println!("tx: {:#?}", &tx);
