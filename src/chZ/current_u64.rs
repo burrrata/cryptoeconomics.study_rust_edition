@@ -162,7 +162,7 @@ impl Hash {
     // Takes a preimage ("preimage" = fancy word for input to a hash function)
     // Encodes it via the data_encode() function
     // Hashes that data into a hex string
-    pub fn hash<T>(preimage: &T) -> String {
+    pub fn hash<T>(preimage: &T) -> u64 {
         
         let stuff_as_u8 = unsafe {
             DataEncoding::to_u8(preimage)
@@ -170,14 +170,16 @@ impl Hash {
         
         let mut hasher = DefaultHasher::new();
         hasher.write(stuff_as_u8);
-        let digest = format!("{}", hasher.finish());
-        digest
         
         // u64
-        // let digest = hasher.finish();
+        let digest = hasher.finish();
+        digest
+        
+        // String
+        // let digest = format!("{}", hasher.finish());
         // digest
         
-        // hex
+        // Hex String
         // let hex_digest = format!("{:#X}", digest);
         // hex_digest
     }    
