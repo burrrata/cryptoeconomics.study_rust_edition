@@ -1,39 +1,3 @@
-// YOU CANNOT CLONE A BLOCK AND GET THE SAME HASH BACK
-
-// TODO
-// When we encrypt a TX in the sign() function
-// the resulting bytes are not valid utf8
-// and thus do not convert to a String
-// so v2s fails and the entire program shuts down
-// but if you don't then exp_mod() crashes because the numbers are too big
-// but if you use f64 then the hashmaps can't take them is as values
-
-/*
-Ohhhhhhhh
-The problem is that the signature is just the
-signature vec concatenated into a string
-
-but when you try to parse that string back to 
-a vec the program does so according to utf8 or
-something, not realizing that those numbers are
-meant to be as is
-
-So essentially, signatures and data formats need
-to be passed around in vector form, not as strings
-or as i32 or f64?
-
-Also, the signing function can't really operatre on
-the hex data within a hash, so that needs to be changed
-to something else
-Or... we need a function that takes a vec of u8 and 
-turns it into a hex string, and back...
-
-Why not just use the nice u64 that the default hash
-function outputs by default? 
-- nope: `u64` is not an iterator
-*/
-
-
 extern crate rand;
 use rand::prelude::*;
 
@@ -41,15 +5,56 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+
+
+
+
+
 // GOAL
-// - Refactor the code so that you can change any of the modules and it still runs.
+/*
+Modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs.
+*/
+
+// TODO
+/*
+1! DataEncoding
+    - we need a pluggable standard library to encode all
+      data into a fast and easy to use uniform format everywhere
+    - this means all the functions need to be refactored to use
+      the standard DataEncoding function to take in arbitrary inpus,
+      and then transform it into a standardized format, and operate
+      on that format.
+    -!If we change the data format though, won't we need to change
+      the architecture of every function too in order to operate
+      on that format? Thus, data encoding isn't really "pluggable"?
+2! PoS
+    - A minimal viable PoS consensus mechanism would be great.
+3! Networking
+    - This toy example is misleading if you can't simulate network
+      activity. We could start by simulating multiple nodes with
+      multiple threads in Rust, but eventually we're going to need
+      to open it up to real networking on a real testnet
+      - https://doc.rust-lang.org/book/ch16-00-concurrency.html
+      - https://github.com/paritytech/substrate/tree/master/core/network
+*/
 
 // NOTES
-// - Currently all values are i32 to make sketching the draft easier.
-// - The goal is to use the DataEncoding library to encode all
-//   data into a fast and easy to use uniform format everywhere
+/*
+1) YOU CANNOT CLONE SOMETHING AND GET THE SAME HASH 
+BACK AS YOU WOULD FROM HASHING THE ORIGINAL THING.
 
-// GENERIC BLOCKCHAIN ARCHITECTURE
+2) HashMaps do not play nicely with floats. Large 
+integers do not multiply nicely. Thus, the signatures 
+for things are stored in a Vec format so that 
+operations can be on each item in the Vec, rather 
+than a large number all at once.
+
+3) u64 and u8 are not iterators.
+*/
+
+// ARCHITECTURE
+/*
 //  - State Transition Function
 //  - Data Encoding Function
 //  - Hash Function
@@ -116,7 +121,7 @@ use std::hash::Hasher;
 // - new_tx()
 // - new_state_transition() (checks pending tx and produces new block)
 // - check_state_transition() (checks the most recently produced block)
-
+*/
 
 
 
