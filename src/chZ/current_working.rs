@@ -614,7 +614,7 @@ impl State {
         
         let data = TxData {
             sender: sender_pub_key,
-            sender_nonce: sender_priv_key,
+            sender_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
             receiver: receiver_pub_key,
             amount: amount,
         };
