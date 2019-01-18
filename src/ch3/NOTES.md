@@ -30,27 +30,27 @@ A way to check that any proposed state transitions are valid
 Roll your own PoS blockchain! (Go)
 - https://medium.com/@mycoralhealth/code-your-own-proof-of-stake-blockchain-in-go-610cd99aa658
 
-EIP 1011
-- https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
-
 Vlad had some python sketches drawn up for some of his ideas right?
 - tbd
 
-ethresear.ch
-- https://ethresear.ch/c/casper
-
-Substrate Staking
-- https://github.com/paritytech/substrate/tree/master/srml/staking/src
+Pyethereum Serenity Draft
+- https://github.com/ethereum/pyethereum/tree/serenity/
 
 99% Fault Tolerant Consensus
 - https://vitalik.ca/general/2018/08/07/99_fault_tolerant.html
 - https://www.youtube.com/watch?v=l0AQ0UJAvM8
 
-Casper FFG Testnet (PoS)
+EIP 1011 (lots of extra stuff we don't need yet)
+- https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
+
+ethresear.ch (useful, but not for MVPoS)
+- https://ethresear.ch/c/casper
+
+Substrate Staking (very extra)
+- https://github.com/paritytech/substrate/tree/master/srml/staking/src
+
+Casper FFG Testnet (very web3.js, not very general)
 - https://hackmd.io/s/Hk6UiFU7z
 
-Sharding
+Sharding (probably a little extra for a MVPoS draft)
 - https://github.com/ethereum/wiki/wiki/Sharding-roadmap
-
-Pyethereum Serenity Draft
-- https://github.com/ethereum/pyethereum/tree/serenity/
