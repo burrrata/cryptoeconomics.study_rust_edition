@@ -249,10 +249,10 @@ impl Hash {
 }
 
 
-
-
-/// "RSA" Key Generation and Signing ///
-
+// This struct holds all the data for the key generation
+// and signing. If you want to use a different key
+// protocol, change the data in the Keys struct as well
+// as the functions in the Keys impl
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Keys {
     min: i32,
@@ -263,15 +263,7 @@ pub struct Keys {
     ctf_pq: i32, 
 }
 
-pub static KEY_PARAMS: Keys = Keys {
-    min: 0,
-    max: 1000000,
-    p: 61,
-    q: 53,
-    modulo: 3233,
-    ctf_pq: 780,
-};
-
+/// "RSA" Key Generation and Signing ///
 impl Keys {
     
     // These functionsare not needed as we have hard coded
@@ -497,7 +489,7 @@ impl STF {
                 continue
             }
             
-            if !(Keys::check_tx_signature(KEY_PARAMS, i.clone())) {
+            if !(Keys::check_tx_signature(state.keys, i.clone())) {
                 println!("Invalid TX: signature check failed");
                 continue
             }
@@ -645,6 +637,7 @@ pub struct Block {
 //   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
 #[derive(Debug)]
 pub struct State {
+    keys: Keys,
     stf: STF,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
@@ -656,6 +649,21 @@ impl State {
     // Create a new state
     pub fn create_state() -> State {
         
+        let rsa_params = Keys {
+            min: 0,
+            max: 1000000,
+            p: 61,
+            q: 53,
+            modulo: 3233,
+            ctf_pq: 780,
+        };
+
+        let stf_data = STF {
+            version: String::from("PoW"),
+            difficulty: 5,
+            max: 1000000,
+        };
+
         let genesis_block = Block {
                 proof: String::from("GENESIS BLOCK"),
                 data: BlockData {
@@ -669,14 +677,9 @@ impl State {
                     transactions: Vec::new(),
                 }
             };
-            
-        let stf_data = STF {
-            version: String::from("PoW"),
-            difficulty: 5,
-            max: 1000000,
-        };
         
         let new_state = State {
+            keys: rsa_params,
             stf: stf_data,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
@@ -693,7 +696,7 @@ impl State {
         // - How can I make Keys::generator_keypair() not
         //   take in anything as input and have all the params
         //   stored within the Keys library?
-        let (priv_key, pub_key) = Keys::generate_keypair(KEY_PARAMS);
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
         let new_account = Account {
             balance: 0,
             nonce: 0,
@@ -725,7 +728,7 @@ impl State {
             amount: amount,
         };
         
-        let signature = Keys::sign(KEY_PARAMS, &data, sender_priv_key);
+        let signature = Keys::sign(self.keys, &data, sender_priv_key);
         
         let tx = TX {
             data: data,
