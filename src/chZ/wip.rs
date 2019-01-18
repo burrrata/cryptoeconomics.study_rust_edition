@@ -505,8 +505,6 @@ impl STF {
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
     pub fn proof(mut block_data: BlockData) -> (BlockData, String) {
     
-        //println!("block input to proof function: {:#?}", &block);
-        
         let difficulty = 5;
         let max = 1000000;
         
@@ -523,7 +521,6 @@ impl STF {
             
             if count > difficulty {
                 // success
-                println!("\nBlockData That Was Hashed:\n{:#?}", &block_data);
                 return (block_data, hash);
             }
             
@@ -557,36 +554,17 @@ impl STF {
             proof: proof,
             data: data,
         };
-        println!("BLOCK: {:#?}", &block);
         
         block
     }
-    
-    /*
-    // check that PoW hash matches BlockHeader
-    pub fn check_pow(mut block: Block) -> bool {
-
-        let hash_check = Hash::hash(&block);
-        
-        if hash_check != block.proof {
-            println!("\nPoW Error: Invalid PoW Hash.");
-            return false
-        }
-        
-        return true
-    }
-    */
     
     // function to transition the state
     pub fn push_block(state: &mut State,
                       mut block: Block) {
         
-        
-        
+        // check proof (in this case PoW)
         let submitted_proof = &block.proof;
-        
         let hash_check = Hash::hash(&block.data);
-        
         if &hash_check != submitted_proof {
             println!("\nPoW Error: Invalid PoW Hash.");
             return
@@ -598,9 +576,7 @@ impl STF {
             state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
             state.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
         }
-        
         state.history.push(block);
-        
     }
     
 }
@@ -785,5 +761,4 @@ fn main() {
     // process the tx
     blockchain.state_transition_function();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
-    
 }
