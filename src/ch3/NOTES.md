@@ -1,13 +1,31 @@
 # Minimal Viable PoS
 
-### Things We'll Need
-- a source of randomness
-- tokens to stake
-- a slashing/rewarding mechanism
-- a way to prove that a node has been chosen to produce the next state transition
-- a way to check that any proposed state transitions are valid
+<br>
 
-## Building Blocks
+### Things We'll Need
+
+A source of randomness
+  - collective coin flipping
+  - randomness beacon
+  - Rust Rand thread_rng() until we have networking?
+  
+A slashing/rewarding mechanism
+  - reward if state transition is valid/uncontested
+  - slash of stake if state transition is flawed
+
+A mechanism that chooses nodes to produce the next state transition
+  - coin age
+  - purely random selection
+  - etc...
+
+A way to check that any proposed state transitions are valid
+  - proof of proposing node's proof of stake
+  - proof of proposing node's eligibility to produce the next state transition
+  - proof that state transition only includes valid tx
+
+<br>
+
+### Building Blocks
 
 EIP 1011
 - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
