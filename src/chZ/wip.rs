@@ -643,6 +643,30 @@ pub struct State {
 
 impl State {
 
+    // Create a new state
+    pub fn create_state() -> State {
+        
+        let genesis_block = Block {
+                proof: String::from("Hello World"),
+                blockheader: Blockheader {
+                    nonce: 0,
+                    timestamp: time::now().to_timespec().sec as i32,
+                    block_number: 0,
+                    previous_block_hash: String::from("?"),  
+                    current_block_hash: Hash::hash(&String::from("")),  
+                },
+                transactions: Vec::new(),
+            };
+        
+        let new_state = State {
+            accounts: HashMap::new(),
+            pending_tx: Vec::new(),
+            history: vec![genesis_block],
+        };
+        
+        new_state
+    }
+
     // Create a new account
     pub fn create_account(&mut self) {
         
@@ -710,11 +734,7 @@ impl State {
 fn main() {
     
     // Init "blockchain"
-    let mut blockchain = State {
-        accounts: HashMap::new(),
-        pending_tx: Vec::new(),
-        history: Vec::new(),
-    };
+    let mut blockchain = State::create_state();
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
     // Create random accounts
@@ -751,7 +771,7 @@ fn main() {
     //println!("blockchain:\n{:#?}", blockchain);
     
     // process the tx
-    //blockchain.state_transition_function();
+    blockchain.state_transition_function();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
 }
