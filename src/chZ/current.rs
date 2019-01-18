@@ -361,13 +361,22 @@ impl Keys {
                    thing_to_be_signed: &T,
                    signing_key: i32) -> String {
         
+        println!("\nSIGNING TX");
+        
         let hashed_thing = Hash::hash(thing_to_be_signed);
+        println!("hashed thing: {}", hashed_thing);
+        
         let hashed_thing_vec = DataEncoding::s2v(hashed_thing);
+        println!("hashed thing vec: {:?}", hashed_thing_vec);
+        
         let signed_vec = hashed_thing_vec.iter()
                           .map(|x| Keys::exp_mod(self, *x, signing_key,))
                           .collect();
+        println!("signed_vec: {:?}", signed_vec);
+        
         let signature = DataEncoding::v2s(signed_vec);
-        println!("signing");
+        println!("signature: {}", signature);
+        
         signature
     }
     
@@ -375,14 +384,40 @@ impl Keys {
     pub fn check_tx_signature(self,
                               tx: TX) -> bool {
         
-        let cloned = tx.clone();
-        let v = DataEncoding::s2v(cloned.signature);
-        let counter_signed_v = v.iter()
-                                .map(|x| Keys::exp_mod(self, *x, tx.data.sender,))
-                                .collect();
-        let counter_signed_hash = DataEncoding::v2s(counter_signed_v);
+        /*
+        Ohhhhhhhh
+        The problem is that the signature is just the
+        signature vec concatenated into a string
         
+        but when you try to parse that string back to 
+        a vec the program does so according to utf8 or
+        something, not realizing that those numbers are
+        meant to be as is
+        
+        So essentially, signatures and data formats need
+        to be passed around in vector form, not as strings
+        or as i32 or f64?
+        */
+        
+        println!("\nCHECKING TX SIGNATURE");
+        println!("tx: {:#?}", &tx);
+        
+        let cloned = tx.clone();
+        println!("cloned tx: {:#?}", &cloned);
+        
+        let sig_check = DataEncoding::s2v(cloned.signature);
+        println!("signature to check: {:?}", &sig_check);
+        
+        let counter_signed_sig_vec = sig_check.iter()
+                                        .map(|x| Keys::exp_mod(self, *x, tx.data.sender,))
+                                        .collect();
+        println!("counter signed signature vector: {:?}", &counter_signed_sig_vec);
+        
+        let counter_signed_hash = DataEncoding::v2s(counter_signed_sig_vec);
         let hashed_tx = Hash::hash(&tx.data);
+        
+        println!("counter signed hash: {}", &counter_signed_hash);
+        println!("hashed tx: {}", &hashed_tx);
         
         if counter_signed_hash == hashed_tx {
             return true
@@ -599,9 +634,9 @@ impl State {
         }
         
         self.accounts.insert(pub_key, new_account);
-        println!("\nThis is your public key: {:#?}", &pub_key);
-        println!("This is your private key: {:#?}", &priv_key);
-        println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
+        //println!("\nThis is your public key: {:#?}", &pub_key);
+        //println!("This is your private key: {:#?}", &priv_key);
+        //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
     }
     
     // Create a new TX
@@ -652,13 +687,13 @@ fn main() {
         pending_tx: Vec::new(),
         history: Vec::new(),
     };
-    println!("blockchain:\n{:#?}", blockchain);
+    //println!("blockchain:\n{:#?}", blockchain);
     
     // Create random accounts
     for _i in 0..3 {
         blockchain.create_account();
     }
-    println!("blockchain:\n{:#?}", blockchain);
+    //println!("blockchain:\n{:#?}", blockchain);
     
     // Manually create testing account 0
     let acc_0_pub_key = 773;
@@ -668,7 +703,7 @@ fn main() {
         nonce: 0,
     };
     blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
-    println!("blockchain:\n{:#?}", blockchain);
+    //println!("blockchain:\n{:#?}", blockchain);
     
     // Manually create testing account 1
     let acc_1_pub_key = 179;
@@ -678,14 +713,14 @@ fn main() {
         nonce: 0,        
     };
     blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
-    println!("blockchain:\n{:#?}", blockchain);
+    //println!("blockchain:\n{:#?}", blockchain);
     
     // test a tx
     blockchain.create_tx(acc_0_pub_key,
                         acc_0_priv_key,
                         acc_1_pub_key,
                         50);
-    println!("blockchain:\n{:#?}", blockchain);
+    //println!("blockchain:\n{:#?}", blockchain);
     
     // process the tx
     blockchain.state_transition_function();
