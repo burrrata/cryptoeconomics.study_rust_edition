@@ -25,6 +25,13 @@ say changing PoW to PoS, and it still runs.
     -!If we change the data format though, won't we need to change
       the architecture of every function too in order to operate
       on that format? Thus, data encoding isn't really "pluggable"?
+      
+      https://substrate.readme.io/docs/low-level-data-formats
+      https://github.com/paritytech/parity-common/blob/master/parity-bytes/src/lib.rs
+      https://github.com/paritytech/substrate/search?q=codec&unscoped_q=codec
+      
+      https://github.com/ethereum/wiki/wiki/RLP
+      https://github.com/jnnk/pyrlp/blob/master/docs/tutorial.rst
 
 2! PoS
     - A minimal viable PoS consensus mechanism would be great.
