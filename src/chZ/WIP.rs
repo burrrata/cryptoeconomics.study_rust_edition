@@ -6,15 +6,12 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
 /* GOAL
-
 A modular architecture where you can change any of the modules,
 say changing PoW to PoS, and it still runs.
-
 */
 
 
 /* TODO
-
 1! DataEncoding
     - we need a pluggable standard library to encode all
       data into a fast and easy to use uniform format everywhere
@@ -32,10 +29,8 @@ say changing PoW to PoS, and it still runs.
       
       https://github.com/ethereum/wiki/wiki/RLP
       https://github.com/jnnk/pyrlp/blob/master/docs/tutorial.rst
-
 2! PoS
     - A minimal viable PoS consensus mechanism would be great.
-
 3! Networking
     - This toy example is misleading if you can't simulate network
       activity. We could start by simulating multiple nodes with
@@ -47,22 +42,18 @@ say changing PoW to PoS, and it still runs.
 
 
 /* NOTES
-
 1) YOU CANNOT CLONE SOMETHING AND GET THE SAME HASH 
 BACK AS YOU WOULD FROM HASHING THE ORIGINAL THING.
-
 2) HashMaps do not play nicely with floats. Large 
 integers do not multiply nicely. Thus, the signatures 
 for things are stored in a Vec format so that 
 operations can be on each item in the Vec, rather 
 than a large number all at once.
-
 3) u64 and u8 are not iterators.
 */
 
 
 /* ARCHITECTURE SKETCH
-
 Functions
 - State Transition Function
 - Data Encoding Function
@@ -71,37 +62,30 @@ Functions
 - Account Data
 - Transaction Data
 - State Data: a user defined configuration of the various blockchain modules
-
 State Transition Function
  - determines what is a valid state transition by verifying tx
  - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
  - impliments the state change
  - this needs to contain all params out of the box including the difficulty level
    and/or any functions needed to upgrade/modify those params
-
 Data Encoding Function
  - takes in arbitrary data and encodes it in a specific way
  - the entire "blockchain" uses this in order to allow any function
    to process arbitrary data inputs as well as sharing data between functions
  - standard for now, but may become upgradable as Ethreum and Substrate data is explored
-
 Hash Function
  - takes in arbitrary data and returns a string
  - the way that data is hashes or the encoding of the string can be changed
-
 Key Generation Function
  - the method to generate public and private key pairs
  - can be a centralized system, RSA, elliptic curves, etc...
  - contains all parmas neccessary to work out of the box
-
 Account Data
  - these will ALWAYS be a key/value pair in a HashMap
  - what you can change is the data that the account struct holds
  - UTXOs TBD
-
 TX Data
  - standard for now
-
 State Data
  - accounts: HashMap<i32, Account>
  - pending_tx: Vec<TX>
@@ -110,7 +94,6 @@ State Data
  - State transition function: user defined
  - hash function: user defined
  - key gen function: user defined
-
 STANDARD STRUCTS
 These will keep the same name throughout the program, but their underlying
 logic can be changed/upgraded.
@@ -119,7 +102,6 @@ logic can be changed/upgraded.
 - BlockHeader
 - Block
 - State
-
 STANDARD FUNCTIONS
 These will keep the same name throughout the program, but their underlying
 logic can be changed/upgraded.
@@ -465,12 +447,23 @@ impl Keys {
 }
 
 
-pub struct STF;
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoW, but if you
+// wanted to impliment PoS you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32, // currently PoW difficulty
+    max: i32, // max time/tries for valid proof
+}
 
 impl STF {
     
     // This function encodes the rules of what qualifies as a "valid tx"
-    pub fn verify_vec_of_tx(state: &mut State) -> Vec<TX> {
+    pub fn verify_pending_tx(state: &mut State) -> Vec<TX> {
         
         let mut verified_tx = Vec::new();
         
@@ -517,6 +510,7 @@ impl STF {
 
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
+    // You could change the logic of this function to satisfy PoS or PoA as well.
     pub fn proof(mut block_data: BlockData) -> (BlockData, String) {
     
         let difficulty = 5;
@@ -546,9 +540,9 @@ impl STF {
     }
     
     // Create A New Block With Valid Transactions
-    pub fn new_block(state: &mut State) -> Block {
+    pub fn create_block(state: &mut State) -> Block {
     
-        let verified_tx = STF::verify_vec_of_tx(state);
+        let verified_tx = STF::verify_pending_tx(state);
         
         let mut naive_header = BlockHeader {
             nonce: 0,
@@ -573,8 +567,7 @@ impl STF {
     }
     
     // function to transition the state
-    pub fn push_block(state: &mut State,
-                      mut block: Block) {
+    pub fn check_block(block: &mut Block) -> bool {
         
         // TODO
         // There needs to be a way to check that 
@@ -588,16 +581,10 @@ impl STF {
         let hash_check = Hash::hash(&block.data);
         if &hash_check != submitted_proof {
             println!("\nPoW Error: Invalid PoW Hash.");
-            return
+            return false
         }
         
-        // transition the state
-        for i in &block.data.transactions {
-            state.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
-            state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
-            state.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
-        }
-        state.history.push(block);
+        true
     }
     
 }
@@ -648,8 +635,10 @@ pub struct Block {
 // - does it make sense to add more data to the State?
 //   STF (type, difficulty, etc...)
 //   KEY_PARAMS (type, p, q, modulo, etc..)
+//   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
 #[derive(Debug)]
 pub struct State {
+    stf: STF,
     accounts: HashMap<i32, Account>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
@@ -673,8 +662,15 @@ impl State {
                     transactions: Vec::new(),
                 }
             };
+            
+        let stf_data = STF {
+            version: String::from("PoW"),
+            difficulty: 5,
+            max: 1000000,
+        };
         
         let new_state = State {
+            stf: stf_data,
             accounts: HashMap::new(),
             pending_tx: Vec::new(),
             history: vec![genesis_block],
@@ -731,14 +727,27 @@ impl State {
         
         self.pending_tx.push(tx);
     }
-    
-    // Create a new state transition
-    pub fn state_transition_function(&mut self) {
+
+    // function to transition the state to a new state
+    pub fn create_new_state(&mut self) {
         
-        let new_block = STF::new_block(self);
-        let state_transition = STF::push_block(self, new_block);
+        let block = STF::create_block(self);
         
-        state_transition
+        /*
+        // check that proof is valid
+        if !(STF::check_block(&block)) {
+            println!("\nERROR: block not valid.");
+            return
+        }
+        */
+        
+        // transition the state
+        for i in &block.data.transactions {
+            self.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
+        }
+        self.history.push(block);
     }
 }
 
@@ -784,6 +793,6 @@ fn main() {
     //println!("blockchain:\n{:#?}", blockchain);
     
     // process the tx
-    blockchain.state_transition_function();
+    blockchain.create_new_state();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
