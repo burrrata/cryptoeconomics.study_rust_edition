@@ -33,12 +33,12 @@ Roll your own PoS blockchain! (Go)
 Vlad had some python sketches drawn up for some of his ideas right?
 - tbd
 
-Pyethereum Serenity Draft
-- https://github.com/ethereum/pyethereum/tree/serenity/
-
 99% Fault Tolerant Consensus
 - https://vitalik.ca/general/2018/08/07/99_fault_tolerant.html
 - https://www.youtube.com/watch?v=l0AQ0UJAvM8
+
+Pyethereum Serenity Draft (very extra, much sharding)
+- https://github.com/ethereum/pyethereum/tree/serenity/
 
 EIP 1011 (lots of extra stuff we don't need yet)
 - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
