@@ -562,6 +562,13 @@ impl STF {
     pub fn push_block(state: &mut State,
                       mut block: Block) {
         
+        // TODO
+        // There needs to be a way to check that 
+        // the difficulty/type of proof is correct.
+        // Does this need to be hard coded into the
+        // State for all "nodes" to see and verify
+        // against?
+        
         // check proof (in this case PoW)
         let submitted_proof = &block.proof;
         let hash_check = Hash::hash(&block.data);
@@ -623,6 +630,10 @@ pub struct Block {
     data: BlockData,
 }
 
+// TODO
+// - does it make sense to add more data to the State?
+//   STF (type, difficulty, etc...)
+//   KEY_PARAMS (type, p, q, modulo, etc..)
 #[derive(Debug)]
 pub struct State {
     accounts: HashMap<i32, Account>,
@@ -636,13 +647,13 @@ impl State {
     pub fn create_state() -> State {
         
         let genesis_block = Block {
-                proof: String::from("Hello World"),
+                proof: String::from("GENESIS BLOCK"),
                 data: BlockData {
                     header: BlockHeader {
                         nonce: 0,
                         timestamp: time::now().to_timespec().sec as i32,
                         block_number: 0,
-                        previous_block_hash: String::from("?"),  
+                        previous_block_hash: String::from("N/A"),  
                         current_block_hash: Hash::hash(&String::from("")),  
                     },
                     transactions: Vec::new(),
