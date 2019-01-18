@@ -9,7 +9,11 @@
 
 ## Building Blocks
 
-Vlad had some pythong sketches drawn up for some of his ideas right?
+Vlad had some python sketches drawn up for some of his ideas right?
+- tbd
+
+ethresear.ch
+- https://ethresear.ch/c/casper
 
 Substrate Staking
 - https://github.com/paritytech/substrate/tree/master/srml/staking/src
