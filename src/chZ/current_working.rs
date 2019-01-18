@@ -406,34 +406,34 @@ impl STF {
         
             if !(state.accounts.contains_key(&i.data.sender)) {
                 println!("Invalid TX: sender not found.");
-                break
+                continue
             }
             
             if !(state.accounts.contains_key(&i.data.receiver)) {
                 println!("Invalid TX: receiver not found.");
-                break
+                continue
             }
             
             if !(i.data.amount > 0) {
                 println!("Invalid TX: negative amount error.");
                 println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
-                break
+                continue
             }
             
             if !(state.accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
                 println!("Invalid TX: insufficient funds.");
                 println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
-                break            
+                continue         
             }
             
             if !(i.data.sender_nonce == state.accounts.get(&i.data.sender).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
                 println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, state.accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
-                break
+                continue
             }
             
             if !(Keys::check_tx_signature(KEY_PARAMS, i.clone())) {
-                println!("TX No Good!");
+                println!("Invalid TX: signature check failed");
                 continue
             }
             
