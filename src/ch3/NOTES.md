@@ -9,6 +9,9 @@
 
 ## Building Blocks
 
+EIP 1011
+- https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1011.md
+
 Vlad had some python sketches drawn up for some of his ideas right?
 - tbd
 
