@@ -16,6 +16,21 @@ THEN explore crypto upgrades towards specific architectures like Bitcoin, Ethere
 
 <br><br><br>
 
+Blockchains are databases. Glorious, beautiful, databases.
+
+Like any database, their current state is called the state.
+
+Who gets to change this state and under what circumstances is defined in the state transition function.
+
+Who is on the database is defined by the account creation system.
+
+And whether or not the database has been tampered with is verified via the history.
+
+:)
+
+<br><br><br>
+
+
 # Better Explanations & References
 
 These are ALL full of amazing references, and they need to be used as inspiration for the chapter descriptions and linked to as references if someone wants to learn more
