@@ -459,8 +459,9 @@ impl STF {
     }
 
     // This function creates a proof that authorizes the state transition
-    // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
-    // You could change the logic of this function to satisfy PoS or PoA as well.
+    // This can be as complex as desired such as in a PoW setting 
+    // Or it can simply hash the publicly announced validator address like
+    // it does here :)
     pub fn proof(state: &State) -> String {
     
         let hash = Hash::hash(&state.stf.validator);
