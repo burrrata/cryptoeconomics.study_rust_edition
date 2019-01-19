@@ -26,6 +26,10 @@ Core Concepts
 <br>
 
 ## Code
+
+Permalink to the Rust Playground
+- https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=6df734fdee7fac411d9378f17f7978ca
+
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
