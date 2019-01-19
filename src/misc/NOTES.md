@@ -11,8 +11,8 @@
 
 <br>
 
-THEN explore crypto upgrades or recreation of specific architectures like Bitcoin, Ethereum, etc...
-- and add references/explanations and stuff
+THEN explore crypto upgrades towards specific architectures like Bitcoin, Ethereum, etc...
+- and then add references and explanations along with each
 
 <br><br><br>
 
