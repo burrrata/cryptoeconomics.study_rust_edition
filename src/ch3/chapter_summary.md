@@ -42,7 +42,7 @@ say changing PoW to PoS, and it still runs.
 /* IDEAS
 
 Add, validators: Vec<i32>, to State struct
-Add, minimum_staking_balance: i32, to STF struct
+Add, difficulty: i32, to STF struct
 
 Function to add an account to the validation pool
 - checks to make sure that account has more than minimum staking requirement
@@ -137,7 +137,6 @@ impl Hash {
         hasher.write(stuff_as_u8);
         
         // format u64 hash as String
-        let digest = hasher.finish();
         let string_digest = format!("{}", hasher.finish());
         string_digest
         
@@ -355,7 +354,7 @@ impl Keys {
     pub fn check_tx_signature(self,
                               tx: TX) -> bool {
         
-        let mut tx_sig_check: Vec<i32> = tx.clone().signature;
+        let tx_sig_check: Vec<i32> = tx.clone().signature;
         
         let mut tx_sig_check_pub_signed = Vec::new();
         for i in tx_sig_check {
@@ -380,18 +379,25 @@ impl Keys {
 
 // This struct holds all the data needed for 
 // the chosen state transition protocol.
-// In this case we're doign PoW, but if you
-// wanted to impliment PoS you would write a new
+// In this case we're doign PoS, but if you
+// wanted to impliment PoW you would write a new
 // STF struct and new verify_pending_tx and proof
 // functions.
 #[derive(Debug)]
 pub struct STF {
     version: String, // PoA, PoW, PoS, etc...
-    difficulty: i32, // currently PoW difficulty
-    max: i32, // max time/tries for valid proof
+    difficulty: i32,
+    validator: i32,
 }
 
 impl STF {
+    
+    // A "random beacon"
+    pub fn random_validator_selection(state: &mut State) {
+        
+        let validator: i32 = thread_rng().gen_range(0, state.validators.len() as i32);
+        state.stf.validator = validator;
+    }
     
     // This function encodes the rules of what qualifies as a "valid tx"
     pub fn verify_pending_tx(state: &mut State) -> Vec<TX> {
@@ -442,38 +448,18 @@ impl STF {
     // This function creates a proof that authorizes the state transition
     // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
     // You could change the logic of this function to satisfy PoS or PoA as well.
-    pub fn proof(state: &State,
-                 mut block_data: BlockData) -> (BlockData, String) {
+    pub fn proof(state: &State) -> String {
     
-        for i in 0..state.stf.max {
+        let hash = Hash::hash(&state.stf.validator);
         
-            let mut count = 0;
-            let hash = Hash::hash(&block_data);
-
-            for i in hash.chars() {
-                if i == '0' {
-                    count += 1;
-                }
-            }
-            
-            if count > state.stf.difficulty {
-                // success
-                return (block_data, hash);
-            }
-            
-            block_data.header.nonce += 1;
-        }
-        
-        // failure
-        return (block_data, String::from("ERROR: proof failed."))
+        hash
     }
     
     // Create A New Block With Valid Transactions
     pub fn create_block(state: &mut State) -> Block {
     
         let verified_tx = STF::verify_pending_tx(state);
-        
-        let mut naive_header = BlockHeader {
+        let header = BlockHeader {
             nonce: 0,
             timestamp: time::now().to_timespec().sec as i32,
             block_number: state.history.last().unwrap().data.header.block_number + 1,
@@ -481,12 +467,12 @@ impl STF {
             current_block_hash: Hash::hash_tree(verified_tx.clone()),
         };
         
-        let naive_data = BlockData {
-            header: naive_header,
+        let data = BlockData {
+            header: header,
             transactions: verified_tx, 
         };
+        let proof = STF::proof(state);
         
-        let (data, proof) = STF::proof(state, naive_data);
         let block = Block {
             proof: proof,
             data: data,
@@ -502,22 +488,16 @@ impl STF {
         // proof to check
         let submitted_proof = &block.proof;
         
-        // check proof difficulty is achieved
-        let mut count = 0;
-        for i in submitted_proof.chars() {
-            if i == '0' {
-                count += 1;
-            }
-        }
-        if !(count > state.stf.difficulty) {
-            println!("ERROR: block proof does not meet difficulty requirements.");
+        // check that validator matches randomly chosen STF validator
+        if submitted_proof != &Hash::hash(&state.stf.validator) {
+            println!("\nProof Error: invalid PoS validator.");
             return false
         }
         
-        // check proof matches block
-        let hash_check = Hash::hash(&block.data);
-        if &hash_check != submitted_proof {
-            println!("\nPoW Error: Invalid PoW Hash.");
+        // check validator account has enough state
+        let validator_balance = state.accounts.get(&state.stf.validator).unwrap().balance;
+        if !(validator_balance > state.stf.difficulty) {
+            println!("ERROR: block proof does not meet difficulty requirements.");
             return false
         }
         
@@ -579,6 +559,7 @@ pub struct State {
     keys: Keys,
     stf: STF,
     accounts: HashMap<i32, Account>,
+    validators: Vec<i32>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
 }
@@ -598,9 +579,9 @@ impl State {
         };
 
         let stf_data = STF {
-            version: String::from("PoW"),
-            difficulty: 5,
-            max: 1000000,
+            version: String::from("PoS"),
+            difficulty: 10,
+            validator: 0,
         };
 
         let genesis_block = Block {
@@ -621,6 +602,7 @@ impl State {
             keys: rsa_params,
             stf: stf_data,
             accounts: HashMap::new(),
+            validators: Vec::new(),
             pending_tx: Vec::new(),
             history: vec![genesis_block],
         };
@@ -680,6 +662,9 @@ impl State {
     // function to transition the state to a new state
     pub fn create_new_state(&mut self) {
         
+        // "publicly" select a random validator
+        STF::random_validator_selection(self);
+    
         // check tx and put valid ones into a block
         let mut block = STF::create_block(self);
         
@@ -747,7 +732,6 @@ fn main() {
     blockchain.create_new_state();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
-
 ```
 
 <br>
