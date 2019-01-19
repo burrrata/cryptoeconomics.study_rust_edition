@@ -14,9 +14,16 @@
 
 <br><br><br>
 
-Exploring a minimal viable MPC demo.
+### Exploring a minimal viable MPC demo.
+
+Fred talks about building a demo around 15min, so all the info for the
+basics is presented before that.
 - https://www.zeroknowledge.fm/60
+
+This has some great visuals :)
 - https://en.wikipedia.org/wiki/Lagrange_polynomial
+
+
 
 <br><br><br>
 
