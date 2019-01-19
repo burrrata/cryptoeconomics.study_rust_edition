@@ -15,26 +15,6 @@
 <br><br><br>
 
 ```rust, ignore
-/*
-
-NOTE!
-- hash(block) != hash(cloned_block)
-
-TODO ASAP
-- Make check_signed_tx_signature() NOT crash the entire
-  program if the tx signature does not match the sender.
- 
-Nice To Have
-- Maybe use 65537 as the "RSA" modulo rather than
-   the toy setup in the wikipedia article? 
-- RLP: 
-    - How much faster would the program be if values were
-      converted to a standard data format? 
-    - Or is the ux better with i32 because the user just types
-      a number without thinking about type like in Javascript?   
-*/
-
-
 extern crate rand;
 use rand::prelude::*;
 
@@ -42,61 +22,231 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+/* "Blockchain" Sketch
+A modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs. This is the PoW version.
+*/
 
-#[derive(Debug)]
-struct State {
+
+/* ARCHITECTURE SKETCH
+Functions
+- State Transition Function
+- Data Encoding Function
+- Hash Function
+- Key Generation Function
+- Account Data
+- Transaction Data
+- State Data: a user defined configuration of the various blockchain modules
+State Transition Function
+ - determines what is a valid state transition by verifying tx
+ - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
+ - impliments the state change
+ - this needs to contain all params out of the box including the difficulty level
+   and/or any functions needed to upgrade/modify those params
+Data Encoding Function
+ - takes in arbitrary data and encodes it in a specific way
+ - the entire "blockchain" uses this in order to allow any function
+   to process arbitrary data inputs as well as sharing data between functions
+ - standard for now, but may become upgradable as Ethreum and Substrate data is explored
+Hash Function
+ - takes in arbitrary data and returns a string
+ - the way that data is hashes or the encoding of the string can be changed
+Key Generation Function
+ - the method to generate public and private key pairs
+ - can be a centralized system, RSA, elliptic curves, etc...
+ - contains all parmas neccessary to work out of the box
+Account Data
+ - these will ALWAYS be a key/value pair in a HashMap
+ - what you can change is the data that the account struct holds
+ - UTXOs TBD
+TX Data
+ - standard for now
+State Data
+ - accounts: HashMap<i32, Account>
+ - pending_tx: Vec<TX>
+ - history: Vec<Block>
+ - data encoding: user defined
+ - State transition function: user defined
+ - hash function: user defined
+ - key gen function: user defined
+STANDARD STRUCTS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- Account
+- TX
+- BlockHeader
+- Block
+- State
+STANDARD FUNCTIONS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- data_encode()
+- key_gen()
+- hash()
+- new_account()
+- new_tx()
+- new_state_transition() (checks pending tx and produces new block)
+- check_state_transition() (checks the most recently produced block)
+*/
+
+
+
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &[u8] slice
+    pub unsafe fn to_u8<T: Sized>(p: &T) -> &[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::<T>(),
+        )
+    }    
+
+    // i32 -> String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn i2s(input: i32) -> String {
+        
+        let output = input.to_string();
+        
+        output
+    }
+    
+    // String -> i32
+    // https://stackoverflow.com/questions/27043268/convert-a-string-to-int-in-rust
+    pub fn s2i(input: String) -> i32 {
+        
+        let output = input.parse::<i32>().unwrap();
+        
+        output
+    }
+
+    // string -> Vec<i32>
+    pub fn s2v(input: String) -> Vec<i32> {
+        
+        let output: Vec<i32> = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+ 
+    // Vec<i32> -> String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn v2s(input: Vec<i32>) -> String {
+        
+        let mut output_vec = Vec::new();
+        for i in input {
+            output_vec.push(i.to_string())
+        }
+        let output_string = output_vec.join("");
+        
+        output_string
+    }
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage ("preimage" = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex or an integer (you choose)
+    fn hash<T>(preimage: &T) -> String {
+        
+        // convert to u8
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        // hash u8 to u64
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        
+        // format u64 hash as String
+        let digest = hasher.finish();
+        let string_digest = format!("{}", hasher.finish());
+        string_digest
+        
+        // hex String
+        //let digest = hasher.finish();
+        //let hex_digest = format!("{:#X}", digest);
+        //hex_digest
+        
+        // i32
+        //let digest = hasher.finish() as i32;
+        //digest 
+        
+        // f64
+        //let digest = hasher.finish() as f64;
+        //digest 
+     
+        // u64
+        //let digest = hasher.finish();
+        //digest
+    }   
+    
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn hash_tree<T>(stuff: Vec<T>) -> String {
+        
+        let mut v = Vec::new();
+
+        for i in &stuff {
+            let hashed = Hash::hash(&i);
+            v.push(hashed);
+        }
+
+        if v.len() % 2 == 1 {
+            let last = v.last().cloned().unwrap();
+            v.push(last);
+        }
+
+        while v.len() > 1 {
+            let mut h1 = v.remove(0);
+            let mut h2 = v.remove(0);
+            h1.push_str(&mut h2);
+            let nh = Hash::hash(&h1);
+            v.push(nh);
+        }
+        
+        v.pop().unwrap()
+    }
+    
+}
+
+
+// This struct holds all the data for the key generation
+// and signing. If you want to use a different key
+// protocol, change the data in the Keys struct as well
+// as the functions in the Keys impl
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Keys {
+    min: i32,
+    max: i32,
+    p: i32,
+    q: i32,
     modulo: i32,
-    pow_difficulty: i32,
-    accounts: HashMap<i32, Account>,
-    pending_tx: Vec<SignedTX>,
-    chain: Vec<Block>,
-    block_height: i32,
+    ctf_pq: i32, 
 }
 
-#[derive(Debug, Clone, PartialEq)]
-struct Account {
-    balance: f32,
-    nonce: i32,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-struct TX {
-    sender: i32,
-    receiver: i32,
-    amount: f32,
-    nonce: i32,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-struct SignedTX {
-    tx: TX,
-    signature: Vec<i32>,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct Blockheader {
-    timestamp: i64,
-    block_number: i32,
-    nonce: i32,
-    previous_block_hash: String,  
-    merkle: String,  
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct Block {
-    header: Blockheader,
-    PoW: String,
-    transactions: Vec<SignedTX>,
-}
-
-
-impl State {
-
-    /// "RSA" KEY GENERATION STUFF ///
-
+/// "RSA" Key Generation and Signing ///
+impl Keys {
+    
+    // These functionsare not needed as we have hard coded
+    // the modulo and ctf_pq values
+    /*
     // greatest common divisor
     pub fn gcd(a: i32,
-           b: i32) -> i32 {
+               b: i32) -> i32 {
         
         let (mut a, mut b) = if a > b {
             (a, b)
@@ -115,29 +265,31 @@ impl State {
     
     // lowest common multiple
     pub fn lcm(a: i32,
-           b: i32) -> i32 {
+               b: i32) -> i32 {
         
-        let lcm = (a * b) / State::gcd(a, b);
+        let lcm = (a * b) / Keys::gcd(a, b);
         
         lcm
     }
     
     // Carmichael's totient function
     pub fn ctf(a: i32,
-           b: i32) -> i32 {
+               b: i32) -> i32 {
         
-        State::lcm(a - 1, b - 1)
+        Keys::lcm(a - 1, b - 1)
     }
+    */
     
     // slowly check if a number is prime
-    pub fn slow_prime_check(num: i32) -> bool {
+    pub fn slow_prime_check(self,
+                            num: i32) -> bool {
         
-        if num < 0 {
-            println!("number must be greater than 0");
+        if num < self.min {
+            println!("number must be greater than {}", self.min);
         }
         
-        if num > 1000000 {
-            println!("number cannot be greater than 1000000");
+        if num > self.max {
+            println!("number cannot be greater than {}", self.max);
         }
         
         for i in 2..num{
@@ -145,539 +297,493 @@ impl State {
                 return false
             }
         }
+        
         true
     }
 
-    // slowly yet randomly generate a prime number within a range
-    pub fn prime_gen(low: i32,
-                 high: i32) -> i32 {
+    // slowly, yet randomly, generate a prime number within a range
+    pub fn prime_gen(self) -> i32 {
         
-        for _i in 0..1000000 {
-            let p = thread_rng().gen_range(low, high);
-            if State::slow_prime_check(p) {
+        for _i in 0..self.max {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
                 return p
             }
         }
+        
         0
     }
-    
-    // slowly find the modular multiplicative inverse of a prime 
-    pub fn slow_mmi(ctf_pq: i32,
-                pub_key: i32,
-                max: i32)-> i32 {
+
+    // generate a private key within a range
+    pub fn priv_key_gen(self) -> i32 {
         
-        for i in 2..max {
-            if (i * pub_key) % ctf_pq == 1 {
-                return i
-            }
-        }
-        println!("Try larger search?");
-        0
-    }
-    
-    // generate a public key within a range
-    pub fn pub_key_gen(min: i32,
-                   max: i32) -> i32 {
-        
-        let pub_key = State::prime_gen(min, max);
-        assert!(max % pub_key != 0);
-        
-        pub_key
-    }
-    
-    // create a private key from a public key and other data
-    pub fn priv_key_gen(ctf_pq: i32,
-                    pub_key: i32) -> i32 {
-        
-        let priv_key = State::slow_mmi(ctf_pq, pub_key, 100000);
+        let priv_key = Keys::prime_gen(self);
+        assert!(self.max % priv_key != 0);
         
         priv_key
     }
     
-    // Because... Rust.
-    pub fn exp_mod(input: i32,
-               power: i32,
-               modulo: i32) -> i32 {
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(self,
+                    priv_key: i32)-> i32 {
         
-        let mut out = (input * input) % modulo;
+        for i in 2..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
+                return i
+            }
+        }
+        println!("Try larger search?");
+        
+        0
+    }
+    
+    // create a public key from a pricate key and RSA param data
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -> i32 {
+        
+        let pub_key = Keys::slow_mmi(self, priv_key);
+        
+        pub_key
+    }
+    
+    // generate a private/public key pair
+    pub fn generate_keypair(self) -> (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
+        (priv_key, pub_key)
+    }
+    
+    // Because... Rust.
+    pub fn exp_mod(self,
+                   input: i32,
+                   power: i32) -> i32 {
+        
+        let mut out = (input * input) % self.modulo;
         // because the first iter of out took 2 off the base
         for _i in 0..power-2 {
-            out = (out * input) % modulo;
+            out = (out * input) % self.modulo;
         }
         
         out
     }
     
-    // toy RSA function
-    pub fn toy_rsa(input: Vec<i32>,
-               key: i32,
-               modulo: i32) -> Vec<i32> {
+    // Sign a TX with a toy RSA function
+    pub fn sign<T>(self,
+                   thing_to_be_signed: &T,
+                   signing_key: i32) -> Vec<i32> {
         
-        let output = input.iter()
-                          .map(|x| State::exp_mod(*x, key, modulo))
-                          .collect();
-        output
-    }
-
-    /// "BLOCKCHAIN" STUFF ///
-    
-    // Initialize A "Blockchain"
-    pub fn new_blockchain() -> State {
-        let mut state = State {
-            modulo: 0,
-            pow_difficulty: 3,
-            accounts: HashMap::new(),
-            pending_tx: Vec::new(),
-            chain: Vec::new(),
-            block_height: 0,
-        };
-    
-        state
-    }    
-    
-    // Create New Account
-    pub fn new_account(&mut self, ctf_pq: i32) {
+        let hashed_thing = Hash::hash(thing_to_be_signed);
         
-        let pub_key = State::pub_key_gen(1, ctf_pq);
-        let priv_key = State::priv_key_gen(ctf_pq, pub_key);
-        let new_account = Account {
-            balance: 100.0,
-            nonce: 0,
-        };
-        
-        if self.accounts.contains_key(&pub_key) {
-            println!("Bummer... account collision.");
+        let mut hashed_thing_vec = Vec::new();
+        for i in hashed_thing.chars() {
+            hashed_thing_vec.push(i.to_string().parse::<i32>().unwrap())
         }
-        self.accounts.insert(pub_key.clone(), new_account);
         
-        //println!("\nThis is your public key (address): {:#?}", &pub_key);
-        //println!("This is your private key (signing key): {:#?}", &priv_key);
-        //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
-    }
-    
-    // Turn Arbitrary Stuff Into &[u8] Slice
-    pub unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
-        ::std::slice::from_raw_parts(
-            (p as *const T) as *const u8,
-            ::std::mem::size_of::<T>(),
-        )
-    }
+        let mut signed_vec = Vec::new();
+        for i in hashed_thing_vec {
+            signed_vec.push(Keys::exp_mod(self, i, signing_key,));
+        }
 
-    // Hash &[u8] Into Hex String
-    pub fn hash_u8(stuff: &[u8]) -> String {
-        
-        let mut hasher = DefaultHasher::new();
-        hasher.write(stuff);
-        let digest = hasher.finish();
-        let hex_digest = format!("{:#X}", digest);
-            
-        hex_digest
-    }    
-    
-    // Takes in stuff
-    // Turns it to a u8 slice
-    // Hashes that slice into a hex string
-    pub fn hash_any<T>(stuff: &T) -> String {
-        
-        let u8_stuff = unsafe {
-            State::any_as_u8_slice(stuff)
-        };
-        let hash_of_stuff = State::hash_u8(u8_stuff);
-        
-        hash_of_stuff
+        signed_vec
     }
     
-    // convert string to Vec<i32>
-    pub fn s2v(input: String) -> Vec<i32> {
+    // Check signature on a TX
+    pub fn check_tx_signature(self,
+                              tx: TX) -> bool {
         
-        let output: Vec<i32> = input.as_bytes()
-                                    .iter()
-                                    .map(|x| *x as i32)
-                                    .collect();
+        let mut tx_sig_check: Vec<i32> = tx.clone().signature;
         
-        output
-    }
-    
-    // convert Vec<i32> to string
-    pub fn v2s(input: Vec<i32>) -> String {
+        let mut tx_sig_check_pub_signed = Vec::new();
+        for i in tx_sig_check {
+            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender))
+        }
         
-        let output_u8: Vec<u8> = input.iter()
-                                      .map(|x| *x as u8)
-                                      .collect();
-        let output_string = String::from_utf8(output_u8).unwrap();
+        let mut tx_sig_check_string = String::new();
+        for i in tx_sig_check_pub_signed {
+            tx_sig_check_string.push_str(&i.to_string())
+        }
         
-        output_string
-    }    
-    
-    // Create A TX And Add It To The pending_tx Pool
-    pub fn new_signed_tx(&mut self,
-                  sender_pub_key: i32,
-                  sender_priv_key: i32,
-                  receiver: i32,
-                  amount: f32,
-                  m: i32) {
+        let hashed_tx = Hash::hash(&tx.data);
         
-        // Create TX
-        let tx = TX {
-            sender: sender_pub_key,
-            receiver: receiver,
-            amount: amount,
-            nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
-        };
-        
-        // Create Signature
-        let tx_bytes: &[u8] = unsafe {
-            State::any_as_u8_slice(&tx)
-        };
-        let tx_hash = State::hash_u8(tx_bytes);
-        let signature = State::toy_rsa(State::s2v(tx_hash), sender_priv_key, m);
-        
-        // Create Signed TX
-        let signed_tx = SignedTX {
-            tx: tx,
-            signature: signature,
-        };
-        
-        // Add SignedTX to pending TX pool
-        self.pending_tx.push(signed_tx);
-    }
-    
-    // Check The Signature Of A SignedTX Matches The Sender
-    // NOTE: 
-    //   if the TX uses an invalid signature
-    //   there is a high likelihood that it will produce
-    //   invalid utf8, and thus this function will crash
-    //   when v2s() tries to turn the Vec<i32> into a String
-    // TODO:
-    //   make the TX just fail rather than crashing the entire program  
-    pub fn check_signed_tx_signature(signed_tx: SignedTX,
-                                     modulo: i32) -> bool {
-    
-        let tx_as_bytes = unsafe {
-            State::any_as_u8_slice(&signed_tx.tx)
-        };
-        let tx_hash = State::hash_u8(tx_as_bytes);
-        //println!("tx hash: {}", tx_hash);
-        
-        let decrypted_tx_hash_sig = State::toy_rsa(signed_tx.signature,
-                                            signed_tx.tx.sender,
-                                            modulo);
-        let decrypted_tx_hash = State::v2s(decrypted_tx_hash_sig);
-        //println!("decrypted tx hash: {}", decrypted_tx_hash);
-        
-        match tx_hash == decrypted_tx_hash {
-            true => true,
-            false => {
-                println!("not valid tx");
-                return false
-            },
+        if tx_sig_check_string == hashed_tx {
+            return true
+        } else {
+            return false
         }
     }
+}
+
+
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoW, but if you
+// wanted to impliment PoS you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32, // currently PoW difficulty
+    max: i32, // max time/tries for valid proof
+}
+
+impl STF {
     
-    // Verify a Vec of TX
-    pub fn verify_tx(&mut self,
-                     tx: Vec<SignedTX>) -> Vec<SignedTX> {
-        
-        //println!("\nVerifying TX:");
+    // This function encodes the rules of what qualifies as a "valid tx"
+    pub fn verify_pending_tx(state: &mut State) -> Vec<TX> {
         
         let mut verified_tx = Vec::new();
         
-        for i in tx {
+        for i in &state.pending_tx {
         
-            //println!("{:#?}", &i);
-            
-            if !self.accounts.contains_key(&i.tx.sender) {
+            if !(state.accounts.contains_key(&i.data.sender)) {
                 println!("Invalid TX: sender not found.");
-                break
-            } 
+                continue
+            }
             
-            if !self.accounts.contains_key(&i.tx.receiver) {
+            if !(state.accounts.contains_key(&i.data.receiver)) {
                 println!("Invalid TX: receiver not found.");
-                break
+                continue
             }
             
-            if !(i.tx.amount > 0.0) {
+            if !(i.data.amount > 0) {
                 println!("Invalid TX: negative amount error.");
-                println!("{} cannot send {} to {}", i.tx.sender, i.tx.amount, i.tx.receiver);
-                break
+                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                continue
             }
             
-            if !(self.accounts.get(&i.tx.sender).unwrap().balance > i.tx.amount) {
+            if !(state.accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
                 println!("Invalid TX: insufficient funds.");
-                println!("{} cannot send {} to {}", i.tx.sender, i.tx.amount, i.tx.receiver);
-                break            
+                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                continue         
             }
             
-            if !(i.tx.nonce == self.accounts.get(&i.tx.sender).unwrap().nonce) {
+            if !(i.data.sender_nonce == state.accounts.get(&i.data.sender).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.tx.sender, self.accounts.get(&i.tx.sender).unwrap().nonce, i.tx.nonce);
-                break
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, state.accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                continue
             }
             
-            if !(State::check_signed_tx_signature(i.clone(), self.modulo)) {
-                println!("TX No Good!");
-                break
+            if !(Keys::check_tx_signature(state.keys, i.clone())) {
+                println!("Invalid TX: signature check failed");
+                continue
             }
             
-            //println!("Valid TX.");
             verified_tx.push(i.clone());
         }
         
         verified_tx
     }
-    
-    // Create A Merkle Tree Of All TX In A Vec
-    pub fn merklize_block(transactions: Vec<SignedTX>) -> String {
-        
-        let mut merkle = Vec::new();
 
-        for i in &transactions {
-            let hashed_tx = State::hash_any(&i);
-            merkle.push(hashed_tx);
-        }
-
-        if merkle.len() % 2 == 1 {
-            let last = merkle.last().cloned().unwrap();
-            merkle.push(last);
-        }
-
-        while merkle.len() > 1 {
-            let mut h1 = merkle.remove(0);
-            let mut h2 = merkle.remove(0);
-            h1.push_str(&mut h2);
-            let nh = State::hash_any(&h1);
-            merkle.push(nh);
-        }
-        
-        merkle.pop().unwrap()
-    }
+    // This function creates a proof that authorizes the state transition
+    // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
+    // You could change the logic of this function to satisfy PoS or PoA as well.
+    pub fn proof(state: &State,
+                 mut block_data: BlockData) -> (BlockData, String) {
     
-    // PoW, but easy so that it runs in the Rust Playground 
-    pub fn easy_proof_of_work(&mut self, mut block: Block) -> (Blockheader, String) {
-    
-        //let mut block_header = block.header.clone();
-        let difficulty = self.pow_difficulty;
-        let max = 1000000;
-        
-        for i in 0..max {
-        
-            //println!("block_header: {:#?}", block_header);
+        for i in 0..state.stf.max {
         
             let mut count = 0;
-            let hash = State::hash_any(&block.header);
-            //println!("hash: {}", hash);
-            
+            let hash = Hash::hash(&block_data);
+
             for i in hash.chars() {
                 if i == '0' {
                     count += 1;
                 }
             }
             
-            if count > difficulty {
-                println!("\n/// WINNING ///");
-                //println!("iter: {}", i);
-                //println!("count: {}", count);
-                println!("{:#?}", &block.header);
-                println!("{}", hash);
-                println!("{}", State::hash_any(&block.header));
-                return (block.header, hash);
+            if count > state.stf.difficulty {
+                // success
+                return (block_data, hash);
             }
             
-            block.header.nonce += 1;
+            block_data.header.nonce += 1;
         }
-        println!("\n!!! {} Iterations !!!", max);
-        println!("!!! Matching Hash Not Found !!!\n");
-        return (block.header, String::from("!!! PoW ERROR !!!") )
+        
+        // failure
+        return (block_data, String::from("ERROR: proof failed."))
     }
     
     // Create A New Block With Valid Transactions
-    pub fn new_block(&mut self) -> Block {
+    pub fn create_block(state: &mut State) -> Block {
     
-        //println!("\n/// Creating New Block ///\n");
-    
-        let verified_tx = State::verify_tx(self, self.pending_tx.clone());
+        let verified_tx = STF::verify_pending_tx(state);
         
-        let mut naive_header = Blockheader {
-            timestamp: time::now().to_timespec().sec,
-            block_number: self.block_height + 1,
+        let mut naive_header = BlockHeader {
             nonce: 0,
-            previous_block_hash: State::hash_any(& self.chain.last()),
-            merkle: State::merklize_block(verified_tx.clone()),
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&state.history.last().unwrap().data.header.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
         };
-        let naive_pow = String::from("TBD");
-        let naive_block = Block {
+        
+        let naive_data = BlockData {
             header: naive_header,
-            PoW: naive_pow,
-            transactions: verified_tx.clone(),
-
+            transactions: verified_tx, 
         };
         
-        let (header, pow) = State::easy_proof_of_work(self, naive_block);
+        let (data, proof) = STF::proof(state, naive_data);
         let block = Block {
-            header: header,
-            PoW: pow,
-            transactions: verified_tx,
+            proof: proof,
+            data: data,
         };
         
-        //println!("\n/// Block Successfully Created! ///\n");
         block
     }
     
-    // check that PoW hash matches blockheader
-    pub fn check_pow(&mut self, mut block: Block) -> bool {
+    // function to transition the state
+    pub fn check_block(state: &State,
+                       block: &mut Block) -> bool {
         
-        println!("\n/// CHECKING BLOCK ///");
+        // proof to check
+        let submitted_proof = &block.proof;
         
-        // Check hash matches header
-        let hash_check = State::hash_any(&block.header);
+        // check proof difficulty is achieved
+        let mut count = 0;
+        for i in submitted_proof.chars() {
+            if i == '0' {
+                count += 1;
+            }
+        }
+        if !(count > state.stf.difficulty) {
+            println!("ERROR: block proof does not meet difficulty requirements.");
+            return false
+        }
         
-        println!("{:#?}", block.header);
-        println!("{}", hash_check);
-        println!("{}", hash_check);
-        
-        if hash_check != block.PoW {
+        // check proof matches block
+        let hash_check = Hash::hash(&block.data);
+        if &hash_check != submitted_proof {
             println!("\nPoW Error: Invalid PoW Hash.");
             return false
         }
         
-        // Check difficulty matches target
-        let target = self.pow_difficulty; 
-        let mut count = 0;
-        for i in hash_check.chars() {
-                if i == '0' {
-                    count += 1;
-                }
-            }
-        if count < target {
-            println!("\nPoW Error! Difficulty Not Satisfied.");
-            return false
-        }
-        
-        return true
+        // if tests are passed, return true
+        true
     }
     
-    // Confirm TX in valid_tx Pool And Add Them To The History
-    pub fn push_block(&mut self,
-                      mut block: Block) {
+}
+
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Account {
+    balance: i32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TxData {
+    sender: i32,
+    sender_nonce: i32,
+    amount: i32,
+    receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    data: TxData,
+    signature: Vec<i32>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockHeader {
+    nonce: i32,
+    timestamp: i32,
+    block_number: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockData {
+    header: BlockHeader,
+    transactions: Vec<TX>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    data: BlockData,
+}
+
+// TODO
+// - does it make sense to add more data to the State?
+//   STF (type, difficulty, etc...)
+//   KEY_PARAMS (type, p, q, modulo, etc..)
+//   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
+#[derive(Debug)]
+pub struct State {
+    keys: Keys,
+    stf: STF,
+    accounts: HashMap<i32, Account>,
+    pending_tx: Vec<TX>,
+    history: Vec<Block>,
+}
+
+impl State {
+
+    // Create a new state
+    pub fn create_state() -> State {
         
-        let block_copy = block.clone();
-        
-        // Check block tx
-        let checked_tx = State::verify_tx(self, block.transactions.clone());
-        for i in 0..checked_tx.len() {
-            for j in 0..block.transactions.len() {
-                if checked_tx[i] != block.transactions[j] {
-                    println!("TX Error: {:#?} does not match {:#?}.", checked_tx[i], block.transactions[i]);
-                    break
+        let rsa_params = Keys {
+            min: 0,
+            max: 1000000,
+            p: 61,
+            q: 53,
+            modulo: 3233,
+            ctf_pq: 780,
+        };
+
+        let stf_data = STF {
+            version: String::from("PoW"),
+            difficulty: 5,
+            max: 1000000,
+        };
+
+        let genesis_block = Block {
+                proof: String::from("GENESIS BLOCK"),
+                data: BlockData {
+                    header: BlockHeader {
+                        nonce: 0,
+                        timestamp: time::now().to_timespec().sec as i32,
+                        block_number: 0,
+                        previous_block_hash: String::from("N/A"),  
+                        current_block_hash: Hash::hash(&String::from("")),  
+                    },
+                    transactions: Vec::new(),
                 }
-            }
-        }
+            };
         
-        // Check block PoW
-        if !(State::check_pow(self, block)) {
-            println!("Block Error: check_pow() failed.");
+        let new_state = State {
+            keys: rsa_params,
+            stf: stf_data,
+            accounts: HashMap::new(),
+            pending_tx: Vec::new(),
+            history: vec![genesis_block],
+        };
+        
+        new_state
+    }
+
+    // Create a new account
+    pub fn create_account(&mut self) {
+        
+        // TODO
+        // - How can I make Keys::generator_keypair() not
+        //   take in anything as input and have all the params
+        //   stored within the Keys library?
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
+        let new_account = Account {
+            balance: 0,
+            nonce: 0,
+        };
+        
+        if self.accounts.contains_key(&pub_key) {
+            println!("Bummer... account collision.");
             return
         }
+        
+        self.accounts.insert(pub_key, new_account);
+        //println!("\nThis is your public key: {:#?}", &pub_key);
+        //println!("This is your private key: {:#?}", &priv_key);
+        //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
+    }
     
-        // If PoW and TX are valid,
-        // - process tx and change state
-        // - push block to state history
-        println!("\nPushing Block To Blockchain:\n{:#?}", &block_copy);
-        for i in &block_copy.transactions {
-            self.accounts.get_mut(&i.tx.sender).unwrap().balance -= i.tx.amount;
-            self.accounts.get_mut(&i.tx.receiver).unwrap().balance += i.tx.amount;
-            self.accounts.get_mut(&i.tx.sender).unwrap().nonce += 1;
-            //println!("{} sent {} to {}", &i.tx.sender, &i.tx.amount, &i.tx.receiver);
+    // Create a new TX
+    pub fn create_tx(&mut self,
+                     sender_pub_key: i32,
+                     sender_priv_key: i32,
+                     receiver_pub_key: i32,
+                     amount: i32) {
+        
+        
+        let data = TxData {
+            sender: sender_pub_key,
+            sender_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
+            receiver: receiver_pub_key,
+            amount: amount,
+        };
+        
+        let signature = Keys::sign(self.keys, &data, sender_priv_key);
+        
+        let tx = TX {
+            data: data,
+            signature: signature,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+
+    // function to transition the state to a new state
+    pub fn create_new_state(&mut self) {
+        
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
+        
+        // check that the block proof is valid
+        if !(STF::check_block(&self, &mut block)) {
+            println!("\nERROR: block not valid.");
+            return
         }
-        self.chain.push(block_copy);
-        self.block_height += 1;
-        println!("Block pushed to Chain");
         
+        // transition the state by incorporating the
+        // information in the new block
+        for i in &block.data.transactions {
+            self.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
+        }
         
+        // add the block to the history
+        self.history.push(block);
     }
 }
 
 
 
-
-// Rollin, rollin, rollin...
 fn main() {
-
-
-    // Init Blockchain State
-    let mut state = State::new_blockchain();
     
+    // Init "blockchain"
+    let mut blockchain = State::create_state();
+    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
-    // Init "RSA" Params and Create Account Keys
+    // Create random accounts
+    for _i in 0..3 {
+        blockchain.create_account();
+    }
+    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
-    // Randomized initialization
-    // State::prime_gen(5, 100);
-    // State::prime_gen(5, 100);
-    
-    // Fixed p and q initialization to generate 
-    // deterministic accounts for testing
-    let p = 61; 
-    let q = 53; 
-    assert!(p > 0);
-    assert!(q > 0);
-    // m (3233) is now a constant we can use for all keys
-    // that share the same fixed p and q setup
-    let m = p * q;
-    state.modulo = m;
     // Manually create testing account 0
     let acc_0_pub_key = 773;
     let acc_0_priv_key = 557;
     let acc_0 = Account {
-        balance: 10000.0,
+        balance: 10000,
         nonce: 0,
     };
-    state.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
+    
     // Manually create testing account 1
     let acc_1_pub_key = 179;
     let acc_1_priv_key = 719;
     let acc_1 = Account {
-        balance: 10000.0,
+        balance: 10000,
         nonce: 0,        
     };
-    state.accounts.insert(acc_1_pub_key.clone(), acc_1);
-    // Carmichael's totient function of p and q
-    let ctf_pq = State::ctf(p, q);
-   
-    // rand!
-    // Create 3 random accounts
-    for _i in 0..3 {
-        state.new_account(ctf_pq)
-    }
-    // Uncomment if you want to generate more keys
-    // and see their params
-    let pub_key = State::pub_key_gen(1, ctf_pq);
-    let priv_key = State::priv_key_gen(ctf_pq, pub_key);
-    /*
-    println!("p: {}", &p);
-    println!("q: {}", &q);
-    println!("m: {}", &m);
-    println!("ctf_pq: {}", &ctf_pq);
-    println!("pub_key: {}", &pub_key);
-    println!("priv_key: {}", &priv_key);
-    // check results
-    println!("\nInitial {:#?}", state);
-    */
+    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
-    // Create Test TX
-    state.new_signed_tx(acc_0_pub_key,
+    // test a tx
+    blockchain.create_tx(acc_0_pub_key,
                         acc_0_priv_key,
                         acc_1_pub_key,
-                        50.0,
-                        m);
-    //println!("\nAdded Pending TX\n{:#?}", state);
+                        50);
+    //println!("blockchain:\n{:#?}", blockchain);
     
-    // Create New Block
-    let pending_block = state.new_block();
-    
-    // Push New Block To The "Blockchain"
-    state.push_block(pending_block);
-    println!("\nState With New Block\n{:#?}", state);
+    // process the tx
+    blockchain.create_new_state();
+    println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
+
 ```
 
 
