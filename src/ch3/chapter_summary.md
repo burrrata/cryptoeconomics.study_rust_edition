@@ -691,7 +691,7 @@ impl State {
         
         // check that the block proof is valid
         if !(STF::check_block(&self, &block)) {
-            // if block is not valid slach validator's funds
+            // if block is not valid slash validator's funds
             println!("\nERROR: block not valid.");
             self.accounts.get_mut(&self.stf.validator).unwrap().balance -= self.stf.difficulty;
             return
