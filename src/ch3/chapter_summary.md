@@ -39,20 +39,9 @@ A modular architecture where you can change any of the modules,
 say changing PoW to PoS, and it still runs.
 */
 
-/* IDEAS
-
-Add, validators: Vec<i32>, to State struct
-Add, difficulty: i32, to STF struct
-
-Function to add an account to the validation pool
-- checks to make sure that account has more than minimum staking requirement
-- copies account pub_key (address) to the validator Vec
-
-Change proof() to randomly select an entry from the validators Vec
-- that validator then publishes a block and transitions the state
-- that state transition is checked and the validator gets a reward or punishment
+/* QUESTIONS
+Why does this panic?
 */
-
 
 
 pub struct DataEncoding;
@@ -732,6 +721,7 @@ fn main() {
     blockchain.create_new_state();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
+
 ```
 
 <br>
