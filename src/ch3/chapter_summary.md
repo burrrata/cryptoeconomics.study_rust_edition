@@ -376,7 +376,7 @@ impl Keys {
 // wanted to impliment PoW you would write a new
 // STF struct and new verify_pending_tx and proof
 // functions.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct STF {
     version: String, // PoA, PoW, PoS, etc...
     difficulty: i32,
@@ -385,8 +385,21 @@ pub struct STF {
 
 impl STF {
     
-    // A "random beacon"
+    // Standin for a "random beacon"
     pub fn random_validator_selection(state: &mut State) {
+        
+        // kick out any validators who don't meet the 
+        // difficulty requirements
+        // TODO: find a more "rust like" way to do this
+        // without clone()
+        let state_copy = state.clone();
+        let mut count = 0;
+        for i in state_copy.validators {
+            if state.accounts.get(&i).unwrap().balance < state.stf.difficulty {
+                state.validators.remove(count as usize);
+            }
+            count += 1;
+        }
         
         // check that there are validators
         if state.validators.len() <= 0 {
@@ -554,7 +567,7 @@ pub struct Block {
 //   STF (type, difficulty, etc...)
 //   KEY_PARAMS (type, p, q, modulo, etc..)
 //   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct State {
     keys: Keys,
     stf: STF,
