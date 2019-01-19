@@ -9,6 +9,10 @@
 
 3! Testnet
 
+<br>
+
+THEN explore crypto upgrades or recreation of specific architectures like Bitcoin, Ethereum, etc...
+- and add references/explanations and stuff
 
 <br><br><br>
 
