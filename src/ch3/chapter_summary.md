@@ -26,7 +26,7 @@ Core Concepts
 <br>
 
 ## Code
-```rust
+```rust, ignore
 extern crate rand;
 use rand::prelude::*;
 
@@ -384,7 +384,7 @@ impl STF {
     // A "random beacon"
     pub fn random_validator_selection(state: &mut State) {
         
-        let validator: i32 = thread_rng().gen_range(0, state.validators.len() as i32);
+        let validator = thread_rng().gen_range(0, state.validators.len() as i32);
         state.stf.validator = validator;
     }
     
@@ -659,9 +659,14 @@ impl State {
         
         // check that the block proof is valid
         if !(STF::check_block(&self, &mut block)) {
+            // if block is not valid slach validator's funds
             println!("\nERROR: block not valid.");
+            self.accounts.get_mut(&self.stf.validator).unwrap().balance -= self.stf.difficulty;
             return
         }
+        
+        // if block is valid add reward to validator's balance
+        self.accounts.get_mut(&self.stf.validator).unwrap().balance += self.stf.difficulty;
         
         // transition the state by incorporating the
         // information in the new block
@@ -721,6 +726,7 @@ fn main() {
     blockchain.create_new_state();
     println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
 }
+
 
 ```
 
