@@ -14,6 +14,9 @@
 
 <br><br><br>
 
+Permalink to the Rust Playground
+- https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=703530237531ef005e811b13e31b6533
+
 ```rust, ignore
 extern crate rand;
 use rand::prelude::*;
