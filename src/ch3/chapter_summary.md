@@ -384,8 +384,15 @@ impl STF {
     // A "random beacon"
     pub fn random_validator_selection(state: &mut State) {
         
-        let validator = thread_rng().gen_range(0, state.validators.len() as i32);
-        state.stf.validator = validator;
+        // check that there are validators
+        if state.validators.len() <= 0 {
+            println!("ERROR: no known validators.");
+            return
+        }
+        
+        // randomly select a validator from the validator Vec
+        let validator_num = thread_rng().gen_range(0, state.validators.len());
+        state.stf.validator = state.validators[validator_num];
     }
     
     // This function encodes the rules of what qualifies as a "valid tx"
@@ -472,7 +479,7 @@ impl STF {
     
     // function to transition the state
     pub fn check_block(state: &State,
-                       block: &mut Block) -> bool {
+                       block: &Block) -> bool {
         
         // proof to check
         let submitted_proof = &block.proof;
@@ -569,7 +576,7 @@ impl State {
 
         let stf_data = STF {
             version: String::from("PoS"),
-            difficulty: 10,
+            difficulty: 100,
             validator: 0,
         };
 
@@ -647,18 +654,25 @@ impl State {
         
         self.pending_tx.push(tx);
     }
-
+    
+    // function to add an account to the validator Vec
+    pub fn create_validator(&mut self,
+                                account: i32) {
+        
+        self.validators.push(account);
+    }
+    
     // function to transition the state to a new state
     pub fn create_new_state(&mut self) {
         
         // "publicly" select a random validator
         STF::random_validator_selection(self);
-    
+        
         // check tx and put valid ones into a block
         let mut block = STF::create_block(self);
         
         // check that the block proof is valid
-        if !(STF::check_block(&self, &mut block)) {
+        if !(STF::check_block(&self, &block)) {
             // if block is not valid slach validator's funds
             println!("\nERROR: block not valid.");
             self.accounts.get_mut(&self.stf.validator).unwrap().balance -= self.stf.difficulty;
@@ -713,6 +727,11 @@ fn main() {
         nonce: 0,        
     };
     blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
+    
+    // add testing account 0 and 1 to the validator pool
+    blockchain.create_validator(acc_0_pub_key);
+    blockchain.create_validator(acc_1_pub_key);
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
     // test a tx
