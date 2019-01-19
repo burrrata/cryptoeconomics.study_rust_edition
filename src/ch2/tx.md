@@ -18,6 +18,9 @@ Core Concepts:
 - when you sign/do stuff with a public key crypto system you prove that it came from your address.
 - you also have assurance that your key or a 51% attack are needed to compromise that assurance
 
+TODO / Ideas:
+- the part where thread messages come in at different times could be good to show why nonces are important: https://doc.rust-lang.org/book/ch16-02-message-passing.html
+
 ### Transaction (TX):
 A transaction is a digitally signed message authorizing some particular action associated with the blockchain. In a currency, the dominant transaction type is sending currency units or tokens to someone else; in a database actions like registering domain names, sending messages, or posting to a social feed would also be valid transaction types. Essentially, a state is an ordering of data, a transaction is a request to change the state of that data, and the state transition funciton determines how that happens.
 
