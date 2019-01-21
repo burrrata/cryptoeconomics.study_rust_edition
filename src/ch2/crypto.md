@@ -278,6 +278,7 @@ fn main() {
 - https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/
 - https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash
 - Merklize this! Merkle Trees & Patricia Tries: https://www.zeroknowledge.fm/57
+- https://medium.com/building-blocks-on-the-chain/learn-merkle-trees-by-programming-your-own-4f0438d40063
 
 <br><br><br>
 
