@@ -579,6 +579,7 @@ impl State {
         // p and q must be prime, but larger the better
         // but less than 300 in order to work on the Rust Playground
         // https://en.wikipedia.org/wiki/List_of_prime_numbers
+        // https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation
         let p = 173; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let q = 223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let m = p * q; 
