@@ -6,6 +6,11 @@ say changing PoW to PoS, and it still runs.
 
 /* QUESTIONS / TODOS
 QUESTION
+- why is the prime_gen() function not working?
+TODO
+- fix it
+
+QUESTION
 - does it make more sense to incriment the nonce every time a 
   tx is submitted, or everytime a tx is sucessfully processed?
 
@@ -221,16 +226,17 @@ impl Keys {
     }
     
     // slowly check if a number is prime
-    pub fn slow_prime_check(min: i32,
-                            max: i32,
+    pub fn slow_prime_check(self,
                             num: i32) -> bool {
         
-        if num < min {
-            println!("number must be greater than {}", min);
+        if num < self.min {
+            println!("number must be greater than {}", self.min);
+            return false
         }
         
-        if num > max {
-            println!("number cannot be greater than {}", max);
+        if num > self.max {
+            println!("number cannot be greater than {}", self.max);
+            return false
         }
         
         for i in 2..num{
@@ -243,12 +249,11 @@ impl Keys {
     }
 
     // slowly, yet randomly, generate a prime number within a range
-    pub fn prime_gen(min: i32,
-                     max: i32) -> i32 {
+    pub fn prime_gen(self) -> i32 {
         
-        for _i in min..max {
-            let p = thread_rng().gen_range(min, max);
-            if Keys::slow_prime_check(min, max, p) {
+        for _i in 0..1000000 {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
                 return p
             }
         }
@@ -257,45 +262,40 @@ impl Keys {
     }
 
     // generate a private key within a range
-    pub fn priv_key_gen(min: i32,
-                        max: i32) -> i32 {
+    pub fn priv_key_gen(self) -> i32 {
         
-        let priv_key = Keys::prime_gen(min, max);
-        assert!(max % priv_key != 0);
+        let priv_key = Keys::prime_gen(self);
+        //assert!(max % priv_key != 0);
         
         priv_key
     }
     
     // slowly find the modular multiplicative inverse of a prime 
-    pub fn slow_mmi(max: i32,
-                    priv_key: i32,
-                    ctf_pq: i32)-> i32 {
+    pub fn slow_mmi(self,
+                    priv_key: i32)-> i32 {
         
-        for i in 2..max {
-            if (i * priv_key) % ctf_pq == 1 {
+        for i in 1..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
                 return i
             }
         }
-        println!("Try larger search?");
+        //println!("Try larger search?");
         return 0
     }
     
     // create a public key from a pricate key and RSA param data
-    pub fn pub_key_gen(max: i32,
-                       priv_key: i32,
-                       ctf_pq: i32) -> i32 {
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -> i32 {
         
-        let pub_key = Keys::slow_mmi(max, priv_key, ctf_pq);
+        let pub_key = Keys::slow_mmi(self, priv_key);
         
         pub_key
     }
     
     // generate a private/public key pair
-    pub fn generate_keypair(min: i32,
-                            max: i32,
-                            ctf_pq: i32) -> (i32, i32){
-        let priv_key = Keys::priv_key_gen(min, max);
-        let pub_key = Keys::pub_key_gen(max, priv_key, ctf_pq);
+    pub fn generate_keypair(self) -> (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
         (priv_key, pub_key)
     }
     
@@ -573,10 +573,13 @@ impl State {
     pub fn create_state() -> State {
         
         // Key Generation Params
-        let min = 5;
-        let max = 10000;
-        let p = Keys::prime_gen(min, max); // we want between 5 and 1000000
-        let q = Keys::prime_gen(min, max); // we want between 5 and 1000000
+        // account key range
+        let min = 1;
+        let max = 100000; 
+        // p and q must be prime, but larger the better
+        // but less than 300 in order to work on the Rust Playground
+        let p = 173; //Keys::prime_gen(min, max); // we want between 5 and 1000000
+        let q = 223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let m = p * q; 
         let ctf_pq = Keys::ctf(p, q);
         
@@ -630,7 +633,7 @@ impl State {
     pub fn create_account(&mut self) {
         
         // create a new priv/pub key pair
-        let (priv_key, pub_key) = Keys::generate_keypair(self.keys.min, self.keys.max, self.keys.ctf_pq);
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
         
         // check to make sure we're not duplicating an existing account
         // - this is important when we're using small numbers for key 
