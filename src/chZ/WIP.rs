@@ -5,22 +5,10 @@ say changing PoW to PoS, and it still runs.
 
 
 /* QUESTIONS / TODOS
-PROBLEM
-- when we process a block of transactions verify_tx()
-  checks that the tx are valid against the previous history,
-  but does not check if the tx are valid relative to other tx
-  in the block. This means that you can have a double spend where
-  each tx is valid, but the block is not, and no one can check this
-  until the block is processed.
-TODO
-- find out how Bitcoin and Ethereum do this
-- and/or just create a function that clones the State before
-  verifying tx and updates the copy to check against that vs
-  the previous state, then throw away the copy once tx are verified
 QUESTION
 - does it make more sense to incriment the nonce every time a 
   tx is submitted, or everytime a tx is sucessfully processed?
-  
+
 PROBLEM
 - with a small pq RSA setup there's a lot of account collisions
 TODO
