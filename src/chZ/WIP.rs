@@ -318,7 +318,7 @@ impl Keys {
         
         let mut tx_sig_check_pub_signed = Vec::new();
         for i in tx_sig_check {
-            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender))
+            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender_pub_key))
         }
         
         let mut tx_sig_check_string = String::new();
@@ -386,8 +386,8 @@ impl STF {
         
         for i in &state.pending_tx {
         
-            if !(state.accounts.contains_key(&i.data.sender)) {
-                println!("Invalid TX: sender not found.");
+            if !(state.accounts.contains_key(&i.data.sender_pub_key)) {
+                println!("Invalid TX: sender_pub_key not found.");
                 continue
             }
             
@@ -398,19 +398,19 @@ impl STF {
             
             if !(i.data.amount > 0) {
                 println!("Invalid TX: negative amount error.");
-                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                println!("{} cannot send {} to {}", i.data.sender_pub_key, i.data.amount, i.data.receiver);
                 continue
             }
             
-            if !(state.accounts.get(&i.data.sender).unwrap().balance > i.data.amount) {
+            if !(state.accounts.get(&i.data.sender_pub_key).unwrap().balance > i.data.amount) {
                 println!("Invalid TX: insufficient funds.");
-                println!("{} cannot send {} to {}", i.data.sender, i.data.amount, i.data.receiver);
+                println!("{} cannot send {} to {}", i.data.sender_pub_key, i.data.amount, i.data.receiver);
                 continue         
             }
             
-            if !(i.data.sender_nonce == state.accounts.get(&i.data.sender).unwrap().nonce) {
+            if !(i.data.sender_pub_key_nonce == state.accounts.get(&i.data.sender_pub_key).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender, state.accounts.get(&i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender_pub_key, state.accounts.get(&i.data.sender_pub_key).unwrap().nonce, i.data.sender_pub_key_nonce);
                 continue
             }
             
@@ -497,8 +497,8 @@ pub struct Account {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct TxData {
-    sender: i32,
-    sender_nonce: i32,
+    sender_pub_key: i32,
+    sender_pub_key_nonce: i32,
     amount: i32,
     receiver: i32,
 }
@@ -540,6 +540,7 @@ pub struct State {
     keys: Keys,
     stf: STF,
     accounts: HashMap<i32, Account>,
+    priv_keys: HashMap<i32, i32>, // this is for testing only to simulate network activity
     validators: Vec<i32>,
     pending_tx: Vec<TX>,
     history: Vec<Block>,
@@ -583,6 +584,7 @@ impl State {
             keys: rsa_params,
             stf: stf_data,
             accounts: HashMap::new(),
+            priv_keys: HashMap::new(),
             validators: Vec::new(),
             pending_tx: Vec::new(),
             history: vec![genesis_block],
@@ -600,7 +602,7 @@ impl State {
         //   stored within the Keys library?
         let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
         let new_account = Account {
-            balance: 0,
+            balance: 1000, // init account with testnet tokens
             nonce: 0,
         };
         
@@ -609,28 +611,37 @@ impl State {
             return
         }
         
+        // Add public keys and account to the "blockchain"
         self.accounts.insert(pub_key, new_account);
+        
+        // This to simulate tx and network activity while testing.
+        // Remove if you want to print out and store your keys.
+        self.priv_keys.insert(pub_key, priv_key);
+        
+        // Uncomment if you want to keep your private keys offline
         //println!("\nThis is your public key: {:#?}", &pub_key);
         //println!("This is your private key: {:#?}", &priv_key);
         //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
+    
+
     }
     
     // Create a new TX
     pub fn create_tx(&mut self,
-                     sender_pub_key: i32,
-                     sender_priv_key: i32,
+                     sender_pub_key_pub_key: i32,
+                     sender_pub_key_priv_key: i32,
                      receiver_pub_key: i32,
                      amount: i32) {
         
         
         let data = TxData {
-            sender: sender_pub_key,
-            sender_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
+            sender_pub_key: sender_pub_key_pub_key,
+            sender_pub_key_nonce: self.accounts.get(&sender_pub_key_pub_key).unwrap().nonce,
             receiver: receiver_pub_key,
             amount: amount,
         };
         
-        let signature = Keys::sign(self.keys, &data, sender_priv_key);
+        let signature = Keys::sign(self.keys, &data, sender_pub_key_priv_key);
         
         let tx = TX {
             data: data,
@@ -670,13 +681,14 @@ impl State {
         // transition the state by incorporating the
         // information in the new block
         for i in &block.data.transactions {
-            self.accounts.get_mut(&i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&i.data.sender_pub_key).unwrap().balance -= i.data.amount;
             self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
-            self.accounts.get_mut(&i.data.sender).unwrap().nonce += 1;
+            self.accounts.get_mut(&i.data.sender_pub_key).unwrap().nonce += 1;
         }
         
-        // add the block to the history
+        // add the block to the history and clear pending tx pool
         self.history.push(block);
+        self.pending_tx.clear();
     }
 }
 
@@ -702,6 +714,7 @@ fn main() {
         nonce: 0,
     };
     blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    blockchain.priv_keys.insert(acc_0_pub_key, acc_0_priv_key);
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
     // Manually create testing account 1
@@ -712,6 +725,7 @@ fn main() {
         nonce: 0,        
     };
     blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    blockchain.priv_keys.insert(acc_1_pub_key, acc_1_priv_key);
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
     // add testing account 0 and 1 to the validator pool
@@ -726,15 +740,42 @@ fn main() {
     use std::time::Duration;
     use std::sync::{Mutex, Arc};
     
+    fn create_random_tx(state: &mut State) {
+        
+        // get random keys from the account pool
+        let keys: Vec<i32> = state.accounts.iter().map(|x| *x.0).collect();
+        let sender_pub_key = keys[thread_rng().gen_range(0, keys.len())];
+        let sender_priv_key = state.priv_keys.get(&sender_pub_key).unwrap();
+        let receiver = keys[thread_rng().gen_range(0, keys.len())];
+
+        // create a tx from the randomly chosen keys
+        let new_tx_data = TxData {
+            sender_pub_key: sender_pub_key,
+            sender_pub_key_nonce: state.accounts.get(&sender_pub_key).unwrap().nonce,
+            amount: thread_rng().gen_range(1, state.accounts.get(&sender_pub_key).unwrap().balance),
+            receiver: receiver,
+        };
+        let new_tx_data_signature = Keys::sign(state.keys, &new_tx_data, *sender_priv_key);
+        let new_tx = TX {
+            data: new_tx_data,
+            signature: new_tx_data_signature,
+        };
+        
+        // return the tx
+        state.pending_tx.push(new_tx);
+    }
+    create_random_tx(&mut blockchain);
+    
     let chain = Mutex::new(&mut blockchain);
     for i in 0..10 {
         let mut chain_thread = chain.lock().unwrap();
         //chain_thread.validators.push(10);
-        chain_thread.create_tx(acc_0_pub_key, acc_0_priv_key, acc_1_pub_key, 50);
+        create_random_tx(& mut chain_thread);
     }
-    println!("\nBLOCKCHAIN:\n{:#?}", &chain);
+    //println!("\nBLOCKCHAIN:\n{:?}", &chain);
     
     // process the tx
     blockchain.create_new_state();
     println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
+    
 }
