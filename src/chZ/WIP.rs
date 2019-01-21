@@ -398,16 +398,17 @@ impl STF {
     // This function encodes the rules of what qualifies as a "valid tx"
     pub fn verify_pending_tx(state: &mut State) -> Vec<TX> {
         
+        let mut new_state = state.clone();
         let mut verified_tx = Vec::new();
         
-        for i in &state.pending_tx {
+        for i in &new_state.pending_tx {
         
-            if !(state.accounts.contains_key(&i.data.sender_pub_key)) {
+            if !(new_state.accounts.contains_key(&i.data.sender_pub_key)) {
                 println!("Invalid TX: sender_pub_key not found.");
                 continue
             }
             
-            if !(state.accounts.contains_key(&i.data.receiver)) {
+            if !(new_state.accounts.contains_key(&i.data.receiver)) {
                 println!("Invalid TX: receiver not found.");
                 continue
             }
@@ -418,24 +419,26 @@ impl STF {
                 continue
             }
             
-            if !(state.accounts.get(&i.data.sender_pub_key).unwrap().balance > i.data.amount) {
+            if !(new_state.accounts.get(&i.data.sender_pub_key).unwrap().balance > i.data.amount) {
                 println!("Invalid TX: insufficient funds.");
-                println!("{} cannot send {} to {}", i.data.sender_pub_key, i.data.amount, i.data.receiver);
-                continue         
+                println!("{} has {} and cannot send {} to {}", i.data.sender_pub_key, new_state.accounts.get(&i.data.sender_pub_key).unwrap().balance, i.data.amount, i.data.receiver);
+                continue   
             }
             
-            if !(i.data.sender_pub_key_nonce == state.accounts.get(&i.data.sender_pub_key).unwrap().nonce) {
+            if !(i.data.sender_pub_key_nonce == new_state.accounts.get(&i.data.sender_pub_key).unwrap().nonce) {
                 println!("Invalid TX: potential replay tx.");
-                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender_pub_key, state.accounts.get(&i.data.sender_pub_key).unwrap().nonce, i.data.sender_pub_key_nonce);
+                println!("{} has nonce {}, but submitted a tx with nonce {}", i.data.sender_pub_key, new_state.accounts.get(&i.data.sender_pub_key).unwrap().nonce, i.data.sender_pub_key_nonce);
                 continue
             }
             
-            if !(Keys::check_tx_signature(state.keys, i.clone())) {
+            if !(Keys::check_tx_signature(new_state.keys, i.clone())) {
                 println!("Invalid TX: signature check failed");
                 continue
             }
             
             verified_tx.push(i.clone());
+            new_state.accounts.get_mut(&i.data.sender_pub_key).unwrap().balance -= i.data.amount;
+            new_state.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
         }
         
         verified_tx
@@ -612,20 +615,22 @@ impl State {
     // Create a new account
     pub fn create_account(&mut self) {
         
-        // TODO
-        // - How can I make Keys::generator_keypair() not
-        //   take in anything as input and have all the params
-        //   stored within the Keys library?
+        // create a new priv/pub key pair
         let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
-        let new_account = Account {
-            balance: 1000, // init account with testnet tokens
-            nonce: 0,
-        };
         
+        // check to make sure we're not duplicating an existing account
+        // - this is important when we're using small numbers for key 
+        // generation while testing
         if self.accounts.contains_key(&pub_key) {
-            println!("Bummer... account collision.");
+            println!("ERROR: account generation collision.");
             return
         }
+        
+        // if no collisions, create a new account
+        let new_account = Account {
+            balance: 10000, // init account with testnet tokens
+            nonce: 0,
+        };
         
         // Add public keys and account to the "blockchain"
         self.accounts.insert(pub_key, new_account);
@@ -644,15 +649,14 @@ impl State {
     
     // Create a new TX
     pub fn create_tx(&mut self,
-                     sender_pub_key_pub_key: i32,
+                     sender_pub_key: i32,
                      sender_pub_key_priv_key: i32,
                      receiver_pub_key: i32,
                      amount: i32) {
         
-        
         let data = TxData {
-            sender_pub_key: sender_pub_key_pub_key,
-            sender_pub_key_nonce: self.accounts.get(&sender_pub_key_pub_key).unwrap().nonce,
+            sender_pub_key: sender_pub_key,
+            sender_pub_key_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
             receiver: receiver_pub_key,
             amount: amount,
         };
@@ -664,15 +668,12 @@ impl State {
             signature: signature,
         };
         
+        // increase sender's nonce by 1 to prevent replay attacks
+        self.accounts.get(&sender_pub_key).unwrap().nonce += 1;
+        // push tx to the pending_tx pool
         self.pending_tx.push(tx);
     }
     
-    // TODO
-    // - is it better to use self or state in these functions
-    //   self is very natural, but makes the centralized nature
-    //   of the turorial ovbious whereas state allows the function
-    //   to take in arbitrary valid structs, but is also a little 
-    //   clunky
     // Testing function to generate a tx with random
     // sender, reciever, and amount
     pub fn create_random_tx(&mut self) {
@@ -684,20 +685,22 @@ impl State {
         let receiver = keys[thread_rng().gen_range(0, keys.len())];
 
         // create a tx from the randomly chosen keys
-        let new_tx_data = TxData {
+        let data = TxData {
             sender_pub_key: sender_pub_key,
             sender_pub_key_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
             amount: thread_rng().gen_range(1, self.accounts.get(&sender_pub_key).unwrap().balance),
             receiver: receiver,
         };
-        let new_tx_data_signature = Keys::sign(self.keys, &new_tx_data, *sender_priv_key);
-        let new_tx = TX {
-            data: new_tx_data,
-            signature: new_tx_data_signature,
+        let signature = Keys::sign(self.keys, &data, *sender_priv_key);
+        let tx = TX {
+            data: data,
+            signature: signature,
         };
         
-        // return the tx
-        self.pending_tx.push(new_tx);
+        // increase sender's nonce by 1 to prevent replay attacks
+        self.accounts.get(&sender_pub_key).unwrap().nonce += 1;
+        // push tx to the pending_tx pool
+        self.pending_tx.push(tx);
     }
     
     // function to add an account to the validator Vec
@@ -747,7 +750,6 @@ impl State {
         for i in &block.data.transactions {
             self.accounts.get_mut(&i.data.sender_pub_key).unwrap().balance -= i.data.amount;
             self.accounts.get_mut(&i.data.receiver).unwrap().balance += i.data.amount;
-            self.accounts.get_mut(&i.data.sender_pub_key).unwrap().nonce += 1;
         }
         
         // add the block to the history and clear pending tx pool
