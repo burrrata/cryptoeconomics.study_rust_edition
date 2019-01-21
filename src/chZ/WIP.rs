@@ -33,6 +33,8 @@ PROBLEM
 TODO
 - create a way for the state to be shared rather than confirmed
   on the main() thread
+  - can we create collective coin flipping or MPC style randomness
+    just with multiple threads?
 - or do the best we can with this setup but move towards a 
   CLI tutorial that allows for networking
 */
@@ -815,5 +817,4 @@ fn main() {
     //println!("\n\n\nCHAIN:\n{:#?}", &chain);
     blockchain.create_new_state();
     println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
-    
 }
