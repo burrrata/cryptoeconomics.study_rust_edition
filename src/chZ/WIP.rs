@@ -4,7 +4,23 @@ say changing PoW to PoS, and it still runs.
 */
 
 /* QUESTIONS / TODOS
+
+PROBLEM
+- when we process a block of transactions verify_tx()
+  checks that the tx are valid against the previous history,
+  but does not check if the tx are valid relative to other tx
+  in the block. This means that you can have a double spend where
+  each tx is valid, but the block is not, and no one can check this
+  until the block is processed.
+TODO
+- find out how Bitcoin and Ethereum do this
+- and/or just create a function that clones the State before
+  verifying tx and updates the copy to check against that vs
+  the previous state, then throw away the copy once tx are verified
+
+ALSO
 Currently working on concurrent threading to simulate network activity
+
 */
 
 extern crate rand;
@@ -651,11 +667,59 @@ impl State {
         self.pending_tx.push(tx);
     }
     
+    // TODO
+    // - is it better to use self or state in these functions
+    //   self is very natural, but makes the centralized nature
+    //   of the turorial ovbious whereas state allows the function
+    //   to take in arbitrary valid structs, but is also a little 
+    //   clunky
+    // Testing function to generate a tx with random
+    // sender, reciever, and amount
+    pub fn create_random_tx(&mut self) {
+        
+        // get random keys from the account pool
+        let keys: Vec<i32> = self.accounts.iter().map(|x| *x.0).collect();
+        let sender_pub_key = keys[thread_rng().gen_range(0, keys.len())];
+        let sender_priv_key = self.priv_keys.get(&sender_pub_key).unwrap();
+        let receiver = keys[thread_rng().gen_range(0, keys.len())];
+
+        // create a tx from the randomly chosen keys
+        let new_tx_data = TxData {
+            sender_pub_key: sender_pub_key,
+            sender_pub_key_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
+            amount: thread_rng().gen_range(1, self.accounts.get(&sender_pub_key).unwrap().balance),
+            receiver: receiver,
+        };
+        let new_tx_data_signature = Keys::sign(self.keys, &new_tx_data, *sender_priv_key);
+        let new_tx = TX {
+            data: new_tx_data,
+            signature: new_tx_data_signature,
+        };
+        
+        // return the tx
+        self.pending_tx.push(new_tx);
+    }
+    
     // function to add an account to the validator Vec
     pub fn create_validator(&mut self,
-                                account: i32) {
+                            account: i32) {
         
         self.validators.push(account);
+    }
+    
+    // function to iterate through all accounts eligible
+    // to participate in the validator pool and randomly
+    // "flip a coin" to decide if they join the validator
+    // pool
+    pub fn create_random_validators(&mut self) {
+        
+        let keys: Vec<i32> = self.accounts.iter().map(|x| *x.0).collect();
+        for i in keys {
+            match random() {
+                true => self.create_validator(i),
+                false => continue
+            }
+        }
     }
     
     // function to transition the state to a new state
@@ -696,85 +760,42 @@ impl State {
 
 fn main() {
     
-    // Init "blockchain"
+    // Init The "Blockchain"
     let mut blockchain = State::create_state();
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
-    // Create random accounts
-    for _i in 0..3 {
+    
+    // Create Testing Accounts
+    // create 10 new accounts
+    for i in 0..10 {
         blockchain.create_account();
     }
-    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
-    
-    // Manually create testing account 0
-    let acc_0_pub_key = 773;
-    let acc_0_priv_key = 557;
-    let acc_0 = Account {
-        balance: 10000,
-        nonce: 0,
-    };
-    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
-    blockchain.priv_keys.insert(acc_0_pub_key, acc_0_priv_key);
-    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
-    
-    // Manually create testing account 1
-    let acc_1_pub_key = 179;
-    let acc_1_priv_key = 719;
-    let acc_1 = Account {
-        balance: 10000,
-        nonce: 0,        
-    };
-    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
-    blockchain.priv_keys.insert(acc_1_pub_key, acc_1_priv_key);
-    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
-    
-    // add testing account 0 and 1 to the validator pool
-    blockchain.create_validator(acc_0_pub_key);
-    blockchain.create_validator(acc_1_pub_key);
+    // randomly add testing accounts the validator pool
+    blockchain.create_random_validators();
     //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
     
     
-    // test multiple tx
+    // Test Multiple TX
     use std::thread;
     use std::sync::mpsc;
     use std::time::Duration;
     use std::sync::{Mutex, Arc};
     
-    fn create_random_tx(state: &mut State) {
-        
-        // get random keys from the account pool
-        let keys: Vec<i32> = state.accounts.iter().map(|x| *x.0).collect();
-        let sender_pub_key = keys[thread_rng().gen_range(0, keys.len())];
-        let sender_priv_key = state.priv_keys.get(&sender_pub_key).unwrap();
-        let receiver = keys[thread_rng().gen_range(0, keys.len())];
-
-        // create a tx from the randomly chosen keys
-        let new_tx_data = TxData {
-            sender_pub_key: sender_pub_key,
-            sender_pub_key_nonce: state.accounts.get(&sender_pub_key).unwrap().nonce,
-            amount: thread_rng().gen_range(1, state.accounts.get(&sender_pub_key).unwrap().balance),
-            receiver: receiver,
-        };
-        let new_tx_data_signature = Keys::sign(state.keys, &new_tx_data, *sender_priv_key);
-        let new_tx = TX {
-            data: new_tx_data,
-            signature: new_tx_data_signature,
-        };
-        
-        // return the tx
-        state.pending_tx.push(new_tx);
-    }
-    create_random_tx(&mut blockchain);
-    
     let chain = Mutex::new(&mut blockchain);
     for i in 0..10 {
         let mut chain_thread = chain.lock().unwrap();
-        //chain_thread.validators.push(10);
-        create_random_tx(& mut chain_thread);
+        chain_thread.create_random_tx();
     }
-    //println!("\nBLOCKCHAIN:\n{:?}", &chain);
+    // TODO
+    // - how/why did chain copy it's data to blockchain
+    //   if we print both their pending_tx pools are the same
+    //println!("\n\n\nCHAIN:\n{:#?}", &chain);
+    //println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
-    // process the tx
+    
+    // Test The State Transition Function
+    //chain.lock().unwrap().create_new_state();
+    //println!("\n\n\nCHAIN:\n{:#?}", &chain);
     blockchain.create_new_state();
     println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
