@@ -1,4 +1,11 @@
-// Currently working on concurrent threading to simulate network activity
+/* GOAL
+A modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs.
+*/
+
+/* QUESTIONS / TODOS
+Currently working on concurrent threading to simulate network activity
+*/
 
 extern crate rand;
 use rand::prelude::*;
@@ -6,15 +13,6 @@ use rand::prelude::*;
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
-
-/* GOAL
-A modular architecture where you can change any of the modules,
-say changing PoW to PoS, and it still runs.
-*/
-
-/* QUESTIONS
-Why does this panic?
-*/
 
 
 pub struct DataEncoding;
@@ -731,11 +729,12 @@ fn main() {
     let chain = Mutex::new(&mut blockchain);
     for i in 0..10 {
         let mut chain_thread = chain.lock().unwrap();
-        chain_thread.validators.push(10);
+        //chain_thread.validators.push(10);
+        chain_thread.create_tx(acc_0_pub_key, acc_0_priv_key, acc_1_pub_key, 50);
     }
     println!("\nBLOCKCHAIN:\n{:#?}", &chain);
     
     // process the tx
-    //blockchain.create_new_state();
-    //println!("\nBLOCKCHAIN:\n{:#?}", &blockchain);
+    blockchain.create_new_state();
+    println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
 }
