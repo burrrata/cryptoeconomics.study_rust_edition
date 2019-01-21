@@ -5,6 +5,7 @@ say changing PoW to PoS, and it still runs.
 
 /* QUESTIONS / TODOS
 
+
 PROBLEM
 - when we process a block of transactions verify_tx()
   checks that the tx are valid against the previous history,
@@ -17,10 +18,26 @@ TODO
 - and/or just create a function that clones the State before
   verifying tx and updates the copy to check against that vs
   the previous state, then throw away the copy once tx are verified
+QUESTION
+- does it make more sense to incriment the nonce every time a 
+  tx is submitted, or everytime a tx is sucessfully processed?
+  
+  
+PROBLEM
+- with a small pq RSA setup there's a lot of account collisions
+TODO
+- find out what the largest setup is that we can use in the
+  Rust Playground without crashing or waiting a long time
 
-ALSO
-Currently working on concurrent threading to simulate network activity
 
+PROBLEM
+- concurrent threading is a weak way to simulate network
+  activity.
+TODO
+- create a way for the state to be shared rather than confirmed
+  on the main() thread
+- or do the best we can with this setup but move towards a 
+  CLI tutorial that allows for networking
 */
 
 extern crate rand;
@@ -654,22 +671,21 @@ impl State {
                      receiver_pub_key: i32,
                      amount: i32) {
         
+        // increase sender's nonce by 1 to prevent replay attacks
+        self.accounts.get_mut(&sender_pub_key).unwrap().nonce += 1;
+        
         let data = TxData {
             sender_pub_key: sender_pub_key,
             sender_pub_key_nonce: self.accounts.get(&sender_pub_key).unwrap().nonce,
             receiver: receiver_pub_key,
             amount: amount,
         };
-        
         let signature = Keys::sign(self.keys, &data, sender_pub_key_priv_key);
-        
         let tx = TX {
             data: data,
             signature: signature,
         };
         
-        // increase sender's nonce by 1 to prevent replay attacks
-        self.accounts.get(&sender_pub_key).unwrap().nonce += 1;
         // push tx to the pending_tx pool
         self.pending_tx.push(tx);
     }
@@ -683,7 +699,10 @@ impl State {
         let sender_pub_key = keys[thread_rng().gen_range(0, keys.len())];
         let sender_priv_key = self.priv_keys.get(&sender_pub_key).unwrap();
         let receiver = keys[thread_rng().gen_range(0, keys.len())];
-
+        
+        // increase sender's nonce by 1 to prevent replay attacks
+        self.accounts.get_mut(&sender_pub_key).unwrap().nonce += 1;
+        
         // create a tx from the randomly chosen keys
         let data = TxData {
             sender_pub_key: sender_pub_key,
@@ -696,9 +715,7 @@ impl State {
             data: data,
             signature: signature,
         };
-        
-        // increase sender's nonce by 1 to prevent replay attacks
-        self.accounts.get(&sender_pub_key).unwrap().nonce += 1;
+
         // push tx to the pending_tx pool
         self.pending_tx.push(tx);
     }
@@ -769,7 +786,7 @@ fn main() {
     
     // Create Testing Accounts
     // create 10 new accounts
-    for i in 0..10 {
+    for i in 0..100 {
         blockchain.create_account();
     }
     // randomly add testing accounts the validator pool
