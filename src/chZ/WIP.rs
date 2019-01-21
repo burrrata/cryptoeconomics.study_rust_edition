@@ -3,9 +3,8 @@ A modular architecture where you can change any of the modules,
 say changing PoW to PoS, and it still runs.
 */
 
+
 /* QUESTIONS / TODOS
-
-
 PROBLEM
 - when we process a block of transactions verify_tx()
   checks that the tx are valid against the previous history,
@@ -22,13 +21,11 @@ QUESTION
 - does it make more sense to incriment the nonce every time a 
   tx is submitted, or everytime a tx is sucessfully processed?
   
-  
 PROBLEM
 - with a small pq RSA setup there's a lot of account collisions
 TODO
 - find out what the largest setup is that we can use in the
   Rust Playground without crashing or waiting a long time
-
 
 PROBLEM
 - concurrent threading is a weak way to simulate network
@@ -39,6 +36,7 @@ TODO
 - or do the best we can with this setup but move towards a 
   CLI tutorial that allows for networking
 */
+
 
 extern crate rand;
 use rand::prelude::*;
