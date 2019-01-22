@@ -752,7 +752,7 @@ impl State {
         STF::random_validator_selection(self);
         
         // check tx and put valid ones into a block
-        let mut block = STF::create_block(self);
+        let block = STF::create_block(self);
         
         // check that the block proof is valid
         if !(STF::check_block(&self, &block)) {
@@ -788,7 +788,7 @@ fn main() {
     
     // Create Accounts
     // create some new accounts
-    for i in 0..100 {
+    for _ in 0..100 {
         blockchain.create_account();
     }
     // randomly add accounts to the validator pool
@@ -797,9 +797,9 @@ fn main() {
     
     // Test TX and STF
     // simulate 10 blocks
-    for i in 0..10 {
+    for _ in 0..10 {
         // simulate 10 tx per block
-        for i in 0..10 {
+        for _ in 0..10 {
             blockchain.create_random_tx();
         }
         // create new block and transition the state
