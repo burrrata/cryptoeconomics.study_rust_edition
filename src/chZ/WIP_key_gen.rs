@@ -576,12 +576,13 @@ impl State {
         // account key range
         let min = 1;
         let max = 100000; 
-        // p and q must be prime, but larger the better
-        // but less than 300 in order to work on the Rust Playground
+        // set p and q for RSA system
+        // p and q must be prime, the larger the better
+        // - for Rust Playground: p && q < 300
         // https://en.wikipedia.org/wiki/List_of_prime_numbers
         // https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation
-        let p = 173; //Keys::prime_gen(min, max); // we want between 5 and 1000000
-        let q = 223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
+        let p = 61; //173; //Keys::prime_gen(min, max); // we want between 5 and 1000000
+        let q = 53; //223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let m = p * q; 
         let ctf_pq = Keys::ctf(p, q);
         
@@ -783,40 +784,26 @@ fn main() {
     
     // Init The "Blockchain"
     let mut blockchain = State::create_state();
-    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
+    //println!("\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
-    
-    // Create Testing Accounts
-    // create 10 new accounts
+    // Create Accounts
+    // create some new accounts
     for i in 0..100 {
         blockchain.create_account();
     }
-    // randomly add testing accounts the validator pool
+    // randomly add accounts to the validator pool
     blockchain.create_random_validators();
-    //println!("\nBLOCKCHAIN:\n{:#?}", blockchain);
+    //println!("\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
-    
-    // Test Multiple TX
-    use std::thread;
-    use std::sync::mpsc;
-    use std::time::Duration;
-    use std::sync::{Mutex, Arc};
-    
-    let chain = Mutex::new(&mut blockchain);
+    // Test TX and STF
+    // simulate 10 blocks
     for i in 0..10 {
-        let mut chain_thread = chain.lock().unwrap();
-        chain_thread.create_random_tx();
+        // simulate 10 tx per block
+        for i in 0..10 {
+            blockchain.create_random_tx();
+        }
+        // create new block and transition the state
+        blockchain.create_new_state();
     }
-    // TODO
-    // - how/why did chain copy it's data to blockchain
-    //   if we print both their pending_tx pools are the same
-    //println!("\n\n\nCHAIN:\n{:#?}", &chain);
-    //println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
-    
-    
-    // Test The State Transition Function
-    //chain.lock().unwrap().create_new_state();
-    //println!("\n\n\nCHAIN:\n{:#?}", &chain);
-    blockchain.create_new_state();
     println!("\n\n\nBLOCKCHAIN:\n{:#?}", &blockchain);
 }
