@@ -786,7 +786,7 @@ fn main() {
     let mut blockchain = State::create_state();
     //println!("\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
-    // Create Accounts
+    // Create New Accounts
     // create some new accounts
     for _ in 0..100 {
         blockchain.create_account();
@@ -795,7 +795,7 @@ fn main() {
     blockchain.create_random_validators();
     //println!("\nBLOCKCHAIN:\n{:#?}", &blockchain);
     
-    // Test TX and STF
+    // Test TX and State Transition Function
     // simulate 10 blocks
     for _ in 0..10 {
         // simulate 10 tx per block
