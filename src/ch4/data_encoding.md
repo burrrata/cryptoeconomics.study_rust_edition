@@ -4,3 +4,5 @@
 
 https://github.com/paritytech/substrate/tree/master/srml
 
+This could also be good for data encoding:
+- https://github.com/poanetwork/hex_fmt/blob/master/src/lib.rs
