@@ -6,19 +6,8 @@ say changing PoW to PoS, and it still runs.
 
 /* QUESTIONS / TODOS
 QUESTION
-- why is the prime_gen() function not working?
-TODO
-- fix it
-
-QUESTION
 - does it make more sense to incriment the nonce every time a 
   tx is submitted, or everytime a tx is sucessfully processed?
-
-PROBLEM
-- with a small pq RSA setup there's a lot of account collisions
-TODO
-- find out what the largest setup is that we can use in the
-  Rust Playground without crashing or waiting a long time
 
 PROBLEM
 - concurrent threading is a weak way to simulate network
