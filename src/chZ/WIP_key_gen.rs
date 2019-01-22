@@ -248,13 +248,14 @@ impl Keys {
     // slowly, yet randomly, generate a prime number within a range
     pub fn prime_gen(self) -> i32 {
         
-        for _i in 0..1000000 {
+        for _ in 0..1000000 {
             let p = thread_rng().gen_range(self.min, self.max);
             if Keys::slow_prime_check(self, p) {
                 return p
             }
         }
         
+        println!("ERROR: failed to generate a prime.");
         0
     }
 
@@ -576,17 +577,17 @@ impl State {
     pub fn create_state() -> State {
         
         // Key Generation Parameters
-        // account key range
-        let min = 1;
-        let max = 100000; 
-        // set p and q for RSA system
+        // min and max determine the size of the private keys
+        let min = 1000; // min account value
+        let max = 100000; // max account value
+        // p and q (and thus m and ctf_pq) determine the size of the public keys
         // p and q must be prime, the larger the better
         // - for Rust Playground: p && q < 300
         // https://en.wikipedia.org/wiki/List_of_prime_numbers
         // https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation
         let p = 61; //173; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let q = 53; //223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
-        let m = p * q; 
+        let m = p * q; // modulo group
         let ctf_pq = Keys::ctf(p, q);
         // set up Keys struct to hold the RSA parameters
         let rsa_params = Keys {
@@ -600,11 +601,12 @@ impl State {
 
         // State Transition Function data
         let stf_data = STF {
-            version: String::from("PoS"),
-            difficulty: 100,
+            version: String::from("PoS"), // this is has no purpose other than to show humans what STF is being used
+            difficulty: 100, // in PoS this is the amount an account is required to have before they can become a validator
             current_validator: 0, // changes every block
         };
 
+        // Create the genesis block to init a state
         let genesis_block = Block {
                 proof: String::from("GENESIS BLOCK"),
                 data: BlockData {
@@ -619,6 +621,7 @@ impl State {
                 }
             };
         
+        // The new state
         let new_state = State {
             keys: rsa_params,
             stf: stf_data,
@@ -663,8 +666,6 @@ impl State {
         //println!("\nThis is your public key: {:#?}", &pub_key);
         //println!("This is your private key: {:#?}", &priv_key);
         //println!("This is your account: {:#?}", self.accounts.get(&pub_key).unwrap());
-    
-
     }
     
     // Create a new TX
@@ -788,7 +789,7 @@ fn main() {
     
     // Create New Accounts
     // create some new accounts
-    for _ in 0..100 {
+    for _ in 0..10 {
         blockchain.create_account();
     }
     // randomly add accounts to the validator pool
@@ -797,9 +798,9 @@ fn main() {
     
     // Test TX and State Transition Function
     // simulate 10 blocks
-    for _ in 0..10 {
+    for _ in 0..3 {
         // simulate 10 tx per block
-        for _ in 0..10 {
+        for _ in 0..3 {
             blockchain.create_random_tx();
         }
         // create new block and transition the state
