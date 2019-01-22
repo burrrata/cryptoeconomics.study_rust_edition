@@ -21,6 +21,8 @@ TODO
   CLI tutorial that allows for networking
 */
 
+/////////////////////////////////////////////////////////
+
 
 extern crate rand;
 use rand::prelude::*;
@@ -29,6 +31,9 @@ use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hasher;
 
+
+// Data Encoding
+/////////////////////////////////////////////////////////
 
 pub struct DataEncoding;
 
@@ -161,6 +166,9 @@ impl Hash {
     
 }
 
+
+// Keys
+/////////////////////////////////////////////////////////
 
 // This struct holds all the data for the key generation
 // and signing. If you want to use a different key
@@ -349,6 +357,9 @@ impl Keys {
 }
 
 
+// State Transition Function
+/////////////////////////////////////////////////////////
+
 // This struct holds all the data needed for 
 // the chosen state transition protocol.
 // In this case we're doign PoS, but if you
@@ -504,6 +515,9 @@ impl STF {
 }
 
 
+// State
+/////////////////////////////////////////////////////////
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Account {
     balance: i32,
@@ -561,7 +575,7 @@ impl State {
     // Create a new state
     pub fn create_state() -> State {
         
-        // Key Generation Params
+        // Key Generation Parameters
         // account key range
         let min = 1;
         let max = 100000; 
@@ -574,7 +588,7 @@ impl State {
         let q = 53; //223; //Keys::prime_gen(min, max); // we want between 5 and 1000000
         let m = p * q; 
         let ctf_pq = Keys::ctf(p, q);
-        
+        // set up Keys struct to hold the RSA parameters
         let rsa_params = Keys {
             min: min,
             max: max,
@@ -582,12 +596,9 @@ impl State {
             q: q,
             modulo: m,
             ctf_pq: ctf_pq,
-            //p: 61,
-            //q: 53,
-            //modulo: 3233,
-            //ctf_pq: 780,
         };
 
+        // State Transition Function data
         let stf_data = STF {
             version: String::from("PoS"),
             difficulty: 100,
