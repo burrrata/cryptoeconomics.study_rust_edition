@@ -370,7 +370,7 @@ impl Keys {
 pub struct STF {
     version: String, // PoA, PoW, PoS, etc...
     difficulty: i32,
-    validator: i32,
+    current_validator: i32,
 }
 
 impl STF {
@@ -399,7 +399,7 @@ impl STF {
         
         // randomly select a validator from the validator Vec
         let validator_num = thread_rng().gen_range(0, state.validators.len());
-        state.stf.validator = state.validators[validator_num];
+        state.stf.current_validator = state.validators[validator_num];
     }
     
     // This function encodes the rules of what qualifies as a "valid tx"
@@ -457,7 +457,7 @@ impl STF {
     // it does here :)
     pub fn proof(state: &State) -> String {
     
-        let hash = Hash::hash(&state.stf.validator);
+        let hash = Hash::hash(&state.stf.current_validator);
         
         hash
     }
@@ -495,14 +495,14 @@ impl STF {
         // proof to check
         let submitted_proof = &block.proof;
         
-        // check that validator matches randomly chosen STF validator
-        if submitted_proof != &Hash::hash(&state.stf.validator) {
+        // check that validator matches currently chosen STF validator
+        if submitted_proof != &Hash::hash(&state.stf.current_validator) {
             println!("\nProof Error: invalid PoS validator.");
             return false
         }
         
         // check validator account has enough state
-        let validator_balance = state.accounts.get(&state.stf.validator).unwrap().balance;
+        let validator_balance = state.accounts.get(&state.stf.current_validator).unwrap().balance;
         if !(validator_balance > state.stf.difficulty) {
             println!("ERROR: block proof does not meet difficulty requirements.");
             return false
@@ -602,7 +602,7 @@ impl State {
         let stf_data = STF {
             version: String::from("PoS"),
             difficulty: 100,
-            validator: 0,
+            current_validator: 0, // changes every block
         };
 
         let genesis_block = Block {
@@ -756,14 +756,14 @@ impl State {
         
         // check that the block proof is valid
         if !(STF::check_block(&self, &block)) {
-            // if block is not valid slash validator's funds
+            // if block is not valid slash the current validator's funds
             println!("\nERROR: block not valid.");
-            self.accounts.get_mut(&self.stf.validator).unwrap().balance -= self.stf.difficulty;
+            self.accounts.get_mut(&self.stf.current_validator).unwrap().balance -= self.stf.difficulty;
             return
         }
         
-        // if block is valid add reward to validator's balance
-        self.accounts.get_mut(&self.stf.validator).unwrap().balance += self.stf.difficulty;
+        // if block is valid add reward to current validator's balance
+        self.accounts.get_mut(&self.stf.current_validator).unwrap().balance += self.stf.difficulty;
         
         // transition the state by incorporating the
         // information in the new block
