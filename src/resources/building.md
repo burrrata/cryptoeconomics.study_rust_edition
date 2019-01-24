@@ -36,6 +36,7 @@
 - TBD
 
 ### General Ethereum Dev
+- https://blog.0xproject.com/new-ethereum-dev-tools-from-0x-db80ee9e802
 - https://github.com/trailofbits/awesome-ethereum-security
 - https://github.com/ConsenSys/ethereum-developer-tools-list
 - https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6
