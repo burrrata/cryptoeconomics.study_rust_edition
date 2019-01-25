@@ -17,6 +17,9 @@
 
 ## Grants
 
+Web3 Grants
+- https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
+
 Ethereum Foundation Grants
 - https://blog.ethereum.org/2018/10/15/ethereum-foundation-grants-update-wave-4/
 - https://app.tettra.co/teams/ethereum/pages/applying-for-ef-grants
