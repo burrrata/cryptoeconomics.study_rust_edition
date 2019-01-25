@@ -9,7 +9,13 @@
         Because money doesn't grow on trees.
     </p>
 </div>
-<br>
+<br><br><br>
+
+# GOAL
+- wrap up this 3 part tutorial, then apply for a grant to build it out into a CLI application
+- https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
+
+<br><br><br>
 
 ## FOSS Sustainability
 
