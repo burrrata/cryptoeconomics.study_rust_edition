@@ -12,8 +12,9 @@
 <br><br><br>
 
 # GOAL
-- wrap up this 3 part tutorial, then apply for a grant to build it out into a CLI application
-- https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
+- wrap up this 3 part tutorial: just decide on the structure of the content and add a few modules
+- rewrite it in according to this style guide: https://github.com/paritytech/polkadot/wiki/Style-Guide
+- then apply for a grant to build it out into a CLI application: https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
 
 <br><br><br>
 
