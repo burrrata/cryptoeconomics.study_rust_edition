@@ -11,10 +11,14 @@
 </div>
 <br><br><br>
 
-# GOAL
-- wrap up this 3 part tutorial: just decide on the structure of the content and add a few modules
+# GOALS
+
+Wrap up this 3 part tutorial
+- add concurrent nodes via this method: https://esimmler.com/why-arent-my-rust-threads-running/
 - rewrite it in according to this style guide: https://github.com/paritytech/polkadot/wiki/Style-Guide
-- then apply for a grant to build it out into a CLI application: https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
+
+Then apply for a grant to build it out into a CLI application
+- https://github.com/w3f/Web3-collaboration/blob/master/grants/grants.md
 
 <br><br><br>
 
