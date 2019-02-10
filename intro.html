@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Intro - Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="intro.html" class="active">Intro</a></li><li class="affix"><a href="crypto_wars.html">Pregame</a></li><li><a href="ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="ch1/state.html"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="ch2/crypto.html"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="ch2/accounts.html"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="ch2/chapter_summary.html"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="feedback.html">Feedback :)</a></li><li class="affix"><a href="donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="intro.jpg">  
+    </p>
+    <br>
+    <h1 align="center">
+        Welcome!
+    </h1>
+</div>
+<p><br><br><br></p>
+<p>
+A blockchain is, at it's heart, just a glorified database. It keeps track of stuff. In this book we'll explore how that works and why anyone should care.
+<p>There's a lot of data in the world. More and more everyday. While data can be useful, it's most useful to those who have access to it. Those In today's world that means banks, social networks, and governements. Take a look at their market caps as well as their influence over the state of things. There's a direct correlation between access to data and power and wealth. It's a zero sum game. If you're not a bank, social network, or government this sucks.</p>
+<p>Good news though! There's this cool thing called Free Open Source Software, and there's a subset of that called P2P decentralized technology, and there's a subset of that called blockchains. Why do these matter? Well because silly... they're free for anyone to use and the networks are P2P so the users control the networks and data, and thus, keep the value they create. The magic of blockchains specifically is that they align incentives in a way that gets people to do stuff that benefits them individually as well as the network as a whole. It's a positive sum win/win game. The is achieved in a variety of ways depending on the blockchain, but common stakeholders include:</p>
+<ul>
+<li>people who use the network to do stuff,</li>
+<li>people who develop the code that the network runs on,</li>
+<li>and people who contribute to the security of the network by verifying and creating blocks of transactions.</li>
+</ul>
+<p>These stakeholders are incentivized to contribute to the health and growth network because they derive value from it. This can come in the form of direct monetary incentivization for miners to verify and create blocks, developers wanting to build things that people actually use so that their dApp tokens are valued highly, or users signalling their preferences by using things they like and dropping things that don't work. If this system is balanced, secure, and correctly designed all parties involved will benefit more than they would otherwise. This magic alchemy is often referred to as cryptoeconomics. Why? Well the network is built out of code, and code can verify things and keep them secure (crypto). Also, people who use and participate in the network recieve value for doing so (economics).</p>
+<p>This tutorial will explore the basic components that go into building cryptoeconomic systems. This will start with the traditional centralize payment processors we know and hate, and will progressively move towards more and more decentralized systems secured and maintained through cryptoeconomics rather than corporate interests. Let the games begin!</p>
+</p>
+<p><br><br><br></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="crypto_wars.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a href="crypto_wars.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

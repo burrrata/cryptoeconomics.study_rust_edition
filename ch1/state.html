@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>State - Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../intro.html">Intro</a></li><li class="affix"><a href="../crypto_wars.html">Pregame</a></li><li><a href="../ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="../ch1/state.html" class="active"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="../ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="../ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="../ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="../ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="../ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="../ch2/crypto.html"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="../ch2/accounts.html"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="../ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="../ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="../ch2/chapter_summary.html"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="../ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="../ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="../ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="../resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="../resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="../resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="../resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="../feedback.html">Feedback :)</a></li><li class="affix"><a href="../donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state.png">
+    </p>
+    <h1 align="center">
+        State
+    </h1>
+    <p align="center">
+        All the things...
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:</p>
+<ul>
+<li>money,</li>
+<li>social connections,</li>
+<li>and identity.</li>
+</ul>
+<p>This data is most often stored in centralized databases. The &quot;state&quot; of these databases is what we look at to determine what is &quot;true&quot; or not. Ever gone to a restaurant and been told they can't find your reservation, or tried to register to vote and been told that you're not in the system? Data.</p>
+<p>In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data.</p>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=XIsn8-5Xekc"><img src="https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg" alt="Cryptoeconomics - 1.5 - Properties of Centralized Systems" /></a></p>
+<p><a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions &amp; Payment Processor Implementation</a>.</p>
+<p><br><br><br></p>
+<pre><pre class="playpen"><code class="language-rust editable">// This is live editable Rust code. That means 
+// that you can push the play button (little white triangle)
+// in the top right of this box to see run it, or 
+// you can edit whatever you like to see how that
+// changes things. Explore!
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+// In Rust, structs are a way to organize data. You can 
+// learn more about them here:
+// https://doc.rust-lang.org/book/ch05-00-structs.html
+
+// This structure keeps track of all the bank's data.
+// The state is simply a record of what's what, and when
+// things change, like users doing stuff or the bank doing
+// stuff, the state will (hopefully )change to reflect that.
+// Theoretically it's in everyone's best interest to make
+// sure that the state accurate.
+#[derive(Debug)]
+struct State {
+
+    // Accounts are stored in a HashMap 
+    // with the account ID String the key
+    // and the Account Struct as the value.
+    accounts: HashMap&lt;String, Account&gt;,
+    // Frozen accounts are decoupled from the main system
+    // so that they're non-funcitonal, but they are not
+    // deleted so that you can unfreeze them if needed.
+    // This can be useful for regulatory compliance or 
+    // savings accounts.
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    // This is just a Vec that stores all account IDs.
+    // This is useful to look up account data in the 
+    // accounts HashMap.
+    account_ids: Vec&lt;String&gt;,
+    // This is a churning pool of TX that have been submitted
+    // by users, but not verified and processed by the bank. 
+    pending_tx: Vec&lt;TX&gt;,
+    // This is a history of all TX the bank has processed
+    // correctly.
+    history: Vec&lt;TX&gt;,
+    // This is a history of all the moneys the bank has
+    // created via fractional reserve banking. The bank can
+    // sell this history to collectors or other investors.
+    debt_history: Vec&lt;TX&gt;,
+    // This is the amount of capital the bank has as debt on
+    // it's balance sheet. While this is a liability for the
+    // users who owe money, it's an asset for the bank that
+    // they can trade at a discount to other parties like
+    // collectors or investment funds.
+    debt_pool: i32,
+}
+
+// This structure keeps track of the information in a user
+// account.
+#[derive(Debug, Clone)]
+struct Account {
+
+    // The password is how the user authorizes TX and proves
+    // that they were sent by the user and not another party
+    // like the receiver creating fake TX. This data is 
+    // stored in the bank's centralized account database, 
+    // and the bank (or anyone who gains access to it) can
+    // change it at any time. This can be on purpose due to
+    // compliance, regular operations, or intentional fraud.
+    // This can also occur if the bank is hacked or if the user
+    // reuses a password from another site for their bank
+    // account, and that site then gets hacked.
+    password: i32,
+    // This number is incrimented every time an account
+    // creates a valid TX. This is to prevent accidental 
+    // glitches that might replay TX if the pending_tx pool
+    // is not cleared properly.
+    nonce: i32,
+    // This is the users balance. Funny how so much of a 
+    // person's access to resources, opportunities, and
+    // survival depend on this number being accurate...
+    balance: i32,
+}
+
+// This structure keeps track of all the TX information
+// the bank cares about from users.
+#[derive(Debug, Clone)]
+struct TX {
+    // Account to take money from.
+    sender: String,
+    // Add a password so we know the account to take money
+    // from is the one that submitted the TX.
+    sender_password: i32,
+    // Check to make sure we're not processing duplicate TX.
+    sender_nonce: i32,
+    // Account to add money to.
+    receiver: String,
+    // Amount of moneys to &quot;move around&quot;. Actually, the money
+    // doesn't exist because the bank makes it up when they
+    // &quot;loan&quot; money. It's just a number in a database. The only
+    // thing verifying it's existance is the banks internal 
+    // ledger, and maybe the ledgers of other banks. Good 
+    // thing those banks are all secure, honest, and don't
+    // collude 👍
+    amount: i32,
+}
+
+
+// An implimentation is a structure that links functions
+// together. You can learn more about them here:
+// https://doc.rust-lang.org/book/ch05-03-method-syntax.html
+impl State {
+    
+    // This function create a new state for the bank.
+    pub fn new_state() -&gt; State {
+    
+        // Ah... a blank canvas. So clean. So pure. So beautiful.
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new
+    }
+}
+
+// In Rust the main() function is where the program runs.
+// You can store functions and stuff anywhere, but main()
+// is the function has it's own state that keeps track of
+// variables and computation. You can learn more about it
+// here: https://doc.rust-lang.org/book/
+fn main() {
+    
+    // Let's roll our own &quot;bank&quot;!
+    let mut bank = State::new_state();
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Let the games begin...
+}
+</code></pre></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more" id="but-wait-theres-more"><h2>But wait... there's more</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Record_(computer_science)</li>
+<li>https://en.wikipedia.org/wiki/Database</li>
+<li>https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database</li>
+<li>https://github.com/rust-unofficial/awesome-rust#database</li>
+</ul>
+<p><br><br><br></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../ch1/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../ch1/accounts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../ch1/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../ch1/accounts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

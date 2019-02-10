@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Crypto - Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../intro.html">Intro</a></li><li class="affix"><a href="../crypto_wars.html">Pregame</a></li><li><a href="../ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="../ch1/state.html"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="../ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="../ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="../ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="../ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="../ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="../ch2/crypto.html" class="active"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="../ch2/accounts.html"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="../ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="../ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="../ch2/chapter_summary.html"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="../ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="../ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="../ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="../resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="../resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="../resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="../resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="../feedback.html">Feedback :)</a></li><li class="affix"><a href="../donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="crypto.png">
+    </p>
+    <h1 align="center">
+        Crypto & Trust
+    </h1>
+    <p align="center">
+        How do we go from trusting a b2c centralized database to trusting a p2p decentralized database?
+        <br>
+        and why would we want to?
+    </p>
+</div>
+<p><br><br><br></p>
+<p>In chapter 1 we explored how a generic database might work and how that database would be managed if we trusted a central operator to run it. What if we wanted to create a shared database though, where we could all verify things for ourselves?</p>
+<p>One option might be to keep the central operator, but make the database transparent. All participants would agree to a set of rules that they would all play by and they could all verify changes of state. If anything happened that was not in line with the agreed upon rules they could switch to a new network. This has a few downsides though... mainly that switching and coordination costs are high. If you catch someone cheating (either the central operator or another user), at what threshold is it worth raising an issue or switching to another network? What if that network is already integrated into other apps and services and you'd have to switch those over too? What if your identity, social connections, or reputation are tied to this network and starting on a new one would mean losing all that? At what point would a transgressino of the network validate the cost of switching? If it's anything similar to our current banking or social networks, the answer is pretty damn high. There must be a better way...</p>
+<p>It turns out, there is! It's called cryptography. Roughly speaking, cryptography is the process of using mathematic functions to conceal or verify information. In this chapter we'll focus mainly on the later as a way to replace trust in a central operator with trust in mathematics. This means that we can define in code all the functions that the central operator performed:</p>
+<ul>
+<li>creating accounts</li>
+<li>verifying tx</li>
+<li>managing state transitions</li>
+</ul>
+<p>In this section we'll cover some of the basic concepts in cryptography that allow us to do this, then throughout the chapter we'll apply those concepts to create the mechanisms that do that, and then in the chapter summary we'll have our own working network that we can use to simulate these things.</p>
+<p>Let's start with a few foundational concepts that will help us get started :)</p>
+<p><br></p>
+<a class="header" href="#computational-infeasibility-aka-cryptographic-hardness" id="computational-infeasibility-aka-cryptographic-hardness"><h3>Computational Infeasibility (aka cryptographic hardness)</h3></a>
+<ul>
+<li>A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out.</li>
+<li>Why should we care? Well, without knowing the computational feasibility or infeasibility of a problem we cannot make any claims that people can't cheat on our network by overwriting data or creating data without following the rules. Say for example I know the password to my account and I think that it's secure. If it takes you 3 days to randomly guess all the possible combinations of characters that my password might be, then it's really only secure as long as someone doesn't decide to take the time to figure it out. If it takes you 3 billion years to guess all the possible combinations though, then the story is quite different and I can rest assured that I'm not going to wake up one day and have all my data changed or stolen.</li>
+</ul>
+<pre><code class="language-rust ignore">// For example, pick any Ethereum address and try to guess the private key that unlocks it. Go ahead! 
+// https://www.myetherwallet.com/#send-transaction
+</code></pre>
+<ul>
+<li>https://en.wikipedia.org/wiki/Computational_hardness_assumption</li>
+</ul>
+<p><br></p>
+<a class="header" href="#randomness" id="randomness"><h3>Randomness</h3></a>
+<ul>
+<li>Random data does not have a pattern. If one were to take a series of random data and cut it in half, then ask someone to guess the second half given the first, any possible values would be equally likely and no one could do better than a wild guess. In computer science and information theory, we often say that if a random string of data is long enough it is computationally infeasable to guess it, and thus it is secure against attacks.</li>
+<li>Why should we care? Well we're actually going to use random data to create accounts in such a way that only the person who created the account can use it to send transactions or sign data. We're also going to use random data to create a random string of characters that people have to guess in order to earn a reward and create the next state transition. The longest chain of valid state transitions is the agreed upon valid state, and since people are competing to earn the rewards that come with processing valid state transitions, anyone who wants to spam or overwrite the network would have to solve more puzzles faster than everyone else competing to do so, which on networks like Bitcoin or Ethereum is many.</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+extern crate rand;
+use rand::prelude::*;
+
+// generate a large random number
+fn key_gen() -&gt; String {
+    
+    let rn: i32 = thread_rng().gen_range(100000, 1000000);
+    rn.to_string()
+}
+
+fn main() {
+
+    let key = key_gen();
+    println!(&quot;key: {}&quot;, key);
+}
+
+// if you want to learn more about how the rand crate works in Rust, they've got a great book and docs
+// - https://crates.io/crates/rand
+// - https://rust-random.github.io/book/intro.html
+</code></pre>
+<p>Ethereum Specific Randomness</p>
+<ul>
+<li>https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics</li>
+<li>https://vitalik.ca/files/randomness.html</li>
+<li>https://ethresear.ch/t/posw-random-beacon/1814</li>
+</ul>
+<p>Random Randomness</p>
+<ul>
+<li>https://blog.cloudflare.com/why-randomness-matters/</li>
+<li>https://en.wikipedia.org/wiki/Entropy_(information_theory)</li>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Security_and_practical_considerations</li>
+<li>https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator</li>
+<li>https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/</li>
+<li>https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API</li>
+</ul>
+<p><br></p>
+<a class="header" href="#hash-functions" id="hash-functions"><h3>Hash Functions</h3></a>
+<ul>
+<li>A hash function (or hash algorithm) is a process by which a piece of data of arbitrary size (could be anything; a piece of text, a picture, or even a list of other hashes) is processed into a small piece of data (usually 32 bytes) which looks completely random, and from which no meaningful data can be recovered about the document, but which has the important property that the result of hashing one particular document is always the same. Additionally, it is crucially important that it is computationally infeasible to find two documents that have the same hash. Generally, changing even one letter in a document will completely randomize the hash; for example, the SHA3 hash of &quot;Saturday&quot; is c38bbc8e93c09f6ed3fe39b5135da91ad1a99d397ef16948606cdcbd14929f9d, whereas the SHA3 hash of Caturday is b4013c0eed56d5a0b448b02ec1d10dd18c1b3832068fbbdc65b98fa9b14b6dbf. Hashes are usually used as a way of creating a globally agreed-upon identifier for a particular document that cannot be forged. In the biz they call the input to a hash function the &quot;preimage&quot; and the output is called the &quot;digest&quot;.</li>
+<li>Why should we care? Well we're acually going us a hash function to create the random string of characters that need to be guessed in order to earn a reward and create the next state transition. We're also going to use a hash function to store the history of all those state transitions. Since every hash is completely deterministic, if someone were to change 1 datapoint in the past, it would literally change every piece of data that came after it. This means that in order to cheat and arbitrarily rewrite the state someone would have to re-solve all the puzzles after that change, and do so faster than everyone else working on the current puzzles. The more people are working to solve puzzles on the network the harder someone who wants to cheat would have to work as well. This means that the security of the network is tied to the amount of people working to earn rewards by creating valid state transitions, which is often tied to the monetary value of those rewards, which for networks like Bitcoin or Ethereum is generally quite high.</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+// Turn Arbitrary Stuff Into &amp;[u8] Slice
+pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+// Hash &amp;[u8] Into Hex String
+pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}    
+
+// Takes in stuff
+// Turns it to a u8 slice
+// Hashes that slice into a hex string
+pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+    
+    let u8_stuff = unsafe {
+        any_as_u8_slice(stuff)
+    };
+    let hash_of_stuff = hash_u8(u8_stuff);
+    
+    hash_of_stuff
+}
+
+fn main() {
+    
+    
+    // Let's hash something!
+    
+    let my_data = String::from(&quot;stuff and stuff&quot;);
+    println!(&quot;my data: {}&quot;, my_data);
+    
+    let my_hash = hash(&amp;my_data);
+    println!(&quot;my hash: {}&quot;, my_hash);
+    
+    
+    // Let's try to find a hash that has an arbitrary amount of 0s
+    
+    // this is the number that we will hash
+    let mut random_number = 0;
+    
+    // difficulty = the amount of 0s we want in our hash
+    // - note: in the Rust Playground a difficulty &gt; 8 
+    // - will often fail or simply spin and do nothing
+    let difficulty = 7; 
+    
+    // amount of times to guess
+    for i in 0..100000 {
+        
+        // let's hash our random number to create a guess
+        let guess = hash(&amp;random_number);
+        
+        // count the amount of 0s in the hash of your guess
+        let mut count = 0;
+        for i in guess.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+        
+        // if your guess has enough 0s print the results
+        if count &gt; difficulty {
+            println!(&quot;\n/// WINNING ///&quot;);
+            println!(&quot;Difficulty: {}&quot;, difficulty);
+            println!(&quot;Winning Number: {}&quot;, random_number);
+            println!(&quot;Winning Hash: {}&quot;, guess);
+            break
+        }
+        
+        // if you were incorrect augment the number by 1
+        // and try again
+        random_number += 1;
+    }
+}
+</code></pre>
+<ul>
+<li>https://en.wikipedia.org/wiki/Hash_function</li>
+<li>https://en.wikipedia.org/wiki/Cryptographic_hash_function</li>
+<li>https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use</li>
+</ul>
+<p><br></p>
+<a class="header" href="#hash-trees-aka-merkle-trees" id="hash-trees-aka-merkle-trees"><h3>Hash Trees (aka Merkle trees)</h3></a>
+<ul>
+<li>The concept of a hash tree is often referred to as a &quot;Merkle Tree&quot;, named after Ralph Merkle who patented the idea in 1979. A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the &quot;root&quot; or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a &quot;tree&quot; in that the &quot;root&quot; is a single hash, but there's lots of things (&quot;leaves&quot;) that get hashed together (&quot;branches&quot;), and then hashed together again and again until it's all been hashed together and there's a single hash &quot;root&quot;. The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).</li>
+<li>Why should we care? This is how we're going to store the history of all state transitions. Everytime someone earns the right to create a new valid state transition they're going to look at all the pending transactions that were requested between the last state change. They'll then check that all the transaction requests are valid and update the state accordingly. They then publish the new state along with the transactions that were processed to get to that state, the hash of the previous state, and a hash of the new state combined with the previous state's hash. This is called a block, because it's a bunch of data that gets processed together in batches, or &quot;blocks&quot;. Every time there's a state transition a new block is created, and since every block comes published with a hash of the previous blocks, they're all chained together such that if you change something in a past block you also change all the hashes of any blocks after that. This is why our p2p decentralized database is called a &quot;blockchain&quot;. It's also called a merkle tree because the only way to get to that latest hash is to include all the previous data. The &quot;root&quot; is the latest hash, and the branches are all the data that went into that hash, and all the data that went into those hashes, and so on...</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+// Turn Arbitrary Stuff Into &amp;[u8] Slice
+pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+// Hash &amp;[u8] Into Hex String
+pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}    
+
+// Takes in stuff
+// Turns it to a u8 slice
+// Hashes that slice into a hex string
+pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+    
+    let u8_stuff = unsafe {
+        any_as_u8_slice(stuff)
+    };
+    let hash_of_stuff = hash_u8(u8_stuff);
+    
+    hash_of_stuff
+}
+
+fn main() {
+    
+    // a short chain of hashed data
+    let my_data = String::from(&quot;stuff and stuff&quot;);
+    let my_hash_preimage = my_data.clone();
+    let my_hash = hash(&amp;my_hash_preimage);
+    println!(&quot;\nmy hash: {}&quot;, my_hash);
+    let my_data2 = String::from(&quot;stuff that came after the first stuff&quot;);
+    let my_hash_preimage2 = my_hash + &amp;my_data2;
+    let my_hash2 = hash(&amp;my_hash_preimage);
+    println!(&quot;my hash 2: {}&quot;, my_hash2);
+    let my_data3 = String::from(&quot;more stuff&quot;);
+    let my_hash_preimage3 = my_hash2 + &amp;my_data3;
+    let my_hash3 = hash(&amp;my_hash_preimage3);
+    println!(&quot;my hash 3: {}&quot;, my_hash3);
+    
+    // a very similar short chain of data
+    // with very different hashes
+    let my_data = String::from(&quot;stuff or stuff&quot;);
+    let my_hash_preimage = my_data.clone();
+    let my_hash = hash(&amp;my_hash_preimage);
+    println!(&quot;\nV2 of my hash: {}&quot;, my_hash);
+    let my_data2 = String::from(&quot;stuff that came after the first stuff&quot;);
+    let my_hash_preimage2 = my_hash + &amp;my_data2;
+    let my_hash2 = hash(&amp;my_hash_preimage);
+    println!(&quot;V2 of my hash 2: {}&quot;, my_hash2);
+    let my_data3 = String::from(&quot;more stuff&quot;);
+    let my_hash_preimage3 = my_hash2 + &amp;my_data3;
+    let my_hash3 = hash(&amp;my_hash_preimage3);
+    println!(&quot;V2 of my hash 3: {}&quot;, my_hash3);
+    
+}
+</code></pre>
+<p align="center">
+    <img src="crypto_hash_tree.png">
+    <p>
+        An example of a binary merkle tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
+    </p>
+</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Hash_trie</li>
+<li>https://en.wikipedia.org/wiki/Merkle_tree</li>
+<li>https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/</li>
+<li>https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash</li>
+<li>Merklize this! Merkle Trees &amp; Patricia Tries: https://www.zeroknowledge.fm/57</li>
+<li>https://medium.com/building-blocks-on-the-chain/learn-merkle-trees-by-programming-your-own-4f0438d40063</li>
+</ul>
+<p><br><br><br></p>
+<a class="header" href="#general-resources--references" id="general-resources--references"><h2>General Resources &amp; References</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Cryptography</li>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p><br><br><br></p>
+<a class="header" href="#problem--todo" id="problem--todo"><h1>PROBLEM / TODO</h1></a>
+<ul>
+<li>Overall these explanations are a good high level explanation of blockchain basics and state transitions, but don't do a very good job explaining the cryptographic functions being used. Either add more robust explanations and terminology so that after this someone can ~read other crypto tutorials, or maybe move this to the State Transitions section?</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../ch2/state.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../ch2/accounts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../ch2/state.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../ch2/accounts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

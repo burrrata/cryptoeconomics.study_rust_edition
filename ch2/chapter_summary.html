@@ -1,0 +1,1011 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Roll Your Own PoW &quot;Blockchain&quot; - Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../intro.html">Intro</a></li><li class="affix"><a href="../crypto_wars.html">Pregame</a></li><li><a href="../ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="../ch1/state.html"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="../ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="../ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="../ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="../ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="../ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="../ch2/crypto.html"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="../ch2/accounts.html"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="../ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="../ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="../ch2/chapter_summary.html" class="active"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="../ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="../ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="../ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="../resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="../resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="../resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="../resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="../feedback.html">Feedback :)</a></li><li class="affix"><a href="../donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="chapter_summary.jpg">
+    </p>
+    <h1 align="center">
+        Roll Your Own PoW "Blockchain"
+    </h1>
+    <p align="center">
+        I love the smell of progress in the morning. 
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Permalink to the Rust Playground</p>
+<ul>
+<li>https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=703530237531ef005e811b13e31b6533</li>
+</ul>
+<pre><code class="language-rust ignore">extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+/* &quot;Blockchain&quot; Sketch
+A modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs. This is the PoW version.
+*/
+
+
+/* ARCHITECTURE SKETCH
+Functions
+- State Transition Function
+- Data Encoding Function
+- Hash Function
+- Key Generation Function
+- Account Data
+- Transaction Data
+- State Data: a user defined configuration of the various blockchain modules
+State Transition Function
+ - determines what is a valid state transition by verifying tx
+ - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
+ - impliments the state change
+ - this needs to contain all params out of the box including the difficulty level
+   and/or any functions needed to upgrade/modify those params
+Data Encoding Function
+ - takes in arbitrary data and encodes it in a specific way
+ - the entire &quot;blockchain&quot; uses this in order to allow any function
+   to process arbitrary data inputs as well as sharing data between functions
+ - standard for now, but may become upgradable as Ethreum and Substrate data is explored
+Hash Function
+ - takes in arbitrary data and returns a string
+ - the way that data is hashes or the encoding of the string can be changed
+Key Generation Function
+ - the method to generate public and private key pairs
+ - can be a centralized system, RSA, elliptic curves, etc...
+ - contains all parmas neccessary to work out of the box
+Account Data
+ - these will ALWAYS be a key/value pair in a HashMap
+ - what you can change is the data that the account struct holds
+ - UTXOs TBD
+TX Data
+ - standard for now
+State Data
+ - accounts: HashMap&lt;i32, Account&gt;
+ - pending_tx: Vec&lt;TX&gt;
+ - history: Vec&lt;Block&gt;
+ - data encoding: user defined
+ - State transition function: user defined
+ - hash function: user defined
+ - key gen function: user defined
+STANDARD STRUCTS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- Account
+- TX
+- BlockHeader
+- Block
+- State
+STANDARD FUNCTIONS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- data_encode()
+- key_gen()
+- hash()
+- new_account()
+- new_tx()
+- new_state_transition() (checks pending tx and produces new block)
+- check_state_transition() (checks the most recently produced block)
+*/
+
+
+
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &amp;[u8] slice
+    pub unsafe fn to_u8&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }    
+
+    // i32 -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn i2s(input: i32) -&gt; String {
+        
+        let output = input.to_string();
+        
+        output
+    }
+    
+    // String -&gt; i32
+    // https://stackoverflow.com/questions/27043268/convert-a-string-to-int-in-rust
+    pub fn s2i(input: String) -&gt; i32 {
+        
+        let output = input.parse::&lt;i32&gt;().unwrap();
+        
+        output
+    }
+
+    // string -&gt; Vec&lt;i32&gt;
+    pub fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+        
+        let output: Vec&lt;i32&gt; = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+ 
+    // Vec&lt;i32&gt; -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+        
+        let mut output_vec = Vec::new();
+        for i in input {
+            output_vec.push(i.to_string())
+        }
+        let output_string = output_vec.join(&quot;&quot;);
+        
+        output_string
+    }
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage (&quot;preimage&quot; = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex or an integer (you choose)
+    fn hash&lt;T&gt;(preimage: &amp;T) -&gt; String {
+        
+        // convert to u8
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        // hash u8 to u64
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        
+        // format u64 hash as String
+        let digest = hasher.finish();
+        let string_digest = format!(&quot;{}&quot;, hasher.finish());
+        string_digest
+        
+        // hex String
+        //let digest = hasher.finish();
+        //let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        //hex_digest
+        
+        // i32
+        //let digest = hasher.finish() as i32;
+        //digest 
+        
+        // f64
+        //let digest = hasher.finish() as f64;
+        //digest 
+     
+        // u64
+        //let digest = hasher.finish();
+        //digest
+    }   
+    
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn hash_tree&lt;T&gt;(stuff: Vec&lt;T&gt;) -&gt; String {
+        
+        let mut v = Vec::new();
+
+        for i in &amp;stuff {
+            let hashed = Hash::hash(&amp;i);
+            v.push(hashed);
+        }
+
+        if v.len() % 2 == 1 {
+            let last = v.last().cloned().unwrap();
+            v.push(last);
+        }
+
+        while v.len() &gt; 1 {
+            let mut h1 = v.remove(0);
+            let mut h2 = v.remove(0);
+            h1.push_str(&amp;mut h2);
+            let nh = Hash::hash(&amp;h1);
+            v.push(nh);
+        }
+        
+        v.pop().unwrap()
+    }
+    
+}
+
+
+// This struct holds all the data for the key generation
+// and signing. If you want to use a different key
+// protocol, change the data in the Keys struct as well
+// as the functions in the Keys impl
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Keys {
+    min: i32,
+    max: i32,
+    p: i32,
+    q: i32,
+    modulo: i32,
+    ctf_pq: i32, 
+}
+
+/// &quot;RSA&quot; Key Generation and Signing ///
+impl Keys {
+    
+    // These functionsare not needed as we have hard coded
+    // the modulo and ctf_pq values
+    /*
+    // greatest common divisor
+    pub fn gcd(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let (mut a, mut b) = if a &gt; b {
+            (a, b)
+        } else {
+            (b, a)
+        };
+    
+        while b != 0 {
+            let r = a % b;
+            a = b;
+            b = r;
+        }
+    
+        a
+    }
+    
+    // lowest common multiple
+    pub fn lcm(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let lcm = (a * b) / Keys::gcd(a, b);
+        
+        lcm
+    }
+    
+    // Carmichael's totient function
+    pub fn ctf(a: i32,
+               b: i32) -&gt; i32 {
+        
+        Keys::lcm(a - 1, b - 1)
+    }
+    */
+    
+    // slowly check if a number is prime
+    pub fn slow_prime_check(self,
+                            num: i32) -&gt; bool {
+        
+        if num &lt; self.min {
+            println!(&quot;number must be greater than {}&quot;, self.min);
+        }
+        
+        if num &gt; self.max {
+            println!(&quot;number cannot be greater than {}&quot;, self.max);
+        }
+        
+        for i in 2..num{
+            if num % i == 0 {
+                return false
+            }
+        }
+        
+        true
+    }
+
+    // slowly, yet randomly, generate a prime number within a range
+    pub fn prime_gen(self) -&gt; i32 {
+        
+        for _i in 0..self.max {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
+                return p
+            }
+        }
+        
+        0
+    }
+
+    // generate a private key within a range
+    pub fn priv_key_gen(self) -&gt; i32 {
+        
+        let priv_key = Keys::prime_gen(self);
+        assert!(self.max % priv_key != 0);
+        
+        priv_key
+    }
+    
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(self,
+                    priv_key: i32)-&gt; i32 {
+        
+        for i in 2..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
+                return i
+            }
+        }
+        println!(&quot;Try larger search?&quot;);
+        
+        0
+    }
+    
+    // create a public key from a pricate key and RSA param data
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -&gt; i32 {
+        
+        let pub_key = Keys::slow_mmi(self, priv_key);
+        
+        pub_key
+    }
+    
+    // generate a private/public key pair
+    pub fn generate_keypair(self) -&gt; (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
+        (priv_key, pub_key)
+    }
+    
+    // Because... Rust.
+    pub fn exp_mod(self,
+                   input: i32,
+                   power: i32) -&gt; i32 {
+        
+        let mut out = (input * input) % self.modulo;
+        // because the first iter of out took 2 off the base
+        for _i in 0..power-2 {
+            out = (out * input) % self.modulo;
+        }
+        
+        out
+    }
+    
+    // Sign a TX with a toy RSA function
+    pub fn sign&lt;T&gt;(self,
+                   thing_to_be_signed: &amp;T,
+                   signing_key: i32) -&gt; Vec&lt;i32&gt; {
+        
+        let hashed_thing = Hash::hash(thing_to_be_signed);
+        
+        let mut hashed_thing_vec = Vec::new();
+        for i in hashed_thing.chars() {
+            hashed_thing_vec.push(i.to_string().parse::&lt;i32&gt;().unwrap())
+        }
+        
+        let mut signed_vec = Vec::new();
+        for i in hashed_thing_vec {
+            signed_vec.push(Keys::exp_mod(self, i, signing_key,));
+        }
+
+        signed_vec
+    }
+    
+    // Check signature on a TX
+    pub fn check_tx_signature(self,
+                              tx: TX) -&gt; bool {
+        
+        let mut tx_sig_check: Vec&lt;i32&gt; = tx.clone().signature;
+        
+        let mut tx_sig_check_pub_signed = Vec::new();
+        for i in tx_sig_check {
+            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender))
+        }
+        
+        let mut tx_sig_check_string = String::new();
+        for i in tx_sig_check_pub_signed {
+            tx_sig_check_string.push_str(&amp;i.to_string())
+        }
+        
+        let hashed_tx = Hash::hash(&amp;tx.data);
+        
+        if tx_sig_check_string == hashed_tx {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoW, but if you
+// wanted to impliment PoS you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32, // currently PoW difficulty
+    max: i32, // max time/tries for valid proof
+}
+
+impl STF {
+    
+    // This function encodes the rules of what qualifies as a &quot;valid tx&quot;
+    pub fn verify_pending_tx(state: &amp;mut State) -&gt; Vec&lt;TX&gt; {
+        
+        let mut verified_tx = Vec::new();
+        
+        for i in &amp;state.pending_tx {
+        
+            if !(state.accounts.contains_key(&amp;i.data.sender)) {
+                println!(&quot;Invalid TX: sender not found.&quot;);
+                continue
+            }
+            
+            if !(state.accounts.contains_key(&amp;i.data.receiver)) {
+                println!(&quot;Invalid TX: receiver not found.&quot;);
+                continue
+            }
+            
+            if !(i.data.amount &gt; 0) {
+                println!(&quot;Invalid TX: negative amount error.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue
+            }
+            
+            if !(state.accounts.get(&amp;i.data.sender).unwrap().balance &gt; i.data.amount) {
+                println!(&quot;Invalid TX: insufficient funds.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue         
+            }
+            
+            if !(i.data.sender_nonce == state.accounts.get(&amp;i.data.sender).unwrap().nonce) {
+                println!(&quot;Invalid TX: potential replay tx.&quot;);
+                println!(&quot;{} has nonce {}, but submitted a tx with nonce {}&quot;, i.data.sender, state.accounts.get(&amp;i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                continue
+            }
+            
+            if !(Keys::check_tx_signature(state.keys, i.clone())) {
+                println!(&quot;Invalid TX: signature check failed&quot;);
+                continue
+            }
+            
+            verified_tx.push(i.clone());
+        }
+        
+        verified_tx
+    }
+
+    // This function creates a proof that authorizes the state transition
+    // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
+    // You could change the logic of this function to satisfy PoS or PoA as well.
+    pub fn proof(state: &amp;State,
+                 mut block_data: BlockData) -&gt; (BlockData, String) {
+    
+        for i in 0..state.stf.max {
+        
+            let mut count = 0;
+            let hash = Hash::hash(&amp;block_data);
+
+            for i in hash.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+            
+            if count &gt; state.stf.difficulty {
+                // success
+                return (block_data, hash);
+            }
+            
+            block_data.header.nonce += 1;
+        }
+        
+        // failure
+        return (block_data, String::from(&quot;ERROR: proof failed.&quot;))
+    }
+    
+    // Create A New Block With Valid Transactions
+    pub fn create_block(state: &amp;mut State) -&gt; Block {
+    
+        let verified_tx = STF::verify_pending_tx(state);
+        
+        let mut naive_header = BlockHeader {
+            nonce: 0,
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&amp;state.history.last().unwrap().data.header.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
+        };
+        
+        let naive_data = BlockData {
+            header: naive_header,
+            transactions: verified_tx, 
+        };
+        
+        let (data, proof) = STF::proof(state, naive_data);
+        let block = Block {
+            proof: proof,
+            data: data,
+        };
+        
+        block
+    }
+    
+    // function to transition the state
+    pub fn check_block(state: &amp;State,
+                       block: &amp;mut Block) -&gt; bool {
+        
+        // proof to check
+        let submitted_proof = &amp;block.proof;
+        
+        // check proof difficulty is achieved
+        let mut count = 0;
+        for i in submitted_proof.chars() {
+            if i == '0' {
+                count += 1;
+            }
+        }
+        if !(count &gt; state.stf.difficulty) {
+            println!(&quot;ERROR: block proof does not meet difficulty requirements.&quot;);
+            return false
+        }
+        
+        // check proof matches block
+        let hash_check = Hash::hash(&amp;block.data);
+        if &amp;hash_check != submitted_proof {
+            println!(&quot;\nPoW Error: Invalid PoW Hash.&quot;);
+            return false
+        }
+        
+        // if tests are passed, return true
+        true
+    }
+    
+}
+
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Account {
+    balance: i32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TxData {
+    sender: i32,
+    sender_nonce: i32,
+    amount: i32,
+    receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    data: TxData,
+    signature: Vec&lt;i32&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockHeader {
+    nonce: i32,
+    timestamp: i32,
+    block_number: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockData {
+    header: BlockHeader,
+    transactions: Vec&lt;TX&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    data: BlockData,
+}
+
+// TODO
+// - does it make sense to add more data to the State?
+//   STF (type, difficulty, etc...)
+//   KEY_PARAMS (type, p, q, modulo, etc..)
+//   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
+#[derive(Debug)]
+pub struct State {
+    keys: Keys,
+    stf: STF,
+    accounts: HashMap&lt;i32, Account&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;Block&gt;,
+}
+
+impl State {
+
+    // Create a new state
+    pub fn create_state() -&gt; State {
+        
+        let rsa_params = Keys {
+            min: 0,
+            max: 1000000,
+            p: 61,
+            q: 53,
+            modulo: 3233,
+            ctf_pq: 780,
+        };
+
+        let stf_data = STF {
+            version: String::from(&quot;PoW&quot;),
+            difficulty: 5,
+            max: 1000000,
+        };
+
+        let genesis_block = Block {
+                proof: String::from(&quot;GENESIS BLOCK&quot;),
+                data: BlockData {
+                    header: BlockHeader {
+                        nonce: 0,
+                        timestamp: time::now().to_timespec().sec as i32,
+                        block_number: 0,
+                        previous_block_hash: String::from(&quot;N/A&quot;),  
+                        current_block_hash: Hash::hash(&amp;String::from(&quot;&quot;)),  
+                    },
+                    transactions: Vec::new(),
+                }
+            };
+        
+        let new_state = State {
+            keys: rsa_params,
+            stf: stf_data,
+            accounts: HashMap::new(),
+            pending_tx: Vec::new(),
+            history: vec![genesis_block],
+        };
+        
+        new_state
+    }
+
+    // Create a new account
+    pub fn create_account(&amp;mut self) {
+        
+        // TODO
+        // - How can I make Keys::generator_keypair() not
+        //   take in anything as input and have all the params
+        //   stored within the Keys library?
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
+        let new_account = Account {
+            balance: 0,
+            nonce: 0,
+        };
+        
+        if self.accounts.contains_key(&amp;pub_key) {
+            println!(&quot;Bummer... account collision.&quot;);
+            return
+        }
+        
+        self.accounts.insert(pub_key, new_account);
+        //println!(&quot;\nThis is your public key: {:#?}&quot;, &amp;pub_key);
+        //println!(&quot;This is your private key: {:#?}&quot;, &amp;priv_key);
+        //println!(&quot;This is your account: {:#?}&quot;, self.accounts.get(&amp;pub_key).unwrap());
+    }
+    
+    // Create a new TX
+    pub fn create_tx(&amp;mut self,
+                     sender_pub_key: i32,
+                     sender_priv_key: i32,
+                     receiver_pub_key: i32,
+                     amount: i32) {
+        
+        
+        let data = TxData {
+            sender: sender_pub_key,
+            sender_nonce: self.accounts.get(&amp;sender_pub_key).unwrap().nonce,
+            receiver: receiver_pub_key,
+            amount: amount,
+        };
+        
+        let signature = Keys::sign(self.keys, &amp;data, sender_priv_key);
+        
+        let tx = TX {
+            data: data,
+            signature: signature,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+
+    // function to transition the state to a new state
+    pub fn create_new_state(&amp;mut self) {
+        
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
+        
+        // check that the block proof is valid
+        if !(STF::check_block(&amp;self, &amp;mut block)) {
+            println!(&quot;\nERROR: block not valid.&quot;);
+            return
+        }
+        
+        // transition the state by incorporating the
+        // information in the new block
+        for i in &amp;block.data.transactions {
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&amp;i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().nonce += 1;
+        }
+        
+        // add the block to the history
+        self.history.push(block);
+    }
+}
+
+
+
+fn main() {
+    
+    // Init &quot;blockchain&quot;
+    let mut blockchain = State::create_state();
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Create random accounts
+    for _i in 0..3 {
+        blockchain.create_account();
+    }
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 0
+    let acc_0_pub_key = 773;
+    let acc_0_priv_key = 557;
+    let acc_0 = Account {
+        balance: 10000,
+        nonce: 0,
+    };
+    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 1
+    let acc_1_pub_key = 179;
+    let acc_1_priv_key = 719;
+    let acc_1 = Account {
+        balance: 10000,
+        nonce: 0,        
+    };
+    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // test a tx
+    blockchain.create_tx(acc_0_pub_key,
+                        acc_0_priv_key,
+                        acc_1_pub_key,
+                        50);
+    //println!(&quot;blockchain:\n{:#?}&quot;, blockchain);
+    
+    // process the tx
+    blockchain.create_new_state();
+    println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+}
+
+</code></pre>
+<a class="header" href="#want-even-more" id="want-even-more"><h3>Want even more?</h3></a>
+<p>Cryptoeconomics.Study</p>
+<ul>
+<li>https://cryptoeconomics.study/overview.html</li>
+<li>https://cryptoeconomics.study/lectures/</li>
+<li>https://github.com/cryptoeconomics-study/code/tree/master/c3_ProofOfWork</li>
+</ul>
+<p>Rust Blockchain Tutorial</p>
+<ul>
+<li>https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain</li>
+<li>https://github.com/tensor-programming/Rust_block_chain</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../ch2/state_transitions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../ch3/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../ch2/state_transitions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../ch3/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

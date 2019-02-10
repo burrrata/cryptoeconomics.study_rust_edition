@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Accounts - Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../intro.html">Intro</a></li><li class="affix"><a href="../crypto_wars.html">Pregame</a></li><li><a href="../ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="../ch1/state.html"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="../ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="../ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="../ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="../ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="../ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="../ch2/crypto.html"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="../ch2/accounts.html" class="active"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="../ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="../ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="../ch2/chapter_summary.html"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="../ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="../ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="../ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="../ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="../resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="../resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="../resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="../resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="../feedback.html">Feedback :)</a></li><li class="affix"><a href="../donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="accounts.jpg">
+    </p>
+    <h1 align="center">
+        Accounts
+    </h1>
+    <p align="center">
+        Crypto in action.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Core Concepts:</p>
+<ul>
+<li>trusting math enforced via code vs an opaque centralized b2c database operator</li>
+<li>creating accounts</li>
+<li>creating signatures</li>
+</ul>
+<p>Other Concepts</p>
+<ul>
+<li>how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around</li>
+<li>how you can sign stuff with your private key, and others can verify that signature with your public key</li>
+<li>this is grounded in the hardness of cryptography, not the choice of a central operator</li>
+</ul>
+<p>Weak randomness can lead to hacked keys and crypto systems. This isn't a concern with our toy demo, but for any live working blockchain it's mission critical.</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)</li>
+</ul>
+<p>TODO</p>
+<ul>
+<li>add info about the data structure of accounts (nonces, balances, keys, etc)</li>
+</ul>
+<a class="header" href="#account-nonce" id="account-nonce"><h3>Account nonce:</h3></a>
+<p>A transaction counter in each account. This prevents replay attacks where a transaction sending eg. 20 coins from A to B can be replayed by B over and over to continually drain A's balance.</p>
+<a class="header" href="#computational-infeasibility" id="computational-infeasibility"><h3>Computational infeasibility:</h3></a>
+<p>A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.</p>
+<a class="header" href="#encryption" id="encryption"><h3>Encryption:</h3></a>
+<p>Encryption is a process by which a document (plaintext) is combined with a shorter string of data, called a key (eg. c85ef7d79691fe79573b1a7064c19c1a9819ebdbd1faaab1a8ec92344438aaf4), to produce an output (ciphertext) which can be &quot;decrypted&quot; back into the original plaintext by someone else who has the key, but which is incomprehensible and computationally infeasible to decrypt for anyone who does not have the key.</p>
+<a class="header" href="#public-key-encryption" id="public-key-encryption"><h3>Public key encryption:</h3></a>
+<p>A special kind of encryption where there is a process for generating two keys at the same time (typically called a private key and a public key), such that documents encrypted using one key can be decrypted with the other. Generally, as suggested by the name, individuals publish their public keys and keep their private keys to themselves.</p>
+<a class="header" href="#digital-signature" id="digital-signature"><h3>Digital signature:</h3></a>
+<p>A digital signing algorithm is a process by which a user can produce a short string of data called a &quot;signature&quot; of a document using a private key such that anyone with the corresponding public key, the signature and the document can verify that (1) the document was &quot;signed&quot; by the owner of that particular private key, and (2) the document was not changed after it was signed. Note that this differs from traditional signatures where you can scribble extra text onto a document after you sign it and there's no way to tell the difference; in a digital signature any change to the document will render the signature invalid.</p>
+<p><br><br><br></p>
+<p>This recreates the RSA style protocol explained in the <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation">RSA wiki page</a>, randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)</p>
+<pre><code class="language-rust ignore">
+extern crate rand;
+use rand::prelude::*;
+
+// variable names based off Euclidean divison equation: a = b · q + r
+// https://crates.io/crates/gcd
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+fn gcd(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let (mut a, mut b) = if a &gt; b {
+        (a, b)
+    } else {
+        (b, a)
+    };
+
+    while b != 0 {
+        let r = a % b;
+        a = b;
+        b = r;
+    }
+
+    a
+}
+
+// lowest common multiple
+// https://en.wikipedia.org/wiki/Least_common_multiple
+fn lcm(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let lcm = (a * b) / gcd(a, b);
+    
+    lcm
+}
+
+// Carmichael's totient function
+// https://en.wikipedia.org/wiki/Carmichael_function
+fn ctf(a: i32,
+       b: i32) -&gt; i32 {
+    
+    lcm((a - 1), (b - 1))
+}
+
+// slowly check if a number is prime
+fn slow_prime_check(num: i32) -&gt; bool {
+    
+    if num &lt; 0 {
+        println!(&quot;number must be greater than 0&quot;);
+    }
+    
+    if num &gt; 1000000 {
+        println!(&quot;number cannot be greater than 1000000&quot;);
+    }
+    
+    for i in 2..num{
+        if num % i == 0 {
+            return false
+        }
+    }
+    true
+}
+
+// slowly yet randomly generate a prime number within a range
+fn prime_gen(low: i32,
+             high: i32) -&gt; i32 {
+    
+    for i in 0..1000000 {
+        let p = thread_rng().gen_range(low, high);
+        if slow_prime_check(p) {
+            return p
+        }
+    }
+    0
+}
+
+// generate a public key within a range
+fn pub_key_gen(min: i32,
+               max: i32) -&gt; i32 {
+    
+    let pub_key = prime_gen(min, max);
+    assert!(max % pub_key != 0);
+    
+    pub_key
+}
+
+// slowly find the modular multiplicative inverse of a prime 
+fn slow_mmi(ctf_pq: i32,
+            pub_key: i32,
+            max: i32)-&gt; i32 {
+    
+    for i in 2..max {
+        if (i * pub_key) % ctf_pq == 1 {
+            return i
+        }
+    }
+    println!(&quot;Try larger search?&quot;);
+    0
+}
+
+// create a private key from a public key and other data
+fn priv_key_gen(ctf_pq: i32,
+                pub_key: i32) -&gt; i32 {
+    
+    let priv_key = slow_mmi(ctf_pq, pub_key, 100000);
+    
+    priv_key
+}
+
+// Because... Rust.
+// exp_mod() is like pow() with a mod option
+// (like python does natively, but not Rust)
+// https://docs.python.org/3/library/functions.html#pow
+// https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
+// https://en.wikipedia.org/wiki/Modular_exponentiation
+fn exp_mod(input: i32,
+           power: i32,
+           modulo: i32) -&gt; i32 {
+    
+    let mut out = (input * input) % modulo;
+    // because the first iter of out took 2 off the base
+    for i in 0..power-2 {
+        out = (out * input) % modulo;
+    }
+    
+    out
+}
+
+// toy RSA function
+fn toy_rsa(input: Vec&lt;i32&gt;,
+           key: i32,
+           modulo: i32) -&gt; Vec&lt;i32&gt; {
+    
+    let output = input.iter()
+                      .map(|x| exp_mod(*x, key, modulo))
+                      .collect();
+    output
+}
+
+// convert string to Vec&lt;i32&gt;
+fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+    
+    let output: Vec&lt;i32&gt; = input.as_bytes()
+                                .iter()
+                                .map(|x| *x as i32)
+                                .collect();
+    
+    output
+}
+
+// convert Vec&lt;i32&gt; to string
+fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+    
+    let output_u8: Vec&lt;u8&gt; = input.iter()
+                                  .map(|x| *x as u8)
+                                  .collect();
+    let output_string = String::from_utf8(output_u8).unwrap();
+    
+    output_string
+}
+
+
+
+// Rollin, rollin, rollin... !
+fn main() {
+
+    /*
+    // the numbers from wiki work
+    // https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+    let p = 61;
+    let q = 53;
+    let m = 3233;
+    let ctf_pq = 780;
+    let pub_key = 17;
+    let priv_key = 413;
+    */
+
+    // usually works on Rust Playground when p and q are &lt; 500
+    let p = prime_gen(5, 100);
+    let q = prime_gen(5, 100);
+    let m = p * q; 
+    let ctf_pq = ctf(p, q);
+    let pub_key = pub_key_gen(1, ctf_pq);
+    let priv_key = priv_key_gen(ctf_pq, pub_key);
+    println!(&quot;\n// Params //&quot;);
+    assert!(p &gt; 0);
+    assert!(q &gt; 0);
+    println!(&quot;p: {}&quot;, &amp;p);
+    println!(&quot;q: {}&quot;, &amp;q);
+    println!(&quot;m: {}&quot;, &amp;m);
+    println!(&quot;ctf_pq: {}&quot;, &amp;ctf_pq);
+    println!(&quot;pub_key: {}&quot;, &amp;pub_key);
+    println!(&quot;priv_key: {}&quot;, &amp;priv_key);
+    
+    let message = &quot;thepasswordispassword&quot;.to_string();
+    let m2nums = s2v(message.clone());
+    let ciphertext = toy_rsa(m2nums.clone(), pub_key, m);
+    let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
+    let message2 = v2s(decrypted.clone());
+    assert_eq!(message, message2);
+    println!(&quot;\n// Testing //&quot;);
+    println!(&quot;message: {:?}&quot;, &amp;message);
+    println!(&quot;message as nums: {:?}&quot;, &amp;m2nums);
+    println!(&quot;ciphertext: {:?}&quot;, &amp;ciphertext);
+    println!(&quot;decrypted nums: {:?}&quot;, &amp;decrypted);
+    println!(&quot;decrypted message: {}&quot;, &amp;message2);
+    
+    println!(&quot;DONE!&quot;);
+
+}
+
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#always-good-to-get-a-second-opinion" id="always-good-to-get-a-second-opinion"><h3>Always Good To Get A Second Opinion</h3></a>
+<p>Ethereum Wiki Glossary</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p>RSA Pub Key Stuff</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Public-key_cryptography</li>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)</li>
+<li>https://en.wikipedia.org/wiki/Least_common_multiple</li>
+<li>https://en.wikipedia.org/wiki/Modular_exponentiation</li>
+</ul>
+<p>Ethereum Key Stuff</p>
+<ul>
+<li>Appendix F of the Yellow Paper: https://ethereum.github.io/yellowpaper/paper.pdf</li>
+<li>Parity Ethereum Client (Rust): ethkey library: https://github.com/paritytech/parity-ethereum/tree/master/accounts/ethkey</li>
+</ul>
+<p><br></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../ch2/crypto.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../ch2/tx.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../ch2/crypto.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../ch2/tx.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

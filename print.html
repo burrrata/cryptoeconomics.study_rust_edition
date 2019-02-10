@@ -1,0 +1,4986 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rusty Cryptoeconomics</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="intro.html">Intro</a></li><li class="affix"><a href="crypto_wars.html">Pregame</a></li><li><a href="ch1/intro.html"><strong aria-hidden="true">1.</strong> Centralized Database Managers</a></li><li><ol class="section"><li><a href="ch1/state.html"><strong aria-hidden="true">1.1.</strong> State</a></li><li><a href="ch1/accounts.html"><strong aria-hidden="true">1.2.</strong> Accounts</a></li><li><a href="ch1/tx.html"><strong aria-hidden="true">1.3.</strong> TX</a></li><li><a href="ch1/state_transitions.html"><strong aria-hidden="true">1.4.</strong> State Transitions</a></li><li><a href="ch1/chapter_summary.html"><strong aria-hidden="true">1.5.</strong> Roll Your Own Centralized Database</a></li></ol></li><li><a href="ch2/intro.html"><strong aria-hidden="true">2.</strong> PoW &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="ch2/state.html"><strong aria-hidden="true">2.1.</strong> State</a></li><li><a href="ch2/crypto.html"><strong aria-hidden="true">2.2.</strong> Crypto</a></li><li><a href="ch2/accounts.html"><strong aria-hidden="true">2.3.</strong> Accounts</a></li><li><a href="ch2/tx.html"><strong aria-hidden="true">2.4.</strong> TX</a></li><li><a href="ch2/state_transitions.html"><strong aria-hidden="true">2.5.</strong> State Transitions</a></li><li><a href="ch2/chapter_summary.html"><strong aria-hidden="true">2.6.</strong> Roll Your Own PoW &quot;Blockchain&quot;</a></li></ol></li><li><a href="ch3/intro.html"><strong aria-hidden="true">3.</strong> PoS &quot;Blockchain&quot;</a></li><li><ol class="section"><li><a href="ch3/state.html"><strong aria-hidden="true">3.1.</strong> State</a></li><li><a href="ch3/state_transitions.html"><strong aria-hidden="true">3.2.</strong> State Transitions</a></li><li><a href="ch3/chapter_summary.html"><strong aria-hidden="true">3.3.</strong> Roll Your Own PoS &quot;Blockchain&quot;</a></li></ol></li><li><a href="resources/intro.html"><strong aria-hidden="true">4.</strong> Resources</a></li><li><ol class="section"><li><a href="resources/learning.html"><strong aria-hidden="true">4.1.</strong> Learning</a></li><li><a href="resources/building.html"><strong aria-hidden="true">4.2.</strong> Building</a></li><li><a href="resources/engaging.html"><strong aria-hidden="true">4.3.</strong> Engaging</a></li></ol></li><li><a href="feedback.html">Feedback :)</a></li><li class="affix"><a href="donations.html">Donations Welcome!</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rusty Cryptoeconomics</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="intro.jpg">  
+    </p>
+    <br>
+    <h1 align="center">
+        Welcome!
+    </h1>
+</div>
+<p><br><br><br></p>
+<p>
+A blockchain is, at it's heart, just a glorified database. It keeps track of stuff. In this book we'll explore how that works and why anyone should care.
+<p>There's a lot of data in the world. More and more everyday. While data can be useful, it's most useful to those who have access to it. Those In today's world that means banks, social networks, and governements. Take a look at their market caps as well as their influence over the state of things. There's a direct correlation between access to data and power and wealth. It's a zero sum game. If you're not a bank, social network, or government this sucks.</p>
+<p>Good news though! There's this cool thing called Free Open Source Software, and there's a subset of that called P2P decentralized technology, and there's a subset of that called blockchains. Why do these matter? Well because silly... they're free for anyone to use and the networks are P2P so the users control the networks and data, and thus, keep the value they create. The magic of blockchains specifically is that they align incentives in a way that gets people to do stuff that benefits them individually as well as the network as a whole. It's a positive sum win/win game. The is achieved in a variety of ways depending on the blockchain, but common stakeholders include:</p>
+<ul>
+<li>people who use the network to do stuff,</li>
+<li>people who develop the code that the network runs on,</li>
+<li>and people who contribute to the security of the network by verifying and creating blocks of transactions.</li>
+</ul>
+<p>These stakeholders are incentivized to contribute to the health and growth network because they derive value from it. This can come in the form of direct monetary incentivization for miners to verify and create blocks, developers wanting to build things that people actually use so that their dApp tokens are valued highly, or users signalling their preferences by using things they like and dropping things that don't work. If this system is balanced, secure, and correctly designed all parties involved will benefit more than they would otherwise. This magic alchemy is often referred to as cryptoeconomics. Why? Well the network is built out of code, and code can verify things and keep them secure (crypto). Also, people who use and participate in the network recieve value for doing so (economics).</p>
+<p>This tutorial will explore the basic components that go into building cryptoeconomic systems. This will start with the traditional centralize payment processors we know and hate, and will progressively move towards more and more decentralized systems secured and maintained through cryptoeconomics rather than corporate interests. Let the games begin!</p>
+</p>
+<p><br><br><br></p>
+<p><br></p>
+<p align="center">
+  <h2 align="center">
+    If you're looking for a whimsical yet accessible intro to some of the concepts in this book, look no further than...
+  </h2>
+  <a href="https://burrrata.github.io/crypto_wars/">
+    <img src="crypto_wars.png" style="border:1px solid black;max-width:100%;">
+  </a>
+  <p align="center">
+    (WIP)
+  </p>
+</p>
+<p><br><br><br></p>
+<div align="center">
+    <div align="center">
+        <img src="intro.png">  
+    </div>
+    <h1 align="center">
+        Ch1: Centralized Database Managers
+    </h1>
+    <p align="center">
+        They're not as boring when you roll your own!
+    </p>
+</div>
+<br>
+<p>
+This chapter will explore data as we know it: in the form of a centralized financial database like PayPal or your bank. The purpose is to highlight the important working parts of the system: state, accounts, transactions, and most of all... trust. In future chapters we'll show how we can get those same properties, but in a way where everyone can verify the authenticity of the state rather than trusting the word of a for profit business. After that we'll explore the new and exciting possibilities enabled by this divergent architecture :)
+<p>Let's get started...</p>
+</p>
+<br>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state.png">
+    </p>
+    <h1 align="center">
+        State
+    </h1>
+    <p align="center">
+        All the things...
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Some people say data is the new oil. Why? Probably because people like metaphors, but also... they both allow you to do stuff. Our world is becoming more and more digitized, and this means that data = access to:</p>
+<ul>
+<li>money,</li>
+<li>social connections,</li>
+<li>and identity.</li>
+</ul>
+<p>This data is most often stored in centralized databases. The &quot;state&quot; of these databases is what we look at to determine what is &quot;true&quot; or not. Ever gone to a restaurant and been told they can't find your reservation, or tried to register to vote and been told that you're not in the system? Data.</p>
+<p>In this example we'll explore some of the common data structures that banks keep track of, and how they might go about maintaining and updating the state of that data.</p>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=XIsn8-5Xekc"><img src="https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg" alt="Cryptoeconomics - 1.5 - Properties of Centralized Systems" /></a></p>
+<p><a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions &amp; Payment Processor Implementation</a>.</p>
+<p><br><br><br></p>
+<pre><pre class="playpen"><code class="language-rust editable">// This is live editable Rust code. That means 
+// that you can push the play button (little white triangle)
+// in the top right of this box to see run it, or 
+// you can edit whatever you like to see how that
+// changes things. Explore!
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+// In Rust, structs are a way to organize data. You can 
+// learn more about them here:
+// https://doc.rust-lang.org/book/ch05-00-structs.html
+
+// This structure keeps track of all the bank's data.
+// The state is simply a record of what's what, and when
+// things change, like users doing stuff or the bank doing
+// stuff, the state will (hopefully )change to reflect that.
+// Theoretically it's in everyone's best interest to make
+// sure that the state accurate.
+#[derive(Debug)]
+struct State {
+
+    // Accounts are stored in a HashMap 
+    // with the account ID String the key
+    // and the Account Struct as the value.
+    accounts: HashMap&lt;String, Account&gt;,
+    // Frozen accounts are decoupled from the main system
+    // so that they're non-funcitonal, but they are not
+    // deleted so that you can unfreeze them if needed.
+    // This can be useful for regulatory compliance or 
+    // savings accounts.
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    // This is just a Vec that stores all account IDs.
+    // This is useful to look up account data in the 
+    // accounts HashMap.
+    account_ids: Vec&lt;String&gt;,
+    // This is a churning pool of TX that have been submitted
+    // by users, but not verified and processed by the bank. 
+    pending_tx: Vec&lt;TX&gt;,
+    // This is a history of all TX the bank has processed
+    // correctly.
+    history: Vec&lt;TX&gt;,
+    // This is a history of all the moneys the bank has
+    // created via fractional reserve banking. The bank can
+    // sell this history to collectors or other investors.
+    debt_history: Vec&lt;TX&gt;,
+    // This is the amount of capital the bank has as debt on
+    // it's balance sheet. While this is a liability for the
+    // users who owe money, it's an asset for the bank that
+    // they can trade at a discount to other parties like
+    // collectors or investment funds.
+    debt_pool: i32,
+}
+
+// This structure keeps track of the information in a user
+// account.
+#[derive(Debug, Clone)]
+struct Account {
+
+    // The password is how the user authorizes TX and proves
+    // that they were sent by the user and not another party
+    // like the receiver creating fake TX. This data is 
+    // stored in the bank's centralized account database, 
+    // and the bank (or anyone who gains access to it) can
+    // change it at any time. This can be on purpose due to
+    // compliance, regular operations, or intentional fraud.
+    // This can also occur if the bank is hacked or if the user
+    // reuses a password from another site for their bank
+    // account, and that site then gets hacked.
+    password: i32,
+    // This number is incrimented every time an account
+    // creates a valid TX. This is to prevent accidental 
+    // glitches that might replay TX if the pending_tx pool
+    // is not cleared properly.
+    nonce: i32,
+    // This is the users balance. Funny how so much of a 
+    // person's access to resources, opportunities, and
+    // survival depend on this number being accurate...
+    balance: i32,
+}
+
+// This structure keeps track of all the TX information
+// the bank cares about from users.
+#[derive(Debug, Clone)]
+struct TX {
+    // Account to take money from.
+    sender: String,
+    // Add a password so we know the account to take money
+    // from is the one that submitted the TX.
+    sender_password: i32,
+    // Check to make sure we're not processing duplicate TX.
+    sender_nonce: i32,
+    // Account to add money to.
+    receiver: String,
+    // Amount of moneys to &quot;move around&quot;. Actually, the money
+    // doesn't exist because the bank makes it up when they
+    // &quot;loan&quot; money. It's just a number in a database. The only
+    // thing verifying it's existance is the banks internal 
+    // ledger, and maybe the ledgers of other banks. Good 
+    // thing those banks are all secure, honest, and don't
+    // collude 👍
+    amount: i32,
+}
+
+
+// An implimentation is a structure that links functions
+// together. You can learn more about them here:
+// https://doc.rust-lang.org/book/ch05-03-method-syntax.html
+impl State {
+    
+    // This function create a new state for the bank.
+    pub fn new_state() -&gt; State {
+    
+        // Ah... a blank canvas. So clean. So pure. So beautiful.
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new
+    }
+}
+
+// In Rust the main() function is where the program runs.
+// You can store functions and stuff anywhere, but main()
+// is the function has it's own state that keeps track of
+// variables and computation. You can learn more about it
+// here: https://doc.rust-lang.org/book/
+fn main() {
+    
+    // Let's roll our own &quot;bank&quot;!
+    let mut bank = State::new_state();
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Let the games begin...
+}
+</code></pre></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more" id="but-wait-theres-more"><h2>But wait... there's more</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Record_(computer_science)</li>
+<li>https://en.wikipedia.org/wiki/Database</li>
+<li>https://www.coindesk.com/information/what-is-the-difference-blockchain-and-database</li>
+<li>https://github.com/rust-unofficial/awesome-rust#database</li>
+</ul>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="accounts.png">
+    </p>
+    <h1 align="center">
+        Accounts
+    </h1>
+    <p align="center">
+        You and your stuff.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>An account is just a way to store data to make it more useful. As we said before, he who controls the data controls the world. Let's put all our eggs in one basket via a centralized database and see how that works.</p>
+<p>Some people like centralized databases and services because they're fast and there's someone to blame if/when things go wrong. This makes users feel safe because it's familiar, they don't have to think too much, and someone seems responsible. Time has told us however that this is merely a mirage to make us feel good and in reality centralized operators have most of the upside but limited downside, while for users it's reversed. Sound fun? Great! Let's go...</p>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=VaUTTE5xb54"><img src="https://img.youtube.com/vi/VaUTTE5xb54/0.jpg" alt="Cryptoeconomics - 1.0 - Chapter 1 Overview" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-0.html">Cryptoeconomics - 1.0 - Chapter 1 Overview</a>.
+</p>
+<p><br><br><br></p>
+<pre><code class="language-rust ignore">// This is Rust code.
+// I haven't figured out how to get rand to play
+// nicely with mdBook, so you'll have to copypasta
+// this into the Rust Playground. Have fun!
+// https://play.rust-lang.org
+
+extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+#[derive(Debug)]
+struct State {
+    accounts: HashMap&lt;String, Account&gt;,
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    account_ids: Vec&lt;String&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;TX&gt;,
+    debt_history: Vec&lt;TX&gt;,
+    debt_pool: i32,
+}
+
+#[derive(Debug, Clone)]
+struct Account {
+    password: i32,
+    nonce: i32,
+    balance: i32,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    sender_password: i32,
+    sender_nonce: i32,
+    receiver: String,
+    amount: i32,
+}
+
+
+// Central Payment Processor
+impl State {
+    
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
+    
+    // Turn stuff into &amp;[u8] slice
+    pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }
+
+    // Hash &amp;[u8] slice into a hex String
+    pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!(&quot;{:#X}&quot;, digest);
+            
+        hex_digest
+    }    
+    
+    // Hash stuff into a hex string
+    pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+        
+        let u8_stuff = unsafe {
+            State::any_as_u8_slice(stuff)
+        };
+        let hash_of_stuff = State::hash_u8(u8_stuff);
+        
+        hash_of_stuff
+    }
+    
+    
+    /// FUNCTION TO INIT THE STATE ///
+    
+    // Create a new state
+    pub fn new_state() -&gt; State {
+    
+        // Ah... a blank canvas. So clean. So pure. So beautiful.
+        // Let the games begin.
+    
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new
+    }
+    
+    
+    /// ACCOUNT FUNCTIONS ///
+    
+    // Create a new account
+    pub fn new_account(&amp;mut self) {
+        
+        // Notice how the only thing tying the account_id to the password
+        // is that the bank stores them in the same database. If the bank
+        // were to change this by accident, or a hacker were to get access to
+        // that data via hacking the bank directly or a relevant 3rd party...
+        // well... life would get very interesting very fast. Mostly for you 
+        // though because the banks are insured so for them it's a write-off
+        // that affects them minimally. 
+        // https://en.wikipedia.org/wiki/Write-off
+        // https://en.wikipedia.org/wiki/Equifax
+        
+        let account_id = State::hash(&amp;thread_rng().gen_range(0, 1000000));
+        let account_data = Account {
+            password: thread_rng().gen_range(0, 1000000),
+            nonce: 0,
+            balance: 0,
+        };
+        
+        self.account_ids.push(account_id.clone());
+        self.accounts.insert(account_id, account_data);
+    }
+    
+    // Create multiple new accounts
+    pub fn new_accounts(&amp;mut self,
+                        num_accounts: i32) {
+        
+        // Sock puppets ahoy!
+        // Good thing banks are honest and would never create accounts to
+        // simulate activity when there was none. Even better that crypto
+        // exchanges are even more honest because, well... crypto! It's 
+        // different this time right?
+        // https://en.wikipedia.org/wiki/Sockpuppet_(Internet)
+        // https://en.wikipedia.org/wiki/Wash_trade
+        // https://medium.com/@bitfinexed/wash-trading-bitcoin-how-bitfinex-benefits-from-fraudulent-trading-8bd66be73215
+        // https://medium.com/@bitfinexed/the-tether-truth-machine-the-wheels-of-justice-turn-slowly-but-grind-exceedingly-finely-8e3bd72ad011
+        
+        for i in 0..num_accounts {
+            self.new_account()
+        }
+    }
+    
+    // Print account info
+    pub fn print_account_info(&amp;mut self,
+                         account_id: String) {
+        
+        // If it's written down it must be true.
+        
+        if let Some(x) = self.accounts.get(&amp;account_id) {
+            println!(&quot;Your Account:\n{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        }
+        println!(&quot;Account not found&quot;);
+    }
+    
+    // Print account history
+    pub fn print_account_history(&amp;mut self,
+                                 account_id: String,) {
+        
+        // Assuming the bank's records are accurate and up to date, which
+        // we assume they are, probably, but we don't know ¯\_(ツ)_/¯ 
+        // https://www.bbc.com/news/business-43985233
+        // https://www.cnet.com/news/commonwealth-bank-of-australia-financial-data-breach-20-million-accounts/
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        println!(&quot;\n/// Getting Account History ///&quot;);
+        println!(&quot;Account {} &quot;, account_id);
+        println!(&quot;{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        println!(&quot;History:\n{:#?}&quot;, account_history);
+    }
+    
+    // &quot;Freeze&quot; an account
+    pub fn freeze_account(&amp;mut self,
+                          account_id: String) {
+        
+        // The end of your life savings are just a click away...
+        
+        let account = self.accounts.remove_entry(&amp;account_id).unwrap();
+    
+        self.frozen_accounts.insert(account.0, account.1);
+    }
+}
+
+fn main() {
+
+    // Init bank state
+    let mut bank = State::new_state();
+    println!(&quot;\n/// Initialized Bank State ///&quot;);
+    println!(&quot;{:#?}&quot;, &amp;bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!(&quot;\n/// Created Some Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+}
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more-1" id="but-wait-theres-more-1"><h2>But wait... there's more</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/User_(computing)</li>
+<li>https://en.wikipedia.org/wiki/Bank_account</li>
+</ul>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="tx.jpg">
+    </p>
+    <h1 align="center">
+        TX
+    </h1>
+    <p align="center">
+        Making stuff happen.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Core Concept: tx is a way to request a state change, but...</p>
+<ul>
+<li>the state transition function is how we make that state change</li>
+<li>the central operator controls the state and thus all state changes including freezing accounts or printing money</li>
+</ul>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=XIsn8-5Xekc"><img src="https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg" alt="Cryptoeconomics - 1.5 - Properties of Centralized Systems" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
+</p>
+<p><a href="https://www.youtube.com/watch?v=j7Mbx8laZwY"><img src="https://img.youtube.com/vi/j7Mbx8laZwY/0.jpg" alt="Cryptoeconomics - 1.3 - Replay Protection" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-3.html">Cryptoeconomics - 1.3 - Replay Protection</a>.
+</p>
+<p><br><br><br></p>
+<pre><code class="language-rust ignore">
+extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+#[derive(Debug)]
+struct State {
+    accounts: HashMap&lt;String, Account&gt;,
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    account_ids: Vec&lt;String&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;TX&gt;,
+    debt_history: Vec&lt;TX&gt;,
+    debt_pool: i32,
+}
+
+#[derive(Debug, Clone)]
+struct Account {
+    password: i32,
+    nonce: i32,
+    balance: i32,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    sender_password: i32,
+    sender_nonce: i32,
+    receiver: String,
+    amount: i32,
+}
+
+
+// Central Payment Processor
+impl State {
+    
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
+    
+    // Turn stuff into &amp;[u8] slice
+    pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }
+
+    // Hash &amp;[u8] slice into a hex String
+    pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!(&quot;{:#X}&quot;, digest);
+            
+        hex_digest
+    }    
+    
+    // Hash stuff into a hex string
+    pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+        
+        let u8_stuff = unsafe {
+            State::any_as_u8_slice(stuff)
+        };
+        let hash_of_stuff = State::hash_u8(u8_stuff);
+        
+        hash_of_stuff
+    }
+    
+    
+    /// FUNCTION TO INIT THE STATE ///
+    
+    // Create a new state
+    pub fn new_state() -&gt; State {
+    
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new.accounts.insert(String::from(&quot;bank&quot;), Account { password: 0, nonce: 0, balance: 1000000 });
+        
+        new
+    }
+    
+    
+    /// ACCOUNT FUNCTIONS ///
+    
+    // Create a new account
+    pub fn new_account(&amp;mut self) {
+        
+        let account_id = State::hash(&amp;thread_rng().gen_range(0, 1000000));
+        let account_data = Account {
+            password: thread_rng().gen_range(0, 1000000),
+            nonce: 0,
+            balance: 0,
+        };
+        
+        self.account_ids.push(account_id.clone());
+        self.accounts.insert(account_id, account_data);
+    }
+    
+    // Create multiple new accounts
+    pub fn new_accounts(&amp;mut self,
+                        num_accounts: i32) {
+
+        for i in 0..num_accounts {
+            self.new_account()
+        }
+    }
+    
+    // Print account info
+    pub fn print_account_info(&amp;mut self,
+                         account_id: String) {
+        
+        if let Some(x) = self.accounts.get(&amp;account_id) {
+            println!(&quot;Your Account:\n{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        }
+        println!(&quot;Account not found&quot;);
+    }
+    
+    // Print account history
+    pub fn print_account_history(&amp;mut self,
+                                 account_id: String,) {
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        println!(&quot;\n/// Getting Account History ///&quot;);
+        println!(&quot;Account {} &quot;, account_id);
+        println!(&quot;{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        println!(&quot;History:\n{:#?}&quot;, account_history);
+    }
+    
+    // &quot;Freeze&quot; an account
+    pub fn freeze_account(&amp;mut self,
+                          account_id: String) {
+        
+        // The end of your life savings are just a click away...
+        
+        let account = self.accounts.remove_entry(&amp;account_id).unwrap();
+    
+        self.frozen_accounts.insert(account.0, account.1);
+    }
+
+
+    /// TX FUNCTIONS ///
+    
+    // Create a new TX for the bank
+    pub fn new_bank_tx(&amp;mut self,
+                       receiver: String,
+                       amount: i32) {
+        
+        // When banks give people loans or credit it's actually processed
+        // as debt which banks can then trade amongst each other at a market
+        // rate based on how likely the debtor is likely to pay back in full
+        // Yes you heard this right, they print money and profit from doing so.
+        // Carpenters make cabinets, comedians make jokes, banks make money,
+        // literaly...
+        // Fun Fact: debt on a banks balance sheet is an ASSET to the bank and
+        // not a liability. It's a liability to users, but banks can buy, sell, 
+        // and trade this debt as a financial product. One of a banks primary 
+        // products is loans, but as a user of a bank you're actually the product 
+        // they're selling to other banks and investment funds. Kind of like how 
+        // with social media platforms access to the users attention is the 
+        // product that they sell to 3rd party advertisers.
+        // https://en.wikipedia.org/wiki/Fractional-reserve_banking
+        let tx = TX {
+            sender: String::from(&quot;bank&quot;),
+            sender_password: 0,
+            sender_nonce: self.accounts.get(&quot;bank&quot;).unwrap().nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+
+        // Tx is legit by default because it's from the bank so let's process it.
+        // decrease the balance from sender's account
+        self.accounts
+            .get_mut(&amp;tx.sender)
+            .unwrap()
+            .balance -= tx.amount;
+        // increase sender's nonce to prevent replay glitches
+        self.accounts
+            .get_mut(&amp;tx.sender)
+            .unwrap()
+            .nonce += 1;
+        // increase the balance of the reciever's account
+        self.accounts
+            .get_mut(&amp;tx.receiver)
+            .unwrap()
+            .balance += tx.amount;
+            
+        // add processed TX to history
+        self.history.push(tx.clone());        
+    }
+    
+    // Create a new TX for a bank user
+    pub fn new_user_tx(&amp;mut self,
+                       sender: String,
+                       sender_password: i32,
+                       sender_nonce: i32,
+                       receiver: String,
+                       amount: i32) {
+        
+        // This is really more of a TX request, but that's ok
+        
+        let tx = TX {
+            sender: sender,
+            sender_password: sender_password,
+            sender_nonce: sender_nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+}
+
+
+fn main() {
+
+    // Init bank state
+    let mut bank = State::new_state();
+    println!(&quot;\n/// Initialized Bank State ///&quot;);
+    println!(&quot;{:#?}&quot;, &amp;bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!(&quot;\n/// Created Some Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Init some variables for testing accounts
+    let test_account0 = bank.account_ids[0].clone();
+    let test_account1 = bank.account_ids[1].clone();
+    let test_account2 = bank.account_ids[2].clone();
+
+    // Add some funds to those accounts
+    for i in bank.accounts.values_mut() {
+        i.balance += 10000;
+    }
+    println!(&quot;\n/// Added Funds To Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Let's make some TX requests
+    for i in 0..10 {
+        
+        let sender = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+            bank.new_user_tx(sender.to_string(),
+                        bank.accounts.get(sender).unwrap().password,
+                        bank.accounts.get(sender).unwrap().nonce,
+                        receiver.to_string(),
+                        thread_rng().gen_range(100, 1000))
+        }
+    }    
+
+    println!(&quot;\n/// Created Pending TX ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+}
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more-2" id="but-wait-theres-more-2"><h3>But wait... there's more</h3></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Database_transaction</li>
+</ul>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state_transitions.jpg">
+    </p>
+    <h1 align="center">
+        State Transitions
+    </h1>
+    <p align="center">
+        Getting from A to B.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>For every database that has a state, there's a way to change that state. Every time you're in state s and then make a change, you're now in state s'. The history of state transitions is the history of the database. When multiple people are using this database it's important that they all agree on the current state. If they don't, in meatspace we get wars and in cyberspace we get forks.</p>
+<p>Since in this example we have a centralized database controlled by a single operator, it's their database so they make the rules. Because they control the state they also control the state changes. Users can submit TX for consideration, but ultimately the bank decides what goes through or not.</p>
+<p>Let's try it out and become kings of our own little hills!</p>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=XIsn8-5Xekc"><img src="https://img.youtube.com/vi/XIsn8-5Xekc/0.jpg" alt="Cryptoeconomics - 1.5 - Properties of Centralized Systems" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-2.html">Cryptoeconomics - 1.2 - State Transitions & Payment Processor Implementation</a>.
+</p>
+<p><br><br><br></p>
+<pre><code class="language-rust ignore">
+extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+#[derive(Debug)]
+struct State {
+    accounts: HashMap&lt;String, Account&gt;,
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    account_ids: Vec&lt;String&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;TX&gt;,
+    debt_history: Vec&lt;TX&gt;,
+    debt_pool: i32,
+}
+
+#[derive(Debug, Clone)]
+struct Account {
+    password: i32,
+    nonce: i32,
+    balance: i32,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    sender_password: i32,
+    sender_nonce: i32,
+    receiver: String,
+    amount: i32,
+}
+
+
+// Central Payment Processor
+impl State {
+    
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
+    
+    // Turn stuff into &amp;[u8] slice
+    pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }
+
+    // Hash &amp;[u8] slice into a hex String
+    pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!(&quot;{:#X}&quot;, digest);
+            
+        hex_digest
+    }    
+    
+    // Hash stuff into a hex string
+    pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+        
+        let u8_stuff = unsafe {
+            State::any_as_u8_slice(stuff)
+        };
+        let hash_of_stuff = State::hash_u8(u8_stuff);
+        
+        hash_of_stuff
+    }
+    
+    
+    /// FUNCTION TO INIT THE STATE ///
+    
+    // Create a new state
+    pub fn new_state() -&gt; State {
+    
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new.accounts.insert(String::from(&quot;bank&quot;), Account { password: 0, nonce: 0, balance: 1000000 });
+        
+        new
+    }
+    
+    
+    /// ACCOUNT FUNCTIONS ///
+    
+    // Create a new account
+    pub fn new_account(&amp;mut self) {
+        
+        let account_id = State::hash(&amp;thread_rng().gen_range(0, 1000000));
+        let account_data = Account {
+            password: thread_rng().gen_range(0, 1000000),
+            nonce: 0,
+            balance: 0,
+        };
+        
+        self.account_ids.push(account_id.clone());
+        self.accounts.insert(account_id, account_data);
+    }
+    
+    // Create multiple new accounts
+    pub fn new_accounts(&amp;mut self,
+                        num_accounts: i32) {
+
+        for i in 0..num_accounts {
+            self.new_account()
+        }
+    }
+    
+    // Print account info
+    pub fn print_account_info(&amp;mut self,
+                         account_id: String) {
+        
+        if let Some(x) = self.accounts.get(&amp;account_id) {
+            println!(&quot;Your Account:\n{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        }
+        println!(&quot;Account not found&quot;);
+    }
+    
+    // Print account history
+    pub fn print_account_history(&amp;mut self,
+                                 account_id: String,) {
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        println!(&quot;\n/// Getting Account History ///&quot;);
+        println!(&quot;Account {} &quot;, account_id);
+        println!(&quot;{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        println!(&quot;History:\n{:#?}&quot;, account_history);
+    }
+    
+    // &quot;Freeze&quot; an account
+    pub fn freeze_account(&amp;mut self,
+                          account_id: String) {
+        
+        // The end of your life savings are just a click away...
+        
+        let account = self.accounts.remove_entry(&amp;account_id).unwrap();
+    
+        self.frozen_accounts.insert(account.0, account.1);
+    }
+    
+    
+    /// TX FUNCTIONS ///
+    
+    // Create a new TX
+    pub fn new_user_tx(&amp;mut self,
+                       sender: String,
+                       sender_password: i32,
+                       sender_nonce: i32,
+                       receiver: String,
+                       amount: i32) {
+        
+        let tx = TX {
+            sender: sender,
+            sender_password: sender_password,
+            sender_nonce: sender_nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+    
+    // Create a new bank TX
+    pub fn new_bank_tx(&amp;mut self,
+                       receiver: String,
+                       amount: i32) {
+
+        // Tx is legit by default because it's from the bank so let's just process it.
+        let tx = TX {
+            sender: &quot;bank&quot;.to_string(),
+            sender_password: 0,
+            sender_nonce: self.accounts.get(&quot;bank&quot;).unwrap().nonce,
+            receiver: receiver,
+            amount: amount, 
+        };
+        // decrease the balance in the bank's debt account
+        self.debt_pool -= tx.amount;
+        // increase the balance of the reciever's account
+        self.accounts
+            .get_mut(&amp;tx.receiver)
+            .unwrap()
+            .balance += tx.amount;
+            
+        // add processed TX to history
+        self.history.push(tx.clone());        
+    }
+    
+    
+    /// STATE TRANSITION FUNCTIONS ///
+    
+    // Verify pending user TX
+    // - notice how the bank (or any hacker) gets to bypass this check
+    //   using a bank tx rather than a user tx
+    pub fn process_pending_tx(&amp;mut self) {
+        
+        // check pending tx
+        for i in &amp; self.pending_tx {
+            
+            // check that sender is legit
+            if !(self.accounts.contains_key(&amp;i.sender)) {
+                println!(&quot;TX ERROR: sender not found.&quot;);
+                continue;
+            }
+ 
+            // check that receiver is legit
+            if !(self.accounts.contains_key(&amp;i.receiver)) {
+                println!(&quot;TX ERROR: receiver not found.&quot;);
+                continue;
+            }           
+            
+            // check that tx is signed by sender password
+            if !(i.sender_password == self.accounts
+                                     .get(&amp;i.sender)
+                                     .unwrap()
+                                     .password) {
+                println!(&quot;TX ERROR: tx and sender passwords do not match.&quot;);
+                continue;
+            }
+            
+            // check that the TX nonce matches the sender nonce
+            if !(i.sender_nonce == self.accounts
+                                  .get(&amp;i.sender)
+                                  .unwrap()
+                                  .nonce) {
+                println!(&quot;TX ERROR: tx and sender nonces do not match.&quot;);
+                continue;
+            }
+
+            // check that the TX amount is &gt;= the sender's balance 
+            if !(i.amount &lt;= self.accounts
+                                    .get(&amp;i.sender)
+                                    .unwrap()
+                                    .balance) {
+                println!(&quot;TX ERROR: sender has insufficient balance&quot;);
+                continue;
+            } 
+            
+            // Tx is legit so let's process it
+            // decrease the balance from sender's account
+            self.accounts
+                .get_mut(&amp;i.sender)
+                .unwrap()
+                .balance -= i.amount;
+            // increase sender's nonce to prevent replay glitches
+            self.accounts
+                .get_mut(&amp;i.sender)
+                .unwrap()
+                .nonce += 1;
+            // increase the balance of the reciever's account
+            self.accounts
+                .get_mut(&amp;i.receiver)
+                .unwrap()
+                .balance += i.amount;
+                
+            // add processed TX to history
+            self.history.push(i.clone());
+        }
+        
+        // clear pending tx
+        self.pending_tx = Vec::new();
+    }
+    
+    // Arbitrary function to add funds to an account
+    pub fn add_funds(&amp;mut self,
+                     account_id: String,
+                     amount: i32) {
+        
+        // A very important function for any private and seldom audited
+        // for-profit enterprise. Convenient because it
+        // just directly changes the state of the ledger
+        // without going through any checks or being recorded
+        // in the hisroty. What could go wrong?
+        // https://en.wikipedia.org/wiki/Enron_scandal
+        
+        if let Some(x) = self.accounts.get_mut(&amp;account_id) {
+            x.balance += amount;
+        }
+    }
+
+}
+
+
+fn main() {
+    
+    // Note that every function that starts with
+    // bank.function() is a function that only the
+    // centralized operator can perform. Users can
+    // submit TX for review, but ultimately they 
+    // have no control. Same for viewing their 
+    // account history or controlling if/when
+    // their funds are accessible. Users can
+    // make requests, but the central operator
+    // makes the rules.
+    
+    // Init bank state
+    let mut bank = State::new_state();
+    println!(&quot;\n/// Initialized Bank State ///&quot;);
+    println!(&quot;{:#?}&quot;, &amp;bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!(&quot;\n/// Created Some Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Init some variables for testing accounts
+    let test_account0 = bank.account_ids[0].clone();
+    let test_account1 = bank.account_ids[1].clone();
+    let test_account2 = bank.account_ids[2].clone();
+
+    // Add some funds to those accounts
+    for i in bank.accounts.values_mut() {
+        i.balance += 10000;
+    }
+    println!(&quot;\n/// Added Funds To Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Let's make some TX requests
+    for i in 0..10 {
+        
+        let sender = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+            bank.new_user_tx(sender.to_string(),
+                        bank.accounts.get(sender).unwrap().password,
+                        bank.accounts.get(sender).unwrap().nonce,
+                        receiver.to_string(),
+                        thread_rng().gen_range(100, 1000))
+        }
+    } 
+
+    // Let's print some moneys!
+    for i in 0..10 {
+        
+        let sender = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+            bank.new_bank_tx(receiver.to_string(),
+                             thread_rng().gen_range(100, 1000))
+        }
+    }
+    println!(&quot;\n/// Simulated Some TX ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Process and approve or decline pending TX
+    bank.process_pending_tx();
+    println!(&quot;\n/// Processed Pending TX ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Get the TX history for an account
+    bank.print_account_history(test_account0.clone());
+}
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more-3" id="but-wait-theres-more-3"><h3>But wait... there's more</h3></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Transition_system</li>
+</ul>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="chapter_summary.jpg">
+    </p>
+    <h1 align="center">
+        Centralized Payment Processor
+    </h1>
+    <p align="center">
+        Feel the power.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>So to recap...</p>
+<p>Centralized database managers:</p>
+<ul>
+<li>gets to create new data and accounts out of thin air (or money and debt)</li>
+<li>controls read/write access to that data (ability to move/create money)</li>
+<li>has minimal downside when things go wrong due to bailouts and insurance (what is regulatory capture?)</li>
+</ul>
+<p>Users:</p>
+<ul>
+<li>trust the central operator is showing them the correct state for their data or money</li>
+<li>are only allowed as much money or control as they can figure out how to convince the bank or anyone else to give them</li>
+<li>get their lives turned upside down if things go wrong</li>
+</ul>
+<p><br><br><br></p>
+<p><a href="https://www.youtube.com/watch?v=ckzi8iqGilE"><img src="https://img.youtube.com/vi/ckzi8iqGilE/0.jpg" alt="Cryptoeconomics - 1.5 - Properties of Centralized Systems" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-5.html">Cryptoeconomics - 1.5 - Properties of Centralized Systems</a>.
+</p>
+<p><br><br><br></p>
+<p>Here is the code without extra commentary so you can explore and see how all the parts interact. Go ahead and try to modify or play with it :)</p>
+<pre><code class="language-rust ignore">extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+#[derive(Debug)]
+struct State {
+    accounts: HashMap&lt;String, Account&gt;,
+    frozen_accounts: HashMap&lt;String, Account&gt;,
+    account_ids: Vec&lt;String&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;TX&gt;,
+    debt_history: Vec&lt;TX&gt;,
+    debt_pool: i32,
+}
+
+#[derive(Debug, Clone)]
+struct Account {
+    password: i32,
+    nonce: i32,
+    balance: i32,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    sender_password: i32,
+    sender_nonce: i32,
+    receiver: String,
+    amount: i32,
+}
+
+
+// Central Payment Processor
+impl State {
+    
+    
+    /// GENERALLY USEFUL FUNCTIONS ///
+    
+    // Turn stuff into &amp;[u8] slice
+    pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }
+
+    // Hash &amp;[u8] slice into a hex String
+    pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+        
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff);
+        let digest = hasher.finish();
+        let hex_digest = format!(&quot;{:#X}&quot;, digest);
+            
+        hex_digest
+    }    
+    
+    // Hash stuff into a hex string
+    pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+        
+        let u8_stuff = unsafe {
+            State::any_as_u8_slice(stuff)
+        };
+        let hash_of_stuff = State::hash_u8(u8_stuff);
+        
+        hash_of_stuff
+    }
+    
+    
+    /// FUNCTION TO INIT THE STATE ///
+    
+    // Create a new state
+    pub fn new_state() -&gt; State {
+    
+        let mut new = State {
+            accounts: HashMap::new(),
+            frozen_accounts: HashMap::new(),
+            account_ids: Vec::new(),
+            pending_tx: Vec::new(),
+            history: Vec::new(),
+            debt_history: Vec::new(),
+            debt_pool: 0,
+        };
+        
+        new
+    }
+    
+    
+    /// ACCOUNT FUNCTIONS ///
+    
+    // Create a new account
+    pub fn new_account(&amp;mut self) {
+        
+        let account_id = State::hash(&amp;thread_rng().gen_range(0, 1000000));
+        let account_data = Account {
+            password: thread_rng().gen_range(0, 1000000),
+            nonce: 0,
+            balance: 0,
+        };
+        
+        self.account_ids.push(account_id.clone());
+        self.accounts.insert(account_id, account_data);
+    }
+    
+    // Create multiple new accounts
+    pub fn new_accounts(&amp;mut self,
+                        num_accounts: i32) {
+
+        for i in 0..num_accounts {
+            self.new_account()
+        }
+    }
+    
+    // Print account info
+    pub fn print_account_info(&amp;mut self,
+                         account_id: String) {
+        
+        if let Some(x) = self.accounts.get(&amp;account_id) {
+            println!(&quot;Your Account:\n{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        }
+        println!(&quot;Account not found&quot;);
+    }
+    
+    // Print account history
+    pub fn print_account_history(&amp;mut self,
+                                 account_id: String,) {
+        
+        let mut account_history = Vec::new();
+        let list = self.history.clone();
+        for i in list {
+            if i.sender == account_id {
+                account_history.push(i.clone());
+            }
+            if i.receiver == account_id {
+                account_history.push(i.clone());
+            }
+        }
+        println!(&quot;\n/// Getting Account History ///&quot;);
+        println!(&quot;Account {} &quot;, account_id);
+        println!(&quot;{:#?}&quot;, self.accounts.get(&amp;account_id).unwrap());
+        println!(&quot;History:\n{:#?}&quot;, account_history);
+    }
+    
+    // &quot;Freeze&quot; an account
+    pub fn freeze_account(&amp;mut self,
+                          account_id: String) {
+        
+        let account = self.accounts.remove_entry(&amp;account_id).unwrap();
+    
+        self.frozen_accounts.insert(account.0, account.1);
+    }
+    
+    
+    /// TX FUNCTIONS ///
+        
+    // Create a new bank TX
+    pub fn new_bank_tx(&amp;mut self,
+                       receiver: String,
+                       amount: i32) {
+
+        // Tx is legit by default because it's from the bank so let's just process it.
+        let tx = TX {
+            sender: &quot;bank&quot;.to_string(),
+            sender_password: 0,
+            sender_nonce: self.accounts.get(&quot;bank&quot;).unwrap().nonce,
+            receiver: receiver,
+            amount: amount, 
+        };
+        // decrease the balance in the bank's debt account
+        self.debt_pool -= tx.amount;
+        // increase the balance of the reciever's account
+        self.accounts
+            .get_mut(&amp;tx.receiver)
+            .unwrap()
+            .balance += tx.amount;
+            
+        // add processed TX to history
+        self.history.push(tx.clone());        
+    }
+    
+    // Create a new TX
+    pub fn new_user_tx(&amp;mut self,
+                       sender: String,
+                       sender_password: i32,
+                       sender_nonce: i32,
+                       receiver: String,
+                       amount: i32) {
+        
+        let tx = TX {
+            sender: sender,
+            sender_password: sender_password,
+            sender_nonce: sender_nonce,
+            receiver: receiver,
+            amount: amount,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+
+    
+    /// STATE TRANSITION FUNCTIONS ///
+
+    // Verify pending user TX
+    pub fn process_pending_tx(&amp;mut self) {
+        
+        // check pending tx
+        for i in &amp; self.pending_tx {
+            
+            // check that sender is legit
+            if !(self.accounts.contains_key(&amp;i.sender)) {
+                println!(&quot;TX ERROR: sender not found.&quot;);
+                continue;
+            }
+ 
+            // check that receiver is legit
+            if !(self.accounts.contains_key(&amp;i.receiver)) {
+                println!(&quot;TX ERROR: receiver not found.&quot;);
+                continue;
+            }           
+            
+            // check that tx is signed by sender password
+            if !(i.sender_password == self.accounts
+                                     .get(&amp;i.sender)
+                                     .unwrap()
+                                     .password) {
+                println!(&quot;TX ERROR: tx and sender passwords do not match.&quot;);
+                continue;
+            }
+            
+            // check that the TX nonce matches the sender nonce
+            if !(i.sender_nonce == self.accounts
+                                  .get(&amp;i.sender)
+                                  .unwrap()
+                                  .nonce) {
+                println!(&quot;TX ERROR: tx and sender nonces do not match.&quot;);
+                continue;
+            }
+
+            // check that the TX amount is &gt;= the sender's balance 
+            if !(i.amount &lt;= self.accounts
+                                    .get(&amp;i.sender)
+                                    .unwrap()
+                                    .balance) {
+                println!(&quot;TX ERROR: sender has insufficient balance&quot;);
+                continue;
+            } 
+            
+            // Tx is legit so let's process it
+            // decrease the balance from sender's account
+            self.accounts
+                .get_mut(&amp;i.sender)
+                .unwrap()
+                .balance -= i.amount;
+            // increase sender's nonce to prevent replay glitches
+            self.accounts
+                .get_mut(&amp;i.sender)
+                .unwrap()
+                .nonce += 1;
+            // increase the balance of the reciever's account
+            self.accounts
+                .get_mut(&amp;i.receiver)
+                .unwrap()
+                .balance += i.amount;
+                
+            // add processed TX to history
+            self.history.push(i.clone());
+        }
+        
+        // clear pending tx
+        self.pending_tx = Vec::new();
+    }
+    
+    // Add funds to an account
+    pub fn add_funds(&amp;mut self,
+                     account_id: String,
+                     amount: i32) {
+        
+        if let Some(x) = self.accounts.get_mut(&amp;account_id) {
+            x.balance += amount;
+        }
+    }
+}
+
+
+fn main() {
+    
+    // Init bank state
+    let mut bank = State::new_state();
+    println!(&quot;\n/// Initialized Bank State ///&quot;);
+    println!(&quot;{:#?}&quot;, &amp;bank);
+    
+    // Create some new accounts
+    bank.new_accounts(10);
+    println!(&quot;\n/// Created Some Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Init some variables for testing accounts
+    let test_account0 = bank.account_ids[0].clone();
+    let test_account1 = bank.account_ids[1].clone();
+    let test_account2 = bank.account_ids[2].clone();
+
+    // Add some funds to those accounts
+    for i in bank.accounts.values_mut() {
+        i.balance += 10000;
+    }
+    println!(&quot;\n/// Added Funds To Accounts ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+
+    // Let's make some TX requests
+    for i in 0..10 {
+        
+        let sender = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        let receiver = &amp;bank.account_ids[thread_rng().gen_range(0, bank.account_ids.len())];
+        
+        if sender != receiver {
+            bank.new_user_tx(sender.to_string(),
+                        bank.accounts.get(sender).unwrap().password,
+                        bank.accounts.get(sender).unwrap().nonce,
+                        receiver.to_string(),
+                        thread_rng().gen_range(100, 1000))
+        }
+    } 
+    println!(&quot;\n/// Simulated Some TX ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Process pending TX
+    bank.process_pending_tx();
+    println!(&quot;\n/// Processed Pending TX ///&quot;);
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Get the history for an account
+    bank.print_account_history(test_account0.clone());
+    
+    // Freeze an account
+    bank.freeze_account(test_account0.clone());
+    println!(&quot;\n/// Froze Account {} ///&quot;, &amp;test_account0);
+    println!(&quot;{:#?}&quot;, bank);
+    
+    // Try checking the balance of a frozen account
+    println!(&quot;\n/// Checking Frozen Account ///&quot;);
+    bank.print_account_info(test_account0.clone().to_string());
+}
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#resources-to-learn-more" id="resources-to-learn-more"><h2>Resources To Learn More</h2></a>
+<ul>
+<li>TBD</li>
+</ul>
+<p><br><br><br></p>
+<p>Seems a little odd that such an essential piece of modern living is so opaque and fragile... 🤔</p>
+<p>Can we do better? Maybe! Some people have some ideas on how to at least make this process a little more secure. In the next chapter we'll explore how we can change the architecture of the system to make it better for users. This includes:</p>
+<ul>
+<li>giving everyone on the network the option to verify TX to make sure no one is cheating</li>
+<li>creating account IDs and passwords via cryptography so that they are not all located in a centralized database</li>
+<li>creating costs and rewards for managing state transitions to create reliability and security</li>
+</ul>
+<p>Let's go to chapter 2 and see how that works!</p>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <div align="center">
+        <img src="intro.jpg">  
+    </div>
+    <h1 align="center">
+        Minimal Viable Proof of Work "Blockchain"
+    </h1>
+    <p align="center">
+        If you love your data, set it free.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Welcome!</p>
+<p>As we saw, centralized databases can be a drag. In this chapter we'll explore how we can move towards a decentralized p2p database. This will involve some crypto and some imagination, but mainly crypto. We'll keep the general structure of our database from chapter 1, but add and change a few things. Let's get started :)</p>
+<p><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state.jpg">
+    </p>
+    <h1 align="center">
+        State
+    </h1>
+    <p align="center">
+        All the things...
+    </p>
+</div>
+<p><br><br><br></p>
+<p>So as we mentioned, a blockchain is a glorified database. As such, at it's heart is some data. Like any database that changes, the current state of things is literally called the &quot;state&quot;. As we saw with a centralized database the owners of that database can change the state however and whenever they want. In a decentralized system where there is no centralized database manager, the state is agreed upon by a distributed group of verifiers based on some consensus rules that they all agree to.</p>
+<p>In a Proof of Work blockchain the state is divided by blocks; each new block representing a new world state. Users submit requests to change the state in the form of transactions (tx) and verifiers check those transactions and aggregate them into blocks. In order to publish a block that is accepted as the next state, the verifier has to perform computation to solve a puzzle. This is where the term &quot;proof of work&quot; comes in, because you can only solve the puzzle if you did the work. Whoever solves the puzzle gets to publish the next block, and there is a reward for doing so called the &quot;block reward&quot;. This does a few things:</p>
+<ul>
+<li>it creates new tokens to incentivize people to spend resources to check and secure blocks</li>
+<li>it prevents anyone from just publishing spam blocks arbitrarily</li>
+<li>because there is a reward for publishing valid blocks and every block can be checked by the entire network, anyone who publishes a fake block will be ignored, thus preventing fraud on the network</li>
+</ul>
+<p>All in all this accomplishes something that was not possible before: a shared state that people can trust to be a legitimate source of information. Before you had to trust a centralized operator because it was to complicated for a large network to process and manage a complex state asynchronously. With blockchain technology however, this is possible. In this chapter we'll explore the simplest version of this: a financial transaction network that uses proof of work to solve a simple puzzle.</p>
+<p><br><br><br></p>
+<pre><pre class="playpen"><code class="language-rust">use std::collections::HashMap;
+
+// First we're going to create a struct that will hold the important 
+// state data we want to keep our database functioning:
+//  - accounts: this is where people's money and addresses live
+//  - pending_tx: a pool of pending tx that have not yet been verified 
+//    as legit or not
+//  - chain: this is where TX that have been verified and processed are 
+//    stored. Think of it as the history, but rather than a bank telling
+//    you what your balance is, you can check the history to make sure 
+//    everything is legit. 
+
+#[derive(Debug)]
+struct State {
+    modulo: i32,
+    accounts: HashMap&lt;i32, Account&gt;,
+    pending_tx: Vec&lt;SignedTX&gt;,
+    chain: Vec&lt;Block&gt;,
+}
+
+// As promised, accounts have a balance.
+// Accounts also have a nonce which is a number that
+// gets incremented with every valid transaction sent.
+// The nonce is added to every tx and this helps prevent
+// duplicates from being processed. 
+#[derive(Debug, Clone)]
+struct Account {
+    balance: f32,
+    nonce: i32,
+}
+
+// TX stands for transaction.
+// Sender, receiver, and amount are what they say they are.
+// Like we said, the nonce is a unique value added to every
+// TX to prevent duplicates from being processed.
+#[derive(Debug, Clone)]
+struct TX {
+    sender: i32,
+    receiver: i32,
+    amount: f32,
+    nonce: i32,
+}
+
+// The sender of every TX signs it to verify that it came
+// from them and not someone else. This is done via hashing
+// and public key crypto, which we'll explore soon. 
+#[derive(Debug, Clone)]
+struct SignedTX {
+    tx: TX,
+    signature: Vec&lt;i32&gt;,
+}
+
+// The blockheader is attached to every block to provide
+// information such as when the block was produced (timestamp),
+// a unique identifier (nonce), the hash of the previous block
+// to verify the correct ordering of blocks, and a merkle 
+// hash that acts as a signature of this block that the next
+// block can reference. Hashing and linking these blocks 
+// together like this is what leads to the term &quot;blockchain&quot;.
+// (because it's a chain of blocks)
+#[derive(Debug, Clone)]
+pub struct Blockheader {
+    timestamp: i64,
+    nonce: i32, 
+    previous_block_hash: String,  
+    merkle: String,  
+}
+
+// Each block holds the information in the block header
+// as well as all the TX that were processed in that block.
+// Because of this anyone can verify the authenticity of the
+// history, and you can't rewrite the history without 
+// rewriting every block that comes after it. When there's
+// a cost for creating blocks this is very difficult, and
+// this is what leads people to trust that blockchains are
+// secure. With a centralized operator though, this does not
+// apply. For this reason, in this chapter we'll refer to the
+// database as a &quot;blockchain&quot; because it's architecture is
+// inspired by blockchains, but has none of the security
+// guarantees of decntralized P2P blockchains.
+#[derive(Debug, Clone)]
+pub struct Block {
+    header: Blockheader,
+    transactions: Vec&lt;SignedTX&gt;
+}
+
+// This function initializes a new &quot;blockchain&quot; inspired
+// data structure.
+impl State {
+
+    // Initialize A &quot;Blockchain&quot;
+    pub fn new_blockchain() -&gt; State {
+        let mut state = State {
+            modulo: 0,
+            accounts: HashMap::new(),
+            pending_tx: Vec::new(),
+            chain: Vec::new(),
+        };
+    
+        state
+    }  
+}
+
+// Let's try it out. If you push play you'll see that the
+// program creates a new state. It's empty, but soon we'll
+// start filling it with data.
+fn main() {
+
+  let state = State::new_blockchain();
+  println!(&quot;{:#?}&quot;, state);
+
+}
+</code></pre></pre>
+<p><br><br><br></p>
+<p>The Ethereum Whitepaper: state machine sections</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system</li>
+<li>https://github.com/ethereum/wiki/wiki/White-Paper#ethereum-state-transition-function</li>
+</ul>
+<p>The Ethereum Yellowpaper: 2. The Blockchain Paradigm</p>
+<ul>
+<li>&quot;Ethereum, taken as a whole, can be viewed as a
+transaction-based state machine: we begin with a genesis
+state and incrementally execute transactions to morph
+it into some final state. It is this final state which we
+accept as the canonical “version” of the world of Ethereum.
+The state can include such information as account balances,
+reputations, trust arrangements, data pertaining
+to information of the physical world; in short, anything
+that can currently be represented by a computer is admissible.
+Transactions thus represent a valid arc between two
+states; the ‘valid’ part is important—there exist far more
+invalid state changes than valid state changes. Invalid state
+changes might, e.g., be things such as reducing an account
+balance without an equal and opposite increase elsewhere.&quot;</li>
+<li>https://ethereum.github.io/yellowpaper/paper.pdf</li>
+</ul>
+<p>A history of state machines</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Analytical_Engine</li>
+<li>https://en.wikipedia.org/wiki/Turing_machine#The_%22state%22</li>
+<li>https://en.wikipedia.org/wiki/Distributed_ledger</li>
+<li>https://en.wikipedia.org/wiki/Transition_system</li>
+<li>https://en.wikipedia.org/wiki/Blockchain</li>
+</ul>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="crypto.png">
+    </p>
+    <h1 align="center">
+        Crypto & Trust
+    </h1>
+    <p align="center">
+        How do we go from trusting a b2c centralized database to trusting a p2p decentralized database?
+        <br>
+        and why would we want to?
+    </p>
+</div>
+<p><br><br><br></p>
+<p>In chapter 1 we explored how a generic database might work and how that database would be managed if we trusted a central operator to run it. What if we wanted to create a shared database though, where we could all verify things for ourselves?</p>
+<p>One option might be to keep the central operator, but make the database transparent. All participants would agree to a set of rules that they would all play by and they could all verify changes of state. If anything happened that was not in line with the agreed upon rules they could switch to a new network. This has a few downsides though... mainly that switching and coordination costs are high. If you catch someone cheating (either the central operator or another user), at what threshold is it worth raising an issue or switching to another network? What if that network is already integrated into other apps and services and you'd have to switch those over too? What if your identity, social connections, or reputation are tied to this network and starting on a new one would mean losing all that? At what point would a transgressino of the network validate the cost of switching? If it's anything similar to our current banking or social networks, the answer is pretty damn high. There must be a better way...</p>
+<p>It turns out, there is! It's called cryptography. Roughly speaking, cryptography is the process of using mathematic functions to conceal or verify information. In this chapter we'll focus mainly on the later as a way to replace trust in a central operator with trust in mathematics. This means that we can define in code all the functions that the central operator performed:</p>
+<ul>
+<li>creating accounts</li>
+<li>verifying tx</li>
+<li>managing state transitions</li>
+</ul>
+<p>In this section we'll cover some of the basic concepts in cryptography that allow us to do this, then throughout the chapter we'll apply those concepts to create the mechanisms that do that, and then in the chapter summary we'll have our own working network that we can use to simulate these things.</p>
+<p>Let's start with a few foundational concepts that will help us get started :)</p>
+<p><br></p>
+<a class="header" href="#computational-infeasibility-aka-cryptographic-hardness" id="computational-infeasibility-aka-cryptographic-hardness"><h3>Computational Infeasibility (aka cryptographic hardness)</h3></a>
+<ul>
+<li>A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out.</li>
+<li>Why should we care? Well, without knowing the computational feasibility or infeasibility of a problem we cannot make any claims that people can't cheat on our network by overwriting data or creating data without following the rules. Say for example I know the password to my account and I think that it's secure. If it takes you 3 days to randomly guess all the possible combinations of characters that my password might be, then it's really only secure as long as someone doesn't decide to take the time to figure it out. If it takes you 3 billion years to guess all the possible combinations though, then the story is quite different and I can rest assured that I'm not going to wake up one day and have all my data changed or stolen.</li>
+</ul>
+<pre><code class="language-rust ignore">// For example, pick any Ethereum address and try to guess the private key that unlocks it. Go ahead! 
+// https://www.myetherwallet.com/#send-transaction
+</code></pre>
+<ul>
+<li>https://en.wikipedia.org/wiki/Computational_hardness_assumption</li>
+</ul>
+<p><br></p>
+<a class="header" href="#randomness" id="randomness"><h3>Randomness</h3></a>
+<ul>
+<li>Random data does not have a pattern. If one were to take a series of random data and cut it in half, then ask someone to guess the second half given the first, any possible values would be equally likely and no one could do better than a wild guess. In computer science and information theory, we often say that if a random string of data is long enough it is computationally infeasable to guess it, and thus it is secure against attacks.</li>
+<li>Why should we care? Well we're actually going to use random data to create accounts in such a way that only the person who created the account can use it to send transactions or sign data. We're also going to use random data to create a random string of characters that people have to guess in order to earn a reward and create the next state transition. The longest chain of valid state transitions is the agreed upon valid state, and since people are competing to earn the rewards that come with processing valid state transitions, anyone who wants to spam or overwrite the network would have to solve more puzzles faster than everyone else competing to do so, which on networks like Bitcoin or Ethereum is many.</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+extern crate rand;
+use rand::prelude::*;
+
+// generate a large random number
+fn key_gen() -&gt; String {
+    
+    let rn: i32 = thread_rng().gen_range(100000, 1000000);
+    rn.to_string()
+}
+
+fn main() {
+
+    let key = key_gen();
+    println!(&quot;key: {}&quot;, key);
+}
+
+// if you want to learn more about how the rand crate works in Rust, they've got a great book and docs
+// - https://crates.io/crates/rand
+// - https://rust-random.github.io/book/intro.html
+</code></pre>
+<p>Ethereum Specific Randomness</p>
+<ul>
+<li>https://en.ethereum.wiki/Alternative-blockchains,-randomness,-economics,-and-other-research-topics</li>
+<li>https://vitalik.ca/files/randomness.html</li>
+<li>https://ethresear.ch/t/posw-random-beacon/1814</li>
+</ul>
+<p>Random Randomness</p>
+<ul>
+<li>https://blog.cloudflare.com/why-randomness-matters/</li>
+<li>https://en.wikipedia.org/wiki/Entropy_(information_theory)</li>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Security_and_practical_considerations</li>
+<li>https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator</li>
+<li>https://www.quantamagazine.org/a-unified-theory-of-randomness-20160802/</li>
+<li>https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API</li>
+</ul>
+<p><br></p>
+<a class="header" href="#hash-functions" id="hash-functions"><h3>Hash Functions</h3></a>
+<ul>
+<li>A hash function (or hash algorithm) is a process by which a piece of data of arbitrary size (could be anything; a piece of text, a picture, or even a list of other hashes) is processed into a small piece of data (usually 32 bytes) which looks completely random, and from which no meaningful data can be recovered about the document, but which has the important property that the result of hashing one particular document is always the same. Additionally, it is crucially important that it is computationally infeasible to find two documents that have the same hash. Generally, changing even one letter in a document will completely randomize the hash; for example, the SHA3 hash of &quot;Saturday&quot; is c38bbc8e93c09f6ed3fe39b5135da91ad1a99d397ef16948606cdcbd14929f9d, whereas the SHA3 hash of Caturday is b4013c0eed56d5a0b448b02ec1d10dd18c1b3832068fbbdc65b98fa9b14b6dbf. Hashes are usually used as a way of creating a globally agreed-upon identifier for a particular document that cannot be forged. In the biz they call the input to a hash function the &quot;preimage&quot; and the output is called the &quot;digest&quot;.</li>
+<li>Why should we care? Well we're acually going us a hash function to create the random string of characters that need to be guessed in order to earn a reward and create the next state transition. We're also going to use a hash function to store the history of all those state transitions. Since every hash is completely deterministic, if someone were to change 1 datapoint in the past, it would literally change every piece of data that came after it. This means that in order to cheat and arbitrarily rewrite the state someone would have to re-solve all the puzzles after that change, and do so faster than everyone else working on the current puzzles. The more people are working to solve puzzles on the network the harder someone who wants to cheat would have to work as well. This means that the security of the network is tied to the amount of people working to earn rewards by creating valid state transitions, which is often tied to the monetary value of those rewards, which for networks like Bitcoin or Ethereum is generally quite high.</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+// Turn Arbitrary Stuff Into &amp;[u8] Slice
+pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+// Hash &amp;[u8] Into Hex String
+pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}    
+
+// Takes in stuff
+// Turns it to a u8 slice
+// Hashes that slice into a hex string
+pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+    
+    let u8_stuff = unsafe {
+        any_as_u8_slice(stuff)
+    };
+    let hash_of_stuff = hash_u8(u8_stuff);
+    
+    hash_of_stuff
+}
+
+fn main() {
+    
+    
+    // Let's hash something!
+    
+    let my_data = String::from(&quot;stuff and stuff&quot;);
+    println!(&quot;my data: {}&quot;, my_data);
+    
+    let my_hash = hash(&amp;my_data);
+    println!(&quot;my hash: {}&quot;, my_hash);
+    
+    
+    // Let's try to find a hash that has an arbitrary amount of 0s
+    
+    // this is the number that we will hash
+    let mut random_number = 0;
+    
+    // difficulty = the amount of 0s we want in our hash
+    // - note: in the Rust Playground a difficulty &gt; 8 
+    // - will often fail or simply spin and do nothing
+    let difficulty = 7; 
+    
+    // amount of times to guess
+    for i in 0..100000 {
+        
+        // let's hash our random number to create a guess
+        let guess = hash(&amp;random_number);
+        
+        // count the amount of 0s in the hash of your guess
+        let mut count = 0;
+        for i in guess.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+        
+        // if your guess has enough 0s print the results
+        if count &gt; difficulty {
+            println!(&quot;\n/// WINNING ///&quot;);
+            println!(&quot;Difficulty: {}&quot;, difficulty);
+            println!(&quot;Winning Number: {}&quot;, random_number);
+            println!(&quot;Winning Hash: {}&quot;, guess);
+            break
+        }
+        
+        // if you were incorrect augment the number by 1
+        // and try again
+        random_number += 1;
+    }
+}
+</code></pre>
+<ul>
+<li>https://en.wikipedia.org/wiki/Hash_function</li>
+<li>https://en.wikipedia.org/wiki/Cryptographic_hash_function</li>
+<li>https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use</li>
+</ul>
+<p><br></p>
+<a class="header" href="#hash-trees-aka-merkle-trees" id="hash-trees-aka-merkle-trees"><h3>Hash Trees (aka Merkle trees)</h3></a>
+<ul>
+<li>The concept of a hash tree is often referred to as a &quot;Merkle Tree&quot;, named after Ralph Merkle who patented the idea in 1979. A merkle tree is a hash of a hash of a hash of a hash, etc... Essentially, you can take arbitrary data and hash it, then add data and hash it, and so on which results in the &quot;root&quot; or the latest hash being a hash of all the previous data. The only way to get that hash is to have all the hashes or data that came before it. You can imagine this like a &quot;tree&quot; in that the &quot;root&quot; is a single hash, but there's lots of things (&quot;leaves&quot;) that get hashed together (&quot;branches&quot;), and then hashed together again and again until it's all been hashed together and there's a single hash &quot;root&quot;. The benefit of this is that if you know that a certain set of data will hash down to a single root, then if anyone changes any piece of data it'll change every hash after that. This helps with quickly verifying that data is or isn't in a set, or that the data someone is providing you with is the same as everyone else without checking every piece (because you only have to check the single hash).</li>
+<li>Why should we care? This is how we're going to store the history of all state transitions. Everytime someone earns the right to create a new valid state transition they're going to look at all the pending transactions that were requested between the last state change. They'll then check that all the transaction requests are valid and update the state accordingly. They then publish the new state along with the transactions that were processed to get to that state, the hash of the previous state, and a hash of the new state combined with the previous state's hash. This is called a block, because it's a bunch of data that gets processed together in batches, or &quot;blocks&quot;. Every time there's a state transition a new block is created, and since every block comes published with a hash of the previous blocks, they're all chained together such that if you change something in a past block you also change all the hashes of any blocks after that. This is why our p2p decentralized database is called a &quot;blockchain&quot;. It's also called a merkle tree because the only way to get to that latest hash is to include all the previous data. The &quot;root&quot; is the latest hash, and the branches are all the data that went into that hash, and all the data that went into those hashes, and so on...</li>
+</ul>
+<pre><code class="language-rust ignore">// Note: if you want to run this you'll currently need to copypasta to the Rust Playground.
+// - https://play.rust-lang.org
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+// Turn Arbitrary Stuff Into &amp;[u8] Slice
+pub unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+// Hash &amp;[u8] Into Hex String
+pub fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}    
+
+// Takes in stuff
+// Turns it to a u8 slice
+// Hashes that slice into a hex string
+pub fn hash&lt;T&gt;(stuff: &amp;T) -&gt; String {
+    
+    let u8_stuff = unsafe {
+        any_as_u8_slice(stuff)
+    };
+    let hash_of_stuff = hash_u8(u8_stuff);
+    
+    hash_of_stuff
+}
+
+fn main() {
+    
+    // a short chain of hashed data
+    let my_data = String::from(&quot;stuff and stuff&quot;);
+    let my_hash_preimage = my_data.clone();
+    let my_hash = hash(&amp;my_hash_preimage);
+    println!(&quot;\nmy hash: {}&quot;, my_hash);
+    let my_data2 = String::from(&quot;stuff that came after the first stuff&quot;);
+    let my_hash_preimage2 = my_hash + &amp;my_data2;
+    let my_hash2 = hash(&amp;my_hash_preimage);
+    println!(&quot;my hash 2: {}&quot;, my_hash2);
+    let my_data3 = String::from(&quot;more stuff&quot;);
+    let my_hash_preimage3 = my_hash2 + &amp;my_data3;
+    let my_hash3 = hash(&amp;my_hash_preimage3);
+    println!(&quot;my hash 3: {}&quot;, my_hash3);
+    
+    // a very similar short chain of data
+    // with very different hashes
+    let my_data = String::from(&quot;stuff or stuff&quot;);
+    let my_hash_preimage = my_data.clone();
+    let my_hash = hash(&amp;my_hash_preimage);
+    println!(&quot;\nV2 of my hash: {}&quot;, my_hash);
+    let my_data2 = String::from(&quot;stuff that came after the first stuff&quot;);
+    let my_hash_preimage2 = my_hash + &amp;my_data2;
+    let my_hash2 = hash(&amp;my_hash_preimage);
+    println!(&quot;V2 of my hash 2: {}&quot;, my_hash2);
+    let my_data3 = String::from(&quot;more stuff&quot;);
+    let my_hash_preimage3 = my_hash2 + &amp;my_data3;
+    let my_hash3 = hash(&amp;my_hash_preimage3);
+    println!(&quot;V2 of my hash 3: {}&quot;, my_hash3);
+    
+}
+</code></pre>
+<p align="center">
+    <img src="crypto_hash_tree.png">
+    <p>
+        An example of a binary merkle tree. Hashes 0-0 and 0-1 are the hash values of data blocks L1 and L2, respectively, and hash 0 is the hash of the concatenation of hashes 0-0 and 0-1.
+    </p>
+</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Hash_trie</li>
+<li>https://en.wikipedia.org/wiki/Merkle_tree</li>
+<li>https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/</li>
+<li>https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash</li>
+<li>Merklize this! Merkle Trees &amp; Patricia Tries: https://www.zeroknowledge.fm/57</li>
+<li>https://medium.com/building-blocks-on-the-chain/learn-merkle-trees-by-programming-your-own-4f0438d40063</li>
+</ul>
+<p><br><br><br></p>
+<a class="header" href="#general-resources--references" id="general-resources--references"><h2>General Resources &amp; References</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Cryptography</li>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p><br><br><br></p>
+<a class="header" href="#problem--todo" id="problem--todo"><h1>PROBLEM / TODO</h1></a>
+<ul>
+<li>Overall these explanations are a good high level explanation of blockchain basics and state transitions, but don't do a very good job explaining the cryptographic functions being used. Either add more robust explanations and terminology so that after this someone can ~read other crypto tutorials, or maybe move this to the State Transitions section?</li>
+</ul>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="accounts.jpg">
+    </p>
+    <h1 align="center">
+        Accounts
+    </h1>
+    <p align="center">
+        Crypto in action.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Core Concepts:</p>
+<ul>
+<li>trusting math enforced via code vs an opaque centralized b2c database operator</li>
+<li>creating accounts</li>
+<li>creating signatures</li>
+</ul>
+<p>Other Concepts</p>
+<ul>
+<li>how you can create a pair of numbers such that it's easy to find one from the other, but not the other way around</li>
+<li>how you can sign stuff with your private key, and others can verify that signature with your public key</li>
+<li>this is grounded in the hardness of cryptography, not the choice of a central operator</li>
+</ul>
+<p>Weak randomness can lead to hacked keys and crypto systems. This isn't a concern with our toy demo, but for any live working blockchain it's mission critical.</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)</li>
+</ul>
+<p>TODO</p>
+<ul>
+<li>add info about the data structure of accounts (nonces, balances, keys, etc)</li>
+</ul>
+<a class="header" href="#account-nonce" id="account-nonce"><h3>Account nonce:</h3></a>
+<p>A transaction counter in each account. This prevents replay attacks where a transaction sending eg. 20 coins from A to B can be replayed by B over and over to continually drain A's balance.</p>
+<a class="header" href="#computational-infeasibility" id="computational-infeasibility"><h3>Computational infeasibility:</h3></a>
+<p>A process is computationally infeasible if it would take an impracticably long time (eg. billions of years) to do it for anyone who might conceivably have an interest in carrying it out. Generally, 280 computational steps is considered the lower bound for computational infeasibility.</p>
+<a class="header" href="#encryption" id="encryption"><h3>Encryption:</h3></a>
+<p>Encryption is a process by which a document (plaintext) is combined with a shorter string of data, called a key (eg. c85ef7d79691fe79573b1a7064c19c1a9819ebdbd1faaab1a8ec92344438aaf4), to produce an output (ciphertext) which can be &quot;decrypted&quot; back into the original plaintext by someone else who has the key, but which is incomprehensible and computationally infeasible to decrypt for anyone who does not have the key.</p>
+<a class="header" href="#public-key-encryption" id="public-key-encryption"><h3>Public key encryption:</h3></a>
+<p>A special kind of encryption where there is a process for generating two keys at the same time (typically called a private key and a public key), such that documents encrypted using one key can be decrypted with the other. Generally, as suggested by the name, individuals publish their public keys and keep their private keys to themselves.</p>
+<a class="header" href="#digital-signature" id="digital-signature"><h3>Digital signature:</h3></a>
+<p>A digital signing algorithm is a process by which a user can produce a short string of data called a &quot;signature&quot; of a document using a private key such that anyone with the corresponding public key, the signature and the document can verify that (1) the document was &quot;signed&quot; by the owner of that particular private key, and (2) the document was not changed after it was signed. Note that this differs from traditional signatures where you can scribble extra text onto a document after you sign it and there's no way to tell the difference; in a digital signature any change to the document will render the signature invalid.</p>
+<p><br><br><br></p>
+<p>This recreates the RSA style protocol explained in the <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Key_generation">RSA wiki page</a>, randomly generating primes for p and q and demonstrating that the protocol works for various inputs :)</p>
+<pre><code class="language-rust ignore">
+extern crate rand;
+use rand::prelude::*;
+
+// variable names based off Euclidean divison equation: a = b · q + r
+// https://crates.io/crates/gcd
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+fn gcd(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let (mut a, mut b) = if a &gt; b {
+        (a, b)
+    } else {
+        (b, a)
+    };
+
+    while b != 0 {
+        let r = a % b;
+        a = b;
+        b = r;
+    }
+
+    a
+}
+
+// lowest common multiple
+// https://en.wikipedia.org/wiki/Least_common_multiple
+fn lcm(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let lcm = (a * b) / gcd(a, b);
+    
+    lcm
+}
+
+// Carmichael's totient function
+// https://en.wikipedia.org/wiki/Carmichael_function
+fn ctf(a: i32,
+       b: i32) -&gt; i32 {
+    
+    lcm((a - 1), (b - 1))
+}
+
+// slowly check if a number is prime
+fn slow_prime_check(num: i32) -&gt; bool {
+    
+    if num &lt; 0 {
+        println!(&quot;number must be greater than 0&quot;);
+    }
+    
+    if num &gt; 1000000 {
+        println!(&quot;number cannot be greater than 1000000&quot;);
+    }
+    
+    for i in 2..num{
+        if num % i == 0 {
+            return false
+        }
+    }
+    true
+}
+
+// slowly yet randomly generate a prime number within a range
+fn prime_gen(low: i32,
+             high: i32) -&gt; i32 {
+    
+    for i in 0..1000000 {
+        let p = thread_rng().gen_range(low, high);
+        if slow_prime_check(p) {
+            return p
+        }
+    }
+    0
+}
+
+// generate a public key within a range
+fn pub_key_gen(min: i32,
+               max: i32) -&gt; i32 {
+    
+    let pub_key = prime_gen(min, max);
+    assert!(max % pub_key != 0);
+    
+    pub_key
+}
+
+// slowly find the modular multiplicative inverse of a prime 
+fn slow_mmi(ctf_pq: i32,
+            pub_key: i32,
+            max: i32)-&gt; i32 {
+    
+    for i in 2..max {
+        if (i * pub_key) % ctf_pq == 1 {
+            return i
+        }
+    }
+    println!(&quot;Try larger search?&quot;);
+    0
+}
+
+// create a private key from a public key and other data
+fn priv_key_gen(ctf_pq: i32,
+                pub_key: i32) -&gt; i32 {
+    
+    let priv_key = slow_mmi(ctf_pq, pub_key, 100000);
+    
+    priv_key
+}
+
+// Because... Rust.
+// exp_mod() is like pow() with a mod option
+// (like python does natively, but not Rust)
+// https://docs.python.org/3/library/functions.html#pow
+// https://doc.rust-lang.org/nightly/std/primitive.i32.html#method.pow
+// https://en.wikipedia.org/wiki/Modular_exponentiation
+fn exp_mod(input: i32,
+           power: i32,
+           modulo: i32) -&gt; i32 {
+    
+    let mut out = (input * input) % modulo;
+    // because the first iter of out took 2 off the base
+    for i in 0..power-2 {
+        out = (out * input) % modulo;
+    }
+    
+    out
+}
+
+// toy RSA function
+fn toy_rsa(input: Vec&lt;i32&gt;,
+           key: i32,
+           modulo: i32) -&gt; Vec&lt;i32&gt; {
+    
+    let output = input.iter()
+                      .map(|x| exp_mod(*x, key, modulo))
+                      .collect();
+    output
+}
+
+// convert string to Vec&lt;i32&gt;
+fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+    
+    let output: Vec&lt;i32&gt; = input.as_bytes()
+                                .iter()
+                                .map(|x| *x as i32)
+                                .collect();
+    
+    output
+}
+
+// convert Vec&lt;i32&gt; to string
+fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+    
+    let output_u8: Vec&lt;u8&gt; = input.iter()
+                                  .map(|x| *x as u8)
+                                  .collect();
+    let output_string = String::from_utf8(output_u8).unwrap();
+    
+    output_string
+}
+
+
+
+// Rollin, rollin, rollin... !
+fn main() {
+
+    /*
+    // the numbers from wiki work
+    // https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+    let p = 61;
+    let q = 53;
+    let m = 3233;
+    let ctf_pq = 780;
+    let pub_key = 17;
+    let priv_key = 413;
+    */
+
+    // usually works on Rust Playground when p and q are &lt; 500
+    let p = prime_gen(5, 100);
+    let q = prime_gen(5, 100);
+    let m = p * q; 
+    let ctf_pq = ctf(p, q);
+    let pub_key = pub_key_gen(1, ctf_pq);
+    let priv_key = priv_key_gen(ctf_pq, pub_key);
+    println!(&quot;\n// Params //&quot;);
+    assert!(p &gt; 0);
+    assert!(q &gt; 0);
+    println!(&quot;p: {}&quot;, &amp;p);
+    println!(&quot;q: {}&quot;, &amp;q);
+    println!(&quot;m: {}&quot;, &amp;m);
+    println!(&quot;ctf_pq: {}&quot;, &amp;ctf_pq);
+    println!(&quot;pub_key: {}&quot;, &amp;pub_key);
+    println!(&quot;priv_key: {}&quot;, &amp;priv_key);
+    
+    let message = &quot;thepasswordispassword&quot;.to_string();
+    let m2nums = s2v(message.clone());
+    let ciphertext = toy_rsa(m2nums.clone(), pub_key, m);
+    let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
+    let message2 = v2s(decrypted.clone());
+    assert_eq!(message, message2);
+    println!(&quot;\n// Testing //&quot;);
+    println!(&quot;message: {:?}&quot;, &amp;message);
+    println!(&quot;message as nums: {:?}&quot;, &amp;m2nums);
+    println!(&quot;ciphertext: {:?}&quot;, &amp;ciphertext);
+    println!(&quot;decrypted nums: {:?}&quot;, &amp;decrypted);
+    println!(&quot;decrypted message: {}&quot;, &amp;message2);
+    
+    println!(&quot;DONE!&quot;);
+
+}
+
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#always-good-to-get-a-second-opinion" id="always-good-to-get-a-second-opinion"><h3>Always Good To Get A Second Opinion</h3></a>
+<p>Ethereum Wiki Glossary</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p>RSA Pub Key Stuff</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Public-key_cryptography</li>
+<li>https://en.wikipedia.org/wiki/RSA_(cryptosystem)</li>
+<li>https://en.wikipedia.org/wiki/Least_common_multiple</li>
+<li>https://en.wikipedia.org/wiki/Modular_exponentiation</li>
+</ul>
+<p>Ethereum Key Stuff</p>
+<ul>
+<li>Appendix F of the Yellow Paper: https://ethereum.github.io/yellowpaper/paper.pdf</li>
+<li>Parity Ethereum Client (Rust): ethkey library: https://github.com/paritytech/parity-ethereum/tree/master/accounts/ethkey</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="tx.jpg">
+    </p>
+    <h1 align="center">
+        TX
+    </h1>
+    <p align="center">
+        Doing stuff.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Core Concepts:</p>
+<ul>
+<li>when you sign/do stuff with a public key crypto system you prove that it came from your address.</li>
+<li>you also have assurance that your key or a 51% attack are needed to compromise that assurance</li>
+</ul>
+<p>TODO / Ideas:</p>
+<ul>
+<li>the part where thread messages come in at different times could be good to show why nonces are important: https://doc.rust-lang.org/book/ch16-02-message-passing.html</li>
+</ul>
+<a class="header" href="#transaction-tx" id="transaction-tx"><h3>Transaction (TX):</h3></a>
+<p>A transaction is a digitally signed message authorizing some particular action associated with the blockchain. In a currency, the dominant transaction type is sending currency units or tokens to someone else; in a database actions like registering domain names, sending messages, or posting to a social feed would also be valid transaction types. Essentially, a state is an ordering of data, a transaction is a request to change the state of that data, and the state transition funciton determines how that happens.</p>
+<a class="header" href="#31-the-transaction" id="31-the-transaction"><h3>3.1. The Transaction</h3></a>
+<p>The basic method for Ethereum accounts to interact
+with each other. The transaction is a single cryptographically signed instruction sent to the Ethereum network.
+There are two types of transactions: message calls
+and contract creations. Transactions lie at the
+heart of Ethereum, and are entirely responsible for the
+dynamism and flexibility of the platform. Transactions
+are the bread and butter of state transitions, that is of
+block additions, which contain all of the computation
+performed in one block. Each transaction applies the
+execution changes to the machine state, a temporary
+state which consists of all the required changes in computation that must be made before a block is finalized
+and added to the world state.</p>
+<ul>
+<li>https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf</li>
+</ul>
+<a class="header" href="#tx-fees" id="tx-fees"><h3>TX Fees</h3></a>
+<p>Every transaction is required to include a tx fee. Miners have the choice of including the transaction and collecting the fee or not. This is to prevent someone from spamming the network or creating a DoS attack.</p>
+<p><br><br><br></p>
+<a class="header" href="#code" id="code"><h2>Code</h2></a>
+<pre><code class="language-rust ignore">extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+/// RSA STUFF ///
+
+// greatest common divisor
+fn gcd(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let (mut a, mut b) = if a &gt; b {
+        (a, b)
+    } else {
+        (b, a)
+    };
+
+    while b != 0 {
+        let r = a % b;
+        a = b;
+        b = r;
+    }
+
+    a
+}
+
+// lowest common multiple
+fn lcm(a: i32,
+       b: i32) -&gt; i32 {
+    
+    let lcm = (a * b) / gcd(a, b);
+    
+    lcm
+}
+
+// Carmichael's totient function
+// https://en.wikipedia.org/wiki/Carmichael_function
+fn ctf(a: i32,
+       b: i32) -&gt; i32 {
+    
+    lcm((a - 1), (b - 1))
+}
+
+// slowly check if a number is prime
+fn slow_prime_check(num: i32) -&gt; bool {
+    
+    if num &lt; 0 {
+        println!(&quot;number must be greater than 0&quot;);
+    }
+    
+    if num &gt; 1000000 {
+        println!(&quot;number cannot be greater than 1000000&quot;);
+    }
+    
+    for i in 2..num{
+        if num % i == 0 {
+            return false
+        }
+    }
+    true
+}
+
+// slowly yet randomly generate a prime number within a range
+fn prime_gen(low: i32,
+             high: i32) -&gt; i32 {
+    
+    for i in 0..1000000 {
+        let p = thread_rng().gen_range(low, high);
+        if slow_prime_check(p) {
+            return p
+        }
+    }
+    0
+}
+
+// generate a public key within a range
+fn pub_key_gen(min: i32,
+               max: i32) -&gt; i32 {
+    
+    let pub_key = prime_gen(min, max);
+    assert!(max % pub_key != 0);
+    
+    pub_key
+}
+
+// slowly find the modular multiplicative inverse of a prime 
+fn slow_mmi(ctf_pq: i32,
+            pub_key: i32,
+            max: i32)-&gt; i32 {
+    
+    for i in 2..max {
+        if (i * pub_key) % ctf_pq == 1 {
+            return i
+        }
+    }
+    println!(&quot;Try larger search?&quot;);
+    0
+}
+
+// create a private key from a public key and other data
+fn priv_key_gen(ctf_pq: i32,
+                pub_key: i32) -&gt; i32 {
+    
+    let priv_key = slow_mmi(ctf_pq, pub_key, 100000);
+    
+    priv_key
+}
+
+// Because... Rust.
+fn exp_mod(input: i32,
+           power: i32,
+           modulo: i32) -&gt; i32 {
+    
+    let mut out = (input * input) % modulo;
+    // because the first iter of out took 2 off the base
+    for i in 0..power-2 {
+        out = (out * input) % modulo;
+    }
+    
+    out
+}
+
+// toy RSA function
+fn toy_rsa(input: Vec&lt;i32&gt;,
+           key: i32,
+           modulo: i32) -&gt; Vec&lt;i32&gt; {
+    
+    let output = input.iter()
+                      .map(|x| exp_mod(*x, key, modulo))
+                      .collect();
+    output
+}
+
+// convert string to Vec&lt;i32&gt;
+fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+    
+    let output: Vec&lt;i32&gt; = input.as_bytes()
+                                .iter()
+                                .map(|x| *x as i32)
+                                .collect();
+    
+    output
+}
+
+// convert Vec&lt;i32&gt; to string
+fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+    
+    let output_u8: Vec&lt;u8&gt; = input.iter()
+                                  .map(|x| *x as u8)
+                                  .collect();
+
+    let output_string = String::from_utf8(output_u8).unwrap();
+
+    output_string
+}
+
+/// END RSA STUFF ///
+
+
+// turn stuff into a &amp;[u8] slice
+unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+// hash &amp;[u8] slices into hex Strings
+fn hash_u8(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: i32,
+    receiver: i32,
+    tx_amount: f32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone)]
+struct SignedTX {
+    tx: TX,
+    signature: Vec&lt;i32&gt;,
+}
+
+// NOTE: if the tx uses an invalid signature
+// there is a high likelihood that it will produce
+// invalid utf8, and thus this function will crash
+// when v2s() tries to turn the Vec&lt;i32&gt; into a String
+fn check_signed_tx(signed_tx: SignedTX,
+                   modulo: i32) -&gt; bool {
+    
+    let tx_as_bytes = unsafe {
+        any_as_u8_slice(&amp;signed_tx.tx)
+    };
+    let tx_hash = hash_u8(tx_as_bytes);
+    println!(&quot;tx hash: {}&quot;, tx_hash);
+    
+    let decrypted_tx_hash_sig = toy_rsa(signed_tx.signature,
+                                        signed_tx.tx.sender,
+                                        modulo);
+    let decrypted_tx_hash = v2s(decrypted_tx_hash_sig);
+    println!(&quot;decrypted tx hash: {}&quot;, decrypted_tx_hash);
+    
+    match tx_hash == decrypted_tx_hash {
+        true =&gt; true,
+        false =&gt; {
+            println!(&quot;not valid tx&quot;);
+            return false
+        },
+    }
+}
+
+
+// Rollin, rollin, rollin...
+fn main() {
+
+    // Setup RSA To Create Test Accounts
+    // fix p and q to generate keys
+    let p = 61; //prime_gen(5, 100);
+    let q = 53; //prime_gen(5, 100);
+    assert!(p &gt; 0);
+    assert!(q &gt; 0);
+    // m is now a constant we can use for all keys
+    // that share the same p and q setup
+    let m = p * q; //3233
+    ///////////////////////////////////////
+    // Generated Keys from fixed p and q //
+    // - SENDER: pub: 773, priv: 557     //
+    // - RECEIVER: pub: 179, priv 719    //
+    ///////////////////////////////////////
+    let account1_pub_key = 773;
+    let account1_priv_key = 557;
+    let account2_pub_key = 179;
+    let account2_priv_key = 719;
+    // if you want to generate more keys
+    //let ctf_pq = ctf(p, q);
+    //let pub_key = pub_key_gen(1, ctf_pq);
+    //let priv_key = priv_key_gen(ctf_pq, pub_key);
+    /*
+    // print RSA params to capture keys that work
+    println!(&quot;p: {}&quot;, &amp;p);
+    println!(&quot;q: {}&quot;, &amp;q);
+    println!(&quot;m: {}&quot;, &amp;m);
+    println!(&quot;ctf_pq: {}&quot;, &amp;ctf_pq);
+    println!(&quot;pub_key: {}&quot;, &amp;pub_key);
+    println!(&quot;priv_key: {}&quot;, &amp;priv_key);
+    */
+    
+    
+    // TX Hashing
+    let tx = TX {
+        sender: 86, //account1_pub_key,
+        receiver: account2_pub_key,
+        tx_amount: 1000.0,
+        nonce: 345,
+    };
+    
+    let tx_bytes: &amp;[u8] = unsafe {
+        any_as_u8_slice(&amp;tx)
+    };
+    println!(&quot;tx: {:?}&quot;, &amp;tx_bytes);
+    
+    let tx_hash = hash_u8(tx_bytes);
+    println!(&quot;tx hash: {:#?}&quot;, &amp;tx_hash);
+    
+    
+    // TX Signing
+    let message = tx_hash.clone();
+    let m2nums = s2v(message.clone());
+    let ciphertext = toy_rsa(m2nums.clone(), account1_priv_key, m);
+    println!(&quot;\n/// Testing ///&quot;);
+    println!(&quot;message: {:?}&quot;, &amp;message);
+    println!(&quot;message as nums: {:?}&quot;, &amp;m2nums);
+    println!(&quot;ciphertext: {:?}&quot;, &amp;ciphertext);
+    
+    // Recover the TX hash from the signed ciphertext
+    //let decrypted = toy_rsa(ciphertext.clone(), priv_key, m);
+    //let message2 = v2s(decrypted.clone());
+    //assert_eq!(message, message2);
+    //println!(&quot;decrypted nums: {:?}&quot;, &amp;decrypted);
+    //println!(&quot;decrypted message: {}&quot;, &amp;message2);
+    
+    
+    // Add signed TX hash to a SignedTX
+    let signed_tx = SignedTX {
+        tx: tx,
+        signature: ciphertext,
+    };
+    println!(&quot;\n{:#?}&quot;, &amp;signed_tx);
+
+
+    // Check that the SignedTX is valid 
+    // NOTE: if the tx uses an invalid signature
+    // there is a high likelihood that it will produce
+    // invalid utf8, and thus this function will crash
+    // when v2s() tries to turn the Vec&lt;i32&gt; into a String
+    let check_tx = check_signed_tx(signed_tx, m);
+    println!(&quot;is the signature authentic?\n{}&quot;, check_tx);
+
+}
+
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-there-smore" id="but-wait-there-smore"><h3>But wait... there' smore</h3></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Digital_signature</li>
+<li>https://en.wikipedia.org/wiki/Digital_Signature_Algorithm</li>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p><br><br><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state_transitions.jpg">
+    </p>
+    <h1 align="center">
+        State Transitions
+    </h1>
+    <p align="center">
+        The proof is in the pudding.
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Goal</p>
+<ul>
+<li>Upgrade our state transition function from a consensus model of &quot;because the central operator says so&quot; to &quot;because someone did the work and proved that they earned the right to make these changes for the community&quot;.</li>
+</ul>
+<p>Core Concepts:</p>
+<ul>
+<li>pending_tx pool =&gt; blocks (nonces, block headers, etc...)</li>
+<li>ledger history =&gt; hashed merkle tries</li>
+<li>anti-spam protection with proof of work on each block</li>
+</ul>
+<p>Open Questions</p>
+<ul>
+<li>do people generally refer to the &quot;consensus model&quot; and the &quot;state transition function&quot; as the same thing, or are they different, or are they mostly the same but slightly different?</li>
+<li>How do block nonces differ from TX nonces?</li>
+</ul>
+<a class="header" href="#idea-to-add" id="idea-to-add"><h3>Idea To Add</h3></a>
+<ul>
+<li>because accounts are not in a centralized database the user controls the account, and as long as the network is operational, the user's account is too. Just like if your bank went under (https://en.wikipedia.org/wiki/Lehman_Brothers), your account would be gone, if the P2P network you're on goes under same deal.</li>
+</ul>
+<a class="header" href="#block" id="block"><h3>Block:</h3></a>
+<p>A block is a package of data that contains zero or more transactions, the hash of the previous block (&quot;parent&quot;), and optionally other data. Because each block (except for the initial &quot;genesis block&quot;) points to the previous block, the data structure that they form is called a &quot;blockchain&quot;.</p>
+<a class="header" href="#proof-of-work" id="proof-of-work"><h3>Proof of work:</h3></a>
+<p>One important property of a block in Bitcoin, Ethereum and many other crypto-ledgers is that the hash of the block must be smaller than some target value. The reason this is necessary is that in a decentralized system anyone can produce blocks, so in order to prevent the network from being flooded with blocks, and to provide a way of measuring how much consensus there is behind a particular version of the blockchain, it must in some way be hard to produce a block. Because hashes are pseudorandom, finding a block whose hash is less than 0000000100000000000000000000000000000000000000000000000000000000 takes an average of 4.3 billion attempts. In all such systems, the target value self-adjusts so that on average one node in the network finds a block every N minutes (eg. N = 10 for Bitcoin and 1 for Ethereum).</p>
+<a class="header" href="#proof-of-work-nonce" id="proof-of-work-nonce"><h3>Proof of work nonce:</h3></a>
+<p>A meaningless value in a block which can be adjusted in order to try to satisfy the proof of work condition</p>
+<a class="header" href="#mining" id="mining"><h3>Mining:</h3></a>
+<p>Mining is the process of repeatedly aggregating transactions, constructing a block and trying different nonces until a nonce is found that satisfies the proof of work condition. If a miner gets lucky and produces a valid block, they are granted a certain number of coins as a reward as well as all of the transaction fees in the block, and all miners start trying to create a new block containing the hash of the newly generated block as their parent.</p>
+<a class="header" href="#stale" id="stale"><h3>Stale:</h3></a>
+<p>A stale is a block that is created when there is already another block with the same parent out there; stales typically get discarded and are wasted effort.</p>
+<a class="header" href="#fork" id="fork"><h3>Fork:</h3></a>
+<p>A situation where two blocks are generated pointing to the same block as their parent, and some portion of miners see one block first and some see the other. This may lead to two blockchains growing at the same time. Generally, it is mathematically near-certain that a fork will resolve itself within four blocks as miners on one chain will eventually get lucky and that chain will grow longer and all miners switch to it; however, forks may last longer if miners disagree on whether or not a particular block is valid.</p>
+<p><br><br><br></p>
+<a class="header" href="#videos" id="videos"><h2>Videos</h2></a>
+<p><a href="https://www.youtube.com/watch?v=FLIo_ZjV--U"><img src="https://img.youtube.com/vi/FLIo_ZjV--U/0.jpg" alt="Cryptoeconomics - 1.1 - Hashes and Signatures" /></a></p>
+<p>
+    <a href="https://cryptoeconomics.study/lectures/chapter-01-1.html">Cryptoeconomics - 1.1 - Hashes and Signatures</a>.
+</p>
+<p><br><br><br></p>
+<p>Code Resources:</p>
+<ul>
+<li>https://github.com/cryptoeconomics-study/code/blob/master/c3_ProofOfWork/proofOfWork.js</li>
+<li>https://github.com/tensor-programming/Rust_block_chain/blob/master/src/blockchain.rs</li>
+</ul>
+<pre><code class="language-rust ignore">// https://github.com/tensor-programming/Rust_block_chain/blob/master/src/blockchain.rs
+
+impl Chain {
+
+    pub fn proof_of_work(header: &amp;mut Blockheader) {
+        loop {
+            let hash = Chain::hash(header);
+            let slice = &amp;hash[..header.difficulty as usize];
+            match slice.parse::&lt;u32&gt;() {
+                Ok(val) =&gt; {
+                    if val != 0 {
+                        header.nonce += 1;
+                    } else {
+                        println!(&quot;Block hash: {}&quot;, hash);
+                        break;
+                    }
+                },
+                Err(_) =&gt; {
+                    header.nonce += 1;
+                    continue;
+                }
+            };
+        }
+    }
+}
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+
+struct MyStruct {
+    id: u8,
+    data: String,
+}
+
+#[derive(Debug, Clone)]
+struct TX {
+    sender: String,
+    receiver: String,
+    tx_amount: f32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, Hash)]
+struct AltTX {
+    sender: String,
+    receiver: String,
+    tx_amount: i32,
+    nonce: i32,
+}
+
+
+unsafe fn any_as_u8_slice&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+    ::std::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::std::mem::size_of::&lt;T&gt;(),
+    )
+}
+
+fn hash(stuff: &amp;[u8]) -&gt; String {
+    
+    let mut hasher = DefaultHasher::new();
+    hasher.write(stuff);
+    let digest = hasher.finish();
+    let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        
+    hex_digest
+}
+
+
+fn main() {
+
+    // Using Example Struct
+    let my_struct = MyStruct {
+        id: 98,
+        data: &quot;Hello World&quot;.to_string(),
+    };
+    
+    let bytes: &amp;[u8] = unsafe { 
+        any_as_u8_slice(&amp;my_struct)
+    };
+
+    println!(&quot;{:?}&quot;, &amp;bytes);
+    
+    
+    // Using TX Struct
+    let tx = TX {
+        sender: &quot;Your Mom&quot;.to_string(),
+        receiver: &quot;Yours truly&quot;.to_string(),
+        tx_amount: 1000.0,
+        nonce: 345,
+    };
+    
+    let tx_bytes: &amp;[u8] = unsafe {
+        any_as_u8_slice(&amp;tx)
+    };
+    println!(&quot;tx: {:?}&quot;, &amp;tx_bytes);
+    
+    let tx_hash = hash(tx_bytes);
+    println!(&quot;tx hash: {:#?}&quot;, tx_hash);
+}
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#but-wait-theres-more-4" id="but-wait-theres-more-4"><h3>But wait... there's more</h3></a>
+<p>Hashing and Merkle Trees</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Merkle_tree</li>
+<li>https://blog.ethereum.org/2015/11/15/merkling-in-ethereum/</li>
+<li>https://ethereum.stackexchange.com/questions/2100/what-is-a-block-hash</li>
+<li>Merklize this! Merkle Trees &amp; Patricia Tries: https://www.zeroknowledge.fm/57</li>
+</ul>
+<p>PoW &amp; Blocks</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/White-Paper#blockchain-and-mining</li>
+<li>https://ethereum.stackexchange.com/questions/5833/why-do-we-need-both-nonce-and-mixhash-values-in-a-block</li>
+</ul>
+<p>Terms</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/Glossary</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="chapter_summary.jpg">
+    </p>
+    <h1 align="center">
+        Roll Your Own PoW "Blockchain"
+    </h1>
+    <p align="center">
+        I love the smell of progress in the morning. 
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Permalink to the Rust Playground</p>
+<ul>
+<li>https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=703530237531ef005e811b13e31b6533</li>
+</ul>
+<pre><code class="language-rust ignore">extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+/* &quot;Blockchain&quot; Sketch
+A modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs. This is the PoW version.
+*/
+
+
+/* ARCHITECTURE SKETCH
+Functions
+- State Transition Function
+- Data Encoding Function
+- Hash Function
+- Key Generation Function
+- Account Data
+- Transaction Data
+- State Data: a user defined configuration of the various blockchain modules
+State Transition Function
+ - determines what is a valid state transition by verifying tx
+ - determines who is authorized to create a state change via PoA, PoW, PoS, etc...
+ - impliments the state change
+ - this needs to contain all params out of the box including the difficulty level
+   and/or any functions needed to upgrade/modify those params
+Data Encoding Function
+ - takes in arbitrary data and encodes it in a specific way
+ - the entire &quot;blockchain&quot; uses this in order to allow any function
+   to process arbitrary data inputs as well as sharing data between functions
+ - standard for now, but may become upgradable as Ethreum and Substrate data is explored
+Hash Function
+ - takes in arbitrary data and returns a string
+ - the way that data is hashes or the encoding of the string can be changed
+Key Generation Function
+ - the method to generate public and private key pairs
+ - can be a centralized system, RSA, elliptic curves, etc...
+ - contains all parmas neccessary to work out of the box
+Account Data
+ - these will ALWAYS be a key/value pair in a HashMap
+ - what you can change is the data that the account struct holds
+ - UTXOs TBD
+TX Data
+ - standard for now
+State Data
+ - accounts: HashMap&lt;i32, Account&gt;
+ - pending_tx: Vec&lt;TX&gt;
+ - history: Vec&lt;Block&gt;
+ - data encoding: user defined
+ - State transition function: user defined
+ - hash function: user defined
+ - key gen function: user defined
+STANDARD STRUCTS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- Account
+- TX
+- BlockHeader
+- Block
+- State
+STANDARD FUNCTIONS
+These will keep the same name throughout the program, but their underlying
+logic can be changed/upgraded.
+- data_encode()
+- key_gen()
+- hash()
+- new_account()
+- new_tx()
+- new_state_transition() (checks pending tx and produces new block)
+- check_state_transition() (checks the most recently produced block)
+*/
+
+
+
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &amp;[u8] slice
+    pub unsafe fn to_u8&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }    
+
+    // i32 -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn i2s(input: i32) -&gt; String {
+        
+        let output = input.to_string();
+        
+        output
+    }
+    
+    // String -&gt; i32
+    // https://stackoverflow.com/questions/27043268/convert-a-string-to-int-in-rust
+    pub fn s2i(input: String) -&gt; i32 {
+        
+        let output = input.parse::&lt;i32&gt;().unwrap();
+        
+        output
+    }
+
+    // string -&gt; Vec&lt;i32&gt;
+    pub fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+        
+        let output: Vec&lt;i32&gt; = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+ 
+    // Vec&lt;i32&gt; -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+        
+        let mut output_vec = Vec::new();
+        for i in input {
+            output_vec.push(i.to_string())
+        }
+        let output_string = output_vec.join(&quot;&quot;);
+        
+        output_string
+    }
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage (&quot;preimage&quot; = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex or an integer (you choose)
+    fn hash&lt;T&gt;(preimage: &amp;T) -&gt; String {
+        
+        // convert to u8
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        // hash u8 to u64
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        
+        // format u64 hash as String
+        let digest = hasher.finish();
+        let string_digest = format!(&quot;{}&quot;, hasher.finish());
+        string_digest
+        
+        // hex String
+        //let digest = hasher.finish();
+        //let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        //hex_digest
+        
+        // i32
+        //let digest = hasher.finish() as i32;
+        //digest 
+        
+        // f64
+        //let digest = hasher.finish() as f64;
+        //digest 
+     
+        // u64
+        //let digest = hasher.finish();
+        //digest
+    }   
+    
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn hash_tree&lt;T&gt;(stuff: Vec&lt;T&gt;) -&gt; String {
+        
+        let mut v = Vec::new();
+
+        for i in &amp;stuff {
+            let hashed = Hash::hash(&amp;i);
+            v.push(hashed);
+        }
+
+        if v.len() % 2 == 1 {
+            let last = v.last().cloned().unwrap();
+            v.push(last);
+        }
+
+        while v.len() &gt; 1 {
+            let mut h1 = v.remove(0);
+            let mut h2 = v.remove(0);
+            h1.push_str(&amp;mut h2);
+            let nh = Hash::hash(&amp;h1);
+            v.push(nh);
+        }
+        
+        v.pop().unwrap()
+    }
+    
+}
+
+
+// This struct holds all the data for the key generation
+// and signing. If you want to use a different key
+// protocol, change the data in the Keys struct as well
+// as the functions in the Keys impl
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Keys {
+    min: i32,
+    max: i32,
+    p: i32,
+    q: i32,
+    modulo: i32,
+    ctf_pq: i32, 
+}
+
+/// &quot;RSA&quot; Key Generation and Signing ///
+impl Keys {
+    
+    // These functionsare not needed as we have hard coded
+    // the modulo and ctf_pq values
+    /*
+    // greatest common divisor
+    pub fn gcd(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let (mut a, mut b) = if a &gt; b {
+            (a, b)
+        } else {
+            (b, a)
+        };
+    
+        while b != 0 {
+            let r = a % b;
+            a = b;
+            b = r;
+        }
+    
+        a
+    }
+    
+    // lowest common multiple
+    pub fn lcm(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let lcm = (a * b) / Keys::gcd(a, b);
+        
+        lcm
+    }
+    
+    // Carmichael's totient function
+    pub fn ctf(a: i32,
+               b: i32) -&gt; i32 {
+        
+        Keys::lcm(a - 1, b - 1)
+    }
+    */
+    
+    // slowly check if a number is prime
+    pub fn slow_prime_check(self,
+                            num: i32) -&gt; bool {
+        
+        if num &lt; self.min {
+            println!(&quot;number must be greater than {}&quot;, self.min);
+        }
+        
+        if num &gt; self.max {
+            println!(&quot;number cannot be greater than {}&quot;, self.max);
+        }
+        
+        for i in 2..num{
+            if num % i == 0 {
+                return false
+            }
+        }
+        
+        true
+    }
+
+    // slowly, yet randomly, generate a prime number within a range
+    pub fn prime_gen(self) -&gt; i32 {
+        
+        for _i in 0..self.max {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
+                return p
+            }
+        }
+        
+        0
+    }
+
+    // generate a private key within a range
+    pub fn priv_key_gen(self) -&gt; i32 {
+        
+        let priv_key = Keys::prime_gen(self);
+        assert!(self.max % priv_key != 0);
+        
+        priv_key
+    }
+    
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(self,
+                    priv_key: i32)-&gt; i32 {
+        
+        for i in 2..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
+                return i
+            }
+        }
+        println!(&quot;Try larger search?&quot;);
+        
+        0
+    }
+    
+    // create a public key from a pricate key and RSA param data
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -&gt; i32 {
+        
+        let pub_key = Keys::slow_mmi(self, priv_key);
+        
+        pub_key
+    }
+    
+    // generate a private/public key pair
+    pub fn generate_keypair(self) -&gt; (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
+        (priv_key, pub_key)
+    }
+    
+    // Because... Rust.
+    pub fn exp_mod(self,
+                   input: i32,
+                   power: i32) -&gt; i32 {
+        
+        let mut out = (input * input) % self.modulo;
+        // because the first iter of out took 2 off the base
+        for _i in 0..power-2 {
+            out = (out * input) % self.modulo;
+        }
+        
+        out
+    }
+    
+    // Sign a TX with a toy RSA function
+    pub fn sign&lt;T&gt;(self,
+                   thing_to_be_signed: &amp;T,
+                   signing_key: i32) -&gt; Vec&lt;i32&gt; {
+        
+        let hashed_thing = Hash::hash(thing_to_be_signed);
+        
+        let mut hashed_thing_vec = Vec::new();
+        for i in hashed_thing.chars() {
+            hashed_thing_vec.push(i.to_string().parse::&lt;i32&gt;().unwrap())
+        }
+        
+        let mut signed_vec = Vec::new();
+        for i in hashed_thing_vec {
+            signed_vec.push(Keys::exp_mod(self, i, signing_key,));
+        }
+
+        signed_vec
+    }
+    
+    // Check signature on a TX
+    pub fn check_tx_signature(self,
+                              tx: TX) -&gt; bool {
+        
+        let mut tx_sig_check: Vec&lt;i32&gt; = tx.clone().signature;
+        
+        let mut tx_sig_check_pub_signed = Vec::new();
+        for i in tx_sig_check {
+            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender))
+        }
+        
+        let mut tx_sig_check_string = String::new();
+        for i in tx_sig_check_pub_signed {
+            tx_sig_check_string.push_str(&amp;i.to_string())
+        }
+        
+        let hashed_tx = Hash::hash(&amp;tx.data);
+        
+        if tx_sig_check_string == hashed_tx {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoW, but if you
+// wanted to impliment PoS you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32, // currently PoW difficulty
+    max: i32, // max time/tries for valid proof
+}
+
+impl STF {
+    
+    // This function encodes the rules of what qualifies as a &quot;valid tx&quot;
+    pub fn verify_pending_tx(state: &amp;mut State) -&gt; Vec&lt;TX&gt; {
+        
+        let mut verified_tx = Vec::new();
+        
+        for i in &amp;state.pending_tx {
+        
+            if !(state.accounts.contains_key(&amp;i.data.sender)) {
+                println!(&quot;Invalid TX: sender not found.&quot;);
+                continue
+            }
+            
+            if !(state.accounts.contains_key(&amp;i.data.receiver)) {
+                println!(&quot;Invalid TX: receiver not found.&quot;);
+                continue
+            }
+            
+            if !(i.data.amount &gt; 0) {
+                println!(&quot;Invalid TX: negative amount error.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue
+            }
+            
+            if !(state.accounts.get(&amp;i.data.sender).unwrap().balance &gt; i.data.amount) {
+                println!(&quot;Invalid TX: insufficient funds.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue         
+            }
+            
+            if !(i.data.sender_nonce == state.accounts.get(&amp;i.data.sender).unwrap().nonce) {
+                println!(&quot;Invalid TX: potential replay tx.&quot;);
+                println!(&quot;{} has nonce {}, but submitted a tx with nonce {}&quot;, i.data.sender, state.accounts.get(&amp;i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                continue
+            }
+            
+            if !(Keys::check_tx_signature(state.keys, i.clone())) {
+                println!(&quot;Invalid TX: signature check failed&quot;);
+                continue
+            }
+            
+            verified_tx.push(i.clone());
+        }
+        
+        verified_tx
+    }
+
+    // This function creates a proof that authorizes the state transition
+    // This is a variation of PoW that's easy enough that it runs in the Rust Playground 
+    // You could change the logic of this function to satisfy PoS or PoA as well.
+    pub fn proof(state: &amp;State,
+                 mut block_data: BlockData) -&gt; (BlockData, String) {
+    
+        for i in 0..state.stf.max {
+        
+            let mut count = 0;
+            let hash = Hash::hash(&amp;block_data);
+
+            for i in hash.chars() {
+                if i == '0' {
+                    count += 1;
+                }
+            }
+            
+            if count &gt; state.stf.difficulty {
+                // success
+                return (block_data, hash);
+            }
+            
+            block_data.header.nonce += 1;
+        }
+        
+        // failure
+        return (block_data, String::from(&quot;ERROR: proof failed.&quot;))
+    }
+    
+    // Create A New Block With Valid Transactions
+    pub fn create_block(state: &amp;mut State) -&gt; Block {
+    
+        let verified_tx = STF::verify_pending_tx(state);
+        
+        let mut naive_header = BlockHeader {
+            nonce: 0,
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&amp;state.history.last().unwrap().data.header.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
+        };
+        
+        let naive_data = BlockData {
+            header: naive_header,
+            transactions: verified_tx, 
+        };
+        
+        let (data, proof) = STF::proof(state, naive_data);
+        let block = Block {
+            proof: proof,
+            data: data,
+        };
+        
+        block
+    }
+    
+    // function to transition the state
+    pub fn check_block(state: &amp;State,
+                       block: &amp;mut Block) -&gt; bool {
+        
+        // proof to check
+        let submitted_proof = &amp;block.proof;
+        
+        // check proof difficulty is achieved
+        let mut count = 0;
+        for i in submitted_proof.chars() {
+            if i == '0' {
+                count += 1;
+            }
+        }
+        if !(count &gt; state.stf.difficulty) {
+            println!(&quot;ERROR: block proof does not meet difficulty requirements.&quot;);
+            return false
+        }
+        
+        // check proof matches block
+        let hash_check = Hash::hash(&amp;block.data);
+        if &amp;hash_check != submitted_proof {
+            println!(&quot;\nPoW Error: Invalid PoW Hash.&quot;);
+            return false
+        }
+        
+        // if tests are passed, return true
+        true
+    }
+    
+}
+
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Account {
+    balance: i32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TxData {
+    sender: i32,
+    sender_nonce: i32,
+    amount: i32,
+    receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    data: TxData,
+    signature: Vec&lt;i32&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockHeader {
+    nonce: i32,
+    timestamp: i32,
+    block_number: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockData {
+    header: BlockHeader,
+    transactions: Vec&lt;TX&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    data: BlockData,
+}
+
+// TODO
+// - does it make sense to add more data to the State?
+//   STF (type, difficulty, etc...)
+//   KEY_PARAMS (type, p, q, modulo, etc..)
+//   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
+#[derive(Debug)]
+pub struct State {
+    keys: Keys,
+    stf: STF,
+    accounts: HashMap&lt;i32, Account&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;Block&gt;,
+}
+
+impl State {
+
+    // Create a new state
+    pub fn create_state() -&gt; State {
+        
+        let rsa_params = Keys {
+            min: 0,
+            max: 1000000,
+            p: 61,
+            q: 53,
+            modulo: 3233,
+            ctf_pq: 780,
+        };
+
+        let stf_data = STF {
+            version: String::from(&quot;PoW&quot;),
+            difficulty: 5,
+            max: 1000000,
+        };
+
+        let genesis_block = Block {
+                proof: String::from(&quot;GENESIS BLOCK&quot;),
+                data: BlockData {
+                    header: BlockHeader {
+                        nonce: 0,
+                        timestamp: time::now().to_timespec().sec as i32,
+                        block_number: 0,
+                        previous_block_hash: String::from(&quot;N/A&quot;),  
+                        current_block_hash: Hash::hash(&amp;String::from(&quot;&quot;)),  
+                    },
+                    transactions: Vec::new(),
+                }
+            };
+        
+        let new_state = State {
+            keys: rsa_params,
+            stf: stf_data,
+            accounts: HashMap::new(),
+            pending_tx: Vec::new(),
+            history: vec![genesis_block],
+        };
+        
+        new_state
+    }
+
+    // Create a new account
+    pub fn create_account(&amp;mut self) {
+        
+        // TODO
+        // - How can I make Keys::generator_keypair() not
+        //   take in anything as input and have all the params
+        //   stored within the Keys library?
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
+        let new_account = Account {
+            balance: 0,
+            nonce: 0,
+        };
+        
+        if self.accounts.contains_key(&amp;pub_key) {
+            println!(&quot;Bummer... account collision.&quot;);
+            return
+        }
+        
+        self.accounts.insert(pub_key, new_account);
+        //println!(&quot;\nThis is your public key: {:#?}&quot;, &amp;pub_key);
+        //println!(&quot;This is your private key: {:#?}&quot;, &amp;priv_key);
+        //println!(&quot;This is your account: {:#?}&quot;, self.accounts.get(&amp;pub_key).unwrap());
+    }
+    
+    // Create a new TX
+    pub fn create_tx(&amp;mut self,
+                     sender_pub_key: i32,
+                     sender_priv_key: i32,
+                     receiver_pub_key: i32,
+                     amount: i32) {
+        
+        
+        let data = TxData {
+            sender: sender_pub_key,
+            sender_nonce: self.accounts.get(&amp;sender_pub_key).unwrap().nonce,
+            receiver: receiver_pub_key,
+            amount: amount,
+        };
+        
+        let signature = Keys::sign(self.keys, &amp;data, sender_priv_key);
+        
+        let tx = TX {
+            data: data,
+            signature: signature,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+
+    // function to transition the state to a new state
+    pub fn create_new_state(&amp;mut self) {
+        
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
+        
+        // check that the block proof is valid
+        if !(STF::check_block(&amp;self, &amp;mut block)) {
+            println!(&quot;\nERROR: block not valid.&quot;);
+            return
+        }
+        
+        // transition the state by incorporating the
+        // information in the new block
+        for i in &amp;block.data.transactions {
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&amp;i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().nonce += 1;
+        }
+        
+        // add the block to the history
+        self.history.push(block);
+    }
+}
+
+
+
+fn main() {
+    
+    // Init &quot;blockchain&quot;
+    let mut blockchain = State::create_state();
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Create random accounts
+    for _i in 0..3 {
+        blockchain.create_account();
+    }
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 0
+    let acc_0_pub_key = 773;
+    let acc_0_priv_key = 557;
+    let acc_0 = Account {
+        balance: 10000,
+        nonce: 0,
+    };
+    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 1
+    let acc_1_pub_key = 179;
+    let acc_1_priv_key = 719;
+    let acc_1 = Account {
+        balance: 10000,
+        nonce: 0,        
+    };
+    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // test a tx
+    blockchain.create_tx(acc_0_pub_key,
+                        acc_0_priv_key,
+                        acc_1_pub_key,
+                        50);
+    //println!(&quot;blockchain:\n{:#?}&quot;, blockchain);
+    
+    // process the tx
+    blockchain.create_new_state();
+    println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+}
+
+</code></pre>
+<a class="header" href="#want-even-more" id="want-even-more"><h3>Want even more?</h3></a>
+<p>Cryptoeconomics.Study</p>
+<ul>
+<li>https://cryptoeconomics.study/overview.html</li>
+<li>https://cryptoeconomics.study/lectures/</li>
+<li>https://github.com/cryptoeconomics-study/code/tree/master/c3_ProofOfWork</li>
+</ul>
+<p>Rust Blockchain Tutorial</p>
+<ul>
+<li>https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain</li>
+<li>https://github.com/tensor-programming/Rust_block_chain</li>
+</ul>
+<div align="center">
+    <p align="center">
+        <img src="intro.jpg">
+    </p>
+    <h1 align="center">
+        Minimal Viable Proof of Stake "Blockchain"
+    </h1>
+    <p align="center">
+        Because you can't eat money.
+    </p>
+</div>
+<br>
+<a class="header" href="#words" id="words"><h2>Words</h2></a>
+<p>In this chapter we'll transition our PoW &quot;blockchain&quot; towards a PoS &quot;blockchain&quot;. This has many benefits:</p>
+<ul>
+<li>we don't consume physical resources for digital security</li>
+<li>we can create more compelling incentive mechanisms</li>
+<li>we can destroy an attacker's ability to make repeated attacks</li>
+</ul>
+<p>The future is near. Let's get started!</p>
+<p><br></p>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state.jpg">
+    </p>
+    <h1 align="center">
+        State
+    </h1>
+    <p align="center">
+        Are we there yet?
+    </p>
+</div>
+<p><br><br><br></p>
+<p>Words</p>
+<p><br><br><br></p>
+<p>Videos</p>
+<p><br><br><br></p>
+<pre><code class="language-rust ignore">// code
+</code></pre>
+<p><br><br><br></p>
+<a class="header" href="#resources-to-learn-more-1" id="resources-to-learn-more-1"><h2>Resources To Learn More</h2></a>
+<ul>
+<li>TBD</li>
+</ul>
+<p><br><br><br></p>
+<div align="center">
+    <p align="center">
+        <img src="state_transitions.png">  
+    </p>
+    <h1 align="center">
+        State Transitions
+    </h1>
+    <p align="center">
+        Marching forward.
+    </p>
+</div>
+<br>
+<a class="header" href="#words-1" id="words-1"><h2>Words</h2></a>
+<p>TBD</p>
+<p><br><br><br></p>
+<hr>
+<p><br><br><br></p>
+<p>Core Concepts</p>
+<ul>
+<li>PoW =&gt; PoS</li>
+<li>adding in support for uncles, ommers, and mixhash in addition to nonces (https://ethereum.stackexchange.com/questions/5833/why-do-we-need-both-nonce-and-mixhash-values-in-a-block)</li>
+</ul>
+<p>Uncle: See Ommer, the gender-neutral alternative to aunt/uncle.</p>
+<p>Ommer: a child of a parent of a parent of a block that is not the parent, or more generally a child of an ancestor that is not itself an ancestor. If A is an ommer of B, B is a nibling (niece/nephew) of A.</p>
+<p>Uncle inclusion mechanism: Ethereum has a mechanism where a block may include its uncles; this ensures that miners that create blocks that do not quite get included into the main chain can still get rewarded.</p>
+<p><br></p>
+<a class="header" href="#videos-1" id="videos-1"><h2>Videos</h2></a>
+<p><br></p>
+<a class="header" href="#code-1" id="code-1"><h2>Code</h2></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+
+#fn main() {
+#}</code></pre></pre>
+<p><br></p>
+<a class="header" href="#resources" id="resources"><h2>Resources</h2></a>
+<p>https://github.com/ethereum/wiki/wiki/Glossary#casper-and-scaling-research</p>
+<p><br></p>
+<p align="center">
+    <img src="chapter_summary.jpg">  
+</p>
+<h1 align="center">
+    PoS "Blockchain"
+</h1>
+<p align="center">
+  You get a stake! You get a stake! You get a Stake!
+</p>
+<p><br></p>
+<a class="header" href="#words-2" id="words-2"><h2>Words</h2></a>
+<p>Core Concepts</p>
+<ul>
+<li>RIP the Lorax: save the trees</li>
+<li>PoW is doomed to specialized ASIIC domination whereas PoS allows for more democratized access to blockchain security</li>
+<li>PoS also allows you to create much more interesting and compelling incentivization mechanisms such as slashing and correlated slashing whereas with PoW the attacker doesn't ever lose their compute power and they can launch multiple attacks at little to no increased cost</li>
+<li>PoS also lowers the barriers to entry of becomming a validator and contributing to the network :)</li>
+</ul>
+<p><br></p>
+<a class="header" href="#videos-2" id="videos-2"><h2>Videos</h2></a>
+<p><br></p>
+<a class="header" href="#code-2" id="code-2"><h2>Code</h2></a>
+<p>Permalink to the Rust Playground</p>
+<ul>
+<li>https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=6df734fdee7fac411d9378f17f7978ca</li>
+</ul>
+<pre><code class="language-rust ignore">extern crate rand;
+use rand::prelude::*;
+
+use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::Hasher;
+
+/* GOAL
+A modular architecture where you can change any of the modules,
+say changing PoW to PoS, and it still runs.
+*/
+
+/* QUESTIONS
+Why does this panic?
+*/
+
+
+pub struct DataEncoding;
+
+impl DataEncoding {
+    
+    // TODO
+    //
+    // - Upgrade to something like what Substrate uses
+    //   https://github.com/paritytech/substrate/tree/master/core/serializer
+    // - Also, does it need it's own struct/impl or does it
+    //   make sense to have it in the State impl?
+    //
+    // Turn stuff into an &amp;[u8] slice
+    pub unsafe fn to_u8&lt;T: Sized&gt;(p: &amp;T) -&gt; &amp;[u8] {
+        ::std::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::std::mem::size_of::&lt;T&gt;(),
+        )
+    }    
+
+    // i32 -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn i2s(input: i32) -&gt; String {
+        
+        let output = input.to_string();
+        
+        output
+    }
+    
+    // String -&gt; i32
+    // https://stackoverflow.com/questions/27043268/convert-a-string-to-int-in-rust
+    pub fn s2i(input: String) -&gt; i32 {
+        
+        let output = input.parse::&lt;i32&gt;().unwrap();
+        
+        output
+    }
+
+    // string -&gt; Vec&lt;i32&gt;
+    pub fn s2v(input: String) -&gt; Vec&lt;i32&gt; {
+        
+        let output: Vec&lt;i32&gt; = input.as_bytes()
+                                    .iter()
+                                    .map(|x| *x as i32)
+                                    .collect();
+        
+        output
+    }
+ 
+    // Vec&lt;i32&gt; -&gt; String
+    // https://doc.rust-lang.org/nightly/std/string/trait.ToString.html
+    pub fn v2s(input: Vec&lt;i32&gt;) -&gt; String {
+        
+        let mut output_vec = Vec::new();
+        for i in input {
+            output_vec.push(i.to_string())
+        }
+        let output_string = output_vec.join(&quot;&quot;);
+        
+        output_string
+    }
+}
+
+
+pub struct Hash;
+
+impl Hash {
+    
+    // Takes a preimage (&quot;preimage&quot; = fancy word for input to a hash function)
+    // Encodes it via the data_encode() function
+    // Hashes that data into a hex or an integer (you choose)
+    fn hash&lt;T&gt;(preimage: &amp;T) -&gt; String {
+        
+        // convert to u8
+        let stuff_as_u8 = unsafe {
+            DataEncoding::to_u8(preimage)
+        };
+        
+        // hash u8 to u64
+        let mut hasher = DefaultHasher::new();
+        hasher.write(stuff_as_u8);
+        
+        // format u64 hash as String
+        let string_digest = format!(&quot;{}&quot;, hasher.finish());
+        string_digest
+        
+        // hex String
+        //let digest = hasher.finish();
+        //let hex_digest = format!(&quot;{:#X}&quot;, digest);
+        //hex_digest
+        
+        // i32
+        //let digest = hasher.finish() as i32;
+        //digest 
+        
+        // f64
+        //let digest = hasher.finish() as f64;
+        //digest 
+     
+        // u64
+        //let digest = hasher.finish();
+        //digest
+    }   
+    
+    // Create A Merkle Tree Of All TX In A Vec
+    pub fn hash_tree&lt;T&gt;(stuff: Vec&lt;T&gt;) -&gt; String {
+        
+        let mut v = Vec::new();
+
+        for i in &amp;stuff {
+            let hashed = Hash::hash(&amp;i);
+            v.push(hashed);
+        }
+
+        if v.len() % 2 == 1 {
+            let last = v.last().cloned().unwrap();
+            v.push(last);
+        }
+
+        while v.len() &gt; 1 {
+            let mut h1 = v.remove(0);
+            let mut h2 = v.remove(0);
+            h1.push_str(&amp;mut h2);
+            let nh = Hash::hash(&amp;h1);
+            v.push(nh);
+        }
+        
+        v.pop().unwrap()
+    }
+    
+}
+
+
+// This struct holds all the data for the key generation
+// and signing. If you want to use a different key
+// protocol, change the data in the Keys struct as well
+// as the functions in the Keys impl
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Keys {
+    min: i32,
+    max: i32,
+    p: i32,
+    q: i32,
+    modulo: i32,
+    ctf_pq: i32, 
+}
+
+/// &quot;RSA&quot; Key Generation and Signing ///
+impl Keys {
+    
+    // These functionsare not needed as we have hard coded
+    // the modulo and ctf_pq values
+    /*
+    // greatest common divisor
+    pub fn gcd(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let (mut a, mut b) = if a &gt; b {
+            (a, b)
+        } else {
+            (b, a)
+        };
+    
+        while b != 0 {
+            let r = a % b;
+            a = b;
+            b = r;
+        }
+    
+        a
+    }
+    
+    // lowest common multiple
+    pub fn lcm(a: i32,
+               b: i32) -&gt; i32 {
+        
+        let lcm = (a * b) / Keys::gcd(a, b);
+        
+        lcm
+    }
+    
+    // Carmichael's totient function
+    pub fn ctf(a: i32,
+               b: i32) -&gt; i32 {
+        
+        Keys::lcm(a - 1, b - 1)
+    }
+    */
+    
+    // slowly check if a number is prime
+    pub fn slow_prime_check(self,
+                            num: i32) -&gt; bool {
+        
+        if num &lt; self.min {
+            println!(&quot;number must be greater than {}&quot;, self.min);
+        }
+        
+        if num &gt; self.max {
+            println!(&quot;number cannot be greater than {}&quot;, self.max);
+        }
+        
+        for i in 2..num{
+            if num % i == 0 {
+                return false
+            }
+        }
+        
+        true
+    }
+
+    // slowly, yet randomly, generate a prime number within a range
+    pub fn prime_gen(self) -&gt; i32 {
+        
+        for _i in 0..self.max {
+            let p = thread_rng().gen_range(self.min, self.max);
+            if Keys::slow_prime_check(self, p) {
+                return p
+            }
+        }
+        
+        0
+    }
+
+    // generate a private key within a range
+    pub fn priv_key_gen(self) -&gt; i32 {
+        
+        let priv_key = Keys::prime_gen(self);
+        assert!(self.max % priv_key != 0);
+        
+        priv_key
+    }
+    
+    // slowly find the modular multiplicative inverse of a prime 
+    pub fn slow_mmi(self,
+                    priv_key: i32)-&gt; i32 {
+        
+        for i in 2..self.max {
+            if (i * priv_key) % self.ctf_pq == 1 {
+                return i
+            }
+        }
+        println!(&quot;Try larger search?&quot;);
+        
+        0
+    }
+    
+    // create a public key from a pricate key and RSA param data
+    pub fn pub_key_gen(self,
+                       priv_key: i32) -&gt; i32 {
+        
+        let pub_key = Keys::slow_mmi(self, priv_key);
+        
+        pub_key
+    }
+    
+    // generate a private/public key pair
+    pub fn generate_keypair(self) -&gt; (i32, i32){
+        let priv_key = Keys::priv_key_gen(self);
+        let pub_key = Keys::pub_key_gen(self, priv_key);
+        (priv_key, pub_key)
+    }
+    
+    // Because... Rust.
+    pub fn exp_mod(self,
+                   input: i32,
+                   power: i32) -&gt; i32 {
+        
+        let mut out = (input * input) % self.modulo;
+        // because the first iter of out took 2 off the base
+        for _i in 0..power-2 {
+            out = (out * input) % self.modulo;
+        }
+        
+        out
+    }
+    
+    // Sign a TX with a toy RSA function
+    pub fn sign&lt;T&gt;(self,
+                   thing_to_be_signed: &amp;T,
+                   signing_key: i32) -&gt; Vec&lt;i32&gt; {
+        
+        let hashed_thing = Hash::hash(thing_to_be_signed);
+        
+        let mut hashed_thing_vec = Vec::new();
+        for i in hashed_thing.chars() {
+            hashed_thing_vec.push(i.to_string().parse::&lt;i32&gt;().unwrap())
+        }
+        
+        let mut signed_vec = Vec::new();
+        for i in hashed_thing_vec {
+            signed_vec.push(Keys::exp_mod(self, i, signing_key,));
+        }
+
+        signed_vec
+    }
+    
+    // Check signature on a TX
+    pub fn check_tx_signature(self,
+                              tx: TX) -&gt; bool {
+        
+        let tx_sig_check: Vec&lt;i32&gt; = tx.clone().signature;
+        
+        let mut tx_sig_check_pub_signed = Vec::new();
+        for i in tx_sig_check {
+            tx_sig_check_pub_signed.push(Keys::exp_mod(self, i, tx.data.sender))
+        }
+        
+        let mut tx_sig_check_string = String::new();
+        for i in tx_sig_check_pub_signed {
+            tx_sig_check_string.push_str(&amp;i.to_string())
+        }
+        
+        let hashed_tx = Hash::hash(&amp;tx.data);
+        
+        if tx_sig_check_string == hashed_tx {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+// This struct holds all the data needed for 
+// the chosen state transition protocol.
+// In this case we're doign PoS, but if you
+// wanted to impliment PoW you would write a new
+// STF struct and new verify_pending_tx and proof
+// functions.
+#[derive(Debug, Clone)]
+pub struct STF {
+    version: String, // PoA, PoW, PoS, etc...
+    difficulty: i32,
+    validator: i32,
+}
+
+impl STF {
+    
+    // Standin for a &quot;random beacon&quot;
+    pub fn random_validator_selection(state: &amp;mut State) {
+        
+        // kick out any validators who don't meet the 
+        // difficulty requirements
+        // TODO: find a more &quot;rust like&quot; way to do this
+        // without clone()
+        let state_copy = state.clone();
+        let mut count = 0;
+        for i in state_copy.validators {
+            if state.accounts.get(&amp;i).unwrap().balance &lt; state.stf.difficulty {
+                state.validators.remove(count as usize);
+            }
+            count += 1;
+        }
+        
+        // check that there are validators
+        if state.validators.len() &lt;= 0 {
+            println!(&quot;ERROR: no known validators.&quot;);
+            return
+        }
+        
+        // randomly select a validator from the validator Vec
+        let validator_num = thread_rng().gen_range(0, state.validators.len());
+        state.stf.validator = state.validators[validator_num];
+    }
+    
+    // This function encodes the rules of what qualifies as a &quot;valid tx&quot;
+    pub fn verify_pending_tx(state: &amp;mut State) -&gt; Vec&lt;TX&gt; {
+        
+        let mut verified_tx = Vec::new();
+        
+        for i in &amp;state.pending_tx {
+        
+            if !(state.accounts.contains_key(&amp;i.data.sender)) {
+                println!(&quot;Invalid TX: sender not found.&quot;);
+                continue
+            }
+            
+            if !(state.accounts.contains_key(&amp;i.data.receiver)) {
+                println!(&quot;Invalid TX: receiver not found.&quot;);
+                continue
+            }
+            
+            if !(i.data.amount &gt; 0) {
+                println!(&quot;Invalid TX: negative amount error.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue
+            }
+            
+            if !(state.accounts.get(&amp;i.data.sender).unwrap().balance &gt; i.data.amount) {
+                println!(&quot;Invalid TX: insufficient funds.&quot;);
+                println!(&quot;{} cannot send {} to {}&quot;, i.data.sender, i.data.amount, i.data.receiver);
+                continue         
+            }
+            
+            if !(i.data.sender_nonce == state.accounts.get(&amp;i.data.sender).unwrap().nonce) {
+                println!(&quot;Invalid TX: potential replay tx.&quot;);
+                println!(&quot;{} has nonce {}, but submitted a tx with nonce {}&quot;, i.data.sender, state.accounts.get(&amp;i.data.sender).unwrap().nonce, i.data.sender_nonce);
+                continue
+            }
+            
+            if !(Keys::check_tx_signature(state.keys, i.clone())) {
+                println!(&quot;Invalid TX: signature check failed&quot;);
+                continue
+            }
+            
+            verified_tx.push(i.clone());
+        }
+        
+        verified_tx
+    }
+
+    // This function creates a proof that authorizes the state transition
+    // This can be as complex as desired such as in a PoW setting 
+    // Or it can simply hash the publicly announced validator address like
+    // it does here :)
+    pub fn proof(state: &amp;State) -&gt; String {
+    
+        let hash = Hash::hash(&amp;state.stf.validator);
+        
+        hash
+    }
+    
+    // Create A New Block With Valid Transactions
+    pub fn create_block(state: &amp;mut State) -&gt; Block {
+    
+        let verified_tx = STF::verify_pending_tx(state);
+        let header = BlockHeader {
+            nonce: 0,
+            timestamp: time::now().to_timespec().sec as i32,
+            block_number: state.history.last().unwrap().data.header.block_number + 1,
+            previous_block_hash: Hash::hash(&amp;state.history.last().unwrap().data.header.current_block_hash),
+            current_block_hash: Hash::hash_tree(verified_tx.clone()),
+        };
+        
+        let data = BlockData {
+            header: header,
+            transactions: verified_tx, 
+        };
+        let proof = STF::proof(state);
+        
+        let block = Block {
+            proof: proof,
+            data: data,
+        };
+        
+        block
+    }
+    
+    // function to transition the state
+    pub fn check_block(state: &amp;State,
+                       block: &amp;Block) -&gt; bool {
+        
+        // proof to check
+        let submitted_proof = &amp;block.proof;
+        
+        // check that validator matches randomly chosen STF validator
+        if submitted_proof != &amp;Hash::hash(&amp;state.stf.validator) {
+            println!(&quot;\nProof Error: invalid PoS validator.&quot;);
+            return false
+        }
+        
+        // check validator account has enough state
+        let validator_balance = state.accounts.get(&amp;state.stf.validator).unwrap().balance;
+        if !(validator_balance &gt; state.stf.difficulty) {
+            println!(&quot;ERROR: block proof does not meet difficulty requirements.&quot;);
+            return false
+        }
+        
+        // if tests are passed, return true
+        true
+    }
+    
+}
+
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Account {
+    balance: i32,
+    nonce: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TxData {
+    sender: i32,
+    sender_nonce: i32,
+    amount: i32,
+    receiver: i32,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TX {
+    data: TxData,
+    signature: Vec&lt;i32&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockHeader {
+    nonce: i32,
+    timestamp: i32,
+    block_number: i32,
+    previous_block_hash: String,  
+    current_block_hash: String,  
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct BlockData {
+    header: BlockHeader,
+    transactions: Vec&lt;TX&gt;,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Block {
+    proof: String,
+    data: BlockData,
+}
+
+// TODO
+// - does it make sense to add more data to the State?
+//   STF (type, difficulty, etc...)
+//   KEY_PARAMS (type, p, q, modulo, etc..)
+//   or maybe CRYPTO (KEY_PARAMS, hash function, hash tree function, etc...)
+#[derive(Debug, Clone)]
+pub struct State {
+    keys: Keys,
+    stf: STF,
+    accounts: HashMap&lt;i32, Account&gt;,
+    validators: Vec&lt;i32&gt;,
+    pending_tx: Vec&lt;TX&gt;,
+    history: Vec&lt;Block&gt;,
+}
+
+impl State {
+
+    // Create a new state
+    pub fn create_state() -&gt; State {
+        
+        let rsa_params = Keys {
+            min: 0,
+            max: 1000000,
+            p: 61,
+            q: 53,
+            modulo: 3233,
+            ctf_pq: 780,
+        };
+
+        let stf_data = STF {
+            version: String::from(&quot;PoS&quot;),
+            difficulty: 100,
+            validator: 0,
+        };
+
+        let genesis_block = Block {
+                proof: String::from(&quot;GENESIS BLOCK&quot;),
+                data: BlockData {
+                    header: BlockHeader {
+                        nonce: 0,
+                        timestamp: time::now().to_timespec().sec as i32,
+                        block_number: 0,
+                        previous_block_hash: String::from(&quot;N/A&quot;),  
+                        current_block_hash: Hash::hash(&amp;String::from(&quot;&quot;)),  
+                    },
+                    transactions: Vec::new(),
+                }
+            };
+        
+        let new_state = State {
+            keys: rsa_params,
+            stf: stf_data,
+            accounts: HashMap::new(),
+            validators: Vec::new(),
+            pending_tx: Vec::new(),
+            history: vec![genesis_block],
+        };
+        
+        new_state
+    }
+
+    // Create a new account
+    pub fn create_account(&amp;mut self) {
+        
+        // TODO
+        // - How can I make Keys::generator_keypair() not
+        //   take in anything as input and have all the params
+        //   stored within the Keys library?
+        let (priv_key, pub_key) = Keys::generate_keypair(self.keys);
+        let new_account = Account {
+            balance: 0,
+            nonce: 0,
+        };
+        
+        if self.accounts.contains_key(&amp;pub_key) {
+            println!(&quot;Bummer... account collision.&quot;);
+            return
+        }
+        
+        self.accounts.insert(pub_key, new_account);
+        //println!(&quot;\nThis is your public key: {:#?}&quot;, &amp;pub_key);
+        //println!(&quot;This is your private key: {:#?}&quot;, &amp;priv_key);
+        //println!(&quot;This is your account: {:#?}&quot;, self.accounts.get(&amp;pub_key).unwrap());
+    }
+    
+    // Create a new TX
+    pub fn create_tx(&amp;mut self,
+                     sender_pub_key: i32,
+                     sender_priv_key: i32,
+                     receiver_pub_key: i32,
+                     amount: i32) {
+        
+        
+        let data = TxData {
+            sender: sender_pub_key,
+            sender_nonce: self.accounts.get(&amp;sender_pub_key).unwrap().nonce,
+            receiver: receiver_pub_key,
+            amount: amount,
+        };
+        
+        let signature = Keys::sign(self.keys, &amp;data, sender_priv_key);
+        
+        let tx = TX {
+            data: data,
+            signature: signature,
+        };
+        
+        self.pending_tx.push(tx);
+    }
+    
+    // function to add an account to the validator Vec
+    pub fn create_validator(&amp;mut self,
+                                account: i32) {
+        
+        self.validators.push(account);
+    }
+    
+    // function to transition the state to a new state
+    pub fn create_new_state(&amp;mut self) {
+        
+        // &quot;publicly&quot; select a random validator
+        STF::random_validator_selection(self);
+        
+        // check tx and put valid ones into a block
+        let mut block = STF::create_block(self);
+        
+        // check that the block proof is valid
+        if !(STF::check_block(&amp;self, &amp;block)) {
+            // if block is not valid slash validator's funds
+            println!(&quot;\nERROR: block not valid.&quot;);
+            self.accounts.get_mut(&amp;self.stf.validator).unwrap().balance -= self.stf.difficulty;
+            return
+        }
+        
+        // if block is valid add reward to validator's balance
+        self.accounts.get_mut(&amp;self.stf.validator).unwrap().balance += self.stf.difficulty;
+        
+        // transition the state by incorporating the
+        // information in the new block
+        for i in &amp;block.data.transactions {
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().balance -= i.data.amount;
+            self.accounts.get_mut(&amp;i.data.receiver).unwrap().balance += i.data.amount;
+            self.accounts.get_mut(&amp;i.data.sender).unwrap().nonce += 1;
+        }
+        
+        // add the block to the history
+        self.history.push(block);
+    }
+}
+
+
+
+fn main() {
+    
+    // Init &quot;blockchain&quot;
+    let mut blockchain = State::create_state();
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Create random accounts
+    for _i in 0..3 {
+        blockchain.create_account();
+    }
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 0
+    let acc_0_pub_key = 773;
+    let acc_0_priv_key = 557;
+    let acc_0 = Account {
+        balance: 10000,
+        nonce: 0,
+    };
+    blockchain.accounts.insert(acc_0_pub_key.clone(), acc_0);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // Manually create testing account 1
+    let acc_1_pub_key = 179;
+    let acc_1_priv_key = 719;
+    let acc_1 = Account {
+        balance: 10000,
+        nonce: 0,        
+    };
+    blockchain.accounts.insert(acc_1_pub_key.clone(), acc_1);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // add testing account 0 and 1 to the validator pool
+    blockchain.create_validator(acc_0_pub_key);
+    blockchain.create_validator(acc_1_pub_key);
+    //println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+    
+    // test a tx
+    blockchain.create_tx(acc_0_pub_key,
+                        acc_0_priv_key,
+                        acc_1_pub_key,
+                        50);
+    //println!(&quot;blockchain:\n{:#?}&quot;, blockchain);
+    
+    // process the tx
+    blockchain.create_new_state();
+    println!(&quot;\nBLOCKCHAIN:\n{:#?}&quot;, blockchain);
+}
+
+
+</code></pre>
+<p><br></p>
+<a class="header" href="#resources-1" id="resources-1"><h2>Resources</h2></a>
+<p>Ethereum PoS FAQ</p>
+<ul>
+<li>https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQs</li>
+</ul>
+<p><br></p>
+<div align="center">
+    <div align="center">
+        <img src="earth.jpg" alt="Earth">  
+    </div>
+    <p align="center">
+      A compendium of the resources presented in this book and more :)
+    </p>
+</div>
+<br>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="learning.jpg">
+    </p>
+    <h1 align="center">
+        Knowledge Is Power
+    </h1>
+    <p align="center">
+        So let's learn some stuff!
+    </p>
+</div>
+<p><br><br><br></p>
+<a class="header" href="#cryptoeconomics" id="cryptoeconomics"><h3>Cryptoeconomics</h3></a>
+<ul>
+<li>Cryptoeconomic Primitives and Staking: carrots, sticks, and attack vectors for PoS: https://www.zeroknowledge.fm/49</li>
+<li>Chat with Richard Craib from Numerai on using staking in applications to prevent sybil attacks and filter signal from noise: https://www.zeroknowledge.fm/47</li>
+<li>Awesome Cryptoeconomics jpantunes: https://github.com/jpantunes/awesome-cryptoeconomics</li>
+<li>Awesome Cryptoeconomics L4ventures: https://github.com/L4ventures/awesome-cryptoeconomics</li>
+<li>https://www.reddit.com/r/cryptoeconomics/</li>
+<li>https://theethereum.wiki/w/index.php/Cryptoeconomics</li>
+</ul>
+<a class="header" href="#cryptoeconomicsstudy" id="cryptoeconomicsstudy"><h3>Cryptoeconomics.Study</h3></a>
+<ul>
+<li>Overview: https://cryptoeconomics.study/overview.html</li>
+<li>Lectures: https://cryptoeconomics.study/lectures/</li>
+<li>Code: https://github.com/cryptoeconomics-study/code</li>
+<li>Forum: http://forum.cryptoeconomics.study</li>
+</ul>
+<a class="header" href="#crypto" id="crypto"><h3>Crypto</h3></a>
+<ul>
+<li>Awesome Crypto: https://github.com/sobolevn/awesome-cryptography</li>
+<li>Reddit Crypto Community: https://www.reddit.com/r/crypto</li>
+</ul>
+<a class="header" href="#general-blockchain-resources" id="general-blockchain-resources"><h3>General Blockchain Resources</h3></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Blockchain</li>
+<li>https://github.com/reiver/blockchain-reading-list</li>
+<li>https://a16z.com/2018/02/10/crypto-readings-resources/</li>
+<li>https://github.com/tensor-programming/Rust_block_chain</li>
+<li>https://steemit.com/technology/@tensor/rust-project-cli-toy-blockchain</li>
+</ul>
+<a class="header" href="#bitcoin" id="bitcoin"><h3>Bitcoin</h3></a>
+<ul>
+<li>Bitcoin Whitepaper: https://bitcoin.org/bitcoin.pdf</li>
+<li>Mastering Bitcoin: https://github.com/bitcoinbook/bitcoinbook</li>
+<li>Yuge compendium of resources: https://lopp.net/bitcoin.html</li>
+<li>M Nielsen explains Bitcoin: http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/</li>
+<li>Awesome Bitcoin: https://github.com/igorbarinov/awesome-bitcoin</li>
+<li>Wikipedia: https://en.wikipedia.org/wiki/Bitcoin</li>
+</ul>
+<a class="header" href="#mimblewimble" id="mimblewimble"><h3>Mimblewimble</h3></a>
+<ul>
+<li>Mimblewimble Whitepaper: https://scalingbitcoin.org/papers/mimblewimble.txt</li>
+<li>Mimblewimble Paper Update via Andrew Poelstra: https://scalingbitcoin.org/papers/mimblewimble.pdf</li>
+<li>Grin: https://grin-tech.org/</li>
+</ul>
+<a class="header" href="#ethereum" id="ethereum"><h3>Ethereum</h3></a>
+<ul>
+<li>white: https://github.com/ethereum/wiki/wiki/White-Paper#ethereum</li>
+<li>beige: https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf</li>
+<li>yellow: https://ethereum.github.io/yellowpaper/paper.pdf</li>
+<li>Mastering Ethereum: https://github.com/ethereumbook</li>
+<li>Ethereum Research: https://ethresear.ch</li>
+<li>Ethereum Improvement Research: https://ethereum-magicians.org/</li>
+<li>Reddit: https://www.reddit.com/r/ethereum/</li>
+<li>Awesome Ethereum: https://github.com/btomashvili/awesome-ethereum</li>
+<li>Wikipdedia: https://en.wikipedia.org/wiki/Ethereum</li>
+</ul>
+<a class="header" href="#substrate--polkadot" id="substrate--polkadot"><h3>Substrate / Polkadot</h3></a>
+<ul>
+<li>Polkadot Whitepaper: https://polkadot.network/PolkaDotPaper.pdf</li>
+<li>Substrate Docs: https://substrate.readme.io/</li>
+</ul>
+<a class="header" href="#podcasts" id="podcasts"><h3>Podcasts</h3></a>
+<ul>
+<li>https://www.zeroknowledge.fm/</li>
+</ul>
+<a class="header" href="#other" id="other"><h3>Other</h3></a>
+<ul>
+<li>Awesome Awesome Lists: https://github.com/sindresorhus/awesome</li>
+</ul>
+<h1 align="center">
+    Let's make things better by making better things.
+</h1>
+<p><br><br><br></p>
+<a class="header" href="#cryptoeconomic-security--game-theory-stuff" id="cryptoeconomic-security--game-theory-stuff"><h3>Cryptoeconomic Security / Game Theory Stuff</h3></a>
+<ul>
+<li>https://ethresear.ch/c/economics</li>
+<li>http://tokenengineering.net/building-blocks</li>
+</ul>
+<a class="header" href="#rust-dev" id="rust-dev"><h3>Rust Dev</h3></a>
+<ul>
+<li>all the Rust docs and books! https://doc.rust-lang.org/</li>
+<li>all the Rust Crates! https://crates.io/</li>
+<li>this book is built with <a href="https://rust-lang-nursery.github.io/mdBook/index.html">mdBook</a></li>
+</ul>
+<a class="header" href="#rust-crypto--blockchain-stuff" id="rust-crypto--blockchain-stuff"><h3>Rust Crypto / Blockchain Stuff</h3></a>
+<ul>
+<li>Parity's Ethereum Client: https://github.com/paritytech/parity-ethereum</li>
+<li>Parity Substrate: https://www.parity.io/substrate/</li>
+<li>Parity Polkadot: https://github.com/paritytech/polkadot</li>
+<li>Parity WASM: https://github.com/paritytech/parity-wasm</li>
+<li>POA's Honey Badger Byzantine Fault Tolerant (BFT) consensus algorithm: https://github.com/poanetwork/hbbft</li>
+<li>POA's Threshold Crypto: https://github.com/poanetwork/threshold_crypto</li>
+<li>Grin: https://github.com/mimblewimble/grin</li>
+<li>Zcash: https://z.cash/blog/bellman-zksnarks-in-rust/</li>
+<li>Bellman zk-SNARKS in Rust: https://z.cash/blog/bellman-zksnarks-in-rust/</li>
+<li>Zero-knowledge Cryptography in Rust: https://github.com/zkcrypto</li>
+<li>Zokrates: A toolbox for zkSNARKS on Ethereum
+<ul>
+<li>https://github.com/Zokrates/ZoKrates</li>
+</ul>
+</li>
+<li>Dalek Crypto: https://dalek.rs</li>
+<li>(WIP) Libp2p: https://github.com/libp2p/rust-libp2p</li>
+<li>and these:
+<ul>
+<li>https://github.com/rust-unofficial/awesome-rust#cryptocurrencies</li>
+<li>https://github.com/rust-unofficial/awesome-rust#cryptography</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="#ethereum-core-dev" id="ethereum-core-dev"><h3>Ethereum Core Dev</h3></a>
+<ul>
+<li>TBD</li>
+</ul>
+<a class="header" href="#general-ethereum-dev" id="general-ethereum-dev"><h3>General Ethereum Dev</h3></a>
+<ul>
+<li>https://blog.0xproject.com/new-ethereum-dev-tools-from-0x-db80ee9e802</li>
+<li>https://github.com/trailofbits/awesome-ethereum-security</li>
+<li>https://github.com/ConsenSys/ethereum-developer-tools-list</li>
+<li>https://media.consensys.net/everything-you-possibly-need-to-develop-on-ethereum-1bef0c23c7c6</li>
+</ul>
+<a class="header" href="#ethereum-security-stuff" id="ethereum-security-stuff"><h3>Ethereum Security Stuff</h3></a>
+<ul>
+<li>MythX:
+<ul>
+<li>https://mythx.io/</li>
+</ul>
+</li>
+<li>SECURIFY:
+<ul>
+<li>scanner for Ethereum smart contracts: https://securify.chainsecurity.com/</li>
+</ul>
+</li>
+<li>Trail Of Bits:
+<ul>
+<li>https://www.trailofbits.com/</li>
+<li>https://github.com/trailofbits</li>
+<li>Manticore: https://github.com/trailofbits/manticore</li>
+<li>Echidna: https://github.com/trailofbits/echidna</li>
+<li>Awesome Ethereum Security: https://github.com/trailofbits/awesome-ethereum-security</li>
+</ul>
+</li>
+<li>Sigma Prime:
+<ul>
+<li>https://sigmaprime.io/</li>
+</ul>
+</li>
+<li>formal verification?</li>
+<li>this stuff: https://slideslive.com/38911605/smart-contract-security-incentives-beyond-the-launch</li>
+</ul>
+<a class="header" href="#ethereum-l2-dev" id="ethereum-l2-dev"><h3>Ethereum L2 Dev</h3></a>
+<ul>
+<li>plasma</li>
+<li>state channels</li>
+<li>other?</li>
+</ul>
+<p><br><br><br></p>
+<a class="header" href="#need-some-inspiration-on-what-to-build" id="need-some-inspiration-on-what-to-build"><h3>Need some inspiration on what to build?</h3></a>
+<ul>
+<li>Ethteruem Research Applications: https://ethresear.ch/c/applications</li>
+<li>ETHSingapore hackathon wishlist: https://youtu.be/egC2F_JKuhc?t=829</li>
+</ul>
+<a class="header" href="#yay-people" id="yay-people"><h1>Yay people...</h1></a>
+<p>because sharing is caring</p>
+<a class="header" href="#reddit-communities" id="reddit-communities"><h3>Reddit Communities</h3></a>
+<ul>
+<li>https://www.reddit.com/r/crypto</li>
+<li>https://www.reddit.com/r/Bitcoin/</li>
+<li>https://www.reddit.com/r/ethereum/</li>
+<li>https://www.reddit.com/r/cryptoeconomics/</li>
+</ul>
+<a class="header" href="#cryptoeconomicsstudy-forum" id="cryptoeconomicsstudy-forum"><h3>Cryptoeconomics.Study Forum</h3></a>
+<ul>
+<li>http://forum.cryptoeconomics.study</li>
+</ul>
+<a class="header" href="#ethereum-research-forum" id="ethereum-research-forum"><h3>Ethereum Research Forum</h3></a>
+<ul>
+<li>https://ethresear.ch</li>
+</ul>
+<p><br></p>
+<div align="center">
+    <p align="center">
+        <img src="feedback.png">
+    </p>
+</div>
+<p><br><br><br></p>
+<p>I sincerely hoped you enjoyed this book and got some value out of it. That being said, it's a WIP and needs to get better. What did you like? What sucked? Please let me know!</p>
+<ul>
+<li>rustycryptoeconomics@protonmail.com</li>
+</ul>
+<p>Thanks!</p>
+<p><br><br><br></p>
+<p><br></p>
+<p align="center">
+    <img src="donations.png">  
+</p>
+<p align="center">
+  The best things in life are free, but for everthing else...
+</p>
+<p><br><br><br></p>
+<p>
+  I hope you liked this book/tutorial and got some value out of it! I'll keep building learning tools and resources as long as I can, but it takes a lot of work and I'm doing it for free. If you feel so inspired please consider donating to support the ongoing maintenance and development of this and future books :)
+</p>
+<p>Bitcoin:</p>
+<ul>
+<li>bc1qarnsad7ulp8gnh6v5r9n5qj6rvqx4m7ap4d9zc</li>
+</ul>
+<p>Bitcoin Cash:</p>
+<ul>
+<li>qqsvc8x8qd8g02pqtqwf5kpquuxk4vy6vgt8c24k8c</li>
+</ul>
+<p>Litecoin:</p>
+<ul>
+<li>ltc1qxyxjuszc765e8eszr8yj0v5cgnd9rf9ujjh6yy</li>
+</ul>
+<p>Doge:</p>
+<ul>
+<li>DQ4eMuxEQi49GBeRNGEYXpaLLhftvnaC36</li>
+</ul>
+<p>Ethereum:</p>
+<ul>
+<li>0xAB30757feDDc162C788d748f6F89AbeC4bB78cAD</li>
+</ul>
+<p>Ethereum Classic:</p>
+<ul>
+<li>0x0e2140b372Db8D0a042F87e24C0779eA9A8F559E</li>
+</ul>
+<p>Monero:</p>
+<ul>
+<li>46TtrtJ2Vef89npxpGSaLBBTKzuBmqAAhSj8Y7aEpD6qcSaHMtSGY6w2cn4LkCicZGCCgaXAqL5YxQmKbMSME87RDHaf5Qz</li>
+</ul>
+<p>Zcash:</p>
+<ul>
+<li>t1Ri2Pb63Ajo8avbcqMQBUPh9z2cdpeQytw</li>
+</ul>
+<p>PIVX:</p>
+<ul>
+<li>D9VEfQi9XynPxwPGYRspG5Yg44m2o3cYPo</li>
+</ul>
+<p>and of courrse if you'd like to donate with a token that is not represented here just let me know and I'll add it.</p>
+<p><br><br><br></p>
+<a class="header" href="#also-if-you-know-of-a-grant-program-that-you-think-would-be-a-good-fit-for-this-project-please-reach-out-and-let-me-know" id="also-if-you-know-of-a-grant-program-that-you-think-would-be-a-good-fit-for-this-project-please-reach-out-and-let-me-know"><h3>Also, if you know of a grant program that you think would be a good fit for this project, please reach out and let me know!</h3></a>
+<ul>
+<li>rustycryptoeconomics@protonmail.com</li>
+</ul>
+<p><br><br><br></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
