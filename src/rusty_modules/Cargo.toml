@@ -1,0 +1,9 @@
+[package]
+name = "rusty_modules"
+version = "0.1.0"
+authors = ["scratchpadtest458"]
+edition = "2018"
+
+[dependencies]
+rand = "0.6.5"
+time = "0.1.42"
