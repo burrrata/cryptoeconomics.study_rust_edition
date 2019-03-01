@@ -7,6 +7,8 @@
 
 2! Networking/Threading
 
+- https://users.rust-lang.org/t/fearless-shared-state-concurrency/24514/4
+
 3! Testnet
 
 <br>
