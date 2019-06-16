@@ -4,7 +4,9 @@
 </p>
 <br>
 <h1 align="center">
+  <a href='https://burrrata.ch/rusty_cryptoeconomics'>
     Rusty Cryptoeconomics
+  </a>
 </h1>
 <p>
 This project explores blockchains from first principles, starting with a centralized b2c database and iteratively building towards a decentralized p2p database (aka a blockchain). The goal is to build a foundation of knowledge from basic crypto and blockchain concepts, and then use that to think about and build arbitrary cryptoeconomic mechanisms that get people to do stuff that would otherwise become a tragedy of the commons. It's a WIP and comments/ideas/contributions are warmly welcome :)  
